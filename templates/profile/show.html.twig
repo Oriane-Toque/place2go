@@ -1,0 +1,48 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Profil -
+{% endblock %}
+
+{% block body %}
+
+
+	<section class="card mb-3" style="max-width: 540px;">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid"/>
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<p>{{ user.firstname }} {{ user.lastname }}</p>
+					<p>{{ user.email }}</p>
+					<p>{{ user.firstname }}</p>
+					<p>Autres infos</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<a href="#" type="button" class="btn btn-secondary">Ajouter à ses amis</a>
+
+	<div class="userDescription">
+		<h2>A propos de moi</h2>
+		<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem deserunt, nihil, obcaecati odio voluptate quaerat porro omnis dolores autem placeat laborum doloribus similique aliquid, tempora repellat iste quas itaque? Autem!</p>
+	</div>
+
+	<div class="userFriends">
+		<div class="userFriends__friend">
+			<img src="#" alt="photo ami">
+			<p>Nom de l'ami</p>
+		</div>
+		<div class="userFriends__friend">
+			<img src="#" alt="photo ami">
+			<p>Nom de l'ami</p>
+		</div>	
+		<div class="userFriends__friend">
+			<img src="#" alt="photo ami">
+			<p>Nom de l'ami</p>
+		</div>	
+	</div>
+
+
+{% endblock %}
