@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestamps;
 use App\Repository\AttendantRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AttendantRepository::class)
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Attendant
 {
     use Timestamps;
-    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
