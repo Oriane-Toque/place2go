@@ -2,46 +2,62 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestamps;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EventRepository;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraint as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @ORM\Table(name="event")
+ * @ORM\HasLifecycleCallbacks
  */
 class Event
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $title;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $event_date;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $city;
 
@@ -56,12 +72,15 @@ class Event
     private $lon;
 
     /**
+     * @var int
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     private $maxAttendants;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
     private $isActive;
 
@@ -85,6 +104,7 @@ class Event
     {
         $this->attendants = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int
