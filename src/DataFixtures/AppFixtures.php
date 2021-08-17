@@ -2,18 +2,27 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Attendant;
+use DateTime;
 use App\Entity\User;
 use App\Entity\Event;
 use DateTimeImmutable;
 use App\Entity\Category;
-use DateTime;
+use App\Entity\Attendant;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+   
     public function load(ObjectManager $manager)
     {
         $categories = [];
@@ -33,7 +42,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setEmail("user$i@user.com");
             $user->setRoles(["ROLE_USER"]);
-            $user->setPassword("dada");
+            $user->setPassword($this->passwordHasher->hashPassword($user,'dada'));
             $user->setNickname("dada$i");
             $user->setFirstname("user$i");
             $user->setLastname("dodo$i");
@@ -43,7 +52,6 @@ class AppFixtures extends Fixture
             $user->setCreatedAt(new DateTimeImmutable());
             $users[] = $user;
             $manager->persist($user);
-            
         }
 
         $events = [];
