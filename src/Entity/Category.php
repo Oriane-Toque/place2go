@@ -3,16 +3,23 @@
 namespace App\Entity;
 
 use App\Entity\Event;
+use App\Entity\Traits\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Table(name="category")
+ * @ORM\HasLifecycleCallbacks
  */
 class Category
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,12 +28,16 @@ class Category
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $picture;
 

@@ -2,14 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\AttendantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestamps;
+use App\Repository\AttendantRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AttendantRepository::class)
+ * @ORM\Table(name="attendant")
+ * @ORM\HasLifecycleCallbacks
  */
 class Attendant
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -18,7 +24,9 @@ class Attendant
     private $id;
 
     /**
+     * @var \DateTimeImmutable
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank()
      */
     private $createdAt;
 
