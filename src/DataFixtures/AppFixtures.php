@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setEmail("user$i@user.com");
             $user->setRoles(["ROLE_USER"]);
-            $user->setPassword("dada");
+            $user->setPassword('dada');
             $user->setNickname("dada$i");
             $user->setFirstname("user$i");
             $user->setLastname("dodo$i");
