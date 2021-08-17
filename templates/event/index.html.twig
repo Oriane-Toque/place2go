@@ -1,0 +1,47 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}
+Sorties
+{% endblock %}
+
+
+{% block body %}
+
+<div class="wrapper">
+    <h2>Liste des Sorties</h2>
+
+    <div class="item-list">
+
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Localisation</th>
+                <th>Date</th>
+                <th>Organisateur</th>
+                <th>Nb Participants</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.title }}</td>
+                <td>{{ event.city }}</td>
+                <td>{{ event.eventDate|date('d-m-Y H:i') }}</td>
+                <td>{{ event.author.nickname }}</td>
+                <td>{{ event.attendants|length }} / {{ event.maxAttendants }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Aucune sortie pour le moment</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}
