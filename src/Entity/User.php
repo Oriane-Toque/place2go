@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -79,6 +81,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="author")
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Attendant::class, mappedBy="user")
+     */
+    private $attendants;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+        $this->attendants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -273,6 +291,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getAuthor() === $this) {
+                $event->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attendant[]
+     */
+    public function getAttendants(): Collection
+    {
+        return $this->attendants;
+    }
+
+    public function addAttendant(Attendant $attendant): self
+    {
+        if (!$this->attendants->contains($attendant)) {
+            $this->attendants[] = $attendant;
+            $attendant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttendant(Attendant $attendant): self
+    {
+        if ($this->attendants->removeElement($attendant)) {
+            // set the owning side to null (unless already changed)
+            if ($attendant->getUser() === $this) {
+                $attendant->setUser(null);
+            }
+        }
 
         return $this;
     }
