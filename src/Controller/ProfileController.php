@@ -53,7 +53,7 @@ class ProfileController extends AbstractController
 				// 3 dernières sorties dont il est le participant de l'évènement le plus récent au plus ancien
 				$attendantLastThreeExits = $eventRepository->findLastThreeAttendantEvents($user->getId());
 
-				dump($authorLastThreeExits);
+				dump($attendantLastThreeExits);
 				return $this->render('profile/profile.html.twig', [
 					"user" => $user,
 					"userLastExits" => $authorLastThreeExits,
