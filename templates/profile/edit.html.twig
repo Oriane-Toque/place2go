@@ -4,10 +4,17 @@
 {% block title %}Edition profil{% endblock %}
 
 {% block body %}
-    <h1>Edition du Profil</h1>
+
+<div class="d-flex m-3">
+	{# Navigation secondaire du dashboard + informations #}
+	{% include "profile/_nav_aside.html.twig" %}
+	
+	<section class="contentProfile" style="width:75%;">
+    <h2>Edition du Profil</h2>
 
     {% include 'profile/_form.html.twig' with {'button_label': 'Editer'} %}
 
     <a class="btn btn-primary" href="{{ path('app_profile_profile') }}" role="button to back">Retour</a>
-
+	</section>
+</div>
 {% endblock %}
