@@ -79,7 +79,7 @@ class EventController extends AbstractController
      * 
      * @Route("/events/{id<\d+>}/edit", name="events_edit", methods={"GET", "POST"})
      */
-    public function edit(Event $event, Request $request): Response
+    public function edit(Event $event = null, Request $request): Response
     {
 
         // Event not found

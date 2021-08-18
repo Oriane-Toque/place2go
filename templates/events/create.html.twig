@@ -11,7 +11,40 @@
 		<h2 class="m-0"><i class="fa fa-edit mr-2"></i>Ajouter une sortie<a class="btn btn-secondary ml-2" href="{{ path('events_list') }}"><i class="fa fa-angle-left mr-2"></i>Retour liste</a></h2>
 	</div>
 
-    {{ include('events/_form.html.twig') }}
+    {{ form_start( form, { attr: {novalidate: 'novalidate'} } ) }}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.title, {'attr': {'placeholder': 'Sortie cinéma, Boire un coup, ...'}}) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.event_date, {'attr': {'placeholder': 'Sortie cinéma, Boire un coup, ...'}}) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.address, {'attr': {'placeholder': '25 rue du Général...'}}) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.maxAttendants) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.city, {'attr': {'placeholder': 'Paris, Lyon, ...'}}) }}
+                {{ form_row(form.description, {'attr': {'placeholder': 'Détaillez votre sortie (description, organisation, lieu...)'}}) }}
+                {{ form_row(form.categories) }}
+            </div>
+            <div class="col-md-6">
+                <h3>Cliquez sur la carte pour indiquer l'adresse de votre sortie</h3>
+                <div class="event-map"></div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mb-3">Créer la sortie</button>
+    {{ form_end(form) }}
 
 </div>
 
