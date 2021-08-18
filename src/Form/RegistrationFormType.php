@@ -36,6 +36,8 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Pseudo',
                 'required' => true,
             ])
+						// ajout d'un évènement sur le formulaire pour différencier l'édition de la création d'un utilisateur
+						// mapped false pour le password afin de ne pas relier à l'entité en cas de modification de password
 						->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 
 								// je récupère mon formulaire
@@ -84,26 +86,28 @@ class RegistrationFormType extends AbstractType
 								} else {
 											// si user déjà existant donc mode Edition
 											$form
+												->add('city', TextType::class, [
+													'label' => 'Ville',
+												])
+												->add('description', TextType::class, [
+													'label' => 'Description',
+												])
 												->add('email', EmailType::class)
 												->add('password', RepeatedType::class, [
 													'type' => PasswordType::class,
 													'invalid_message' => 'Les mots de passe ne correspondent pas.',
 													'mapped' => false,
-													'required' => true,
+													'required' => false,
 													'first_options'  => [
 															'constraints' => [
 																	new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
 																	new NotCompromisedPassword(),
-																	new NotBlank(),
 															],
 															'label' => 'Mot de passe',
 															'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
 													],
 													'second_options' => [
 															'label' => 'Répéter le mot de passe',
-															'constraints' => [
-																	new NotBlank(),
-															],
 													],
 											]);
 								}
