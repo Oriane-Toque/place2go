@@ -14,6 +14,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EventRepository extends ServiceEntityRepository
 {
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Event::class);
+    }
+
+    public function findPopularCities($limit)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT e.city, COUNT(e.city) AS count
+            FROM App\Entity\Event e
+            GROUP BY e.city
+            ORDER BY count DESC'
+        )->setMaxResults($limit);
+        return $query->getResult();
+    }
+
 		public function __construct(ManagerRegistry $registry)
 		{
 			parent::__construct($registry, Event::class);
@@ -83,4 +101,5 @@ class EventRepository extends ServiceEntityRepository
 					;
 			}
 			*/
+
 }
