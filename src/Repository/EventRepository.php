@@ -14,37 +14,73 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EventRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Event::class);
-    }
+		public function __construct(ManagerRegistry $registry)
+		{
+			parent::__construct($registry, Event::class);
+		}
 
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+		// /**
+		//  * @return Event[] Returns an array of Event objects
+		//  */
 
-    /*
-    public function findOneBySomeField($value): ?Event
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+		/**
+		 * Recover the last three events of the organizer order by event date (DESC)
+		 *
+		 * @param Int $userId
+		 * @return Array tableau d'objets, les 3 dernières sorties proposées
+		 */
+		public function findLastThreeAuthorEvents(int $userId): array
+		{
+			return $this->createQueryBuilder('e')
+				->where('e.author = :userId')
+				->setParameter('userId', $userId)
+				->orderBy('e.event_date', 'DESC')
+				->setMaxResults(3)
+				->getQuery()
+				->getResult();
+		}
+
+		/**
+		 * Recover the last three exits of the user order by event date (DESC)
+		 *
+		 * @param Int $userId
+		 * @return Array tableau d'objets, les 3 dernières sorties auxquels l'utilisateur participe
+		 */
+		public function findLastThreeAttendantEvents(int $userId): array
+		{
+			return $this->createQueryBuilder('e')
+				->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
+				->where('a.user = :userId')
+				->setParameter('userId', $userId)
+				->orderBy('e.event_date', 'DESC')
+				->setMaxResults(3)
+				->getQuery()
+				->getResult();
+		}
+
+		/*
+			public function findByExampleField($value)
+			{
+					return $this->createQueryBuilder('e')
+							->andWhere('e.exampleField = :val')
+							->setParameter('val', $value)
+							->orderBy('e.id', 'ASC')
+							->setMaxResults(10)
+							->getQuery()
+							->getResult()
+					;
+			}
+			*/
+
+		/*
+			public function findOneBySomeField($value): ?Event
+			{
+					return $this->createQueryBuilder('e')
+							->andWhere('e.exampleField = :val')
+							->setParameter('val', $value)
+							->getQuery()
+							->getOneOrNullResult()
+					;
+			}
+			*/
 }
