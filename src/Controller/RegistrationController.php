@@ -31,8 +31,8 @@ class RegistrationController extends AbstractController
     {   
         // creating user
         $user = new User();
+
         $form = $this->createForm(RegistrationFormType::class, $user);
-         // fetching the request
         $form->handleRequest($request);
        
         // if the form is submitted & valid
@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
             );
             // send flash message to display to the user
             $this->addFlash('success', 'Nous vous avons envoyé un email pour vérifier votre compte');
-            // redirect to route
+
             return $this->redirectToRoute('app_home');
         }
 
