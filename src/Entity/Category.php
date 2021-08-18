@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Event;
-use App\Entity\Traits\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestamps;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +22,7 @@ class Category
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
