@@ -92,7 +92,7 @@ class Event
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attendant::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Attendant::class, mappedBy="event", cascade={"remove"})
      */
     private $attendants;
 
