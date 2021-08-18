@@ -12,7 +12,7 @@ class ProfileController extends AbstractController
     /**
 		 * Display user profile (public)
 		 * 
-     * @Route("/profile/{id<\d+>}", name="profile_show", methods={"GET"})
+     * @Route("/profile/{id<\d+>}", name="app_profile_show", methods={"GET"})
      */
     public function show(User $user = null): Response
     {
