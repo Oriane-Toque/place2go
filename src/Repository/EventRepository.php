@@ -32,11 +32,6 @@ class EventRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-		public function __construct(ManagerRegistry $registry)
-		{
-			parent::__construct($registry, Event::class);
-		}
-
 		// /**
 		//  * @return Event[] Returns an array of Event objects
 		//  */
