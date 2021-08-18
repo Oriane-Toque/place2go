@@ -18,17 +18,10 @@ class Attendant
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
-     * @Assert\NotBlank()
-     */
-    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="attendants")
@@ -45,18 +38,6 @@ class Attendant
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getUser(): ?User

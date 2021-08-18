@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Timestamps;
+use DateTime;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestamps;
 use App\Repository\EventRepository;
-use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -75,6 +75,7 @@ class Event
      * @var int
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\Range(min=1, max=15, message="Le nombre de participants doit être de 15 maximum")
      */
     private $maxAttendants;
 
