@@ -12,8 +12,16 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_category_list') }}">Catégories</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Sorties</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuEvent" data-mdb-toggle="dropdown" aria-expanded="false">Sorties</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuEvent">
+						<li>
+							<a class="dropdown-item" href="{{ path('app_event_list') }}">Voir toutes les sorties</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{ path('app_event_create') }}">Créer une sortie</a>
+						</li>
+					</ul>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">

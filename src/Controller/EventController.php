@@ -15,20 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     /**
-     * @Route("/events", name="events_list", methods={"GET"})
+     * @Route("/events", name="app_event_list", methods={"GET"})
      */
     public function list(EventRepository $eventRepository): Response
     {    
         // Find all events
         $events = $eventRepository->findAll();
 
-        return $this->render('events/list.html.twig', [
+        return $this->render('event/list.html.twig', [
             'events' => $events,
         ]);
     }
 
     /**
-     * @Route("/events/{id<\d+>}/show", name="events_show", methods={"GET"})
+     * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
      */
     public function show(Event $event = null): Response
     {
@@ -37,14 +37,14 @@ class EventController extends AbstractController
             throw $this->createNotFoundException('Sortie introuvable');
         }
 
-        return $this->render('events/show.html.twig', [
+        return $this->render('event/show.html.twig', [
             'event' => $event,
         ]);
     }
 
     /**
      * 
-     * @Route("/events/create", name="events_create", methods={"GET", "POST"})
+     * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
      */
     public function create(Event $event = null, UserRepository $userRepository, Request $request): Response
     {
@@ -75,10 +75,10 @@ class EventController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Sortie créée avec succès !');
 
-            return $this->redirectToRoute('events_list');
+            return $this->redirectToRoute('app_event_list');
         }
 
-        return $this->render('events/create.html.twig', [
+        return $this->render('event/create.html.twig', [
             'form' => $form->createView(),
         ]);
                 
@@ -86,7 +86,7 @@ class EventController extends AbstractController
 
     /**
      * 
-     * @Route("/events/{id<\d+>}/edit", name="events_edit", methods={"GET", "POST"})
+     * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
      */
     public function edit(Event $event = null, Request $request): Response
     {
@@ -110,7 +110,7 @@ class EventController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Sortie modifiée avec succès !');
 
-            return $this->redirectToRoute('events_show', [
+            return $this->redirectToRoute('app_event_show', [
                 'id' => $event->getId(),
             ]);
         }
@@ -123,7 +123,7 @@ class EventController extends AbstractController
 
     /**
      * 
-     * @Route("/events/{id<\d+>}/delete", name="events_delete", methods={"GET"})
+     * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
      */
     public function delete(Event $event = null): Response
     {
@@ -141,7 +141,7 @@ class EventController extends AbstractController
         // Flash message
         $this->addFlash('success', 'Sortie supprimée avec succès');
 
-        return $this->redirectToRoute('events_list');
+        return $this->redirectToRoute('app_event_list');
     }
 
 }
