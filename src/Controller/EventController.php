@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,7 @@ class EventController extends AbstractController
      * 
      * @Route("/events/create", name="events_create", methods={"GET", "POST"})
      */
-    public function create(Event $event = null, Request $request): Response
+    public function create(Event $event = null, UserRepository $userRepository, Request $request): Response
     {
 
         // New object
@@ -58,6 +59,14 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Add author to event
+            $authors = $userRepository->findAll();
+
+            $event->setAuthor($authors[0]);
+            // Add coordinates to event
+            $event->setLat('');
+            $event->setLon('');
+
             // Persist event in BDD
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
@@ -66,7 +75,7 @@ class EventController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Sortie créée avec succès !');
 
-            return $this->redirectToRoute('events');
+            return $this->redirectToRoute('events_list');
         }
 
         return $this->render('events/create.html.twig', [

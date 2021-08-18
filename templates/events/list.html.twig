@@ -30,7 +30,7 @@ Sorties
                 <td><a href="{{ path('events_show', {id: event.id}) }}">{{ event.title }}</a></td>
                 <td>{{ event.city }}</td>
                 <td>{{ event.eventDate|date('d-m-Y H:i') }}</td>
-                <td>{{ event.author.nickname }}</td>
+                <td><a href="{{ path('profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a></td>
                 <td>{{ event.attendants|length }} / {{ event.maxAttendants }}</td>
             </tr>
             {% else %}

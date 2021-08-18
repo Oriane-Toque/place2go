@@ -8,20 +8,20 @@
 {% block body %}
 
 <div class="wrapper">
-    <h2>Sortie</h2>
+    <h2>{{ event.title }}</h2>
 
     <div class="row">
         <div class="col-6">
             <div class="card">
-                <img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="card-img-top" alt="image" />
+                <img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="card-img-top" height="150" alt="image" />
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6"><h5 class="card-author">{{ event.author.nickname }}</h5></div>
-                        <div class="col-6"><h5 class="card-place">{{ event.attendants|length }} / {{ event.maxAttendants }}</h5></div>
+                        <div class="col-6"><h5 class="card-author"><a href="{{ path('profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a></h5></div>
+                        <div class="col-6"><h5 class="card-place">{{ event.attendants|length }} / {{ event.maxAttendants }} participants</h5></div>
                     </div>
                     <div class="row">
                         <div class="col-6"><h3 class="card-title">{{ event.title }}</h5></div>
-                        <div class="col-6"><h5 class="card-date text-muted">{{ event.eventDate|date('d-m-Y H:i') }}</h5></div>
+                        <div class="col-6"><h5 class="card-date text-muted">Date : {{ event.eventDate|date('d-m-Y H:i') }}</h5></div>
                     </div>
                     <p class="card-description">
                     {{ event.description }}
@@ -32,7 +32,9 @@
         </div>
 
         <div class="col-6">
-        <p> La carte ici ! </p>
+            <p> La carte ici ! </p>
+            <p> lat: {{ event.lat }}</p>
+            <p> lon: {{ event.lon }}</p>
         </div>
     </div>
 

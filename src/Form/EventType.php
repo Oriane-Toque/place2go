@@ -24,22 +24,28 @@ class EventType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre de la sortie *',
+                'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description de la sortie',
+                'label' => 'Description de la sortie *',
+                'required' => true,
             ])
             ->add('event_date', DateTimeType::class, [
                 'label' => 'Date de la sortie *',
                 'data' => new DateTime(),
+                'required' => true,
             ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
+                'required' => false,
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville *',
+                'required' => true,
             ])
             ->add('maxAttendants', ChoiceType::class, [
                 'label' => 'Nbre max de participants *',
+                'required' => true,
                 'choices' => range(1,20,1),
                 'choice_label' => function ($value) {
                     return $value;
@@ -50,6 +56,7 @@ class EventType extends AbstractType
             ])
             ->add('categories', EntityType::class, [
                 'label' => 'Catégories *',
+                'required' => true,
                 'class' => Category::class,
                 'multiple' => true,
                 'choice_label' => 'name',
