@@ -108,6 +108,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $birthday;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -360,6 +370,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
 
         return $this;
     }
