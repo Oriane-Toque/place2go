@@ -30,8 +30,8 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $category = new Category();
             $category->setName('category' . $i);
-            $category->setPicture('https://picsum.photos/id/100/600/400');
-
+            $category->setPicture('https://picsum.photos/id/' . mt_rand(100, 500) . '/600/400');
+            
             $categories[] = $category;
             $manager->persist($category);
         }
@@ -46,12 +46,12 @@ class AppFixtures extends Fixture
             $user->setNickname("dada$i");
             $user->setFirstname("user$i");
             $user->setLastname("dodo$i");
-            $user->setAvatar('https://picsum.photos/id/100/300/300');
+            $user->setAvatar('https://picsum.photos/id/' .mt_rand(100, 500) . '/300/300');
             $user->setCity("city$i");
             $user->setIsActive(true);
 			$user->setBirthday(new DateTime("1996-03-05"));
 			$user->setDescription("Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore fuga nam earum facere deserunt quos, pariatur aliquid quisquam accusantium autem beatae accusamus, ipsum reprehenderit sunt sint aperiam? Repellat, explicabo consequuntur.");
-            $user->setCreatedAt(new DateTimeImmutable());
+
             $users[] = $user;
             $manager->persist($user);
         }
@@ -70,6 +70,7 @@ class AppFixtures extends Fixture
             $event->setMaxAttendants(7);
             $event->setIsActive(true);
             $event->setAuthor($users[array_rand($users)]);
+
             for ($j = 0; $j < mt_rand(1, 3); $j++) {
                 $event->addCategory($categories[array_rand($categories)]);
             }
@@ -82,7 +83,6 @@ class AppFixtures extends Fixture
         // create 5 events! Bam!
         for ($i = 0; $i < 5; $i++) {
             $attendant = new Attendant();
-            $attendant->setCreatedAt(new DateTimeImmutable());
             $attendant->setUser($users[array_rand($users)]);
             $attendant->setEvent($events[array_rand($events)]);
 
