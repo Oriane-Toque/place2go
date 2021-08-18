@@ -15,7 +15,7 @@ class CategoryController extends AbstractController
      */
     public function list(): Response
     {
-        return $this->render('category/index.html.twig', [
+        return $this->render('category/list.html.twig', [
             "categories" => $this->getDoctrine()->getRepository(Category::class)->findAll(),
         ]);
     }

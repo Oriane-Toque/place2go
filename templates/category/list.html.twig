@@ -1,0 +1,71 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}
+	Catégories |
+{% endblock %}
+
+
+{% block body %}
+
+	<style>
+		#categoryCarousel .carousel__img {
+			max-height: 600px;
+			height: 100%;
+		}
+
+        #category {
+            
+        }
+	</style>
+
+	{% dump(categories) %}
+
+	<div id="categoryCarousel" class="carousel slide carousel-fade" data-mdb-touch="true" data-mdb-ride="carousel">
+
+		<div class="carousel-inner">
+			{% for category in categories %}
+				<div class="carousel-item {% if category.id == 1 %}active{% endif %}">
+					<img src="{{ category.picture }}" class="d-block w-100 carousel__img" alt="{{ category.name }}"/>
+					<div class="carousel-caption d-none d-md-block">
+						<h5>{{ category.name }}</h5>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		<button class="carousel-control-prev" type="button" data-mdb-target="#categoryCarousel" data-mdb-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+
+		<button class="carousel-control-next" type="button" data-mdb-target="#categoryCarousel" data-mdb-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+
+	<div class="container-xl px-3 px-lg-0">
+
+		<section id="category">
+
+            <h1 class="my-5 ">Catégories de nos sorties</h1>
+
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+				
+                {% for category in categories %}
+                    <div class="col">
+                        <div class="card bg-dark text-white h-100">
+                            <img src="{{ category.picture }}" class="card-img-top" alt="{{ category.name }}"/>
+                            <a href="" class="card-img-overlay category__img">
+                                <h5 class="card-title">{{ category.name }}</h5>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+			</div>
+
+		</section>
+
+	</div>
+{% endblock %}
