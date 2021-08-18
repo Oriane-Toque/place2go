@@ -7,82 +7,10 @@
 <div class="d-flex m-3">
 
 	{# Navigation secondaire du dashboard + informations #}
-	<aside class="dashAction" style="width:25%;">
-		{# Info personnel + Ajout Ami + Edition Compte #}
-		<div class="card mt-3">
-			<div class="card-body">
-					{# Infos sur l'utilisateur #}
-					<div class="infos">
-						<img src="{{ user.avatar }}" alt="photo de {{ user }}">
-						<div class="infos__details">
-							<p>{{ user.lastname }}</p>
-							<p>{{ user.firstname }}</p>
-							<p>{{ user.email }}</p>
-						</div>
-					</div>
-
-					{# Edition de l'utilisateur #}
-					<p>
-						<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="{{ path('app_profile_edit') }}" role="button">
-							<i class="fas fa-user-edit"></i>
-						</a>
-					</p>
-			</div>
-		</div>
-
-		{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
-		<div class="card mt-3">
-			<div class="card-body d-flex">
-					{# Bouton qui affiche l'historique #}
-					<p>
-						<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
-							<i class="far fa-calendar-check"></i>
-						</a>
-					</p>
-
-					{# Bouton qui affiche le tchat privé #}
-					<p>
-						<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
-							<i class="fab fa-rocketchat"></i>
-						</a>
-					</p>
-
-					{# Bouton qui affiche le dashboard/profil #}
-					<p>
-						<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
-							<i class="fas fa-user-circle"></i>
-						</a>
-					</p>
-			</div>
-		</div>
-
-		{# Description de l'utilisateur #}
-		<div class="card mt-3">
-			<div class="card-header">A propos de moi</div>
-			<div class="card-body">
-				{{ user.description }}
-			</div>
-		</div>
-
-		{# Liste des Amis #}
-		<div class="card mt-3">
-			<div class="card-header">My Friends</div>
-			<div class="card-body">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-				<img src="#" alt="photo profil ami">
-			</div>
-		</div>
-			
-	</aside>
+	{% include "profile/_nav_aside.html.twig" %}
 
 	{# Contenu du profil #}
-	<section class="dashboard" style="width:75%;">
+	<section class="contentProfile" style="width:75%;">
 		{# Les derniers sorties proposées par l'utilisateur #}
 		<div class="lastExits__author">
 			<h2>Dernières sorties publiées</h2>
