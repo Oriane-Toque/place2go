@@ -1,0 +1,13 @@
+
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Edition profil{% endblock %}
+
+{% block body %}
+    <h1>Edition du Profil</h1>
+
+    {% include 'profile/_form.html.twig' with {'button_label': 'Editer'} %}
+
+    <a class="btn btn-primary" href="{{ path('app_profile_profile') }}" role="button to back">Retour</a>
+
+{% endblock %}

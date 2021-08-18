@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -63,5 +66,42 @@ class ProfileController extends AbstractController
 			
 			return $this->redirectToRoute("app_login");
 		}
+
+		/**
+		 * Edit user profile
+		 * 
+     * @Route("profile/edit", name="app_profile_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+				// je récupère l'utilisateur courant
+				$user = $this->getUser();
+
+        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // hashage du mdp que si on a renseigné le champs mot de passe
+            if ($form->get('password')->getData() != '') {
+
+                $hashedPassword = $userPasswordHasher->hashPassword($user, $form->get('password')->getData());
+
+                $user->setPassword($hashedPassword);
+            }
+
+						// on insère les nouvelles données
+            $this->getDoctrine()->getManager()->flush();
+
+						// redirection vers le dashboard
+            return $this->redirectToRoute('app_profile_profile', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('profile/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
 }
 

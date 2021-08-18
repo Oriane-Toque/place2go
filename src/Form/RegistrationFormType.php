@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 class RegistrationFormType extends AbstractType
@@ -34,40 +36,82 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Pseudo',
                 'required' => true,
             ])
-            ->add('birthday', BirthdayType::class, [
-                'label' => 'Date de naissance',
-                'widget' => 'choice',
-                'days' => range(1,31),
-                'months' => range(1,12),
-                'years' => range(date('Y'), date('Y')-90),
-                'format' => 'ddMMMMyyyy'
-            ])
-            ->add('city', TextType::class, [
-                'label' => 'Ville',
-                'required' => true,
-            ])
-            ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'required' => true,
-                'first_options'  => [
-                    'constraints' => [
-                        new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
-                        new NotCompromisedPassword(),
-                        new NotBlank(),
-                    ],
-                    'label' => 'Mot de passe',
-                    'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
-                ],
-                'second_options' => [
-                    'label' => 'Répéter le mot de passe',
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                ],
-            ]);   
-        ;
+						// ajout d'un évènement sur le formulaire pour différencier l'édition de la création d'un utilisateur
+						// mapped false pour le password afin de ne pas relier à l'entité en cas de modification de password
+						->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+
+								// je récupère mon formulaire
+								$form = $event->getForm();
+
+								// je récupère l'utilisateur courant
+								$user = $event->getData();
+
+								// si le user n'a pas d'id, c'est qu'il n'a jamais été persisté
+								if(null === $user->getId()) {
+											// si nouveau user on demande de renseigner tous ces champs
+											$form
+												->add('birthday', BirthdayType::class, [
+													'label' => 'Date de naissance',
+													'widget' => 'choice',
+													'days' => range(1,31),
+													'months' => range(1,12),
+													'years' => range(date('Y'), date('Y')-90),
+													'format' => 'ddMMMMyyyy'
+												])
+												->add('city', TextType::class, [
+														'label' => 'Ville',
+														'required' => true,
+												])
+												->add('email', EmailType::class)
+												->add('password', RepeatedType::class, [
+														'type' => PasswordType::class,
+														'invalid_message' => 'Les mots de passe ne correspondent pas.',
+														'required' => true,
+														'first_options'  => [
+																'constraints' => [
+																		new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
+																		new NotCompromisedPassword(),
+																		new NotBlank(),
+																],
+																'label' => 'Mot de passe',
+																'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
+														],
+														'second_options' => [
+																'label' => 'Répéter le mot de passe',
+																'constraints' => [
+																		new NotBlank(),
+																],
+														],
+												]);   
+								} else {
+											// si user déjà existant donc mode Edition
+											$form
+												->add('city', TextType::class, [
+													'label' => 'Ville',
+												])
+												->add('description', TextType::class, [
+													'label' => 'Description',
+												])
+												->add('email', EmailType::class)
+												->add('password', RepeatedType::class, [
+													'type' => PasswordType::class,
+													'invalid_message' => 'Les mots de passe ne correspondent pas.',
+													'mapped' => false,
+													'required' => false,
+													'first_options'  => [
+															'constraints' => [
+																	new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
+																	new NotCompromisedPassword(),
+															],
+															'label' => 'Mot de passe',
+															'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
+													],
+													'second_options' => [
+															'label' => 'Répéter le mot de passe',
+													],
+											]);
+								}
+						});
     }
 
     public function configureOptions(OptionsResolver $resolver)
