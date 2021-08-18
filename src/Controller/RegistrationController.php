@@ -27,20 +27,23 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
-    {
+    public function register(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {   
+        // creating user
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
+         // fetching the request
         $form->handleRequest($request);
-
+       
+        // if the form is submitted & valid
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-                $passwordEncoder->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
+                $passwordHasher->hashPassword($user, $form->get('password')->getData()
                 )
             );
+            // set user role
+            $user->setRoles(["ROLE_USER"]);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -49,13 +52,14 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Mail Bot'))
+                    ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Veuillez confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
-
+            // send flash message to display to the user
+            $this->addFlash('success', 'Nous vous avons envoyé un email pour vérifier votre compte');
+            // redirect to route
             return $this->redirectToRoute('app_home');
         }
 
@@ -90,9 +94,9 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        // redirecting to the "my profile" page
+        $this->addFlash('success', 'Votre compte a bien été vérifié');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_profile_profile');
     }
 }
