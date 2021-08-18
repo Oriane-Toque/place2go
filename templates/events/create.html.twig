@@ -1,0 +1,18 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Ajouter une sortie{% endblock %}
+
+{% block menu_events %}active{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+    <div class="mb-4">
+		<h2 class="m-0"><i class="fa fa-edit mr-2"></i>Ajouter une sortie<a class="btn btn-secondary ml-2" href="{{ path('events_list') }}"><i class="fa fa-angle-left mr-2"></i>Retour liste</a></h2>
+	</div>
+
+    {{ include('events/_form.html.twig') }}
+
+</div>
+
+{% endblock %}
