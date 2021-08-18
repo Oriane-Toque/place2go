@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestamps;
+use Doctrine\ORM\Mapping\PrePersist;
 use App\Repository\AttendantRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,14 +15,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Attendant
 {
-    use Timestamps;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
+
+     /**
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="attendants")
@@ -38,6 +42,18 @@ class Attendant
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -62,5 +78,15 @@ class Attendant
         $this->event = $event;
 
         return $this;
+    }
+
+    /**
+     * @PrePersist
+     */
+    public function updateTimestamps()
+    {
+        if (null === $this->createdAt) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 }
