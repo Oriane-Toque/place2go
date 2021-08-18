@@ -8,7 +8,7 @@
 
 <div class="wrapper">
     <div class="mb-4">
-		<h2 class="m-0"><i class="fa fa-edit mr-2"></i>Ajouter une sortie<a class="btn btn-secondary ml-2" href="{{ path('events_list') }}"><i class="fa fa-angle-left mr-2"></i>Retour liste</a></h2>
+		<h2 class="m-0"><i class="fa fa-edit mr-2"></i>Ajouter une sortie</h2>
 	</div>
 
     {{ form_start( form, { attr: {novalidate: 'novalidate'} } ) }}
@@ -42,7 +42,7 @@
                 <div class="event-map"></div>
             </div>
         </div>
-
+        <a class="btn btn-secondary ml-2" href="{{ path('app_event_list') }}"><i class="fa fa-angle-left mr-2"></i>Annuler</a>
         <button type="submit" class="btn btn-success mb-3">Créer la sortie</button>
     {{ form_end(form) }}
 
