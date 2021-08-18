@@ -7,9 +7,9 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 <div align=center>
-
+<!--
 [![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/O-clock-Trinity/projet-place-2-go?style=flat-square)
-
+-->
 </div>
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
