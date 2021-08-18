@@ -1,19 +1,17 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Profil
-{% endblock %}
+{% block title %}{{ user.nickname }}{% endblock %}
 
 {% block body %}
-
 
 	<section class="card mb-3" style="max-width: 540px;">
 		<div class="row g-0">
 			<div class="col-md-4">
-				<img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid"/>
+				<img src="{{ user.avatar }}" alt="{{ user }}" class="img-fluid"/>
 			</div>
 			<div class="col-md-8">
 				<div class="card-body">
-					<p>{{ user.firstname }} {{ user.lastname }}</p>
+					<p>{{ user }}</p>
 					<p>{{ user.email }}</p>
 					<p>Né le <time datetime="{{ user.birthday|date("d/m/Y") }}">{{ user.birthday|date("d/m/Y") }}</time></p>
 					<p>Autres infos</p>

@@ -39,22 +39,28 @@ class ProfileController extends AbstractController
 			// (MVP) je dois récupérer le nom, prénom, email, description du user
 			// TODO (V2) je dois récupérer les notifications au sujet de mes amis
 
-			// récupération de l'utilisateur connecté
-			$user = $this->getUser();
+			// je vérifie si un utilisateur est connecté
+			if($this->getUser()) {
+				// récupération de l'utilisateur connecté
+				$user = $this->getUser();
 
-			// création de deux requêtes custom dans EventRepository 
-			// pour récupèrer les trois dernières sorties proposées et auxquels il participe
+				// création de deux requêtes custom dans EventRepository 
+				// pour récupèrer les trois dernières sorties proposées et auxquels il participe
 
-			// 3 dernières sorties dont il est l'auteur de l'évènement le plus récent au plus ancien
-			$authorLastThreeExits = $eventRepository->findLastThreeAuthorEvents(2);
+				// 3 dernières sorties dont il est l'auteur de l'évènement le plus récent au plus ancien
+				$authorLastThreeExits = $eventRepository->findLastThreeAuthorEvents($user->getId());
 
-			// 3 dernières sorties dont il est le participant de l'évènement le plus récent au plus ancien
-			$attendantLastThreeExits = $eventRepository->findLastThreeAttendantEvents($user->getId());
+				// 3 dernières sorties dont il est le participant de l'évènement le plus récent au plus ancien
+				$attendantLastThreeExits = $eventRepository->findLastThreeAttendantEvents($user->getId());
 
-			return $this->render('profile/profile.html.twig', [
-				"user" => $user,
-				"userLastExits" => $authorLastThreeExits,
-				"attendantLastExits" => $attendantLastThreeExits,
-			]);
+				dump($authorLastThreeExits);
+				return $this->render('profile/profile.html.twig', [
+					"user" => $user,
+					"userLastExits" => $authorLastThreeExits,
+					"attendantLastExits" => $attendantLastThreeExits,
+				]);
+			}
+			
+			return $this->redirectToRoute("app_login");
 		}
 }
