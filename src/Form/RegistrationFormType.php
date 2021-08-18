@@ -2,47 +2,73 @@
 
 namespace App\Form;
 
+use DateTime;
+
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // register form creation 
+        // adding constraints 
         $builder
-            ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom',
+                'required' => true,
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom de famille',
+                'required' => true,
             ])
+            ->add('nickname', TextType::class, [
+                'label' => 'Pseudo',
+                'required' => true,
+            ])
+            ->add('birthday', BirthdayType::class, [
+                'label' => 'Date de naissance',
+                'widget' => 'choice',
+                'days' => range(1,31),
+                'months' => range(1,12),
+                'years' => range(date('Y'), date('Y')-90),
+                'format' => 'ddMMMMyyyy'
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'Ville',
+                'required' => true,
+            ])
+            ->add('email', EmailType::class)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'required' => true,
+                'first_options'  => [
+                    'constraints' => [
+                        new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
+                        new NotCompromisedPassword(),
+                        new NotBlank(),
+                    ],
+                    'label' => 'Mot de passe',
+                    'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
+                ],
+                'second_options' => [
+                    'label' => 'Répéter le mot de passe',
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ],
+            ]);   
         ;
     }
 
