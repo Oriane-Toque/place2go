@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -103,9 +105,11 @@ class EventController extends AbstractController
     }
 
     /**
+		 * TODO optimiser la méthode pour éviter de passer par l'id
+		 * 
      * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
      */
-    public function delete(Event $event): Response
+    public function delete(Event $event, Request $request): Response
     {
         // Remove from BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -115,7 +119,38 @@ class EventController extends AbstractController
         // Flash message
         $this->addFlash('success', 'Sortie supprimée avec succès');
 
-        return $this->redirectToRoute('app_event_list');
+				//! redirection dans la page courante
+				// solution pour éviter une redirection vers la page liste
+				// quand on supprime depuis le profil privé
+        return $this->redirect($request->headers->get('referer'));
     }
+
+		/**
+		 * To leave an event
+		 *
+		 * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
+		 */
+		public function leave(Event $event = null, AttendantRepository $ar, EntityManagerInterface $em, Request $request) {
+
+			$user = $this->getUser();
+
+			if(null === $event) {
+				throw $this->createNotFoundException('404 - Sortie introuvable !');
+			}
+
+			// récupération de la participation de l'utilisateur selon l'évènement qu'il a sélectionné
+			// requete custom pour la récupération
+			$attendant = $ar->findByUserEvent($user, $event);
+
+			// suppresion de la participation à la sortie de la bdd
+			$em->remove($attendant[0]);
+			$em->flush();
+
+			// Flash message
+			$this->addFlash('success', 'Vous avez quitté la sortie avec succès !');
+
+			// redirection dans la page courante
+			return $this->redirect($request->headers->get('referer'));
+		}
 
 }
