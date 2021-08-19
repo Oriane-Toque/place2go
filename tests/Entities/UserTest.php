@@ -4,9 +4,12 @@ namespace App\Tests\Entities;
 
 use App\Entity\User;
 use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
-
+/**
+ * @coversDefaultClass \App\Entity\User
+ */
 class UserTest extends TestCase
 {
     public function testIsTrue(): void
@@ -21,7 +24,7 @@ class UserTest extends TestCase
             ->setCity('nantes')
             ->setPhone("0600000000")
             ->setDescription('description')
-            ->setBirthday(new \DateTime('now'))
+            ->setBirthday(new \DateTime('10-10-2020'))
             ->setIsActive(true)
             ->setEmail('yoyo@yoyo.com')
             ->setRoles(["ROLE_USER"])
@@ -35,6 +38,7 @@ class UserTest extends TestCase
         $this->assertTrue($user->getCity() === 'nantes');
         $this->assertTrue($user->getPhone() === "0600000000");
         $this->assertTrue($user->getDescription() === 'description');
+        $this->assertEquals($user->getBirthday(), new DateTime('10-10-2020'));
         $this->assertTrue($user->getIsActive() === true);
         $this->assertTrue($user->getEmail() === 'yoyo@yoyo.com');
         $this->assertTrue($user->getRoles() === ['ROLE_USER']);
@@ -107,7 +111,6 @@ class UserTest extends TestCase
             ->setPassword('password')
         ;
 
-
         $this->assertIsString($user->getNickname());
         $this->assertIsString($user->getFirstname());
         $this->assertIsString($user->getLastname());
@@ -136,5 +139,27 @@ class UserTest extends TestCase
         ;
 
         $this->assertIsArray($user->getRoles());
+    }
+
+    public function testIsNull()
+    {
+        $user = new User();
+
+        $this->assertNull($user->getAvatar());
+        $this->assertNull($user->getPhone());
+        $this->assertNull($user->getDescription());
+    }
+
+    public function testIsEquals()
+    {
+        $user = new User();
+
+        $user
+            ->setCreatedAt(new DateTimeImmutable('10-10-2020'))
+            ->setUpdatedAt(new DateTimeImmutable('10-10-2020'))
+        ;
+
+        $this->assertEquals(new DateTimeImmutable('10-10-2020'), $user->getCreatedAt());
+        $this->assertEquals(new DateTimeImmutable('10-10-2020'), $user->getUpdatedAt());
     }
 }

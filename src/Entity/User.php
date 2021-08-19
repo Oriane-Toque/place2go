@@ -77,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
      */
     private $birthday;
 
