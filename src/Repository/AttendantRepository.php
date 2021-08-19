@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Attendant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,6 +24,21 @@ class AttendantRepository extends ServiceEntityRepository
     // /**
     //  * @return Attendant[] Returns an array of Attendant objects
     //  */
+
+		public function findByUserEvent($user, $event)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.user = :user')
+						->andWhere('a.event = :event')
+            ->setParameters(new ArrayCollection([
+							new Parameter('user', $user),
+							new Parameter('event', $event)
+						]))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findByExampleField($value)
     {

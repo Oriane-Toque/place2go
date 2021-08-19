@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -122,5 +123,23 @@ class EventController extends AbstractController
 				// quand on supprime depuis le profil privé
         return $this->redirect($request->headers->get('referer'));
     }
+
+		/**
+		 * To leave an event
+		 *
+		 * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
+		 */
+		public function leave(Event $event = null, AttendantRepository $ar) {
+
+			$user = $this->getUser();
+
+			if(null === $event) {
+				throw $this->createNotFoundException('404 - Sortie introuvable !');
+			}
+
+			$attendant = $ar->findByUserEvent($user, $event);
+
+			dd($attendant);
+		}
 
 }
