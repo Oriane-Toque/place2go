@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\AttendantRepository;
@@ -27,6 +28,38 @@ class EventController extends AbstractController
             'events' => $events,
         ]);
     }
+
+		/**
+		 * Return all events for one category with city's user in params
+		 *
+		 * @Route("events/category/{id<\d+>}/search", name="app_events_category_search", methods={"GET"})
+		 * 
+		 * @return Response renvoie sur la page liste filtré selon la catégorie et la ville paramétré sur le compte utilisateur
+		 * si pas connecté renvoie toutes les sorties dans n'importe quelle ville selon la catégorie
+		 */
+		public function search(Category $category, EventRepository $er): Response {
+
+			if(null === $category) {
+				throw $this->createNotFoundException('404 - Catégorie introuvable');
+			}
+
+			if($this->getUser()) {
+
+				$city = $this->getUser()->getCity();
+
+				$events = $er->findEventsByCategory($category->getId(), $city);
+
+				return $this->render('event/list.html.twig', [
+					'events' => $events,
+				]);
+			}
+
+			$events = $er->findEventsByCategory($category->getId());
+
+			return $this->render('event/list.html.twig', [
+				'events' => $events,
+			]);
+		}
 
     /**
      * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
