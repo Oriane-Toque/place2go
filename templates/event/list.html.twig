@@ -1,47 +1,57 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}
-Sorties
-{% endblock %}
-
+{% block title 'Sorties' %}
 
 {% block body %}
 
-<div class="wrapper">
-    <h2>Liste des Sorties</h2>
+	<div class="container-xl my-5">
 
-    <div class="item-list">
+		<section id="filter">
+        
+        </section>
 
-        <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Localisation</th>
-                <th>Date</th>
-                <th>Organisateur</th>
-                <th>Nb Participants</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-            <tr>
-                <td>{{ event.id }}</td>
-                <td><a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a></td>
-                <td>{{ event.city }}</td>
-                <td>{{ event.eventDate|date('d-m-Y H:i') }}</td>
-                <td><a href="{{ path('profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a></td>
-                <td>{{ event.attendants|length }} / {{ event.maxAttendants }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="5">Aucune sortie pour le moment</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        </table>
+		<section id="event-list">
 
-    </div>
-</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nom</th>
+						<th>Localisation</th>
+						<th>Date</th>
+						<th>Organisateur</th>
+						<th>Nb Participants</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for event in events %}
+						<tr>
+							<td>{{ event.id }}</td>
+							<td>
+								<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
+							</td>
+							<td>{{ event.city }}</td>
+							<td>{{ event.eventDate|date('d-m-Y H:i') }}</td>
+							<td>
+								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
+							</td>
+							<td>
+								{{ event.attendants|length }}
+								/
+								{{ event.maxAttendants }}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="5">Aucune sortie pour le moment</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</section>
+
+	</div>
 
 {% endblock %}
