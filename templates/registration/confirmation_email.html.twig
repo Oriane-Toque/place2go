@@ -1,11 +1,16 @@
-<h1>Email de confirmation</h1>
+<img src="{{ email.image('@img/email-header.png') }}" alt="Logo">
 
+<hr>
+
+<h3>Email de confirmation</h3>
+<br>
 <p>
     Bienvenue sur Place 2 go ! 
 
     Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous :
     <br><br>
-    <a href="{{ signedUrl }}">Confirmer mon email</a>.
+    <a href="{{ signedUrl }}">Confirmer mon email</a>
+    <br><br>
     Ce lien expirera dans : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
 </p>
 

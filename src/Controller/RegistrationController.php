@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
                     ->to($user->getEmail())
-                    ->subject('Veuillez confirmer votre email')
+                    ->subject('Bienvenue sur Place 2 go ! Confirmez votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // send flash message to display to the user
@@ -97,6 +97,6 @@ class RegistrationController extends AbstractController
         // redirecting to the "my profile" page
         $this->addFlash('success', 'Votre compte a bien été vérifié');
 
-        return $this->redirectToRoute('app_profile_profile');
+        return $this->redirectToRoute('app_home');
     }
 }

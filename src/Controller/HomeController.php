@@ -15,8 +15,7 @@ class HomeController extends AbstractController
     public function home(EventRepository $er): Response
     {
         $topCities = $er->findPopularCities(5);
-        dd($topCities);
-        
+               
         return $this->render('home/home.html.twig', [
             'topCities' => $topCities
         ]);
