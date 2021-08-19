@@ -20,10 +20,9 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieve the top five categories with the most entries (DESC)
+     * Retrieve all the categories
      *
-     * @param Int $limit
-     * @return Array the five categories
+     * @return Array all the categories
      */
     public function findAllCategories()
     {
