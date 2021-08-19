@@ -22,15 +22,16 @@ class HomeController extends AbstractController
      */
     public function home(EventRepository $er, CategoryRepository $cr): Response
     {
-        $topCities = $er->findPopularCities(5);
-        $allCities = $er->findAllCities();
-        $categoriesList = $cr->findAllCategories();
+				// top 6 categories -> meilleur score events (+ récupérer nbr event)
+				$topCategories = $cr->findTopCategories();
+
+				// it works
+				dd($topCategories);
+				
+				// top 6 villes -> meilleur score event (+ récupérer nbr event)
         
         return $this->render('home/home.html.twig', [
-            'topCities' => $topCities,
-            'cityList' => $allCities,
-            'allCategories' => $this->sort->allCategories($categoriesList),
-            'topCategories' => $this->sort->sliceCategories($categoriesList)
+            'topCategories' => $topCategories,
         ]);
     }
 }

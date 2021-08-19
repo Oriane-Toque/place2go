@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,12 +25,21 @@ class CategoryRepository extends ServiceEntityRepository
      *
      * @return Array all the categories
      */
-    public function findAllCategories()
+    public function findTopCategories()
     {
-        return $this->createQueryBuilder('c')
-            ->select('c', 'e')
-            ->join('c.events', 'e')
-            ->getQuery()
-            ->getResult();
+
+			$sql='
+			SELECT category.*, COUNT(*) as nbrEvents
+			FROM category
+			INNER JOIN event_category
+			ON event_category.category_id = category.id
+			GROUP BY category_id
+			ORDER BY nbrEvents DESC
+			LIMIT 6';
+
+			$em = $this->getEntityManager();
+			$stmt = $em->getConnection()->prepare($sql);
+			$stmt->executeQuery();
+			return $stmt->fetchAll();
     }
 }

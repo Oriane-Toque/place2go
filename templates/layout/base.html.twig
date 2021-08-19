@@ -25,37 +25,12 @@
 	</head>
 
 	<body>
-		{% include "_partials/_navbar.html.twig" %}
+		
 
 		<header class="page-header-ui bg-light page-header-light">
-			<!-- Background image -->
-			<div class="p-5 text-center text-white bg-image">
-				<div class="mask">
-				<div class="d-flex justify-content-center align-items-center h-100">
-					<div class="text-white">
-					<h1 class="mb-3">Envie de sortir ?</h1>
-					<p class="lead">Cherchez la sortie qui vous convient le mieux</p>
-						{#{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'row row-cols-lg-auto g-3 align-items-center'}}) }}
-							<div class="col-6">
-							{{ form_row(form.localisation, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-							<div class="col-3">
-							{{ form_row(form.distance, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-								<div class="col-3">
-							{{ form_row(form.save, {'attr': {'class': 'btn-outline-light btn-lg'}}) }}
-							</div>
-						{{ form_end(form) }}
+			{% include "_partials/_navbar.html.twig" %}
 
-						{% if coord is defined %}
-
-						<p> Coordonnées pour {{ form.localisation.vars.value }} : {{ coord|join(', ') }}</p>
-
-						{% endif %}#}
-					</div>
-				</div>
-				</div>
-			</div>
+			{% block banner %}{% endblock %}
 		</header>
 
 		<div class="container-fluid py-5"> 
