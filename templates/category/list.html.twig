@@ -5,36 +5,6 @@
 
 {% block body %}
 
-	<style>
-		#categoryCarousel .carousel__img {
-			max-height: 600px;
-			height: 100%;
-		}
-
-        #category .category__card {
-            box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 30%) !important;
-        }
-
-        #category .category__card:hover {
-            box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 35%) !important;
-        }
-
-        #category .category__card_title {
-            display: block;
-            width: 100%;
-            padding: 0.7rem;
-            text-align: center;            
-            color: white;
-            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        #category .category__card:hover .category__card_title {
-            background-color: rgba(0, 0, 0, 0.15);
-        }
-
-	</style>
-
 	{% dump(categories) %}
 
 	<div id="categoryCarousel" class="carousel slide carousel-fade" data-mdb-touch="true" data-mdb-ride="carousel">
