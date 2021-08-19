@@ -32,6 +32,37 @@ class EventRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+	/**
+	 * Get count of all events
+	 *
+	 * @return Int
+	 */
+	public function getTotalEvents():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
+	/**
+	 * Get count of events to come
+	 *
+	 * @return Int
+	 */
+	public function getTotalEventsToCome():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+			->where('e.event_date > CURRENT_DATE()')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
 		// /**
 		//  * @return Event[] Returns an array of Event objects
 		//  */
