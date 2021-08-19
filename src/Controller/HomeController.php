@@ -23,9 +23,9 @@ class HomeController extends AbstractController
     public function home(EventRepository $er, CategoryRepository $cr): Response
     {
         $topCities = $er->findPopularCities(5);
-        $categoriesList = $cr->findAllCategories();
         $allCities = $er->findAllCities();
-            
+        $categoriesList = $cr->findAllCategories();
+        
         return $this->render('home/home.html.twig', [
             'topCities' => $topCities,
             'cityList' => $allCities,
