@@ -6,6 +6,8 @@ use App\Data\SearchData;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,7 +47,7 @@ class EventRepository extends ServiceEntityRepository
      *
      * @return Array all the cities
      */
-    public function findAllCities()
+    public function findAllCities(): array
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
@@ -120,4 +122,25 @@ class EventRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+		/**
+		 * Return all events by category & city params
+		 *
+		 * @param Int $category
+		 * @param String $city city's user
+		 * @return Array tableau d'objets, liste de sorties
+		 */
+		public function findEventsByCategory(int $category, string $city = null): array {
+
+				$query = $this->createQueryBuilder('e')
+				->join('e.categories', 'c')
+				->where('c.id = :categoryId');
+				if(null !== $city) {
+					$query = $query->andWhere('e.city = :city')
+					->setParameter('city', $city);
+				}
+				$query= $query->setParameter('categoryId', $category)
+				->orderBy('e.event_date', 'DESC');
+				
+				return $query->getQuery()->getResult();
+		}
 }

@@ -23,6 +23,7 @@
 			{#{{ encore_entry_script_tags('app') }}#}
 		{% endblock %}
 	</head>
+
 	<body>
 		{% include "_partials/_navbar.html.twig" %}
 
@@ -57,7 +58,8 @@
 			</div>
 		</header>
 
-		<div class="container container-fluid py-5"> 
+		<div class="container-fluid py-5"> 
+		{% include "_partials/_flashmessages.html.twig" %}
         {% block body %}
         {% endblock %}
 		</div>
