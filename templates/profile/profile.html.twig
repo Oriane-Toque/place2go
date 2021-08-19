@@ -12,7 +12,7 @@
 	{# Contenu du profil #}
 	<section class="contentProfile" style="width:75%;">
 		{# Les derniers sorties proposées par l'utilisateur #}
-		<div class="lastExits__author">
+		<div class="contentProfile__lastExits-author">
 			<h2>Dernières sorties publiées</h2>
 			{# Début carte sortie #}
 			{% for event in userLastExits %}
@@ -20,7 +20,7 @@
 					<div class="row g-0">
 
 						<div class="col-md-4">
-							{# Image de la sortie #}
+							{# TODO Image de la sortie (améliorations) #}
 							<img
 								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
 								alt="..."
@@ -41,17 +41,17 @@
 								</div>
 								<div class="actions">
 									{# Bouton pour voir les détails #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+									<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
 										<i class="far fa-eye"></i>
 									</a>
 
 									{# Bouton pour éditer la sortie #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+									<a class="btn btn-warning btn-floating" href="#" role="button">
 										<i class="fas fa-pencil-alt"></i>
 									</a>
 
 									{# Bouton pour supprimer la sortie #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+									<a class="btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button">
 										<i class="fas fa-trash-alt"></i>
 									</a>
 								</div>
@@ -65,7 +65,7 @@
 		</div>
 
 		{# Les dernières sorties auxquelles a participé l'utilisateur #}
-		<div class="lastExits__attendant">
+		<div class="contentProfile__lastExits-attendant">
 			<h2>Dernières sorties effectuées</h2>
 			{# Début carte sortie #}
 			{% for event in attendantLastExits %}
@@ -93,18 +93,13 @@
 								</div>
 								<div class="actions">
 									{# Bouton pour voir les détails #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+									<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
 										<i class="far fa-eye"></i>
 									</a>
 
-									{# Bouton pour éditer la sortie #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
-										<i class="fas fa-pencil-alt"></i>
-									</a>
-
-									{# Bouton pour supprimer la sortie #}
-									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
-										<i class="fas fa-trash-alt"></i>
+									{# Bouton pour ne plus participer à la sortie #}
+									<a class="btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+										<i class="fas fa-sign-out-alt"></i>
 									</a>
 								</div>
 							</div>
@@ -117,7 +112,7 @@
 		</div>
 
 		{# TODO uniquement version supérieur #}
-		<div class="newsFriends">
+		<div class="contentProfile__newsFriends">
 			<h2>Nouveautés de mes amis</h2>
 			{# Début carte notifications sur les amis #}
 			<div class="card mb-3">
@@ -144,7 +139,7 @@
 							</div>
 							<div class="actions">
 								{# Bouton pour voir les détails #}
-								<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+								<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="#!" role="button">
 									<i class="far fa-eye"></i>
 								</a>
 							</div>
@@ -155,7 +150,7 @@
 		</div>
 
 		{# TODO uniquement dans version supérieure #}
-		<div class="lastSearch">
+		<div class="contentProfile__lastSearch">
 			<h2>Ma recherche du moment</h2>
 			<p>Prévoir lien direct vers la recherche sauvegardée</p>
 		</div>

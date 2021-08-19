@@ -85,11 +85,11 @@ header .bg-image {
 }
 
 #category .category__card {
-  /*box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 30%) !important;*/
+  box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 30%) !important;
 }
 
 #category .category__card:hover {
-  /*box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 35%) !important;*/
+  box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 35%) !important;
 }
 
 #category .category__card_title {

@@ -6,7 +6,13 @@
 
 	<div class="container-xl my-5">
 
-		<section id="filter">
+		<section id="search">
+
+			<div class="row">
+				<div class="col">
+					{% include 'event/_filter.html.twig' with {form: form} only %}
+				</div>
+			</div>
         
         </section>
 
@@ -21,6 +27,7 @@
 						<th>Date</th>
 						<th>Organisateur</th>
 						<th>Nb Participants</th>
+						<th>Catégories</th>
 					</tr>
 				</thead>
 
@@ -32,7 +39,7 @@
 								<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
 							</td>
 							<td>{{ event.city }}</td>
-							<td>{{ event.eventDate|date('d-m-Y H:i') }}</td>
+							<td>{{ event.eventDate | date('d-m-Y H:i') }}</td>
 							<td>
 								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
 							</td>
@@ -41,10 +48,17 @@
 								/
 								{{ event.maxAttendants }}
 							</td>
+							<td>
+								{% for category in event.categories %}
+									{{ category.name }}{{ loop.last ? '' : ', ' }}
+								{% endfor %}
+							</td>
+
+
 						</tr>
 					{% else %}
 						<tr>
-							<td colspan="5">Aucune sortie pour le moment</td>
+							<td colspan="5">Aucune sortie ne correspond à votre recherche</td>
 						</tr>
 					{% endfor %}
 				</tbody>
