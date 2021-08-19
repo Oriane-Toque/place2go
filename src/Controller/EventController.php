@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
-use App\Repository\AttendantRepository;
+use App\Data\SearchData;
+use App\Form\SearchFormType;
 use App\Repository\EventRepository;
+use App\Repository\AttendantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +20,19 @@ class EventController extends AbstractController
     /**
      * @Route("/events", name="app_event_list", methods={"GET"})
      */
-    public function list(EventRepository $eventRepository): Response
+    public function list(Request $request, EventRepository $eventRepository): Response
     {    
-        // Find all events
-        $events = $eventRepository->findAll();
+        // Init Data to handle form search
+        $data = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $data);
+
+        // Handle the form request and use $data in custom query to show searched events
+        $form->handleRequest($request);
+        $events = $eventRepository->findSearch($data);
 
         return $this->render('event/list.html.twig', [
             'events' => $events,
+            'form' => $form->createView()
         ]);
     }
 
