@@ -1,21 +1,19 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Profil -
-{% endblock %}
+{% block title %}{{ user.nickname }}{% endblock %}
 
 {% block body %}
-
 
 	<section class="card mb-3" style="max-width: 540px;">
 		<div class="row g-0">
 			<div class="col-md-4">
-				<img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid"/>
+				<img src="{{ user.avatar }}" alt="{{ user }}" class="img-fluid"/>
 			</div>
 			<div class="col-md-8">
 				<div class="card-body">
-					<p>{{ user.firstname }} {{ user.lastname }}</p>
+					<p>{{ user }}</p>
 					<p>{{ user.email }}</p>
-					<p>{{ user.firstname }}</p>
+					<p>Né le <time datetime="{{ user.birthday|date("d/m/Y") }}">{{ user.birthday|date("d/m/Y") }}</time></p>
 					<p>Autres infos</p>
 				</div>
 			</div>
@@ -26,7 +24,11 @@
 
 	<div class="userDescription">
 		<h2>A propos de moi</h2>
-		<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem deserunt, nihil, obcaecati odio voluptate quaerat porro omnis dolores autem placeat laborum doloribus similique aliquid, tempora repellat iste quas itaque? Autem!</p>
+		<p>{% if user.description %}
+					{{ user.description }}
+			 {% else %}
+					Aucune description pour le moment !
+			 {% endif %}</p>
 	</div>
 
 	<div class="userFriends">

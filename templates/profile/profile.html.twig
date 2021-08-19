@@ -1,0 +1,166 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<div class="d-flex m-3">
+
+	{# Navigation secondaire du dashboard + informations #}
+	{% include "profile/_nav_aside.html.twig" %}
+
+	{# Contenu du profil #}
+	<section class="contentProfile" style="width:75%;">
+		{# Les derniers sorties proposées par l'utilisateur #}
+		<div class="lastExits__author">
+			<h2>Dernières sorties publiées</h2>
+			{# Début carte sortie #}
+			{% for event in userLastExits %}
+				<div class="card mb-3">
+					<div class="row g-0">
+
+						<div class="col-md-4">
+							{# Image de la sortie #}
+							<img
+								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+								alt="..."
+								class="img-fluid"
+							/>
+						</div>
+
+						<div class="col-md-8">
+							<div class="card-header">
+								<h5 class="card-title">{{ event.title }}</h5>
+								<p>Date prévue : <time datetime="{{ event.eventDate|date("d-m-Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
+							</div>
+							<div class="card-body">
+								<div class="details">
+									<p class="card-text">Organisé par {{ event.author }}</p>
+									{# fonction length de twig pour retourner le nombre de participants #}
+									<p class="card-text">Nbr part : {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+								</div>
+								<div class="actions">
+									{# Bouton pour voir les détails #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="far fa-eye"></i>
+									</a>
+
+									{# Bouton pour éditer la sortie #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="fas fa-pencil-alt"></i>
+									</a>
+
+									{# Bouton pour supprimer la sortie #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			
+			{# Fin carte sortie #}
+		</div>
+
+		{# Les dernières sorties auxquelles a participé l'utilisateur #}
+		<div class="lastExits__attendant">
+			<h2>Dernières sorties effectuées</h2>
+			{# Début carte sortie #}
+			{% for event in attendantLastExits %}
+				<div class="card mb-3">
+					<div class="row g-0">
+
+						<div class="col-md-4">
+							{# Image de la sortie #}
+							<img
+								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+								alt="..."
+								class="img-fluid"
+							/>
+						</div>
+
+						<div class="col-md-8">
+							<div class="card-header">
+								<h5 class="card-title">{{ event.title }}</h5>
+								<p>Date prévue : <time datetime="{{ event.eventDate|date("d/m/Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
+							</div>
+							<div class="card-body">
+								<div class="details">
+									<p class="card-text">{{ event.author }}</p>
+									<p class="card-text">Nbr part : {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+								</div>
+								<div class="actions">
+									{# Bouton pour voir les détails #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="far fa-eye"></i>
+									</a>
+
+									{# Bouton pour éditer la sortie #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="fas fa-pencil-alt"></i>
+									</a>
+
+									{# Bouton pour supprimer la sortie #}
+									<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{# Fin carte sortie #}
+			{% endfor %}
+			
+		</div>
+
+		{# TODO uniquement version supérieur #}
+		<div class="newsFriends">
+			<h2>Nouveautés de mes amis</h2>
+			{# Début carte notifications sur les amis #}
+			<div class="card mb-3">
+				<div class="row g-0">
+
+					<div class="col-md-4">
+						{# Image profil de l'Ami #}
+						<img
+							src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+							alt="..."
+							class="img-fluid"
+						/>
+					</div>
+
+					<div class="col-md-8">
+						<div class="card-header">
+							<h5 class="card-title">Nom de l'Ami .. participera à X évènements</h5>
+							<p>Date prévue : <time datetime="2025-03-12">2025-03-12</time> à <time datetime=""></time>h</p>
+						</div>
+						<div class="card-body">
+							<div class="details">
+								<p class="card-text">Organisé par Nom de l'organisateur</p>
+								<p class="card-text">Nbr part : 2 / 5</p>
+							</div>
+							<div class="actions">
+								{# Bouton pour voir les détails #}
+								<a class="btn btn-primary btn-lg btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+									<i class="far fa-eye"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# TODO uniquement dans version supérieure #}
+		<div class="lastSearch">
+			<h2>Ma recherche du moment</h2>
+			<p>Prévoir lien direct vers la recherche sauvegardée</p>
+		</div>
+	</section>
+</div>
+
+
+{% endblock %}
