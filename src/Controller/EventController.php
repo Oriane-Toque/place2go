@@ -103,9 +103,11 @@ class EventController extends AbstractController
     }
 
     /**
+		 * TODO optimiser la méthode pour éviter de passer par l'id
+		 * 
      * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
      */
-    public function delete(Event $event): Response
+    public function delete(Event $event, Request $request): Response
     {
         // Remove from BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -115,7 +117,10 @@ class EventController extends AbstractController
         // Flash message
         $this->addFlash('success', 'Sortie supprimée avec succès');
 
-        return $this->redirectToRoute('app_event_list');
+				//! redirection dans la page courante
+				// solution pour éviter une redirection vers la page liste
+				// quand on supprime depuis le profil privé
+        return $this->redirect($request->headers->get('referer'));
     }
 
 }
