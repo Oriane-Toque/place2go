@@ -37,6 +37,23 @@ class EventRepository extends ServiceEntityRepository
         )->setMaxResults($limit);
         return $query->getResult();
     }
+
+     /**
+     * Retrieve all the cities (but still in DESC order)
+     *
+     * @return Array all the cities
+     */
+    public function findAllCities()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT e.city, COUNT(e.city) AS count
+            FROM App\Entity\Event e
+            GROUP BY e.city
+            ORDER BY count DESC'
+        );
+        return $query->getResult();
+    }
    
     /**
      * Recover the last three events of the organizer order by event date (DESC)

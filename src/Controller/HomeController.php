@@ -7,36 +7,30 @@ use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\Sort;
 
 class HomeController extends AbstractController
 {
+    private $sort;
+
+    public function __construct(Sort $sort){
+        $this->sort = $sort;
+    }    
+
     /**
      * @Route("/", name="app_home")
      */
     public function home(EventRepository $er, CategoryRepository $cr): Response
     {
         $topCities = $er->findPopularCities(5);
-
         $categoriesList = $cr->findAllCategories();
-        $topCategories = $this->sortCategories($categoriesList);
-        
+        $allCities = $er->findAllCities();
+            
         return $this->render('home/home.html.twig', [
             'topCities' => $topCities,
-            'topCategories' => $topCategories
+            'cityList' => $allCities,
+            'allCategories' => $this->sort->allCategories($categoriesList),
+            'topCategories' => $this->sort->sliceCategories($categoriesList)
         ]);
-    }
-
-    public function sortCategories($categoriesList)
-    {
-        $categoriesOrder = [];
-        foreach ($categoriesList as $category) {
-            $name = $category->getName();
-            $events = count($category->getEvents());
-            $categoriesOrder[$name] = $events;
-        }
-        arsort($categoriesOrder);
-
-        $topCategories = array_slice($categoriesOrder, 0, 5, true);
-        return $topCategories;
     }
 }
