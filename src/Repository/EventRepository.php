@@ -20,7 +20,13 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function findPopularCities($limit)
+    /**
+     * Retrieve the top five cities with the most entries (DESC)
+     *
+     * @param Int $limit
+     * @return Array the five cities
+     */
+    public function findPopularCities(int $limit)
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
@@ -31,11 +37,7 @@ class EventRepository extends ServiceEntityRepository
         )->setMaxResults($limit);
         return $query->getResult();
     }
-
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-
+   
     /**
      * Recover the last three events of the organizer order by event date (DESC)
      *
