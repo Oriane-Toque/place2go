@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -90,29 +92,32 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /*
-			public function findByExampleField($value)
-			{
-					return $this->createQueryBuilder('e')
-							->andWhere('e.exampleField = :val')
-							->setParameter('val', $value)
-							->orderBy('e.id', 'ASC')
-							->setMaxResults(10)
-							->getQuery()
-							->getResult()
-					;
-			}
-			*/
+    /**
+     * Récupère les sorties en lien avec une recherche
+     * 
+     * @return Event[]
+     */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this
+            ->createQueryBuilder('e')
+            ->select('e', 'c')
+            ->join('e.categories', 'c')   
+        ;
 
-    /*
-			public function findOneBySomeField($value): ?Event
-			{
-					return $this->createQueryBuilder('e')
-							->andWhere('e.exampleField = :val')
-							->setParameter('val', $value)
-							->getQuery()
-							->getOneOrNullResult()
-					;
-			}
-			*/
+        if(!empty($search->q)) {
+            $query = $query
+                ->andWhere('e.city LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+
+        if(!empty($search->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 }
