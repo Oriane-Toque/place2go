@@ -15,6 +15,10 @@ $( document ).ready(function() {
         
     });
 
-
-
+    if (document.getElementById('flash_messages') != null) {
+        setTimeout(() =>
+        {
+            flashMessage.style.display = 'none'
+        }, 6000)
+    }
 });
