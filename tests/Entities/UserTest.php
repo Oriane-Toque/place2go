@@ -3,6 +3,7 @@
 namespace App\Tests\Entities;
 
 use App\Entity\User;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 
@@ -66,6 +67,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->getCity() === 'false');
         $this->assertFalse($user->getPhone() === "false");
         $this->assertFalse($user->getDescription() === 'false');
+        $this->assertFalse($user->getBirthday() === new DateTime('now'));
         $this->assertFalse($user->getIsActive() === false);
         $this->assertFalse($user->getEmail() === 'false@yoyo.com');
         $this->assertFalse($user->getRoles() === ['ROLE_FALSE']);
@@ -89,11 +91,50 @@ class UserTest extends TestCase
         $this->assertEmpty($user->getPassword());
     }
 
+    public function testIsString()
+    {
+        $user = new User();
+
+        $user
+            ->setNickname("yoyo")
+            ->setFirstname('yoyo')
+            ->setLastname('lastname')
+            ->setAvatar('test.com')
+            ->setCity('nantes')
+            ->setPhone("0600000000")
+            ->setDescription('description')
+            ->setEmail('yoyo@yoyo.com')
+            ->setPassword('password')
+        ;
+
+
+        $this->assertIsString($user->getNickname());
+        $this->assertIsString($user->getFirstname());
+        $this->assertIsString($user->getLastname());
+        $this->assertIsString($user->getAvatar());
+        $this->assertIsString($user->getCity());
+        $this->assertIsString($user->getPhone());
+        $this->assertIsString($user->getDescription());
+        $this->assertIsString($user->getEmail());
+        $this->assertIsString($user->getPassword());
+    }
+
     public function testIsBool(): void
     {
         $user = new User();
 
         $this->assertTrue($user->getIsActive());
         $this->assertTrue($user->isVerified() === false);
+    }
+
+    public function testIsArray()
+    {
+        $user = new User();
+
+        $user
+            ->setRoles(["ROLE_USER"])
+        ;
+
+        $this->assertIsArray($user->getRoles());
     }
 }
