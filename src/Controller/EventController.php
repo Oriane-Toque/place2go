@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -129,7 +130,7 @@ class EventController extends AbstractController
 		 *
 		 * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
 		 */
-		public function leave(Event $event = null, AttendantRepository $ar) {
+		public function leave(Event $event = null, AttendantRepository $ar, EntityManagerInterface $em, Request $request) {
 
 			$user = $this->getUser();
 
@@ -137,9 +138,19 @@ class EventController extends AbstractController
 				throw $this->createNotFoundException('404 - Sortie introuvable !');
 			}
 
+			// récupération de la participation de l'utilisateur selon l'évènement qu'il a sélectionné
+			// requete custom pour la récupération
 			$attendant = $ar->findByUserEvent($user, $event);
 
-			dd($attendant);
+			// suppresion de la participation à la sortie de la bdd
+			$em->remove($attendant[0]);
+			$em->flush();
+
+			// Flash message
+			$this->addFlash('success', 'Vous avez quitté la sortie avec succès !');
+
+			// redirection dans la page courante
+			return $this->redirect($request->headers->get('referer'));
 		}
 
 }
