@@ -1,5 +1,13 @@
-{{ form_start(form)}}
-
-    <button type="submit" class="btn btn-outline-info">Rechercher</button>
-
+{% if app.request.get('_route') == 'app_home' %}
+	{{ form_start(form, {'action': path('app_event_list')})}}
+{% else %}
+	{{ form_start(form)}}
+{% endif %}
+		{{ form_row(form.q) }}
+		{% if app.request.get('_route') == 'app_home' %}
+			{{ form_row(form.categories, {'attr': {'style': 'display:none'}})}}
+		{% else %}
+			{{ form_row(form.categories)}}
+		{% endif %}
+		<button type="submit" class="btn btn-outline-info">Rechercher</button>
 {{ form_end(form)}}
