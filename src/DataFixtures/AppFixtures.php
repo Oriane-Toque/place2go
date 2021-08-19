@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
 
         $users = [];
         // create 10 users! Bam!
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setEmail("user$i@user.com");
             $user->setRoles(["ROLE_USER"]);
@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
 
         $events = [];
         // create 10 events! Bam!
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $event = new Event();
             $event->setTitle("event $i");
             $event->setDescription("ceci est l'event n°$i, alonzy !");
@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
 
         $attendants = [];
         // create 5 events! Bam!
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $attendant = new Attendant();
             $attendant->setUser($users[array_rand($users)]);
             $attendant->setEvent($events[array_rand($events)]);
