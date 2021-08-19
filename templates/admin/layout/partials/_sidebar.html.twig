@@ -26,7 +26,7 @@
     </div>
 
     <!-- Nav Item - Events Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_event %}{% endblock %}">
         <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseEvents"
             aria-expanded="true" aria-controls="collapseEvents">
             <i class="fas fa-fw fa-calendar"></i>
@@ -42,7 +42,7 @@
     </li>
 
     <!-- Nav Item - Categories Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_category %}{% endblock %}">
         <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCategories"
             aria-expanded="false" aria-controls="collapseCategories">
             <i class="fas fa-fw fa-tag"></i>
@@ -52,14 +52,14 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Categories</h6>
-                <a class="collapse-item" href="#">Toutes les catégories</a>
-                <a class="collapse-item" href="#">Ajouter une catégorie</a>
+                <a class="collapse-item" href="{{ path('admin_category_list') }}">Toutes les catégories</a>
+                <a class="collapse-item" href="{{ path('admin_category_create') }}">Ajouter une catégorie</a>
             </div>
         </div>
     </li>
 
     <!-- Nav Item - Users Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_user %}{% endblock %}">
         <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseUsers"
             aria-expanded="false" aria-controls="collapseUsers">
             <i class="fas fa-fw fa-users"></i>
@@ -76,12 +76,12 @@
     </li>
 
     <!-- Nav Item - Comments Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_comment %}{% endblock %}">
         <a class="nav-link" href="#"><i class="fas fa-fw fa-comments"></i><span>Commentaires</span></a>
     </li>
 
     <!-- Nav Item - Signalments Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_signalment %}{% endblock %}">
         <a class="nav-link" href="#"><i class="fas fa-fw fa-bullhorn"></i><span>Signalements</span></a>
     </li>
 
@@ -89,7 +89,7 @@
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Nav Item - Collaborators Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {% block menu_collaborator %}{% endblock %}">
         <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCollaborators"
             aria-expanded="true" aria-controls="collapseCollaborators">
             <i class="fas fa-fw fa-users"></i>
