@@ -1,0 +1,265 @@
+
+/****************************
+* NAVBAR
+*****************************/
+
+.navbar {
+  color:#fff;
+}
+  
+.navbar .nav-link {
+  color:#f2f6fc!important;
+}
+  
+.navbar .dropdown-menu .dropdown-header, .text-uppercase-expanded {
+  font-weight: 700;
+  letter-spacing: .125em;
+  text-transform: uppercase;
+}
+  
+.navbar .navbar-nav {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.navbar .btn {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  height: 2.2rem;
+  font-size: .75rem;
+  padding: 0 1rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.dropdown-menu {
+  padding: .5rem 0;
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+
+.dropdown-menu.login-form {
+  min-width: 22rem;
+  padding: 1rem;
+  right: 0;
+  left: auto;
+}
+
+/*** Sticky ***/
+
+.navbar.sticky {
+  background-color:#fff;
+  color:#555!important;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(33,40,50,.15)!important;
+}
+
+.navbar.sticky .nav-link {
+  color:#69707a!important;
+}
+
+
+/****************************
+* HEADER
+*****************************/
+
+.page-header-ui {
+  position: relative;
+  /*padding-top: 93px;*/
+  padding-bottom: 0;
+}
+
+header .bg-image {
+  background-image: url('../img/bg-header.jpeg');
+  height: 400px;
+}
+
+
+/****************************
+* FORM & BUTTON
+*****************************/
+
+#categoryCarousel .carousel__img {
+  max-height: 600px;
+  height: 100%;
+}
+
+#category .category__card {
+  /*box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 30%) !important;*/
+}
+
+#category .category__card:hover {
+  /*box-shadow: 2px 2px 20px 2px rgb(0 0 0 / 35%) !important;*/
+}
+
+#category .category__card_title {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  text-align: center;            
+  color: white;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#category .category__card:hover .category__card_title {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+
+/****************************
+* FORM & BUTTON
+*****************************/
+
+.input-group>.form-control {
+  /* min-height: calc(2.08rem + 2px); */
+  height: auto;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.text-white .btn {
+  color:#fff;
+}
+
+.text-white .btn:hover {
+  color:#fff;
+  background-color: #dc392d;
+}
+
+.btn-outline-light {
+  border: 1px solid #fff;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #dc392d;
+  border-color: #dc392d;
+}
+
+.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-primary:hover {
+  color: #fff;
+  background-color: #bb3026;
+  border-color: #b02e24;
+}
+
+.btn, .btn-icon {
+  justify-content: center;
+}
+
+
+/****************************
+* FONT
+*****************************/
+
+.text-xs {
+  font-size: .75rem!important;
+}
+
+
+/****************************
+* COLOR
+*****************************/
+
+.bg-light {
+  background-color: #f2f6fc !important;
+}
+
+.bg-white-20 {
+  background-color: rgba(255,255,255,.2) !important;
+}
+
+.text-light {
+  color: #f2f6fc !important;
+}
+
+svg.text-light {
+  fill: #f2f6fc !important;
+}
+
+.footer.footer-light, .navbar-light .navbar-nav .nav-link, .page-header-ui-text {
+  color: #69707a!important;
+}
+
+.footer-admin a, .footer a, .text-reset {
+  color: inherit!important;
+}
+
+
+/****************************
+* SVG
+*****************************/
+
+svg {
+  fill: #fff;
+}
+.svg-border-angled {
+  position: relative;
+  padding-top:3rem;
+}
+.svg-border-angled svg {
+  position:absolute;
+  bottom:0;
+  left:0;
+  height:3rem;
+  width:100%;
+}
+
+@media (min-width:576px) {
+  .svg-border-angled { padding-top:3.5rem }
+  .svg-border-angled svg { height:3.5rem }
+}
+
+@media (min-width:768px) {
+  .svg-border-angled { padding-top:4rem }
+  .svg-border-angled svg { height:4rem }
+}
+  
+@media (min-width:992px) {
+  .svg-border-angled { padding-top:4.5rem }
+  .svg-border-angled svg { height:4.5rem }
+}
+  
+@media (min-width:1200px) {
+  .svg-border-angled { padding-top:5rem }
+  .svg-border-angled svg { height:5rem }
+}
+
+
+/****************************
+* ALIGNEMENT & STYLE
+*****************************/
+
+.pt-6 {
+  padding-top: 6rem !important;
+}
+
+.pb-6 {
+  padding-bottom: 6rem !important;
+}
+
+.mask {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+/****************************
+* FOOTER
+*****************************/
+
+.footer .footer-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: .25rem;
+}
+
+.icon-list-social .icon-list-social-link {
+  font-size: 0.75rem;
+  margin-right: .5rem;
+}
+.icon-list-social .icon-list-social-link:hover {
+  transition: all .1s ease-in-out;
+  color: #a7aeb8!important;
+}
