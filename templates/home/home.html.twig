@@ -89,15 +89,20 @@
 <section class="container topContributors">
 	<h2>Top Contributeurs</h2>
 	<div class="topScore">
-		{% for contributor in topContributors %}
-				<div class="card">
-					<div class="card-body">
-						<h3 class="card-title text-center">{{ contributor[0] }}</h3>
-						<p class="card-text">
-							Score : {{ contributor.nbrEvents }} sorties
-						</p>
+		{% for contributors in topContributors %}
+			<a href="{{ path("app_profile_show", {id: contributors[0].id}) }}">
+					<div class="card topScore__content">
+						<div class="topScore__content-avatar">
+							<img src="{{ contributors[0].avatar }}" alt="avatar de {{ contributors[0].nickname }}">
+						</div>
+						<div class="card-body">
+							<h3 class="card-title">{{ contributors[0].nickname }}</h3>
+							<p class="card-text">
+								Score : {{ contributors.nbrEvents }} sorties
+							</p>
+						</div>
 					</div>
-				</div>
+				</a>
 		{% endfor %}
 	</div>
 </section>
