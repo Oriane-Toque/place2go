@@ -132,12 +132,14 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-mdb-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                <img class="img-profile rounded-circle"
-                    src="{{ asset('img/default-profile.svg') }}">
+                {% if app.user.avatar is defined and app.user.avatar is not empty %}
+                    <img class="img-profile rounded-circle" src="{{ app.user.avatar }}">
+				{% else %}
+					<img class="img-profile rounded-circle" src="{{ asset('img/default-profile.svg') }}">
+				{% endif %}
             </a>
             <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow"
-                aria-labelledby="userDropdown">
+            <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profil

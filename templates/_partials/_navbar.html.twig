@@ -30,45 +30,73 @@
 					</div>
 				</li>
 			</ul>
+			<!-- Authenticated User Menu -->
+			{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+				<div class="nav-item dropdown bt-login">
+					<a href="#" class="nav-link dropdown-toggle py-1 d-flex align-items-center" id="connectedDropdown" data-mdb-toggle="dropdown" aria-expanded="false">
+						<span class="me-2 d-none d-lg-inline small">{{ app.user.nickname }}</span>
+						{% if app.user.avatar is defined and app.user.avatar is not empty %}
+							<img src="{{ app.user.avatar }}" class="img-profile rounded-circle" alt="avatar">
+						{% else %}
+							<img src="{{ asset('img/default-profile.svg') }}" class="img-profile rounded-circle" alt="avatar">
+						{% endif %}
+					</a>
+					<div class="dropdown-menu" aria-labelledby="connectedDropdown">
+						{% if is_granted('ROLE_ADMIN') %}
+						<a class="dropdown-item icon" href="{{ path('app_profile_profile') }}"><i class="fa fa-dashboard"></i> Mon espace perso</a>  
+						<div class="dropdown-divider"></div>
+						{% endif %}
+						<a class="dropdown-item icon" href="{{ path('app_logout') }}"><i class="fa fa-power-off"></i> Déconnexion</a>
+					</div>
+				</div>
+
+			{% else %}
+			<!-- Login Dropdown Menu -->
 			<div class="navbar-nav align-items-lg-center nav-right">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+				</li>
 				<li class="nav-item dropdown">
-					<button class="btn btn-primary mb-3 mb-lg-0" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
-					<div class="dropdown-menu login-form p-3">
-						<form>
+					<button class="btn btn-primary mb-3 mb-lg-0" id="loginDropdown" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
+					<div class="dropdown-menu login-form p-3" aria-labelledby="loginDropdown">
+						<form action="{{ path('app_login') }}" method="post">
 						<!-- Email input -->
 						<div class="form-outline mb-4">
-							<input type="email" id="form1Example1" class="form-control" />
-							<label class="form-label" for="form1Example1">Adresse email</label>
+							<input type="email" value="{{ app.session.get('last_username') }}" name="email" id="formLoginEmail" class="form-control" autocomplete="email" required autofocus>
+							<label class="form-label" for="formLoginEmail">Email</label>
 						</div>
 
 						<!-- Password input -->
 						<div class="form-outline mb-4">
-							<input type="password" id="form1Example2" class="form-control" />
-							<label class="form-label" for="form1Example2">Mot de passe</label>
+							<input type="password" name="password" id="formLoginPassword" class="form-control" autocomplete="current-password" required>
+							<label class="form-label" for="formLoginPassword">Mot de passe</label>
 						</div>
 
 						<!-- 2 column grid layout for inline styling -->
 						<div class="row mb-4">
 							<div class="col d-flex justify-content-center">
-							<!-- Checkbox -->
+							<!-- Remember me Checkbox -->
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-								<label class="form-check-label" for="form1Example3"> Se souvenir de moi </label>
+								<input type="checkbox" class="form-check-input" id="formLoginRemember" name="_remember_me" checked />
+								<label class="form-check-label" for="formLoginRemember"> Se souvenir de moi </label>
 							</div>
 							</div>
 
 							<div class="col">
-							<!-- Simple link -->
+							<!-- Forgotten password -->
 							<a href="#!">Mot de passe oublié ?</a>
 							</div>
 						</div>
 
 						<!-- Submit button -->
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						<button type="submit" class="btn btn-primary btn-block">Connexion</button>
 						</form>
 					</div>
 				</li>
 			</div>
+			{% endif %} 
 		</div>
 	</div>
 </nav>
