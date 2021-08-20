@@ -76,7 +76,7 @@ header .bg-image {
 
 
 /****************************
-* FORM & BUTTON
+* CATEGORY
 *****************************/
 
 #categoryCarousel .carousel__img {
@@ -147,6 +147,20 @@ header .bg-image {
 
 .btn, .btn-icon {
   justify-content: center;
+}
+
+/****************************
+* FORM LOGIN
+*****************************/
+
+.nav-item .img-profile {
+  height: 2rem;
+  width: 2rem;
+}
+
+.bt-login .dropdown-menu {
+  right: 0;
+  left: auto;
 }
 
 
