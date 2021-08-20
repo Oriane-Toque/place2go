@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Data\SearchData;
+use App\Entity\Attendant;
 use App\Form\SearchFormType;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
@@ -188,6 +189,42 @@ class EventController extends AbstractController
 			// solution pour éviter une redirection vers la page liste
 			// quand on supprime depuis le profil privé
 			return $this->redirect($request->headers->get('referer'));
+		}
+
+		/**
+		 * To join an event
+		 *
+		 * @Route("/event/{id<\d+>}/join", name="app_event_join", methods={"GET"})
+		 */
+		public function join(Event $event, EntityManagerInterface $em) {
+
+			if(null === $event) {
+				throw $this->createNotFoundException("404 - Sortie introuvable");
+			}
+
+			$user = $this->getUser();
+
+			if($user) {
+				$attendant = new Attendant();
+
+				$attendant->setUser($user);
+				$attendant->setEvent($event);
+
+				$em->persist($attendant);
+				$em->flush();
+
+				// Flash message
+				$this->addFlash('success', 'Vous avez bien été ajouté à la sortie '.$event->getTitle().' !');
+
+				// Redirection sur la page de l'évènement correspondant
+				return $this->redirectToRoute('app_event_show', [
+					'id' => $event->getId(),
+				]);
+			}
+
+			$this->addFlash('danger', 'Connectez vous pour participer à une sortie !');
+
+			return $this->redirectToRoute('app_login');
 		}
 
 		/**
