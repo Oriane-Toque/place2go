@@ -39,6 +39,24 @@ class EventRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+		/**
+     * Return the top six contributors with events score (DESC)
+     *
+     * @return Array the top six contributors
+     */
+    public function findTopContributors(): array
+    {
+				return $this->createQueryBuilder('e')
+				->select('count(e) AS nbrEvents')
+				->addSelect('u')
+				->innerJoin('App\Entity\User', 'u', 'WITH', 'e.author = u.id')
+				->groupBy('u.id')
+				->orderBy('nbrEvents', 'DESC')
+				->setMaxResults(6)
+				->getQuery()
+				->getResult();
+    }
+
      /**
      * Retrieve all the cities (but still in DESC order)
      *
