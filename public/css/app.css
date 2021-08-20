@@ -297,6 +297,15 @@ svg {
 	display: none;
 }
 
+.topCategories a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.topCategories a:hover h3 {
+	text-decoration: underline;
+}
+
 /***************************
 * MEDIA QUERIES
 ****************************/

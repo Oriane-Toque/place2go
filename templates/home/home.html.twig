@@ -41,19 +41,21 @@
 	<h2>Top Catégories</h2>
 	<div class="topScore">
 		{% for category in topCategories %}
-				<div class="card">
-					<img
-						src="{{ category[0].picture }}"
-						class="card-img-top"
-						alt="Catégorie {{ category[0].name }}"
-					/>
-					<div class="card-body">
-						<h3 class="card-title text-center">{{ category[0].name }}</h3>
-						<p class="card-text">
-							Score : {{ category.nbrEvents }} sorties
-						</p>
+			<a href="{{ path("app_events_category_search", {id: category[0].id}) }}">
+					<div class="card">
+						<img
+							src="{{ category[0].picture }}"
+							class="card-img-top"
+							alt="Catégorie {{ category[0].name }}"
+						/>
+						<div class="card-body">
+							<h3 class="card-title text-center">{{ category[0].name }}</h3>
+							<p class="card-text">
+								Score : {{ category.nbrEvents }} sorties
+							</p>
+						</div>
 					</div>
-				</div>
+				</a>
 		{% endfor %}
 	</div>
 </section>
