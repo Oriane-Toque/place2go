@@ -22,6 +22,23 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+		/**
+     * Return the top six cities with events score (DESC)
+     *
+     * @return Array the top six cities
+     */
+    public function findTopCities(): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT e.city, COUNT(e.city) AS nbrEvents
+            FROM App\Entity\Event e
+            GROUP BY e.city
+            ORDER BY nbrEvents DESC'
+        )->setMaxResults(6);
+        return $query->getResult();
+    }
+
      /**
      * Retrieve all the cities (but still in DESC order)
      *

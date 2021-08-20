@@ -18,15 +18,21 @@ class HomeController extends AbstractController
     }    
 
     /**
+		 * Return & display Home page with top 6 cities & categories
+		 * 
      * @Route("/", name="app_home")
      */
-    public function home(CategoryRepository $cr): Response
+    public function home(CategoryRepository $cr, EventRepository $er): Response
     {
 				// top 6 categories -> meilleur score events (+ récupérer nbr event)
 				$topCategories = $cr->findTopCategories();
+
+				// top 6 cities -> meilleur score events (+ récupérer nbr event)
+				$topCities = $er->findTopCities();
         
         return $this->render('home/home.html.twig', [
             'topCategories' => $topCategories,
+            'topCities' => $topCities,
         ]);
     }
 }
