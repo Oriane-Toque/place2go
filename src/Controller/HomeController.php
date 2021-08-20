@@ -21,28 +21,26 @@ class HomeController extends AbstractController
     }    
 
     /**
+		 * Return & display Home page with top 6 cities & categories
+		 * 
      * @Route("/", name="app_home")
      */
-    public function home(Request $request, EventRepository $er, CategoryRepository $cr): Response
+    public function home(CategoryRepository $cr, EventRepository $er): Response
     {
-        $topCities = $er->findPopularCities(5);
-        $allCities = $er->findAllCities();
-        $categoriesList = $cr->findAllCategories();
+				// top 6 categories -> meilleur score events
+				$topCategories = $cr->findTopCategories();
 
-        // Init Data to handle form search
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+				// top 6 cities -> meilleur score events
+				$topCities = $er->findTopCities();
 
-        // Handle the form request and use $data in custom query to show searched events
-        $form->handleRequest($request);
-        
-        
+				// top 6 contributors -> meilleur score events
+        $topContributors = $er->findTopContributors();
+
         return $this->render('home/home.html.twig', [
+            'topCategories' => $topCategories,
             'topCities' => $topCities,
-            'cityList' => $allCities,
-            'allCategories' => $this->sort->allCategories($categoriesList),
-            'topCategories' => $this->sort->sliceCategories($categoriesList),
-            'form' => $form->createView(),
+            'topContributors' => $topContributors,
+
         ]);
     }
 }

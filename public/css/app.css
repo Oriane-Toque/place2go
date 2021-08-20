@@ -277,3 +277,72 @@ svg {
   transition: all .1s ease-in-out;
   color: #a7aeb8!important;
 }
+
+/***************************
+* HOME
+****************************/
+.topScore {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+.topScore h3 {
+	text-transform: capitalize;
+}
+
+.topCategories,
+.topCities,
+.descriptionPlace,
+.topContributors {
+	margin-top: 2rem;
+}
+
+.descriptionPlace {
+	display: flex;
+	box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+	border: 0;
+}
+
+.descriptionPlace__description {
+	margin-left: 2rem;
+}
+
+.descriptionPlace__picture {
+	display: none;
+}
+
+.topCategories a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.topCategories a:hover h3 {
+	text-decoration: underline;
+}
+
+/***************************
+* MEDIA QUERIES
+****************************/
+
+@media screen and (min-width: 700px) {
+
+	.topScore {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.descriptionPlace img {
+		width: 100%;
+	}
+
+	.descriptionPlace__picture {
+		display: block;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+
+	.topScore {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}

@@ -45,7 +45,7 @@ class EventController extends AbstractController
 		 * @return Response renvoie sur la page liste filtré selon la catégorie et la ville paramétré sur le compte utilisateur
 		 * si pas connecté renvoie toutes les sorties dans n'importe quelle ville selon la catégorie
 		 */
-		public function search(Category $category, EventRepository $er): Response {
+		public function searchByCategory(Category $category, EventRepository $er): Response {
 
 			if(null === $category) {
 				throw $this->createNotFoundException('404 - Catégorie introuvable');
@@ -67,6 +67,21 @@ class EventController extends AbstractController
 			return $this->render('event/list.html.twig', [
 				'events' => $events,
 			]);
+		}
+
+		/**
+		 * Return all events for one city
+		 *
+		 * @Route("events/city/{slug}/search", name="app_events_city_search", methods={"GET"})
+		 * 
+		 * @return Response renvoie sur la page liste filtré selon la ville sélectionnée
+		 */
+		public function searchByCities(EventRepository $er) {
+
+			// TODO il nous faut slugifier le nom de la ville pour injection dans url
+			// on fait un requete custom pour rechercher toutes les sorties en fonction
+			// du slug de la ville
+			// on renvoit dans la vue
 		}
 
     /**

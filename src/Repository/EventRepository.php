@@ -24,53 +24,39 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    /**
-     * Retrieve the top five cities with the most entries (DESC)
+		/**
+     * Return the top six cities with events score (DESC)
      *
-     * @param Int $limit
-     * @return Array the five cities
+     * @return Array the top six cities
      */
-    public function findPopularCities(int $limit)
+    public function findTopCities(): array
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
-            'SELECT e.city, COUNT(e.city) AS count
+            'SELECT e.city, COUNT(e.city) AS nbrEvents
             FROM App\Entity\Event e
             GROUP BY e.city
-            ORDER BY count DESC'
-        )->setMaxResults($limit);
+            ORDER BY nbrEvents DESC'
+        )->setMaxResults(6);
         return $query->getResult();
     }
 
-	/**
-	 * Get count of all events
-	 *
-	 * @return Int
-	 */
-	public function getTotalEvents():int
+		/**
+     * Return the top six contributors with events score (DESC)
+     *
+     * @return Array the top six contributors
+     */
+    public function findTopContributors(): array
     {
-		$result = $this->createQueryBuilder('e')
-            ->select('COUNT(e)')
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
-		return (int)$result;
-    }
-
-	/**
-	 * Get count of events to come
-	 *
-	 * @return Int
-	 */
-	public function getTotalEventsToCome():int
-    {
-		$result = $this->createQueryBuilder('e')
-            ->select('COUNT(e)')
-			->where('e.event_date > CURRENT_DATE()')
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
-		return (int)$result;
+				return $this->createQueryBuilder('e')
+				->select('count(e) AS nbrEvents')
+				->addSelect('u')
+				->innerJoin('App\Entity\User', 'u', 'WITH', 'e.author = u.id')
+				->groupBy('u.id')
+				->orderBy('nbrEvents', 'DESC')
+				->setMaxResults(6)
+				->getQuery()
+				->getResult();
     }
 
      /**
