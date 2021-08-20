@@ -22,24 +22,6 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    /**
-     * Retrieve the top five cities with the most entries (DESC)
-     *
-     * @param Int $limit
-     * @return Array the five cities
-     */
-    public function findPopularCities(int $limit)
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT e.city, COUNT(e.city) AS count
-            FROM App\Entity\Event e
-            GROUP BY e.city
-            ORDER BY count DESC'
-        )->setMaxResults($limit);
-        return $query->getResult();
-    }
-
      /**
      * Retrieve all the cities (but still in DESC order)
      *

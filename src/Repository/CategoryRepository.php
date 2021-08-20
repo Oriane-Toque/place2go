@@ -21,25 +21,21 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieve all the categories
+     * Return top 6 categories with events score
      *
-     * @return Array all the categories
+     * @return Array top 6 categories
      */
-    public function findTopCategories()
+    public function findTopCategories(): array
     {
 
-			$sql='
-			SELECT category.*, COUNT(*) as nbrEvents
-			FROM category
-			INNER JOIN event_category
-			ON event_category.category_id = category.id
-			GROUP BY category_id
-			ORDER BY nbrEvents DESC
-			LIMIT 6';
-
-			$em = $this->getEntityManager();
-			$stmt = $em->getConnection()->prepare($sql);
-			$stmt->executeQuery();
-			return $stmt->fetchAll();
+			return $this->createQueryBuilder('c')
+			->select('count(e) AS nbrEvents')
+			->addSelect('c')
+			->join('c.events', 'e')
+			->groupBy('c.id')
+			->orderBy('nbrEvents', 'DESC')
+			->setMaxResults(6)
+			->getQuery()
+			->getResult();
     }
 }

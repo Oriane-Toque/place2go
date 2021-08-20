@@ -20,15 +20,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_home")
      */
-    public function home(EventRepository $er, CategoryRepository $cr): Response
+    public function home(CategoryRepository $cr): Response
     {
 				// top 6 categories -> meilleur score events (+ récupérer nbr event)
 				$topCategories = $cr->findTopCategories();
-
-				// it works
-				dd($topCategories);
-				
-				// top 6 villes -> meilleur score event (+ récupérer nbr event)
         
         return $this->render('home/home.html.twig', [
             'topCategories' => $topCategories,

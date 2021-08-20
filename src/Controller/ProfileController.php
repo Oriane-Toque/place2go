@@ -70,7 +70,7 @@ class ProfileController extends AbstractController
 		/**
 		 * Edit user profile
 		 * 
-     * @Route("profile/edit", name="app_profile_edit", methods={"GET","POST"})
+     * @Route("/profile/edit", name="app_profile_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
