@@ -37,15 +37,41 @@
 
 {% block body %}
 
-<section class="topCategories">
-		<div class="topCategories__category card text-center m-3">
-			<a href="#">
-				<div class="card-body">
-					CATEGORIE1
+<div class="container">
+	<h2>Top Catégories</h2>
+	<section class="topScore">
+		{% for category in topCategories %}
+				<div class="card">
+					<img
+						src="{{ category[0].picture }}"
+						class="card-img-top"
+						alt="Catégorie {{ category[0].name }}"
+					/>
+					<div class="card-body">
+						<h3 class="card-title text-center">{{ category[0].name }}</h3>
+						<p class="card-text">
+							Score : {{ category.nbrEvents }} sorties
+						</p>
+					</div>
 				</div>
-			</a>
-		</div>
-	{% endfor %}
+		{% endfor %}
+	</section>
+</div>
 
-</section>
+<div class="container">
+	<h2>Top Villes</h2>
+	<section class="topScore">
+		{% for city in topCities %}
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title text-center">{{ city.city }}</h3>
+						<p class="card-text">
+							Score : {{ city.nbrEvents }} sorties
+						</p>
+					</div>
+				</div>
+		{% endfor %}
+	</section>
+</div>
+
 {% endblock %}

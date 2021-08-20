@@ -30,6 +30,7 @@ class HomeController extends AbstractController
 				// top 6 cities -> meilleur score events (+ récupérer nbr event)
 				$topCities = $er->findTopCities();
         
+				dump($topCities);
         return $this->render('home/home.html.twig', [
             'topCategories' => $topCategories,
             'topCities' => $topCities,
