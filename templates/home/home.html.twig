@@ -37,9 +37,9 @@
 
 {% block body %}
 
-<div class="container">
+<section class="container topCategories">
 	<h2>Top Catégories</h2>
-	<section class="topScore">
+	<div class="topScore">
 		{% for category in topCategories %}
 				<div class="card">
 					<img
@@ -55,12 +55,22 @@
 					</div>
 				</div>
 		{% endfor %}
-	</section>
-</div>
+	</div>
+</section>
 
-<div class="container">
+<section class="descriptionPlace">
+	<div class="descriptionPlace__picture">
+		<img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="image du site">
+	</div>
+	<div class="descriptionPlace__description">
+		<h2>Bienvenue sur Place 2 Go !</h2>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat quod facere eligendi amet nostrum nihil tempore vel natus, harum voluptate. Non blanditiis quibusdam, harum consectetur soluta quas vel consequatur esse.</p>
+	</div>
+</section>
+
+<section class="container topCities">
 	<h2>Top Villes</h2>
-	<section class="topScore">
+	<div class="topScore">
 		{% for city in topCities %}
 				<div class="card">
 					<div class="card-body">
@@ -71,7 +81,7 @@
 					</div>
 				</div>
 		{% endfor %}
-	</section>
-</div>
+	</div>
+</section>
 
 {% endblock %}

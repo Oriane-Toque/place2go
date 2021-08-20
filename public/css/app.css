@@ -265,7 +265,7 @@ svg {
 }
 
 /***************************
-* TEXT - TOP SCORE
+* HOME
 ****************************/
 .topScore {
 	display: grid;
@@ -277,8 +277,24 @@ svg {
 	text-transform: capitalize;
 }
 
-.container > h2{
-	margin: 2rem 0 1rem 0;
+.topCategories,
+.topCities,
+.descriptionPlace {
+	margin-top: 2rem;
+}
+
+.descriptionPlace {
+	display: flex;
+	box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+	border: 0;
+}
+
+.descriptionPlace img {
+	width: 100%;
+}
+
+.descriptionPlace__description {
+	margin-left: 2rem;
 }
 
 /***************************
