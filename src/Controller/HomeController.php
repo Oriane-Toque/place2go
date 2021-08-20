@@ -24,19 +24,19 @@ class HomeController extends AbstractController
      */
     public function home(CategoryRepository $cr, EventRepository $er): Response
     {
-				// top 6 categories -> meilleur score events (+ récupérer nbr event)
+				// top 6 categories -> meilleur score events
 				$topCategories = $cr->findTopCategories();
 
-				// top 6 cities -> meilleur score events (+ récupérer nbr event)
+				// top 6 cities -> meilleur score events
 				$topCities = $er->findTopCities();
 
 				// top 6 contributors -> meilleur score events
         $topContributors = $er->findTopContributors();
 
-				dd($topContributors);
         return $this->render('home/home.html.twig', [
             'topCategories' => $topCategories,
             'topCities' => $topCities,
+            'topContributors' => $topContributors,
         ]);
     }
 }

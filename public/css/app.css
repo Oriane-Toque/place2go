@@ -279,7 +279,8 @@ svg {
 
 .topCategories,
 .topCities,
-.descriptionPlace {
+.descriptionPlace,
+.topContributors {
 	margin-top: 2rem;
 }
 
