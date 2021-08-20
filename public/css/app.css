@@ -312,13 +312,29 @@ svg {
 	display: none;
 }
 
-.topCategories a {
+.topCategories a,
+.topContributors a {
 	text-decoration: none;
 	color: inherit;
 }
 
-.topCategories a:hover h3 {
+.topCategories a:hover h3,
+.topContributors a:hover h3 {
 	text-decoration: underline;
+}
+
+.topScore__content {
+	display: flex;
+	flex-direction: row;
+}
+
+.topScore__content-avatar {
+	width: 20%;
+}
+
+.topScore__content-avatar > img {
+	width: 100%;
+	border-radius: 3rem;
 }
 
 /***************************

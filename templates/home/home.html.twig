@@ -11,23 +11,7 @@
 				<div class="d-flex justify-content-center align-items-center h-100">
 					<div class="text-white">
 					<p class="lead">Cherchez la sortie qui vous convient le mieux</p>
-						{#{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'row row-cols-lg-auto g-3 align-items-center'}}) }}
-							<div class="col-6">
-							{{ form_row(form.localisation, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-							<div class="col-3">
-							{{ form_row(form.distance, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-								<div class="col-3">
-							{{ form_row(form.save, {'attr': {'class': 'btn-outline-light btn-lg'}}) }}
-							</div>
-						{{ form_end(form) }}
-
-						{% if coord is defined %}
-
-						<p> Coordonnées pour {{ form.localisation.vars.value }} : {{ coord|join(', ') }}</p>
-
-						{% endif %}#}
+					{% include "event/_filter.html.twig" %}
 						<h1 class="mb-3">PLACE 2 GO / BE / MOVE / PARTY / MAKE FRIENDS</h1>
 					</div>
 				</div>
@@ -89,15 +73,20 @@
 <section class="container topContributors">
 	<h2>Top Contributeurs</h2>
 	<div class="topScore">
-		{% for contributor in topContributors %}
-				<div class="card">
-					<div class="card-body">
-						<h3 class="card-title text-center">{{ contributor[0] }}</h3>
-						<p class="card-text">
-							Score : {{ contributor.nbrEvents }} sorties
-						</p>
+		{% for contributors in topContributors %}
+			<a href="{{ path("app_profile_show", {id: contributors[0].id}) }}">
+					<div class="card topScore__content">
+						<div class="topScore__content-avatar">
+							<img src="{{ contributors[0].avatar }}" alt="avatar de {{ contributors[0].nickname }}">
+						</div>
+						<div class="card-body">
+							<h3 class="card-title">{{ contributors[0].nickname }}</h3>
+							<p class="card-text">
+								Score : {{ contributors.nbrEvents }} sorties
+							</p>
+						</div>
 					</div>
-				</div>
+				</a>
 		{% endfor %}
 	</div>
 </section>
