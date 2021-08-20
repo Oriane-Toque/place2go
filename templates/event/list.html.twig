@@ -28,6 +28,7 @@
 						<th>Organisateur</th>
 						<th>Nb Participants</th>
 						<th>Catégories</th>
+						<th>Rejoindre / Quitter</th>
 					</tr>
 				</thead>
 
@@ -52,6 +53,18 @@
 								{% for category in event.categories %}
 									{{ category.name }}{{ loop.last ? '' : ', ' }}
 								{% endfor %}
+							</td>
+							<td>
+								{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-success btn-floating">
+										<i class="fas fa-calendar-plus"></i>
+									</a>
+									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-danger btn-floating">
+										<i class="fas fa-sign-out-alt"></i>
+									</a>
+								{% else %}
+									Veuillez-vous connecter pour participer !
+								{% endif %}
 							</td>
 
 
