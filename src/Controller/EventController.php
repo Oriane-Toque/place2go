@@ -197,7 +197,7 @@ class EventController extends AbstractController
 		 *
 		 * @Route("/event/{id<\d+>}/join", name="app_event_join", methods={"GET"})
 		 */
-		public function join(Event $event, EntityManagerInterface $em, Request $request, AttendantRepository $ar, isAttendant $attendant) {
+		public function join(Event $event, EntityManagerInterface $em, Request $request, AttendantRepository $ar, isAttendant $checkAttendant) {
 
 			if(null === $event) {
 				throw $this->createNotFoundException("404 - Sortie introuvable");
@@ -217,7 +217,7 @@ class EventController extends AbstractController
 
 			// je fais appel à mon service qui me permet de vérifier si
 			// l'utilisateur participe déjà à cette sortie
-			$isAttendant = $attendant->checkIsAttendant($attendantList, $user);
+			$isAttendant = $checkAttendant->checkIsAttendant($attendantList, $user);
 
 			//! Vérifier si l'utilisateur est connecté
 			if($user) {
@@ -267,7 +267,7 @@ class EventController extends AbstractController
 		 *
 		 * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
 		 */
-		public function leave(Event $event = null, AttendantRepository $ar, EntityManagerInterface $em, Request $request)
+		public function leave(Event $event = null, AttendantRepository $ar, EntityManagerInterface $em, Request $request, isAttendant $checkAttendant)
 		{
 
 			$user = $this->getUser();
@@ -280,14 +280,35 @@ class EventController extends AbstractController
 			// requete custom pour la récupération
 			$attendant = $ar->findByUserEvent($user, $event);
 
-			// suppresion de la participation à la sortie de la bdd
-			$em->remove($attendant[0]);
-			$em->flush();
+			//! Vérifier si l'utilisateur est un participant
+			// je récupère la liste des participants de la sortie sélectionnée
+			$attendantList = $ar->findByEvent($event);
 
-			// Flash message
-			$this->addFlash('success', 'Vous avez quitté la sortie avec succès !');
+			// je fais appel à mon service qui me permet de vérifier si
+			// l'utilisateur participe déjà à cette sortie
+			$isAttendant = $checkAttendant->checkIsAttendant($attendantList, $user);
 
-			// redirection dans la page courante
+			if($user) {
+
+				if($isAttendant) {
+					// suppresion de la participation à la sortie de la bdd
+					$em->remove($attendant[0]);
+					$em->flush();
+
+					// Flash message
+					$this->addFlash('success', 'Vous avez quitté la sortie avec succès !');
+
+					// redirection dans la page courante
+					return $this->redirect($request->headers->get('referer'));
+				}
+				// on indique à l'utilisateur qu'il ne participe pas à cette sortie
+				$this->addFlash('warning', 'Vous n\'êtes pas inscrit à cette sortie !');
+
+				return $this->redirect($request->headers->get('referer'));
+			}
+			// on indique à l'utilisateur qu'il doit se connecter
+			$this->addFlash('danger', 'Vous devez vous connecter pour effetuer cette action !');
+
 			return $this->redirect($request->headers->get('referer'));
 		}
 }

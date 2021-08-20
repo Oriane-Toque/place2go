@@ -41,7 +41,16 @@
                                 {{ event.description }}
                             </p>
                             <div class="d-flex justify-content-end">
-                                <a href="#!" class="btn btn-primary">S'incrire</a>
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+																	<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-success btn-floating">
+																		<i class="fas fa-calendar-plus"></i>
+																	</a>
+																	<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-danger btn-floating">
+																		<i class="fas fa-sign-out-alt"></i>
+																	</a>
+																{% else %}
+																	Veuillez-vous connecter pour participer !
+																{% endif %}
                             </div>
                         </div>
 
