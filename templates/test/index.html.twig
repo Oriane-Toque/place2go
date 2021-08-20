@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Add a geocoder</title>
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+		<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+		<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
+
+		<style>
+			.geocoder {
+
+			}
+			.mapboxgl-ctrl-geocoder {
+				min-width: 100%;
+			}
+			#map {
+				height: 100%;
+                width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<!-- Load the `mapbox-gl-geocoder` plugin. -->
+		<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+
+
+		<div class="row">
+			<div class="col-8">
+				
+                {% include "event/_event_form.html.twig" %}
+			
+			</div>
+			<div class="col-4">
+				<div id="map"></div>
+			</div>
+		</div>
+
+		<script>
+			// TO MAKE THE MAP APPEAR YOU MUST
+            // ADD YOUR ACCESS TOKEN FROM
+            // https://account.mapbox.com
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+            const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [
+            -79.4512, 43.6568
+            ],
+            zoom: 13
+            });
+
+            // Add the control to the map.
+            const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl});
+
+            document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+
+                const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+                const eventAddress = document.querySelector('#event_address');
+                console.log(eventAddress);
+                let value;
+
+                input.addEventListener('change', handle);
+                input.addEventListener('keydown', handle);
+
+                function handle(e) {
+                    let value = e.target.value;
+                    console.log(value);
+                    eventAddress.value = value;
+                }
+		</script>
+
+	</body>
+</html>

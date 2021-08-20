@@ -126,7 +126,7 @@ class EventRepository extends ServiceEntityRepository
 
         if(!empty($search->q)) {
             $query = $query
-                ->andWhere('e.city LIKE :q')
+                ->andWhere('e.address LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
         }
 

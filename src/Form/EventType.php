@@ -35,9 +35,8 @@ class EventType extends AbstractType
                 'data' => new DateTime(),
                 'required' => true,
             ])
-            ->add('address', TextType::class, [
-                'label' => 'Adresse',
-                'required' => false,
+            ->add('address', HiddenType::class, [
+                'required' => false
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville *',

@@ -12,12 +12,15 @@
 
     <div class="row">
         <div class="col-md-6">
-            {{ form_row(form.address, {'attr': {'placeholder': '25 rue du Général...'}}) }}
+            <div id="geocoder" class="geocoder"></div>
+
         </div>
         <div class="col-md-6">
             {{ form_row(form.maxAttendants) }}
         </div>
     </div>
+
+    
 
     <div class="row">
         <div class="col-md-6">

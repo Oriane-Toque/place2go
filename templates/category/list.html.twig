@@ -11,8 +11,8 @@
 
 		<div class="carousel-inner">
 			{% for category in categories %}
-				<div class="carousel-item {% if category.id == 1 %}active{% endif %}">
-					<img src="{{ category.picture }}" class="d-block w-100 carousel__img" alt="{{ category.name }}"/>
+				<div class="carousel-item {% if loop.first %}active{% endif %}">
+					<img src="{{ category.picture }}" class="d-block w-100 carousel__img img-fluid" alt="{{ category.name }}"/>
 					<div class="carousel-caption d-none d-md-block">
 						<h5>{{ category.name }}</h5>
 					</div>

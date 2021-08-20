@@ -4,65 +4,101 @@
 
 {% block body %}
 
+<style>
+	#list .list__card {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+		padding: 0.2rem;
+		border-bottom-left-radius: 50px;
+		border-top-left-radius: 50px;
+	}
+
+	#list .list__card_content {
+		padding: 0.5rem;
+
+	}
+
+	#list .list__card_content {
+		display: block;
+		width: 100%;
+		max-width: 100%;
+	}
+
+</style>
+
 	<div class="container-xl my-5">
 
 		<section id="search">
 
 			<div class="row">
 				<div class="col">
-					{% include 'event/_filter.html.twig' with {form: form} only %}
+					{% include 'event/_filter.html.twig' %}
 				</div>
 			</div>
-        
-        </section>
 
-		<section id="event-list">
+		</section>
 
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Nom</th>
-						<th>Localisation</th>
-						<th>Date</th>
-						<th>Organisateur</th>
-						<th>Nb Participants</th>
-						<th>Catégories</th>
-					</tr>
-				</thead>
+		<section id="list">
 
-				<tbody>
+			<div class="row">
+				<div class="col-8">
+
 					{% for event in events %}
-						<tr>
-							<td>{{ event.id }}</td>
-							<td>
-								<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
-							</td>
-							<td>{{ event.city }}</td>
-							<td>{{ event.eventDate | date('d-m-Y H:i') }}</td>
-							<td>
-								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
-							</td>
-							<td>
-								{{ event.attendants|length }}
-								/
-								{{ event.maxAttendants }}
-							</td>
-							<td>
-								{% for category in event.categories %}
-									{{ category.name }}{{ loop.last ? '' : ', ' }}
-								{% endfor %}
-							</td>
+		
+						<div class="list__card shadow-1">
+								<div class="list__card_image">
+									<a href="">
+										<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="100" width="100"/>
+									</a>
+								</div>
+								<div class="list__card_content">
+									<div class="d-flex justify-content-between">
+										<div class="list__card_title">{{ event.title }}</div>
+										<div class="list__card_date">
+											<small class="text-muted fst-italic">le
+												{{ event.eventDate | date('D M Y à H:i', 'Europe/Paris') }}</small>
+										</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<div class="list__cards_author">
+											<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
+										</div>
+										<div class="list__cards_attendants text-muted">participants
+											{{ event.attendants|length }}
+											/
+											{{ event.maxAttendants }}</div>
+									</div>
+									<div class="d-flex justify-content-between">
+										<div>
+											<div>
+												{% for category in event.categories %}
+													{{ category.name }}{{ loop.last ? '' : ', ' }}
+												{% endfor %}
+											</div>
+										</div>
+										<div class="list__cards_join">
+											<a href=""><i class="fas fa-user-plus"></i></a>
+											<a href=""><i class="fas fa-user-minus"></i></a>
+											<a href="{{ path('app_event_show',{id: event.id}) }}" class="btn btn-sm btn-info" role="button">Détails</a>
+										</div>
+									</div>
 
+								</div>
+				
+						</div>
 
-						</tr>
 					{% else %}
-						<tr>
-							<td colspan="5">Aucune sortie ne correspond à votre recherche</td>
-						</tr>
+						<div>
+							Aucun résultat trouvé.
+						</div>
 					{% endfor %}
-				</tbody>
-			</table>
+				</div>
+
+				<div class="col-4">
+					{# MAP #}
+				</div>
+			</div>
 
 		</section>
 

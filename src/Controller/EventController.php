@@ -9,6 +9,7 @@ use App\Data\SearchData;
 use App\Form\SearchFormType;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
+use App\Services\CallApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
+    private $callApiService;
+
+    public function __construct(CallApiService $callApiService)
+    {
+        $this->callApiService = $callApiService;
+    }
+
     /**
      * @Route("/events", name="app_event_list", methods={"GET"})
      */
@@ -31,9 +39,11 @@ class EventController extends AbstractController
         $form->handleRequest($request);
         $events = $eventRepository->findSearch($data);
 
+        dump($events);
+
         return $this->render('event/list.html.twig', [
             'events' => $events,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -108,12 +118,17 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event->setAuthor($this->getUser());
-            // Add coordinates to event
-            $event->setLat('');
-            $event->setLon('');
+            // Add coordinates to Event
 
+            $test = $this->callApiService->getApi($form['address']->getData());
+
+            $event->setLon($test['features'][0]['geometry']['coordinates'][0]);
+            $event->setLat($test['features'][0]['geometry']['coordinates'][1]);
+            
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
+            dump($event);
             $entityManager->flush();
 
             // Flash message
