@@ -289,12 +289,12 @@ svg {
 	border: 0;
 }
 
-.descriptionPlace img {
-	width: 100%;
-}
-
 .descriptionPlace__description {
 	margin-left: 2rem;
+}
+
+.descriptionPlace__picture {
+	display: none;
 }
 
 /***************************
@@ -305,6 +305,14 @@ svg {
 
 	.topScore {
 		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.descriptionPlace img {
+		width: 100%;
+	}
+
+	.descriptionPlace__picture {
+		display: block;
 	}
 }
 
