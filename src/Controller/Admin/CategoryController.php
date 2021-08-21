@@ -5,8 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use Symfony\Component\HttpFoundation\Request;
+use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,7 +40,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/admin/categories/create", name="admin_category_create", methods={"GET", "POST"})
      */
-    public function create(Request $request): Response
+    public function create(Request $request, FileUploader $fileUploader): Response
     {
         // New object
         $category = New Category();
@@ -47,8 +49,23 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
+        dump($form->getData());
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /** @var UploadedFile $imgFile */
+            $imgFile = $form->get('picture')->getData();
+
+            // this condition is needed because the 'picture' field is not required
+            // so the image file must be processed only when a file is uploaded
+            if ($imgFile) {
+                $imgFilename = $fileUploader->upload($imgFile, $this->getParameter('category_directory'));
+
+                // updates the 'picture' property to store the image file name
+                $category->setPicture($imgFilename);
+            }
+
+            // Persist in BDD
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();

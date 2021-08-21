@@ -66,7 +66,13 @@
                             {% for user in users %}
                                 <tr>
                                     <td>{{ user.id }}</td>
-                                    <td><img src="{{ user.avatar }}" width="75"/></td>
+                                    <td>
+                                        {% if 'http' in user.avatar %}
+                                        <img src="{{ user.avatar }}" width="75" height="75" class="rounded-circle">
+                                        {% else %}
+                                        <img src="{{ asset('uploads/avatar/') ~ user.avatar ?? 'default-profile.svg' }}" width="75" height="75" class="rounded-circle">
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{{ path('admin_user_show', {id: user.id}) }}">{{ user.nickname }}</a>
                                     </td>
