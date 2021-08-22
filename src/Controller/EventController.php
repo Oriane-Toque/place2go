@@ -22,6 +22,11 @@ class EventController extends AbstractController
 {
 		/**
 		 * @Route("/events", name="app_event_list", methods={"GET"})
+		 * 
+		 * @param Request $request
+		 * @param EventRepository $eventRepository
+		 * 
+		 * @return Response
 		 */
 		public function list(Request $request, EventRepository $eventRepository): Response
 		{
@@ -100,6 +105,8 @@ class EventController extends AbstractController
 
 		/**
 		 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
+		 * 
+		 * @return Response
 		 */
 		public function show(Event $event): Response
 		{
@@ -110,6 +117,10 @@ class EventController extends AbstractController
 
 		/**
 		 * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
+		 * 
+		 * @param Request $request
+		 * 
+		 * @return Response
 		 */
 		public function create(Request $request): Response
 		{
@@ -145,6 +156,11 @@ class EventController extends AbstractController
 
 		/**
 		 * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
+		 * 
+		 * @param Event $event
+		 * @param Request $request
+		 * 
+		 * @return Response
 		 */
 		public function edit(Event $event, Request $request): Response
 		{
@@ -176,6 +192,11 @@ class EventController extends AbstractController
 		 * TODO optimiser la méthode pour éviter de passer par l'id
 		 * 
 		 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
+		 * 
+		 * @param Event $event
+		 * @param Request $request
+		 * 
+		 * @return Response
 		 */
 		public function delete(Event $event, Request $request): Response
 		{
@@ -267,6 +288,8 @@ class EventController extends AbstractController
 		 * To leave an event
 		 *
 		 * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
+		 * 
+		 * 
 		 */
 		public function leave(Event $event = null, AttendantRepository $ar, EntityManagerInterface $em, Request $request, isAttendant $checkAttendant)
 		{
