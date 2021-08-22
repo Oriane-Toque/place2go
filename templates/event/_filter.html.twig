@@ -1,13 +1,19 @@
-{% if app.request.get('_route') == 'app_home' %}
-	{{ form_start(form, {'action': path('app_event_list')})}}
-{% else %}
-	{{ form_start(form)}}
-{% endif %}
-		{{ form_row(form.q) }}
-		{% if app.request.get('_route') == 'app_home' %}
-			{{ form_row(form.categories, {'attr': {'style': 'display:none'}})}}
-		{% else %}
-			{{ form_row(form.categories)}}
-		{% endif %}
-		<button type="submit" class="btn btn-outline-info">Rechercher</button>
+{{ form_start(form)}}
+<div class="filter__form p-3 my-5">
+
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		{{ form_widget(form.q) }}
+		<button type="submit" class="btn btn-outline-info ms-3" type="button">Rechercher</button>
+	</div>
+
+	{% if app.request.get('_route') == 'app_home' %}
+		{{ form_widget(form.categories, {'attr': {'style': 'visibility:hidden'}})}}
+		{{ form_errors(form.categories) }}
+	{% else %}
+		{{ form_widget(form.categories)}}
+		{{ form_errors(form.categories) }}
+	{% endif %}
+
+</div>
+
 {{ form_end(form)}}
