@@ -1,0 +1,97 @@
+<footer class="footer pt-5 p-5 bg-light">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-5 m-auto text-center">
+				<div class="icon-list-social d-flex justify-content-around">
+					<a href="#" target="_blank" rel="noopener" title="Twitter" class="icon-list-social-link">
+						<i class="fab fa-twitter fa-3x"></i>
+					</a>
+					<a href="#" target="_blank" rel="noopener" title="GitHub" class="icon-list-social-link">
+						<i class="fab fa-github fa-3x"></i>
+					</a>
+					<a href="#" target="_blank" rel="noopener" title="Facebook" class="icon-list-social-link">
+						<i class="fab fa-facebook fa-3x"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<hr class="my-5">
+
+		<div class="row">
+			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+				<ul class="list-unstyled mb-0">
+					<li class="mb-2">
+						<a href="#">A propos</a>
+					</li>
+					<li class="mb-2">
+						<a href="#">Mentions légales</a>
+					</li>
+					<li class="mb-2">
+						<a href="#">Contactez-nous</a>
+					</li>
+					<li class="mb-2">
+						<a href="#">Team</a>
+					</li>
+				</ul>
+			</div>
+
+
+			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+				<div class="text-uppercase-expanded text-xs mb-4">Villes populaires</div>
+				<ul class="list-unstyled mb-0">
+					{% if topCities is defined %}
+						{% for city in topCities %}
+							<li class="mb-2">
+								<a href="">{{ city['city'] }}</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+				<div class="text-uppercase-expanded text-xs mb-4">Catégories populaires</div>
+				<ul class="list-unstyled mb-0">
+					{% if topCities is defined %}
+						{% for city in topCities %}
+							<li class="mb-2">
+								<a href="">{{ city['city'] }}</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+				<div class="text-uppercase-expanded text-xs mb-4">Top Contributeurs</div>
+				<ul class="list-unstyled mb-0">
+					{% if topCities is defined %}
+						{% for city in topCities %}
+							<li class="mb-2">
+								<a href="">{{ city['city'] }}</a>
+							</li>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="mt-5">
+			<div class="text-lg-center">Copyright © 2021</div>
+
+			<div class="text-lg-center text-sm fst-italic">
+				Made with
+				<i class="fas fa-heart text-danger"></i>
+				by
+				<a href="http://">Daniel</a>,
+				<a href="http://">Fred</a>,
+				<a href="http://">Oriane</a>,
+				<a href="http://">Yohann</a>
+			</div>
+		</div>
+
+	</div>
+</footer>
