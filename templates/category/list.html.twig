@@ -2,10 +2,7 @@
 
 {% block title 'Catégories' %}
 
-
 {% block body %}
-
-	{% dump(categories) %}
 
 	<div id="categoryCarousel" class="carousel slide carousel-fade" data-mdb-touch="true" data-mdb-ride="carousel">
 
@@ -43,7 +40,7 @@
                     <div class="col">
                         <div class="card bg-dark h-100 bg-image hover-zoom rounded category__card">
                             <img src="{{ category.picture }}" class="card-img-top category__card_img" alt="{{ category.name }}"/>
-                            <a href="{{ path('app_events_category_search', {id: category.id}) }}" class="card-img-overlay p-0">
+                            <a href="events?q=&categories%5B%5D={{ category.id }}" class="card-img-overlay p-0">
                                 <h5 class="card-title category__card_title">{{ category.name }}</h5>
                             </a>
                         </div>
