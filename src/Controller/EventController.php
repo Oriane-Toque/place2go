@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Data\SearchData;
+use App\Entity\Category;
 use App\Entity\Attendant;
 use App\Form\SearchFormType;
+use App\Service\isAttendant;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
-use App\Service\isAttendant;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class EventController extends AbstractController

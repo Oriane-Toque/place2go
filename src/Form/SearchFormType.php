@@ -4,11 +4,11 @@ namespace App\Form;
 
 use App\Data\SearchData;
 use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Form to handle Events search
@@ -22,16 +22,21 @@ class SearchFormType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher une Sortie par localisation',
-                ],
+                    'placeholder' => 'Rechercher une activité',
+                ]
             ])
             ->add('categories', EntityType::class, [
                 'label' => false,
                 'required' => false,
                 'class' => Category::class,
                 'expanded' => true,
-                'multiple' => true
-            ])
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'd-flex justify-content-between',
+                    'style' => 'width: 100%; flex-wrap: wrap;',
+                ],
+            ]);
+        
         ;
     }
 
