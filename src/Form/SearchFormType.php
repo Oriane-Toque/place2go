@@ -19,15 +19,11 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->add('q', TextType::class, [
-                'label' => false,
-                'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher une activité',
+                    'placeholder' => 'Rechercher une activité...',
                 ]
             ])
             ->add('categories', EntityType::class, [
-                'label' => false,
-                'required' => false,
                 'class' => Category::class,
                 'expanded' => true,
                 'multiple' => true,
