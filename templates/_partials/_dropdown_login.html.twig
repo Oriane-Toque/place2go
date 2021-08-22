@@ -1,0 +1,32 @@
+<form action="{{ path('app_login') }}" method="post">
+
+	<div class="form-outline mb-3">
+		<input type="email" value="{{ app.session.get('last_username') }}" name="email" id="formLoginEmail" class="form-control" autocomplete="email" required autofocus>
+		<label class="form-label" for="formLoginEmail">Email</label>
+	</div>
+
+	<div class="form-outline mb-3">
+		<input type="password" name="password" id="formLoginPassword" class="form-control" autocomplete="current-password" required>
+		<label class="form-label" for="formLoginPassword">Mot de passe</label>
+	</div>
+
+	<!-- Remember me Checkbox -->
+	<div class="form-check ms-2">
+		<input type="checkbox" class="form-check-input" id="formLoginRemember" name="_remember_me" checked/>
+		<label class="form-check-label" for="formLoginRemember">Se souvenir de moi</label>
+	</div>
+
+
+	<!-- Submit button -->
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+	<button type="submit" class="btn btn-primary btn-block mt-4">Connexion</button>
+
+</form>
+
+	<div class="text-center mt-3">
+		<a href="">Mot de passe oublié ?</a>
+	</div>
+
+    <div class="text-center mt-2">
+        Pas encore de compte... <a href="{{ path('app_register') }}" class="">Créez en un !</a>
+    </div>
