@@ -12,11 +12,16 @@ window.addEventListener('scroll', function () {
     }
 })  
 
-
+// Auto close Flashmessage after 6sec
 if (document.getElementById('flash_messages') != null) {
     setTimeout(() =>
     {
         flashMessage.style.display = 'none'
     }, 6000)
+}
+
+// Set home page ibnput to 2.5rem height on homepage only
+if (window.location.pathname == '/') {
+    document.querySelector('#q').style.height = '2.5rem'
 }
 
