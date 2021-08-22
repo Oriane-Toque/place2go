@@ -2,6 +2,9 @@
 
 {% block title 'Sorties' %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block body %}
 
 	<style>
@@ -22,6 +25,12 @@
 		#list .list__card_content {
 			width: 100%;
 			margin: 0 1rem;
+		}
+
+		#map {
+			width: 100%;
+			height: 100%;
+			margin-bottom: 0.8rem;
 		}
 	</style>
 
@@ -113,13 +122,28 @@
 					{% endfor %}
 				</div>
 
-				<div
-					class="col-4">{# MAP #}
+				<div class="col-4 mb-2">
+					<div id='map' class=""></div>
 				</div>
-			</div>
 
-		</section>
+			</section>
 
-	</div>
+		</div>
 
-{% endblock %}
+	<script>
+
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+
+		let map = new mapboxgl.Map({
+			container: 'map', // Container ID
+			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+			center: [1.835895, 48.637596], // Starting position [lng, lat]
+			zoom: 8, // Starting zoom level
+		});
+
+	</script>
+
+	{% endblock %}
+
+
+
