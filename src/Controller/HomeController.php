@@ -24,6 +24,7 @@ class HomeController extends AbstractController
 		// récupération de l'utilisateur
 		$user = $this->getUser();
 
+		// dd($user->getCity());
 		// top 6 categories -> meilleur score events
 		$topCategories = $cr->findTopCategories();
 
