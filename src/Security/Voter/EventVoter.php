@@ -41,45 +41,45 @@ class EventVoter extends Voter
                 break;
             case 'EVENT_CREATE':
 
-                if (!$user instanceof UserInterface) return false;
-                if (!$this->security->isGranted('ROLE_USER')) return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
 
                 return true;
 
                 break;
             case 'EVENT_EDIT':
 
-                if (!$user instanceof UserInterface) return false;
-                if (!$this->security->isGranted('ROLE_USER')) return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor()->getId()) return false;
+                if ($user !== $event->getAuthor()->getId())     return false;
 
 
                 break;
             case 'EVENT_DELETE':
 
-                if (!$user instanceof UserInterface) return false;
-                if (!$this->security->isGranted('ROLE_USER')) return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor()->getId()) return false;
+                if ($user !== $event->getAuthor()->getId())     return false;
 
 
                 break;
             case 'EVENT_JOIN':
 
-                if (!$user instanceof UserInterface) return false;
-                if (!$this->security->isGranted('ROLE_USER')) return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // If user is already an attendant of the event, deny access
-                if ($event->getAttendants()->contains($user)) return false;
+                if ($event->getAttendants()->contains($user))   return false;
 
                 break;
 
             case 'EVENT_LEAVE':
 
-                if (!$user instanceof UserInterface) return false;
-                if (!$this->security->isGranted('ROLE_USER')) return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // If user is not an attendant of the event, deny access
-                if (!$event->getAttendants()->contains($user)) return false;
+                if (!$event->getAttendants()->contains($user))  return false;
 
                 break;
         }
