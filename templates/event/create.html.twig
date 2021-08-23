@@ -3,44 +3,48 @@
 {% block title 'Créer une sortie' %}
 
 {% block body %}
-			<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
-			<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
-			<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-			<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+	<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
 
-			<style>
-				.mapboxgl-ctrl-geocoder,
-				.mapboxgl-ctrl-geocoder .suggestions {
-					box-shadow: 0 0 0 0 rgb(0 0 0 / 0%) !important;
-					border: 1px solid #bdbdbd;
-					margin-bottom: 1rem;
-					width: 100% !important;
-					max-width: 100% !important;
-				}
-				#map {
-					height: 500px;
-					width: 100%;
-				}
-			</style>
+	<style>
+		.mapboxgl-ctrl-geocoder,
+		.mapboxgl-ctrl-geocoder .suggestions {
+			box-shadow: 0 0 0 0 rgb(0 0 0 / 0%) !important;
+			border: 1px solid #bdbdbd;
+			margin-bottom: 1rem;
+			width: 100% !important;
+			max-width: 100% !important;
+		}
+		#map {
+			height: 500px;
+			width: 100%;
+		}
+	</style>
 
-	
 
-			<!-- Load the `mapbox-gl-geocoder` plugin. -->
-			
+	<!-- Load the `mapbox-gl-geocoder` plugin. -->
 
-			<div class="container">
-				<div class="row">
-					<div class="col-12 py-5">
 
-						{% include "event/_event_form.html.twig" %}
+	<div class="container">
+		<div class="mb-4">
+			<h2 class="m-0">
+				<i class="fa fa-edit mr-2"></i>Créer une sortie</h2>
+		</div>
+		<div class="row">
 
-					</div>
-				</div>
+			<div class="col-12 py-5">
+
+				{% include "event/_event_form.html.twig" %}
+
 			</div>
+		</div>
+	</div>
 
 
-			<script>
-				// TO MAKE THE MAP APPEAR YOU MUST
+	<script>
+		// TO MAKE THE MAP APPEAR YOU MUST
 // ADD YOUR ACCESS TOKEN FROM
 // https://account.mapbox.com
 mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
@@ -54,7 +58,7 @@ zoom: 4.5
 });
 
 // Add the control to the map.
-const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr',});
+const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
 
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
@@ -72,7 +76,5 @@ let value = e.target.value;
 console.log(value);
 eventAddress.value = value;
 }
-			</script>
-		</body>
-	{% endblock %}
-
+	</script>
+</body>{% endblock %}
