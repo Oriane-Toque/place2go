@@ -3,13 +3,6 @@ window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar')
     navbar.classList.toggle('sticky', window.scrollY > 0)
 
-    if (window.scrollY > 0) {
-        this.document.querySelector('img.logo').classList.add('d-none')
-        this.document.querySelector('img.logo-sticky').classList.remove('d-none')
-    } else {    
-        this.document.qquerySelector('img.logo').classList.remove('d-none')
-        this.document.querySelector('img.logo-sticky').classList.add('d-none')
-    }
 })  
 
 // Auto close Flashmessage after 6sec

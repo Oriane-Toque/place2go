@@ -51,6 +51,24 @@ class AttendantRepository extends ServiceEntityRepository
         ;
     }
 
+
+    /**
+     * Return all attendants to one event
+     *
+     * @return Array All users
+     */
+    public function findAttendantsByEvent($event)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('u')
+            ->innerJoin('App\Entity\User', 'u', 'WITH', 'a.user = u.id')
+            ->where('a.event = :event')
+            ->setParameter('event', $event)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findByExampleField($value)
     {
