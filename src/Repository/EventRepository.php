@@ -171,7 +171,7 @@ class EventRepository extends ServiceEntityRepository
 
 
         $query = $query
-                ->andWhere('e.event_date > CURRENT_TIMESTAMP()')
+                // ->andWhere('e.event_date > CURRENT_TIMESTAMP()')
                 ->orderBy('e.event_date', 'ASC');
 
 
@@ -191,8 +191,8 @@ class EventRepository extends ServiceEntityRepository
 				->join('e.categories', 'c')
 				->where('c.id = :categoryId');
 				if(null !== $city) {
-					$query = $query->andWhere('e.city = :city')
-					->setParameter('city', $city);
+					$query = $query->andWhere('e.address LIKE :city')
+					->setParameter('city', "%{$city}%");
 				}
 				$query = $query->setParameter('categoryId', $category)
 				->orderBy('e.event_date', 'DESC');
@@ -210,8 +210,8 @@ class EventRepository extends ServiceEntityRepository
 
 			$query = $this->createQueryBuilder('e');
 			if(null !== $city) {
-					$query = $query->where('e.city = :city')
-							->setParameter('city', $city);
+					$query = $query->where('e.address LIKE :city')
+							->setParameter('city', "%{$city}%");
 			}
 			$query = $query->orderBy('RAND()')
 					->addOrderBy('e.event_date', 'DESC')
