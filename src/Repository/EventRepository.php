@@ -194,9 +194,29 @@ class EventRepository extends ServiceEntityRepository
 					$query = $query->andWhere('e.city = :city')
 					->setParameter('city', $city);
 				}
-				$query= $query->setParameter('categoryId', $category)
+				$query = $query->setParameter('categoryId', $category)
 				->orderBy('e.event_date', 'DESC');
 				
 				return $query->getQuery()->getResult();
+		}
+
+		/**
+		 * Return 6 random events
+		 *
+		 * @param String $city (option) ville enregistrée sur le compte utilisateur
+		 * @return Array liste des sorties
+		 */
+		public function findRandEvents(string $city = null): array {
+
+			$query = $this->createQueryBuilder('e');
+			if(null !== $city) {
+					$query = $query->where('e.city = :city')
+							->setParameter('city', $city);
+			}
+			$query = $query->orderBy('RAND()')
+					->addOrderBy('e.event_date', 'DESC')
+					->setMaxResults(6);
+
+			return $query->getQuery()->getResult();
 		}
 }
