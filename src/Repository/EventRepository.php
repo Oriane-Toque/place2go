@@ -59,12 +59,43 @@ class EventRepository extends ServiceEntityRepository
 				->getResult();
     }
 
+    /**
+	 * Get count of all events
+	 *
+	 * @return Int
+	 */
+	public function getTotalEvents():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
+	/**
+	 * Get count of events to come
+	 *
+	 * @return Int
+	 */
+	public function getTotalEventsToCome():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+			->where('e.event_date > CURRENT_DATE()')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
      /**
      * Retrieve all the cities (but still in DESC order)
      *
      * @return Array all the cities
      */
-    public function findAllCities(): array
+    /*public function findAllCities(): array
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
@@ -74,7 +105,8 @@ class EventRepository extends ServiceEntityRepository
             ORDER BY count DESC'
         );
         return $query->getResult();
-    }
+    }*/
+
    
     /**
      * Recover the last three events of the organizer order by event date (DESC)
