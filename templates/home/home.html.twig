@@ -109,10 +109,10 @@
 									</div>
 
 									<div class="list__cards_join">
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-danger">
+										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
 											<i class="fas fa-user-minus"></i>
 										</a>
-										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-info ms-2">
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
 											<i class="fas fa-user-plus"></i>
 										</a>
 									</div>
@@ -120,6 +120,10 @@
 
 							</div>
 
+						</div>
+						{% else %}
+						<div>
+							Aucun résultat trouvé.
 						</div>
 			{% endfor %}
 		</div>

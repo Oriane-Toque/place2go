@@ -28,12 +28,13 @@ class HomeController extends AbstractController
 		$topCategories = $cr->findTopCategories();
 
 		// 6 random events order by event date
-		// option en fonction de la ville enregistrée sur le compte utilisateur
-		if($user) $randEvents = $er->findRandEvents($user->getCity());
-
-		$randEvents = $er->findRandEvents();
-
-		dump($randEvents);
+		// optionnel - en fonction de la ville enregistrée sur le compte utilisateur
+    if ($user) {
+        $randEvents = $er->findRandEvents($user->getCity());
+    } else {
+			$randEvents = $er->findRandEvents();
+		}
+		
 		// top 6 contributors -> meilleur score events
 		$topContributors = $er->findTopContributors();
 
