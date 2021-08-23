@@ -37,18 +37,15 @@ class EventType extends AbstractType
                 'required' => true,
             ])
             ->add('event_date', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => 'Date de la sortie *',
                 'data' => new DateTime(),
                 'required' => true,
             ])
-            ->add('address', TextType::class, [
+            ->add('address', HiddenType::class, [
                 'label' => 'Adresse',
                 'required' => false,
             ])
-            /*->add('city', TextType::class, [
-                'label' => 'Ville *',
-                'required' => true,
-            ])*/
             ->add('maxAttendants', ChoiceType::class, [
                 'label' => 'Nbre max de participants *',
                 'required' => true,

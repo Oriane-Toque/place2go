@@ -4,128 +4,53 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>
-			{% block title %}{% endblock %}
-			- Place 2 Go
-		</title>
-		{% block stylesheets %}
-			<!-- Font Awesome -->
-			<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-			<!-- MDB -->
-			<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
-			<!-- Custom CSS -->
-			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-		{#{{ encore_entry_link_tags('app') }}#}
+		
+		{% block meta %}
 		{% endblock %}
+
+		{# MDB #}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
+		{# Font Awesome #}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+		{# CSS #}			
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		{# MAPBOX #}
+		<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+		{# MAPBOX #}
+		<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>	
+		
+		{% block stylesheets %}
+			{#{{ encore_entry_link_tags('app') }}#}
+		{% endblock %}
+
 		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
 		{% endblock %}
+		
+		<title>{% block title %}{% endblock %}- Place 2 Go</title>
 	</head>
 
 	<body>
-		{% include "_partials/_navbar.html.twig" %}
+		
+		<header id="header" role="banner">
+			{% include "_partials/_navbar.html.twig" %}
 
-		<header class="page-header-ui bg-light page-header-light">
-			<!-- Background image -->
-			<div class="p-5 text-center text-white bg-image">
-				<div class="mask">
-				<div class="d-flex justify-content-center align-items-center h-100">
-					<div class="text-white">
-					<h1 class="mb-3">Envie de sortir ?</h1>
-					<p class="lead">Cherchez la sortie qui vous convient le mieux</p>
-						{#{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'row row-cols-lg-auto g-3 align-items-center'}}) }}
-							<div class="col-6">
-							{{ form_row(form.localisation, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-							<div class="col-3">
-							{{ form_row(form.distance, {'attr': {'class': 'form-select form-select-lg'}}) }}
-							</div>
-								<div class="col-3">
-							{{ form_row(form.save, {'attr': {'class': 'btn-outline-light btn-lg'}}) }}
-							</div>
-						{{ form_end(form) }}
-
-						{% if coord is defined %}
-
-						<p> Coordonnées pour {{ form.localisation.vars.value }} : {{ coord|join(', ') }}</p>
-
-						{% endif %}#}
-					</div>
-				</div>
-				</div>
-			</div>
+			{% block banner %}{% endblock %}
 		</header>
 
-		<div class="container-fluid py-5"> 
-		{% include "_partials/_flashmessages.html.twig" %}
-        {% block body %}
-        {% endblock %}
+		<div class="container-fluid p-0 m-0 g-0"> 
+			{% include "_partials/_flashmessages.html.twig" %}
+			
+			{% block body %}
+			{% endblock %}
 		</div>
 		
-		<footer class="footer pt-5 pb-5 mt-auto bg-light footer-light">
-			<div class="container">	
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="footer-brand">Place 2 Go</div>
-						<div class="mb-3">Site gratuit (pour le moment) de recherche de sorties en fonction de la localisation et de centres d'intérêts ;)</div>
-						<div class="icon-list-social mb-5">
-							<a href="#" target="_blank" rel="noopener" title="Twitter" class="icon-list-social-link"><i class="fab fa-twitter fa-3x"></i></a>
-							<a href="#" target="_blank" rel="noopener" title="GitHub" class="icon-list-social-link"><i class="fab fa-github fa-3x"></i></a>
-							<a href="#" target="_blank" rel="noopener" title="Facebook" class="icon-list-social-link"><i class="fab fa-facebook fa-3x"></i></a>
-						</div>
-					</div>
-					<div class="col-lg-9">
-						<div class="row">
-							<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-								<div class="text-uppercase-expanded text-xs mb-4">Villes populaires</div>
-								{% if popularCities is defined %}
-								<ul class="list-unstyled mb-0">
-								{% for city in popularCities %}
-									<li class="mb-2"><a href="#">{{ city.name}}</a></li>
-								{% endfor %}
-								</ul>
-								{% endif %}
-							</div>
-							<div class="col-lg-3 col-md-6 mb-5 mb-md-0">
-								<div class="text-uppercase-expanded text-xs mb-4">Support</div>
-								<ul class="list-unstyled mb-0">
-									<li class="mb-2"><a href="#">Knowledge Base</a></li>
-									<li><a href="#">Custom Development</a></li>
-								</ul>
-							</div>
-							<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-								<div class="text-uppercase-expanded text-xs mb-4">Ressources</div>
-								<ul class="list-unstyled mb-0">
-									<li class="mb-2"><a href="#">Symfony</a></li>
-									<li class="mb-2"><a href="#">Bootstrap</a></li>
-									<li><a href="#">Tomtom API Map</a></li>
-								</ul>
-							</div>
-							<div class="col-lg-3 col-md-6">
-								<div class="text-uppercase-expanded text-xs mb-4">Société</div>
-								<ul class="list-unstyled mb-0">
-									<li class="mb-2"><a href="#">A propos</a></li>
-									<li class="mb-2"><a href="#">Mentions légales</a></li>
-									<li class="mb-2"><a href="#">Confidentialités</a></li>
-									<li><a href="#">Contactez-nous</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr class="my-5">
-				<div class="text-lg-center">Copyright © Team Trinity 2021</div>
-				<div class="text-lg-center text-xs fst-italic">Website built with <i class="fas fa-heart"></i> and with our hands. Illustrations by <a href="https://freepik.com/">Freepik</a>.</div>
-			</div>
-		</footer>
+		{% include "_partials/_footer.html.twig" %}
 
-		<!-- JQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-		<!-- MDB -->
+		{# MDB #}
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
-		<!-- Custom JS -->
+		{# JS #}
         <script src="{{ asset('js/app.js') }}"></script>
+
 	</body>
 </html>

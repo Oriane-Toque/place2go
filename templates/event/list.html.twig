@@ -2,70 +2,146 @@
 
 {% block title 'Sorties' %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block body %}
 
-	<div class="container-xl my-5">
+	<style>
+		#list .list__card {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+
+			margin-bottom: 0.8rem;
+			padding: 0.4rem 0.8rem;
+
+			border-bottom-left-radius: 70px;
+			border-top-left-radius: 70px;
+			border: 1px solid rgba(0, 0, 0, 0.05);
+		}
+
+		#list .list__card_content {
+			width: 100%;
+			margin: 0 0.5rem 0 1rem;
+		}
+
+		#map {
+			width: 100%;
+			height: 100%;
+			margin-bottom: 0.8rem;
+		}
+	</style>
+
+	<div class="container-xl p-sm-3 p-lg-0 mt-5">
 
 		<section id="search">
 
 			<div class="row">
-				<div class="col">
-					{% include 'event/_filter.html.twig' with {form: form} only %}
+
+				<div class="col-12">
+					{% include 'event/_filter.html.twig' %}
+			
 				</div>
 			</div>
-        
-        </section>
-
-		<section id="event-list">
-
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Nom</th>
-						<th>Localisation</th>
-						<th>Date</th>
-						<th>Organisateur</th>
-						<th>Nb Participants</th>
-						<th>Catégories</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{% for event in events %}
-						<tr>
-							<td>{{ event.id }}</td>
-							<td>
-								<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
-							</td>
-							<td>{{ event.city }}</td>
-							<td>{{ event.eventDate | date('d-m-Y H:i') }}</td>
-							<td>
-								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
-							</td>
-							<td>
-								{{ event.attendants|length }}
-								/
-								{{ event.maxAttendants }}
-							</td>
-							<td>
-								{% for category in event.categories %}
-									{{ category.name }}{{ loop.last ? '' : ', ' }}
-								{% endfor %}
-							</td>
-
-
-						</tr>
-					{% else %}
-						<tr>
-							<td colspan="5">Aucune sortie ne correspond à votre recherche</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
 
 		</section>
 
-	</div>
+		<section id="list" class="mt-5">
+
+			<div class="row">
+				<div class="col-8">
+
+					{% for event in events %}
+
+						<div class="list__card shadow-3">
+
+							<div class="list__card_image">
+								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
+								</a>
+							</div>
+
+							<div class="list__card_content">
+								<div class="d-flex justify-content-between mb-2">
+									<div class="list__cards_author">
+										<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark text-decoration-underline">{{ event.author.nickname }}</a>
+									</div>
+									<div class="list__card_date">
+										<small class="text-muted fst-italic">le
+											{{ event.eventDate | date('D M Y à H:i') }}</small>
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between">
+									<div class="list__card_title">
+										<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
+									</div>
+									<div class="list__cards_attendants text-muted">
+										<small class="text-muted fst-italic">
+											{{ event.attendants|length }}
+											/
+											{{ event.maxAttendants }}
+										</small>
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between">
+									<div class="list__card_address">
+										{{ event.address }}
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between align-items-end mt-2">
+									<div>
+										{% for category in event.categories %}
+											<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+										{% endfor %}
+									</div>
+
+									<div class="list__cards_join">
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-danger">
+											<i class="fas fa-user-minus"></i>
+										</a>
+										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-info ms-2">
+											<i class="fas fa-user-plus"></i>
+										</a>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					{% else %}
+						<div>
+							Aucun résultat trouvé.
+						</div>
+					{% endfor %}
+				</div>
+
+				<div class="col-4 mb-2">
+					<div id='map' class=""></div>
+				</div>
+
+			</section>
+		</div>
+
+	<script>
+
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+
+		let map = new mapboxgl.Map({
+			container: 'map', // Container ID
+			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+			center: [1.835895, 48.637596], // Starting position [lng, lat]
+			zoom: 8, // Starting zoom level
+		});
+
+	</script>
 
 {% endblock %}
+
+
+

@@ -67,10 +67,10 @@ class ProfileController extends AbstractController
 			return $this->redirectToRoute("app_login");
 		}
 
-		/**
-		 * Edit user profile
-		 * 
-     * @Route("profile/edit", name="app_profile_edit", methods={"GET","POST"})
+	/**
+	 * Edit user profile
+	 * 
+     * @Route("/profile/edit", name="app_profile_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {

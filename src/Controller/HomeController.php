@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Services\Sort;
 use App\Data\SearchData;
 use App\Form\SearchFormType;
 use App\Repository\EventRepository;
@@ -14,35 +13,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    private $sort;
 
-    public function __construct(Sort $sort){
-        $this->sort = $sort;
-    }    
+	/**
+	 * Return & display Home page with top 6 cities & categories
+	 * 
+	 * @Route("/", name="app_home")
+	 */
+	public function home(Request $request, CategoryRepository $cr, EventRepository $er): Response
+	{
+		// top 6 categories -> meilleur score events
+		$topCategories = $cr->findTopCategories();
+		// top 6 cities -> meilleur score events
+		$topCities = $er->findTopCities();
+		// top 6 contributors -> meilleur score events
+		$topContributors = $er->findTopContributors();
 
-    /**
-     * @Route("/", name="app_home")
-     */
-    public function home(Request $request, EventRepository $er, CategoryRepository $cr): Response
-    {
-        $topCities = $er->findPopularCities(5);
-        $allCities = $er->findAllCities();
-        $categoriesList = $cr->findAllCategories();
+		// Init Data for form search, change action to event list to hanfle request
+		$data = new SearchData();
+		$form = $this->createForm(SearchFormType::class, $data, [
+			'action' => $this->generateUrl('app_event_list'),
+		]);
 
-        // Init Data to handle form search
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+		// Handle the form request and use $data in custom query to show searched events
+		$form->handleRequest($request);
 
-        // Handle the form request and use $data in custom query to show searched events
-        $form->handleRequest($request);
-        
-        
-        return $this->render('home/home.html.twig', [
-            'topCities' => $topCities,
-            'cityList' => $allCities,
-            'allCategories' => $this->sort->allCategories($categoriesList),
-            'topCategories' => $this->sort->sliceCategories($categoriesList),
-            'form' => $form->createView(),
-        ]);
-    }
+		return $this->render('home/home.html.twig', [
+			'topCategories' => $topCategories,
+			'topCities' => $topCities,
+			'topContributors' => $topContributors,
+			'form' => $form->createView(),
+		]);
+	}
 }

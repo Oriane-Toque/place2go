@@ -12,22 +12,24 @@
 
     <div class="row">
         <div class="col-md-6">
-            {{ form_row(form.address, {'attr': {'placeholder': '25 rue du Général...'}}) }}
+            <label class="form-label required">Adresse *</label>
+            <div id="geocoder" class="geocoder"></div>
+
         </div>
         <div class="col-md-6">
             {{ form_row(form.maxAttendants) }}
         </div>
     </div>
 
+    
+
     <div class="row">
         <div class="col-md-6">
-            {{ form_row(form.city, {'attr': {'placeholder': 'Paris, Lyon, ...'}}) }}
             {{ form_row(form.description, {'attr': {'placeholder': 'Détaillez votre sortie (description, organisation, lieu...)'}}) }}
-            {{ form_row(form.categories) }}
+            {{ form_row(form.categories, {'attr': {'style': 'columns: 2;'}})  }}
         </div>
         <div class="col-md-6">
-            <h3>Cliquez sur la carte pour indiquer l'adresse de votre sortie</h3>
-            <div class="event-map"></div>
+            <div id="map"></div>
         </div>
     </div>
 
