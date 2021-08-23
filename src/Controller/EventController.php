@@ -54,8 +54,15 @@ class EventController extends AbstractController
 			$form->handleRequest($request);
 			
 			$events = $eventRepository->findSearch($data);
-			$location = $this->callApiService->getApi($data->q);
-			$geoJson = $this->geoJson->createGeoJson($events);
+
+			if (($data->q) !== null){
+				$geoJson = $this->geoJson->createGeoJson($events);
+				$location = $this->callApiService->getApi($data->q);
+			} else {
+				$geoJson = null;
+				$location = [2.347, 48.859];
+			};
+			
 
 			return $this->render('event/list.html.twig', [
 				'events' => $events,
