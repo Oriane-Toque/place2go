@@ -54,13 +54,12 @@ class EventController extends AbstractController
 			$form->handleRequest($request);
 			
 			$events = $eventRepository->findSearch($data);
+			$geoJson = $this->geoJson->createGeoJson($events);
 
-			if (($data->q) !== null){
-				$geoJson = $this->geoJson->createGeoJson($events);
+			if (!empty($data->q)){
 				$location = $this->callApiService->getApi($data->q);
 			} else {
-				$geoJson = null;
-				$location = [2.347, 48.859];
+				$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
 			};
 			
 
