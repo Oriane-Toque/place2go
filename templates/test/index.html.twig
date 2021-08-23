@@ -1,78 +1,78 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Add a geocoder</title>
-		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-		<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
-		<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
+{% extends "layout/base.html.twig" %}
 
-		<style>
-			.geocoder {
+{% block title 'Créer une sortie' %}
 
-			}
-			.mapboxgl-ctrl-geocoder {
-				min-width: 100%;
-			}
-			#map {
-				height: 100%;
-                width: 100%;
-			}
-		</style>
-	</head>
-	<body>
+{% block body %}
+			<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+			<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+			<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+			<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
 
-		<!-- Load the `mapbox-gl-geocoder` plugin. -->
-		<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+			<style>
+				.mapboxgl-ctrl-geocoder,
+				.mapboxgl-ctrl-geocoder .suggestions {
+					box-shadow: 0 0 0 0 rgb(0 0 0 / 0%) !important;
+					border: 1px solid #bdbdbd;
+					margin-bottom: 1rem;
+					width: 100% !important;
+					max-width: 100% !important;
+				}
+				#map {
+					height: 100%;
+					width: 100%;
+				}
+			</style>
 
+	
 
-		<div class="row">
-			<div class="col-8">
-				
-                {% include "event/_event_form.html.twig" %}
+			<!-- Load the `mapbox-gl-geocoder` plugin. -->
 			
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12 py-5">
+
+						{% include "event/_event_form.html.twig" %}
+
+					</div>
+				</div>
 			</div>
-			<div class="col-4">
-				<div id="map"></div>
-			</div>
-		</div>
-
-		<script>
-			// TO MAKE THE MAP APPEAR YOU MUST
-            // ADD YOUR ACCESS TOKEN FROM
-            // https://account.mapbox.com
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-            const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [
-            -79.4512, 43.6568
-            ],
-            zoom: 13
-            });
-
-            // Add the control to the map.
-            const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl});
-
-            document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 
-                const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
-                const eventAddress = document.querySelector('#event_address');
-                console.log(eventAddress);
-                let value;
+			<script>
+				// TO MAKE THE MAP APPEAR YOU MUST
+// ADD YOUR ACCESS TOKEN FROM
+// https://account.mapbox.com
+mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [
+-79.4512, 43.6568
+],
+zoom: 13
+});
 
-                input.addEventListener('change', handle);
-                input.addEventListener('keydown', handle);
+// Add the control to the map.
+const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl});
 
-                function handle(e) {
-                    let value = e.target.value;
-                    console.log(value);
-                    eventAddress.value = value;
-                }
-		</script>
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
-	</body>
-</html>
+
+const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+const eventAddress = document.querySelector('#event_address');
+console.log(eventAddress);
+let value;
+
+input.addEventListener('change', handle);
+input.addEventListener('keydown', handle);
+
+function handle(e) {
+let value = e.target.value;
+console.log(value);
+eventAddress.value = value;
+}
+			</script>
+		</body>
+	{% endblock %}
+

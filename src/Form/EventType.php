@@ -31,6 +31,7 @@ class EventType extends AbstractType
                 'required' => true,
             ])
             ->add('event_date', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => 'Date de la sortie *',
                 'data' => new DateTime(),
                 'required' => true,
