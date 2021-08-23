@@ -233,46 +233,47 @@ header .bg-image {
   margin: 0 0.5rem 0 1rem;
 }
 
-/*****************************************************************? COLOR */
+/*****************************************************************? EVENT LIST */
 
-.bg-light {
-  background-color: #f2f6fc !important;
+#show .show__card {
+  padding: 1rem;
 }
 
-.bg-white-20 {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+#show .show__card_title {
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 1rem;
+  color: rgb(0,0,0);
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 }
 
-.text-light {
-  color: #f2f6fc !important;
+#show .show__card_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-svg.text-light {
-  fill: #f2f6fc !important;
+#show .show__card_header-author{ 	
+  width: 100%;	
 }
 
-.footer.footer-light,
-.navbar-light .navbar-nav .nav-link,
-.page-header-ui-text {
-  color: #69707a !important;
+#show .show__card_content {
+  position: relative;
 }
 
-.footer-admin a,
-.footer a,
-.text-reset {
-  color: inherit !important;
+#show .show__card_content-attendants, .show__card_content-date, .show__card_address {
+  color: #757575;
+    font-style: italic;
 }
 
-/****************************
-* ALIGNEMENT & STYLE
-*****************************/
-
-.pt-6 {
-  padding-top: 6rem !important;
-}
-
-.pb-6 {
-  padding-bottom: 6rem !important;
+#show .show__card_content-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  align-items: flex-end;
 }
 
 /*****************************************************************? FOOTER */
@@ -318,7 +319,6 @@ svg.text-light {
 
 @media screen and (min-width: 700px) {
   /************************************************ HOME  */
-
   .topScore {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -341,11 +341,11 @@ svg.text-light {
 
 @media screen and (min-width: 1200px) {
   /************************************************ CONTAINER  */
-  .container-xl {
+  .container {
     padding: 0;
   }
-  /************************************************ HOME  */
 
+  /************************************************ HOME  */
   .topScore {
     grid-template-columns: repeat(3, 1fr);
   }
