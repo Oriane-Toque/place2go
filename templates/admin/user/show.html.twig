@@ -10,8 +10,13 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Utilisateurs</h1>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
+        {% if user.isActive %}
+        <a href="{{ path('admin_user_desactive', {id: user.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
             class="fas fa-ban fa-sm text-white-50"></i> Bloquer</a>
+        {% else %}
+        <a href="{{ path('admin_user_active', {id: user.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
+            class="fas fa-ban fa-sm text-white-50"></i> Activer</a>
+        {% endif %}
         <a href="{{ path('admin_user_delete', {id: user.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
             class="fas fa-trash fa-sm text-white-50"></i> Supprimer</a>
     </div>
