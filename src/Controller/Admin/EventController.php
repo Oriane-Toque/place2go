@@ -60,9 +60,7 @@ class EventController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Sortie créée avec succès !');
 
-            return $this->redirectToRoute('admin_event_show', [
-                'id' => $event->getId(),
-            ]);
+            return $this->redirectToRoute('admin_event_list');
         }
 
         return $this->render('admin/event/create.html.twig', [
@@ -90,9 +88,7 @@ class EventController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Sortie modifiée avec succès !');
 
-            return $this->redirectToRoute('admin_event_show', [
-                'id' => $event->getId(),
-            ]);
+            return $this->redirectToRoute('admin_event_list');
         }
 
         return $this->render('admin/event/edit.html.twig', [
