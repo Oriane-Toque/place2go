@@ -23,10 +23,13 @@ class HomeController extends AbstractController
 	{
 		// top 6 categories -> meilleur score events
 		$topCategories = $cr->findTopCategories();
-		// top 6 cities -> meilleur score events
-		$topCities = $er->findTopCities();
+		// 6 random events order by event date
+		$randEvents = $er->findRandEvents("city0");
+
 		// top 6 contributors -> meilleur score events
 		$topContributors = $er->findTopContributors();
+
+		dd($randEvents);
 
 		// Init Data for form search, change action to event list to hanfle request
 		$data = new SearchData();
