@@ -1,14 +1,14 @@
 {# Navigation secondaire du dashboard + informations #}
 <aside
-	class="dashAction" style="width:25%;">
+	class="dashAction --desktop" style="width:25%;">
 	{# Info personnel + Ajout Ami + Edition Compte #}
-	<div class="card mt-3">
+	<div class="dashAction__item card mt-3">
 		<div
 			class="card-body">
 			{# Infos sur l'utilisateur #}
-			<div class="infos">
+			<div class="dashAction__item-infos">
 				<img src="{{ user.avatar }}" alt="photo de {{ user }}">
-				<div class="infos__details">
+				<div class="dashAction__item-infos_details">
 					<p>{{ user.lastname }}</p>
 					<p>{{ user.firstname }}</p>
 					<p>{{ user.email }}</p>
@@ -25,7 +25,7 @@
 	</div>
 
 	{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
-	<div class="card mt-3">
+	<div class="dashAction__item card mt-3">
 		<div
 			class="card-body d-flex">
 			{# Bouton qui affiche l'historique #}
@@ -52,7 +52,7 @@
 	</div>
 
 	{# Description de l'utilisateur #}
-	<div class="card mt-3">
+	<div class="dashAction__item card mt-3">
 		<div class="card-header">A propos de moi</div>
 		<div class="card-body">
 			{{ user.description }}
@@ -60,7 +60,7 @@
 	</div>
 
 	{# Liste des Amis #}
-	<div class="card mt-3">
+	<div class="dashAction__item card mt-3">
 		<div class="card-header">My Friends</div>
 		<div class="card-body">
 			<img src="#" alt="photo profil ami">
@@ -74,4 +74,54 @@
 		</div>
 	</div>
 
+</aside>
+
+<aside class="dashAction --mobile">
+
+	{# Infos sur l'utilisateur #}
+	<div id="infos" class="dashAction__item">
+		<img src="{{ user.avatar }}" alt="photo de {{ user }}">
+		<div class="dashAction__item-infos_details">
+			<a href="{{ path("app_profile_show", {id:user.id}) }}">{{ user }}</a> 
+		</div>
+	</div>
+
+	{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
+	<div class="dashAction__item">
+
+			{# Edition de l'utilisateur #}
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="{{ path('app_profile_edit') }}" role="button">
+					<i class="fas fa-user-edit"></i>
+				</a>
+			</p>
+
+			{# Bouton qui affiche l'historique #}
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="#!" role="button">
+					<i class="far fa-calendar-check"></i>
+				</a>
+			</p>
+
+			{# Bouton qui affiche le tchat privé #}
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="#!" role="button">
+					<i class="fab fa-rocketchat"></i>
+				</a>
+			</p>
+
+			{# Bouton qui affiche le dashboard/profil #}
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button">
+					<i class="fas fa-user-circle"></i>
+				</a>
+			</p>
+
+			{# Bouton qui affiche le dashboard/profil #}
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button">
+					<i class="fas fa-user-friends"></i>
+				</a>
+			</p>
+	</div>
 </aside>
