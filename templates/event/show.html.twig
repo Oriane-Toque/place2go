@@ -4,53 +4,120 @@
 	{{ event.title }}
 {% endblock %}
 
-
 {% block body %}
 
-	<div class="container-xl my-5">
+	<style>
+		#map {
+		width: 100%;
+		height: 100%;
+		margin-bottom: 0.8rem;
+		}
 
-		<section id="event-show">
+		#show .show__card {
+			padding: 1rem;
+		}
+
+		#show .show__card_title {
+			text-align: center;
+			font-size: 1.3rem;
+			padding: 1rem;
+			color: rgb(0,0,0);
+			text-transform: uppercase;
+			text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+		}
+
+		#show .show__card_header {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-bottom: 1rem;
+		}
+
+		#show .show__card_header-author{ 	
+			width: 100%;	
+		}
+
+		#show .show__card_content {
+			position: relative;
+		}
+
+		#show .show__card_content-attendants, .show__card_content-date, .show__card_address {
+			color: #757575;
+    		font-style: italic;
+		}
+
+		#show .show__card_content-footer {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			margin-top: 2rem;
+			align-items: flex-end;
+		}
+	</style>
+
+	<div class="container-xl my-5">
+		<section id="show" class="mt-5">
 
 			<div class="row">
 				<div class="col-6">
 
-					<div class="card">
-						<img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="card-img-top" height="150" alt="image"/>
+					<div class="show__card shadow-1">
+						<div class="show__card_title">
+							{{ event.title }}
+						</div>
+						<div class="show__card_header">
+							<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">
+								<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle show__card_header-avatar" height="120" width="120"/>
+							</a>
 
-						<div class="card-body">
-							<div class="d-flex justify-content-between">
-								<h5 class="card-author">
-									<a href="{{ path('app_profile_show', {id: event.author.id}) }}">{{ event.author.nickname }}</a>
-								</h5>
-								<div class="card-place">
-									{{ event.attendants|length }}
-									/
-									{{ event.maxAttendants }}
-									participants
+							<div class="show__card_header-author">
+								<div class="text-decoration-underline ms-3">
+									organisateur :
+								</div>
+								<div class="ms-3">
+									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark show__card_header-author">{{ event.author.nickname }}</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="show__card_content">
+							<div class="my-3">
+								<div class="show__card_content-attendants">
+									<i class="fas fa-caret-right"></i>
+									<span class="">Nombre de Participants :</span> 
+									{{ event.attendants|length }} / {{ event.maxAttendants }}
+								</div>
+								
+								<div class="show__card_content-date ">
+									<i class="fas fa-caret-right"></i>
+									Le {{ event.eventDate | date('d/m/Y') }}
+								</div>
+
+								<div class="show__card_address">
+									<i class="fas fa-caret-right"></i>
+									<span class="text-decoration-underline"></span> {{ event.address }}
 								</div>
 							</div>
 
-							<div class="d-flex justify-content-between">
-								<h3 class="card-title">{{ event.title }}</h5>
-								<div class="card-date text-muted">Date :
-									{{ event.eventDate|date('d-m-Y H:i') }}
-								</div>
-							</div>
-
-							<p class="card-description">
+							<div class="show__card_content-description">
 								{{ event.description }}
-							</p>
-							<div class="d-flex justify-content-end">
-								{% if is_granted('ROLE_USER') %}
-									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-success btn-floating">
-										<i class="fas fa-calendar-plus"></i>
+							</div>
+
+							<div class="show__card_content-footer">
+								<div>
+									{% for category in event.categories %}
+										<span class="text-muted fst-italic">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+									{% endfor %}
+								</div>
+
+								<div class="show__cards_join">
+									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-floating">
+										<i class="fas fa-user-minus"></i>
 									</a>
-									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-danger btn-floating">
-										<i class="fas fa-sign-out-alt"></i>
+									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-floating ms-2">
+										<i class="fas fa-user-plus"></i>
 									</a>
-								{% else %}
-									Veuillez-vous connecter pour participer !
-								{% endif %}
+								</div>
 							</div>
 						</div>
 
@@ -58,20 +125,23 @@
 				</div>
 
 				<div class="col-6">
-					<p>
-						La carte ici !
-					</p>
-					<p>
-						lat:
-						{{ event.lat }}</p>
-					<p>
-						lon:
-						{{ event.lon }}</p>
+					<div id='map' class="shadow-1"></div>
 				</div>
-			</div>
 
-		</section>
+			</section>
+		</div>
 
-	</div>
+	<script>
+
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+
+		let map = new mapboxgl.Map({
+			container: 'map', // Container ID
+			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+			center: [1.835895, 48.637596], // Starting position [lng, lat]
+			zoom: 8, // Starting zoom level
+		});
+
+	</script>
 
 {% endblock %}
