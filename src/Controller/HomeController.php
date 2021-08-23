@@ -51,7 +51,7 @@ class HomeController extends AbstractController
 		$form->handleRequest($request);
 
 		return $this->renderForm('home/home.html.twig', [
-			'form' => $form->createView(),
+			'form' => $form,
 			'topCategories' => $topCategories,
 			'randEvents' => $randEvents,
 			'topContributors' => $topContributors,
