@@ -29,7 +29,7 @@
 
 		#map {
 			width: 100%;
-			height: 100%;
+			height: 400px;
 			margin-bottom: 0.8rem;
 		}
 	</style>
@@ -39,6 +39,7 @@
 		<section id="search">
 
 			<div class="row">
+
 				<div class="col-12">
 					{% include 'event/_filter.html.twig' %}
 			
@@ -69,7 +70,7 @@
 									</div>
 									<div class="list__card_date">
 										<small class="text-muted fst-italic">le
-											{{ event.eventDate | date('D M Y à H:i') }}</small>
+											{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}</small>
 									</div>
 								</div>
 
@@ -100,10 +101,10 @@
 									</div>
 
 									<div class="list__cards_join">
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-danger">
+										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
 											<i class="fas fa-user-minus"></i>
 										</a>
-										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-info ms-2">
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
 											<i class="fas fa-user-plus"></i>
 										</a>
 									</div>

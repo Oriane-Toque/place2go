@@ -11,6 +11,7 @@ use App\Form\SearchFormType;
 use App\Services\isAttendant;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
+use App\Services\CallApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +19,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Twig\Environment;
+use Twig\Extensions\IntlExtension;
+
 
 class EventController extends AbstractController
 {
+
+    private $callApiService;
+
+    public function __construct(CallApiService $callApiService)
+    {
+        $this->callApiService = $callApiService;
+    }
+
 		/**
 		 * @Route("/events", name="app_event_list", methods={"GET"})
 		 * 
@@ -104,6 +116,77 @@ class EventController extends AbstractController
 			// on renvoit dans la vue
 		}
 
+    /**
+     * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
+     */
+    public function create(Request $request): Response
+    {
+        // New object
+        $event = New Event();
+
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->setAuthor($this->getUser());
+            // Add coordinates to Event
+
+            $coordinates = $this->callApiService->getApi($form['address']->getData());
+
+            // set coordinates fetched from geoAPI
+            $event->setLon($coordinates[0]);
+            $event->setLat($coordinates[1]);
+            
+            // push into the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($event);
+            dump($event);
+            $entityManager->flush();
+
+            // Flash message
+            $this->addFlash('success', 'Sortie créée avec succès !');
+
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
+
+        return $this->render('event/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
+     */
+    public function edit(Event $event, Request $request): Response
+    {
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            // No persist on edit
+            $entityManager->flush();
+
+            // Flash message
+            $this->addFlash('success', 'Sortie modifiée avec succès !');
+
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
+
+        return $this->render('event/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+                 
+    }
+
 		/**
 		 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
 		 * 
@@ -116,78 +199,6 @@ class EventController extends AbstractController
 			]);
 		}
 
-		/**
-		 * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
-		 * 
-		 * @param Request $request
-		 * 
-		 * @return Response
-		 */
-		public function create(Request $request): Response
-		{
-			// New object
-			$event = new Event();
-
-			// Create new form associated to entity
-			$form = $this->createForm(EventType::class, $event);
-			$form->handleRequest($request);
-
-			if ($form->isSubmitted() && $form->isValid()) {
-				$event->setAuthor($this->getUser());
-				// Add coordinates to event
-				$event->setLat('');
-				$event->setLon('');
-
-				$entityManager = $this->getDoctrine()->getManager();
-				$entityManager->persist($event);
-				$entityManager->flush();
-
-				// Flash message
-				$this->addFlash('success', 'Sortie créée avec succès !');
-
-				return $this->redirectToRoute('app_event_show', [
-					'id' => $event->getId(),
-				]);
-			}
-
-			return $this->render('event/create.html.twig', [
-				'form' => $form->createView(),
-			]);
-		}
-
-		/**
-		 * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
-		 * 
-		 * @param Event $event
-		 * @param Request $request
-		 * 
-		 * @return Response
-		 */
-		public function edit(Event $event, Request $request): Response
-		{
-			// Create new form associated to entity
-			$form = $this->createForm(EventType::class, $event);
-
-			$form->handleRequest($request);
-
-			if ($form->isSubmitted() && $form->isValid()) {
-
-				$entityManager = $this->getDoctrine()->getManager();
-				// No persist on edit
-				$entityManager->flush();
-
-				// Flash message
-				$this->addFlash('success', 'Sortie modifiée avec succès !');
-
-				return $this->redirectToRoute('app_event_show', [
-					'id' => $event->getId(),
-				]);
-			}
-
-			return $this->render('event/edit.html.twig', [
-				'form' => $form->createView(),
-			]);
-		}
 
 		/**
 		 * TODO optimiser la méthode pour éviter de passer par l'id
