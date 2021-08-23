@@ -235,6 +235,10 @@ header .bg-image {
 	display: none;
 }
 
+.dashAction.--mobile {
+	margin: 0 1rem;
+}
+
 .dashAction__item {
 	display: flex;
 	flex-direction: row;
@@ -257,8 +261,6 @@ header .bg-image {
 }
 
 .dashAction__item#infos {
-	width: 50%;
-	transform: translateX(50%);
 	border: none;
 	background-color: transparent;
 }
