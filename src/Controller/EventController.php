@@ -5,13 +5,10 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Data\SearchData;
-use App\Entity\Attendant;
-use App\Form\SearchFormType;
-use App\Services\isAttendant;
-use App\Repository\EventRepository;
-use App\Repository\AttendantRepository;
-use App\Services\CallApiService;
 use App\Services\GeoJson;
+use App\Form\SearchFormType;
+use App\Services\CallApiService;
+use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,8 +53,8 @@ class EventController extends AbstractController
 		$geoJson = $this->geoJson->createGeoJson($events);
 
 		return $this->render('event/list.html.twig', [
-			'events' => $events,
 			'form' => $form->createView(),
+			'events' => $events,
 			'geojson' => $geoJson,
 			'location' => $location,
 		]);
@@ -70,9 +67,8 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function create(Request $request): Response
+	public function create(Request $request, EntityManagerInterface $entityManager): Response
 	{
-		// New object
 		$event = new Event();
 
 		// Create new form associated to entity
@@ -80,9 +76,10 @@ class EventController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$event->setAuthor($this->getUser());
-			// Add coordinates to Event
 
+			$event->setAuthor($this->getUser());
+
+			// Search for coords with geoApi
 			$coordinates = $this->callApiService->getApi($form['address']->getData());
 
 			// set coordinates fetched from geoAPI
@@ -90,12 +87,9 @@ class EventController extends AbstractController
 			$event->setLon($coordinates[1]);
 
 			// push into the database
-			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($event);
-			dump($event);
 			$entityManager->flush();
 
-			// Flash message
 			$this->addFlash('success', 'Sortie créée avec succès !');
 
 			return $this->redirectToRoute('app_event_show', [
@@ -120,16 +114,13 @@ class EventController extends AbstractController
 	{
 		// Create new form associated to entity
 		$form = $this->createForm(EventType::class, $event);
-
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			$entityManager = $this->getDoctrine()->getManager();
-			// No persist on edit
 			$entityManager->flush();
 
-			// Flash message
 			$this->addFlash('success', 'Sortie modifiée avec succès !');
 
 			return $this->redirectToRoute('app_event_show', [
@@ -156,10 +147,7 @@ class EventController extends AbstractController
 		]);
 	}
 
-
 	/**
-	 * TODO optimiser la méthode pour éviter de passer par l'id
-	 * 
 	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
 	 * 
 	 * @param Event $event
@@ -174,12 +162,9 @@ class EventController extends AbstractController
 		$entityManager->remove($event);
 		$entityManager->flush();
 
-		// Flash message
 		$this->addFlash('success', 'Sortie supprimée avec succès');
 
-		//! redirection dans la page courante
-		// solution pour éviter une redirection vers la page liste
-		// quand on supprime depuis le profil privé
+		//? Handle redirect to previous visited page
 		return $this->redirect($request->headers->get('referer'));
 	}
 }

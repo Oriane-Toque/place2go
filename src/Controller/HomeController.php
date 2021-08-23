@@ -11,32 +11,34 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class HomeController extends AbstractController
 {
 
 	/**
-	 * Return & display Home page with top 6 cities & categories
+	 * @Route("/", name="app_home", methods={"GET"})
 	 * 
-	 * @Route("/", name="app_home")
+	 * @param Request $request
+	 * @param CategoryRepository $cr
+	 * @param EventRepository $er
+	 * 
+	 * @return Response
 	 */
 	public function home(Request $request, CategoryRepository $cr, EventRepository $er): Response
 	{
-		// récupération de l'utilisateur
 		$user = $this->getUser();
 
-		// dd($user->getCity());
-		// top 6 categories -> meilleur score events
+		// Get top 6 categories
 		$topCategories = $cr->findTopCategories();
 
-		// 6 random events order by event date
-		// optionnel - en fonction de la ville enregistrée sur le compte utilisateur
-    if ($user) {
-        $randEvents = $er->findRandEvents($user->getCity());
-    } else {
+		// 6 random events ordered by event_date with user location if user is logged in
+		if ($user) {
+			$randEvents = $er->findRandEvents($user->getCity());
+		} else {
 			$randEvents = $er->findRandEvents();
 		}
 
-		// top 6 contributors -> meilleur score events
+		// Get top 6 contributors
 		$topContributors = $er->findTopContributors();
 
 		// Init Data for form search, change action to event list to hanfle request
@@ -48,11 +50,11 @@ class HomeController extends AbstractController
 		// Handle the form request and use $data in custom query to show searched events
 		$form->handleRequest($request);
 
-		return $this->render('home/home.html.twig', [
+		return $this->renderForm('home/home.html.twig', [
+			'form' => $form->createView(),
 			'topCategories' => $topCategories,
 			'randEvents' => $randEvents,
 			'topContributors' => $topContributors,
-			'form' => $form->createView(),
 		]);
 	}
 }
