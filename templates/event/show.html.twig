@@ -13,21 +13,17 @@
 		margin-bottom: 0.8rem;
 		}
 
-		#show .row {
-			height: 500px;
-		}
-
 		#show .show__card {
-			height: 100%;
 			padding: 1rem;
-			border: 1px solid rgba(0,0,0,0.05);
 		}
 
 		#show .show__card_title {
 			text-align: center;
-			font-size: 1.5rem;
-			margin-bottom: 1rem;
-
+			font-size: 1.3rem;
+			padding: 1rem;
+			color: rgb(0,0,0);
+			text-transform: uppercase;
+			text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 		}
 
 		#show .show__card_header {
@@ -42,24 +38,30 @@
 		}
 
 		#show .show__card_content {
-			padding: 1rem;
+			position: relative;
 		}
 
-		#show .show__card_content-attendants, .show__card_content-date {
-			color: #757575!important;
-    		font-style: italic!important;
+		#show .show__card_content-attendants, .show__card_content-date, .show__card_address {
+			color: #757575;
+    		font-style: italic;
 		}
 
+		#show .show__card_content-footer {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			margin-top: 2rem;
+			align-items: flex-end;
+		}
 	</style>
 
 	<div class="container-xl my-5">
-
 		<section id="show" class="mt-5">
 
 			<div class="row">
 				<div class="col-6">
 
-					<div class="show__card">
+					<div class="show__card shadow-1">
 						<div class="show__card_title">
 							{{ event.title }}
 						</div>
@@ -79,44 +81,51 @@
 						</div>
 
 						<div class="show__card_content">
-							<div class="mb-3">
+							<div class="my-3">
 								<div class="show__card_content-attendants">
-									<span class="text-decoration-underline">Nombre de Participants :</span> 
+									<i class="fas fa-caret-right"></i>
+									<span class="">Nombre de Participants :</span> 
 									{{ event.attendants|length }} / {{ event.maxAttendants }}
 								</div>
 								
 								<div class="show__card_content-date ">
+									<i class="fas fa-caret-right"></i>
 									Le {{ event.eventDate | date('d/m/Y') }}
 								</div>
 
 								<div class="show__card_address">
+									<i class="fas fa-caret-right"></i>
 									<span class="text-decoration-underline"></span> {{ event.address }}
 								</div>
 							</div>
 
-							<div class="d-flex justify-content-between align-items-end mt-2">
+							<div class="show__card_content-description">
+								{{ event.description }}
+							</div>
+
+							<div class="show__card_content-footer">
 								<div>
 									{% for category in event.categories %}
-										<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+										<span class="text-muted fst-italic">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
 									{% endfor %}
 								</div>
 
 								<div class="show__cards_join">
-									<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-danger">
+									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-floating">
 										<i class="fas fa-user-minus"></i>
 									</a>
-									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-info ms-2">
+									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-floating ms-2">
 										<i class="fas fa-user-plus"></i>
 									</a>
 								</div>
 							</div>
-
 						</div>
+
 					</div>
 				</div>
 
 				<div class="col-6">
-					<div id='map' class=""></div>
+					<div id='map' class="shadow-1"></div>
 				</div>
 
 			</section>
