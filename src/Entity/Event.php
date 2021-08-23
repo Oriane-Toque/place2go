@@ -55,13 +55,6 @@ class Event
     private $address;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
-     */
-    private $city;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lat;
@@ -157,18 +150,6 @@ class Event
     public function setAddress(?string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }

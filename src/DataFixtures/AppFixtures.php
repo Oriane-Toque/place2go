@@ -64,7 +64,6 @@ class AppFixtures extends Fixture
             $event->setDescription("ceci est l'event n°$i, alonzy !");
             $event->setEventDate(new DateTime());
             $event->setAddress("12 rue du dada");
-            $event->setCity("city$i");
             $event->setLat("4.25641654897456");
             $event->setLon("4.25641654897456");
             $event->setMaxAttendants(7);
