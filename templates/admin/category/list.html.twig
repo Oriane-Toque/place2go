@@ -62,7 +62,13 @@
                             {% for category in categories %}
                                 <tr>
                                     <td>{{ category.id }}</td>
-                                    <td><img src="{{ category.picture }}" width="75"/></td>
+                                    <td>
+                                        {% if 'http' in category.picture %}
+                                        <img src="{{ category.picture }}" width="75" height="75" class="rounded-circle">
+                                        {% else %}
+                                        <img src="{{ asset('uploads/category/') ~ category.picture ?? 'default-category.svg' }}" width="75" height="75" class="rounded-circle">
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{{ path('admin_category_show', {id: category.id}) }}">{{ category.name }}</a>
                                     </td>

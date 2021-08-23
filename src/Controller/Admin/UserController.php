@@ -5,9 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
+use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -38,7 +40,7 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/users/create", name="admin_user_create", methods={"GET", "POST"})
      */
-    public function create(Request $request): Response
+    public function create(Request $request, FileUploader $fileUploader): Response
     {
         // New object
         $user = New User();
@@ -49,6 +51,22 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /** @var UploadedFile $imgFile */
+            $imgFile = $form->get('avatar')->getData();
+
+            // this condition is needed because the 'avatar' field is not required
+            // so the image file must be processed only when a file is uploaded
+            if ($imgFile) {
+                $imgFilename = $fileUploader->upload($imgFile, $this->getParameter('avatar_directory'));
+
+                // updates the 'avatar' property to store the image file name
+                $user->setAvatar($imgFilename);
+            }
+
+            // Add the role ROLE_USER
+            $user->setRoles(["ROLE_USER"]);
+
+            // Persist in BDD
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

@@ -1,0 +1,20 @@
+
+{{ form_start( form, { attr: {novalidate: 'novalidate'} } ) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.picture) }}
+        </div>
+    </div>
+
+    <div class="my-3">
+        <a class="btn btn-secondary me-2" href="{{ path('admin_category_list') }}">
+            <i class="fas fa-angle-left me-2"></i>Annuler</a>
+
+        <button type="submit" class="btn btn-success">{{ button_label ?? 'Créer la catégorie' }}</button>
+    </div>
+
+{{ form_end(form) }}
