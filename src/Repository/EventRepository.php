@@ -33,9 +33,9 @@ class EventRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
-            'SELECT e.city, COUNT(e.city) AS nbrEvents
+            'SELECT e.address, COUNT(e.address) AS nbrEvents
             FROM App\Entity\Event e
-            GROUP BY e.city
+            GROUP BY e.address
             ORDER BY nbrEvents DESC'
         )->setMaxResults(6);
         return $query->getResult();
@@ -124,6 +124,7 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.categories', 'c')   
         ;
 
+
         if(!empty($search->q)) {
             $query = $query
                 ->andWhere('e.address LIKE :q')
@@ -136,9 +137,15 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
+
         $query = $query
+                ->andWhere('e.event_date > CURRENT_TIMESTAMP()')
                 ->orderBy('e.event_date', 'ASC');
 
+        
+        $dada = $query->getQuery()->getResult();
+        dd($dada);
+        
         return $query->getQuery()->getResult();
     }
 
