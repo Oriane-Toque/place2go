@@ -573,6 +573,32 @@ svg.text-light {
 	}
 
 	/************************************************ DASHBOARD  */
+
+	.contentProfile__lastExits>.card>div {
+		display: flex;
+		height: 230px;
+	}
+
+	.contentProfile__lastExits-picture {
+		display: block;
+    flex: 1;
+		max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+	}
+
+	.contentProfile__lastExits-picture>img {
+		width: 100%;
+    height: auto;
+	}
+
+	.contentProfile__lastExits-infos {
+		flex: 3;
+	}
+
+	.contentProfile__lastExits-infos>.card-header {
+		border-radius: 0;
+	}
 }
 
 @media screen and (min-width: 1200px) {
