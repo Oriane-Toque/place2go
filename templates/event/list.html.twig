@@ -8,41 +8,21 @@
 {% block body %}
 
 	<style>
-		#list .list__card {
-			display: flex;
-			align-content: center;
-			justify-content: center;
-			align-items: center;
-
-			margin-bottom: 0.8rem;
-			padding: 0.4rem 0.8rem;
-
-			border-bottom-left-radius: 70px;
-			border-top-left-radius: 70px;
-			border: 1px solid rgba(0, 0, 0, 0.05);
-		}
-
-		#list .list__card_content {
-			width: 100%;
-			margin: 0 0.5rem 0 1rem;
-		}
-
 		#map {
-			width: 100%;
-			height: 100%;
-			margin-bottom: 0.8rem;
-		}
+		width: 100%;
+		height: 100%;
+		margin-bottom: 0.8rem;
+	}
 	</style>
 
-	<div class="container-xl p-sm-3 p-lg-0 mt-5">
+
+	<div class="container-xl my-5">
 
 		<section id="search">
 
 			<div class="row">
-
 				<div class="col-12">
 					{% include 'event/_filter.html.twig' %}
-			
 				</div>
 			</div>
 
@@ -54,9 +34,7 @@
 				<div class="col-8">
 
 					{% for event in events %}
-
 						<div class="list__card shadow-3">
-
 							<div class="list__card_image">
 								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
 									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
@@ -111,9 +89,7 @@
 								</div>
 
 							</div>
-
 						</div>
-
 					{% else %}
 						<div>
 							Aucun résultat trouvé.

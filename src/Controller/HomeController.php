@@ -23,8 +23,6 @@ class HomeController extends AbstractController
 	{
 		// top 6 categories -> meilleur score events
 		$topCategories = $cr->findTopCategories();
-		// top 6 cities -> meilleur score events
-		$topCities = $er->findTopCities();
 		// top 6 contributors -> meilleur score events
 		$topContributors = $er->findTopContributors();
 
@@ -39,7 +37,6 @@ class HomeController extends AbstractController
 
 		return $this->render('home/home.html.twig', [
 			'topCategories' => $topCategories,
-			'topCities' => $topCities,
 			'topContributors' => $topContributors,
 			'form' => $form->createView(),
 		]);

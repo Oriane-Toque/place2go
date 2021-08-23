@@ -1,6 +1,6 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title 'Créer une sortie' %}
+{% block title 'Ajouter une sortie' %}
 
 {% block body %}
 	<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
@@ -23,58 +23,53 @@
 		}
 	</style>
 
-
-	<!-- Load the `mapbox-gl-geocoder` plugin. -->
-
-
-	<div class="container">
+	<div class="container-xl my-5">
 		<div class="mb-4">
 			<h2 class="m-0">
 				<i class="fa fa-edit mr-2"></i>Créer une sortie</h2>
 		</div>
+
 		<div class="row">
-
 			<div class="col-12 py-5">
-
 				{% include "event/_event_form.html.twig" %}
-
 			</div>
 		</div>
 	</div>
 
-
 	<script>
 		// TO MAKE THE MAP APPEAR YOU MUST
-// ADD YOUR ACCESS TOKEN FROM
-// https://account.mapbox.com
-mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-const map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
-center: [
-2, 47
-],
-zoom: 4.5
-});
+		// ADD YOUR ACCESS TOKEN FROM
+		// https://account.mapbox.com
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+		const map = new mapboxgl.Map({
+		container: 'map',
+		style: 'mapbox://styles/mapbox/streets-v11',
+		center: [
+		2, 47
+		],
+		zoom: 4.5
+		});
 
-// Add the control to the map.
-const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
+		// Add the control to the map.
+		const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
 
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+		document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 
-const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
-const eventAddress = document.querySelector('#event_address');
-console.log(eventAddress);
-let value;
+		const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+		const eventAddress = document.querySelector('#event_address');
+		console.log(eventAddress);
+		let value;
 
-input.addEventListener('change', handle);
-input.addEventListener('keydown', handle);
+		input.addEventListener('change', handle);
+		input.addEventListener('keydown', handle);
 
-function handle(e) {
-let value = e.target.value;
-console.log(value);
-eventAddress.value = value;
-}
+		function handle(e) {
+		let value = e.target.value;
+		console.log(value);
+		eventAddress.value = value;
+		}
 	</script>
-</body>{% endblock %}
+	
+
+{% endblock %}
