@@ -142,10 +142,7 @@ class EventRepository extends ServiceEntityRepository
                 ->andWhere('e.event_date > CURRENT_TIMESTAMP()')
                 ->orderBy('e.event_date', 'ASC');
 
-        
-        $dada = $query->getQuery()->getResult();
-        dd($dada);
-        
+
         return $query->getQuery()->getResult();
     }
 
