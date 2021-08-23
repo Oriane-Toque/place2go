@@ -8,7 +8,7 @@ use App\Data\SearchData;
 use App\Entity\Category;
 use App\Entity\Attendant;
 use App\Form\SearchFormType;
-use App\Service\isAttendant;
+use App\Services\isAttendant;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
 use Doctrine\ORM\EntityManagerInterface;
