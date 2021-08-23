@@ -30,9 +30,9 @@ class EventRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
-            'SELECT e.city, COUNT(e.city) AS nbrEvents
+            'SELECT e.address, COUNT(e.address) AS nbrEvents
             FROM App\Entity\Event e
-            GROUP BY e.city
+            GROUP BY e.address
             ORDER BY nbrEvents DESC'
         )->setMaxResults(6);
         return $query->getResult();
@@ -56,12 +56,43 @@ class EventRepository extends ServiceEntityRepository
 				->getResult();
     }
 
+    /**
+	 * Get count of all events
+	 *
+	 * @return Int
+	 */
+	public function getTotalEvents():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
+	/**
+	 * Get count of events to come
+	 *
+	 * @return Int
+	 */
+	public function getTotalEventsToCome():int
+    {
+		$result = $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+			->where('e.event_date > CURRENT_DATE()')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+		return (int)$result;
+    }
+
      /**
      * Retrieve all the cities (but still in DESC order)
      *
      * @return Array all the cities
      */
-    public function findAllCities(): array
+    /*public function findAllCities(): array
     {
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery(
@@ -71,41 +102,52 @@ class EventRepository extends ServiceEntityRepository
             ORDER BY count DESC'
         );
         return $query->getResult();
-    }
+    }*/
+
    
     /**
-     * Recover the last three events of the organizer order by event date (DESC)
+     * Recover the last events of the organizer order by event date (DESC)
      *
      * @param Int $userId
-     * @return Array tableau d'objets, les 3 dernières sorties proposées
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties proposées
      */
-    public function findLastThreeAuthorEvents(int $userId): array
+    public function findLastAuthorEvents(int $userId, int $limit = null): array
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->where('e.author = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('e.event_date', 'DESC')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
-     * Recover the last three exits of the user order by event date (DESC)
+     * Recover the last exits of the user order by event date (DESC)
      *
      * @param Int $userId
-     * @return Array tableau d'objets, les 3 dernières sorties auxquels l'utilisateur participe
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties auxquels l'utilisateur participe
      */
-    public function findLastThreeAttendantEvents(int $userId): array
+    public function findLastAttendantEvents(int $userId, int $limit = null): array
     {
-        return $this->createQueryBuilder('e')
+        $qb =  $this->createQueryBuilder('e')
             ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
             ->where('a.user = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('e.event_date', 'DESC')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+            
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -121,6 +163,7 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.categories', 'c')   
         ;
 
+
         if(!empty($search->q)) {
             $query = $query
                 ->andWhere('e.address LIKE :q')
@@ -133,8 +176,11 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
+
         $query = $query
+                // ->andWhere('e.event_date > CURRENT_TIMESTAMP()')
                 ->orderBy('e.event_date', 'ASC');
+
 
         return $query->getQuery()->getResult();
     }
@@ -152,12 +198,32 @@ class EventRepository extends ServiceEntityRepository
 				->join('e.categories', 'c')
 				->where('c.id = :categoryId');
 				if(null !== $city) {
-					$query = $query->andWhere('e.city = :city')
-					->setParameter('city', $city);
+					$query = $query->andWhere('e.address LIKE :city')
+					->setParameter('city', "%{$city}%");
 				}
-				$query= $query->setParameter('categoryId', $category)
+				$query = $query->setParameter('categoryId', $category)
 				->orderBy('e.event_date', 'DESC');
 				
 				return $query->getQuery()->getResult();
+		}
+
+		/**
+		 * Return 6 random events
+		 *
+		 * @param String $city (option) ville enregistrée sur le compte utilisateur
+		 * @return Array liste des sorties
+		 */
+		public function findRandEvents(string $city = null): array {
+
+			$query = $this->createQueryBuilder('e');
+			if(null !== $city) {
+					$query = $query->where('e.address LIKE :city')
+							->setParameter('city', "%{$city}%");
+			}
+			$query = $query->orderBy('RAND()')
+					->addOrderBy('e.event_date', 'DESC')
+					->setMaxResults(6);
+
+			return $query->getQuery()->getResult();
 		}
 }

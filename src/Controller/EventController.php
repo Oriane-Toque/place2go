@@ -8,7 +8,7 @@ use App\Data\SearchData;
 use App\Entity\Category;
 use App\Entity\Attendant;
 use App\Form\SearchFormType;
-use App\Service\isAttendant;
+use App\Services\isAttendant;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
 use App\Services\CallApiService;
@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+use Twig\Environment;
+use Twig\Extensions\IntlExtension;
 
 
 class EventController extends AbstractController

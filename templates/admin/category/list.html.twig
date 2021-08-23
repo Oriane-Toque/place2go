@@ -36,7 +36,7 @@
 <!-- Content Row -->
 <div class="row">
 
-    <!-- List all events -->
+    <!-- List all items -->
     <div class="col-12">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
@@ -92,5 +92,10 @@
     </div>
 
 </div>
+
+<!-- Modal -->
+{{ include('admin/layout/partials/_modal.html.twig', {
+    modalTitle: 'Modifier la catégorie',
+}) }}
 
 {% endblock %}

@@ -1,0 +1,50 @@
+<div class="card-body">
+    <div class="users-list">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#Id</th>
+                    <th>Image</th>
+                    <th>Nickname</th>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                    <th>Ville</th>
+                    <th>Date inscription</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>
+                            {% if 'http' in user.avatar %}
+                            <img src="{{ user.avatar }}" width="75" height="75" class="rounded-circle">
+                            {% else %}
+                            <img src="{{ asset('uploads/avatar/') ~ user.avatar ?? 'default-profile.svg' }}" width="75" height="75" class="rounded-circle">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_user_show', {id: user.id}) }}">{{ user.nickname }}</a>
+                        </td>
+                        <td>{{ user.firstname }} {{ user.lastname }}</td>
+                        <td>{{ user.birthday|date('d/m/Y') }}</td>
+                        <td>{{ user.city }}</td>
+                        <td>{{ user.createdAt|date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('admin_user_show', {id: user.id}) }}" title="Aperçu" class="me-2"><i class="fas fa-eye text-secondary"></i></a>
+                            <a href="{{ path('admin_user_edit', {id: user.id}) }}" title="Editer" class="me-2"><i class="fas fa-edit text-secondary"></i></a>
+                            <a href="{{ path('admin_user_delete', {id: user.id}) }}" title="Supprimer"><i class="fas fa-trash text-danger"></i></a>
+                            {#<a href="#" onclick="delModal('#delModal', '/admin/user/delete/{{ user.id }}')" class="delModal" data-mdb-toggle="modal" data-mdb-target="#delModal"><i class="fa fa-trash text-danger"></i></a>#}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">Aucun utilisateur pour le moment</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

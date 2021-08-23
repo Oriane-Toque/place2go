@@ -1,0 +1,56 @@
+{% extends "admin/layout/base.html.twig" %}
+
+{% block menu_category 'active' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Catégories</h1>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Create Box -->
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Détails de la catégorie</h6>
+                
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="category-details">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% if 'http' in category.picture %}
+                                <img src="{{ category.picture }}" class="img-fluid">
+                            {% else %}
+                                <img src="{{ asset('uploads/category/') ~ category.picture ?? 'default-category.svg' }}" class="img-fluid">
+                            {% endif %}
+                            <div>{{ category.picture }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            {{ category.name }}
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <a class="btn btn-secondary me-2" href="{{ path('admin_category_list') }}">
+                            <i class="fas fa-angle-left me-2"></i>Retour liste</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

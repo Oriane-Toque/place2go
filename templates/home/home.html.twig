@@ -48,21 +48,73 @@
 	</section>
 
 	<section class="container-xl topCities">
-		<h2>Top Villes</h2>
+		<h2>Sorties du moment</h2>
 
 		<div class="topScore">
-			{# {% for city in topCities %}
-				<div class="card">
-					<div class="card-body">
-						<h3 class="card-title text-center">{{ city.city }}</h3>
-						<p class="card-text">
-							Score :
-							{{ city.nbrEvents }}
-							sorties
-						</p>
-					</div>
-				</div>
-			{% endfor %} #}
+			{% for event in randEvents %}
+						<div class="list__card shadow-3">
+
+							<div class="list__card_image">
+								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
+								</a>
+							</div>
+
+							<div class="list__card_content">
+								<div class="d-flex justify-content-between mb-2">
+									<div class="list__cards_author">
+										<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark text-decoration-underline">{{ event.author.nickname }}</a>
+									</div>
+									<div class="list__card_date">
+										<small class="text-muted fst-italic">le
+											{{ event.eventDate | date('D M Y à H:i') }}</small>
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between">
+									<div class="list__card_title">
+										<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
+									</div>
+									<div class="list__cards_attendants text-muted">
+										<small class="text-muted fst-italic">
+											{{ event.attendants|length }}
+											/
+											{{ event.maxAttendants }}
+										</small>
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between">
+									<div class="list__card_address">
+										{{ event.address }}
+									</div>
+								</div>
+
+								<div class="d-flex justify-content-between align-items-end mt-2">
+									<div>
+										{% for category in event.categories %}
+											<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+										{% endfor %}
+									</div>
+
+									<div class="list__cards_join">
+										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
+											<i class="fas fa-user-minus"></i>
+										</a>
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
+											<i class="fas fa-user-plus"></i>
+										</a>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						{% else %}
+						<div>
+							Aucun résultat trouvé.
+						</div>
+			{% endfor %}
 		</div>
 	</section>
 

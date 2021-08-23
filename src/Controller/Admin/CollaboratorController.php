@@ -13,23 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class CollaboratorController extends AbstractController
 {
     /**
-     * @Route("/admin/users", name="admin_user_list", methods={"GET"})
+     * @Route("/admin/collaborators", name="admin_collaborator_list", methods={"GET"})
      */
     public function list(UserRepository $userRepository): Response
     {    
-        // Find all users
-        $users = $userRepository->findAll();
+        // Find all collaborators => (users with roles = '["ROLE_ADMIN"]')
+        $users = $userRepository->findCollaborators();
 
-        return $this->render('admin/user/list.html.twig', [
+        return $this->render('admin/collaborator/list.html.twig', [
             'users' => $users,
         ]);
     }
 
     /**
-     * @Route("/admin/users/{id<\d+>}/show", name="admin_user_show", methods={"GET"})
+     * @Route("/admin/collaborators/{id<\d+>}/show", name="admin_collaborator_show", methods={"GET"})
      */
     public function show(User $user, EventRepository $eventRepository): Response
     {
@@ -39,7 +39,7 @@ class UserController extends AbstractController
 		// Last events in which the user participates
 		$userLastExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
-        return $this->render('admin/user/show.html.twig', [
+        return $this->render('admin/collaborator/show.html.twig', [
             'user' => $user,
             'userLastEvents' => $userLastEvents,
             'userLastExits' => $userLastExits,
@@ -47,7 +47,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/create", name="admin_user_create", methods={"GET", "POST"})
+     * @Route("/admin/collaborators/create", name="admin_collaborator_create", methods={"GET", "POST"})
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
@@ -73,7 +73,7 @@ class UserController extends AbstractController
             }
 
             // Add the role ROLE_USER
-            $user->setRoles(["ROLE_USER"]);
+            $user->setRoles(["ROLE_ADMIN"]);
 
             // Persist in BDD
             $entityManager = $this->getDoctrine()->getManager();
@@ -83,17 +83,17 @@ class UserController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Utilisateur créé avec succès !');
 
-            return $this->redirectToRoute('admin_user_list');
+            return $this->redirectToRoute('admin_collaborator_list');
         }
 
-        return $this->render('admin/user/create.html.twig', [
+        return $this->render('admin/collaborator/create.html.twig', [
             'form' => $form->createView(),
         ]);
                 
     }
 
     /**
-     * @Route("/admin/users/{id<\d+>}/edit", name="admin_user_edit", methods={"GET", "POST"})
+     * @Route("/admin/collaborators/{id<\d+>}/edit", name="admin_collaborator_edit", methods={"GET", "POST"})
      */
     public function edit(User $user, Request $request): Response
     {
@@ -111,17 +111,17 @@ class UserController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Utilisateur modifié avec succès !');
 
-            return $this->redirectToRoute('admin_user_list');
+            return $this->redirectToRoute('admin_collaborator_list');
         }
 
-        return $this->render('admin/user/edit.html.twig', [
+        return $this->render('admin/collaborator/edit.html.twig', [
             'form' => $form->createView(),
         ]);
                  
     }
 
     /**
-     * @Route("/admin/users/{id<\d+>}/delete", name="admin_user_delete", methods={"GET"})
+     * @Route("/admin/collaborators/{id<\d+>}/delete", name="admin_collaborator_delete", methods={"GET"})
      */
     public function delete(User $user): Response
     {
@@ -133,11 +133,11 @@ class UserController extends AbstractController
         // Flash message
         $this->addFlash('success', 'Utilisateur supprimé avec succès');
 
-        return $this->redirectToRoute('admin_user_list');
+        return $this->redirectToRoute('admin_collaborator_list');
     }
 
     /**
-     * @Route("/admin/users/{id<\d+>}/desactive", name="admin_user_desactive", methods={"GET"})
+     * @Route("/admin/collaborators/{id<\d+>}/desactive", name="admin_collaborator_desactive", methods={"GET"})
      */
     public function desactive(User $user): Response
     {
@@ -151,12 +151,12 @@ class UserController extends AbstractController
         // Flash message
         //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été désactivé !');
 
-        return $this->redirectToRoute('admin_user_show', ['id' => $user->getId()]);
+        return $this->redirectToRoute('admin_collaborator_show', ['id' => $user->getId()]);
             
     }
 
     /**
-     * @Route("/admin/users/{id<\d+>}/active", name="admin_user_active", methods={"GET"})
+     * @Route("/admin/collaboratorss/{id<\d+>}/active", name="admin_collaborator_active", methods={"GET"})
      */
     public function active(User $user): Response
     {
@@ -170,7 +170,7 @@ class UserController extends AbstractController
         // Flash message
         //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été activé !');
 
-        return $this->redirectToRoute('admin_user_show', ['id' => $user->getId()]);
+        return $this->redirectToRoute('admin_collaborator_show', ['id' => $user->getId()]);
             
     }
 }

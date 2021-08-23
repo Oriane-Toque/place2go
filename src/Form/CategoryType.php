@@ -8,14 +8,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\File;
 
 class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', TextType::class, [
+        $builder->addEventListener( FormEvents::PRE_SET_DATA, function (FormEvent $event)
+        {
+            // Get Form data
+            $form = $event->getForm();
+            
+            $form->add('name', TextType::class, [
                 'label' => 'Nom *',
                 'required' => true,
             ])
@@ -41,8 +47,8 @@ class CategoryType extends AbstractType
                         'mimeTypesMessage' => 'Ce format n\'est pas pris en charge',
                     ])
                 ],
-            ])
-        ;
+            ]);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)

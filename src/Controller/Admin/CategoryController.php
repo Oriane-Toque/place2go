@@ -73,9 +73,7 @@ class CategoryController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Catégorie créée avec succès !');
 
-            return $this->redirectToRoute('admin_category_show', [
-                'id' => $category->getId(),
-            ]);
+            return $this->redirectToRoute('admin_category_list');
         }
 
         return $this->render('admin/category/create.html.twig', [
@@ -90,7 +88,7 @@ class CategoryController extends AbstractController
     public function edit(Category $category, Request $request): Response
     {
         // Create new form associated to entity
-        $form = $this->createForm(EventType::class, $category);
+        $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
 
@@ -103,14 +101,16 @@ class CategoryController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Catégorie modifiée avec succès !');
 
-            return $this->redirectToRoute('admin_category_show', [
-                'id' => $category->getId(),
-            ]);
+            return $this->redirectToRoute('admin_category_list');
         }
 
         return $this->render('admin/category/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+        /*return $this->render('admin/category/_category_form.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category,
+        ]);*/
                  
     }
 
