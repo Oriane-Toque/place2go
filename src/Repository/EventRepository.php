@@ -164,11 +164,6 @@ class EventRepository extends ServiceEntityRepository
 				return $query->getQuery()->getResult();
 		}
 
-		//select * from event
-		//where city = "city0"
-		//order by rand(), event_date DESC
-		//limit 6
-
 		/**
 		 * Return 6 random events
 		 *
@@ -180,7 +175,7 @@ class EventRepository extends ServiceEntityRepository
 			return $this->createQueryBuilder('e')
 					->where('e.city = :city')
 					->setParameter('city', $city)
-					->orderBy(rand())
+					->orderBy('RAND()')
 					->addOrderBy('e.event_date', 'DESC')
 					->setMaxResults(6)
 					->getQuery()

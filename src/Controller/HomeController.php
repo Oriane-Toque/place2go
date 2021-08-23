@@ -42,7 +42,6 @@ class HomeController extends AbstractController
 
 		return $this->render('home/home.html.twig', [
 			'topCategories' => $topCategories,
-			'topCities' => $topCities,
 			'topContributors' => $topContributors,
 			'form' => $form->createView(),
 		]);
