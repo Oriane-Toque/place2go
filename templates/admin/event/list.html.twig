@@ -53,7 +53,7 @@
                             <tr>
                                 <th>#Id</th>
                                 <th>Titre</th>
-                                <th>Ville</th>
+                                <th>Adresse</th>
                                 <th>Organisateur</th>
                                 <th>Nb Participants</th>
                                 <th>Date</th>
@@ -68,7 +68,7 @@
                                     <td>
                                         <a href="{{ path('admin_event_show', {id: event.id}) }}">{{ event.title }}</a>
                                     </td>
-                                    <td>{{ event.city }}</td>
+                                    <td>{{ event.address }}</td>
                                     <td>
                                         {{ event.author.nickname }}
                                     </td>

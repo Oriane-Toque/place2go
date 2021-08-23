@@ -74,9 +74,7 @@ class UserController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Utilisateur créé avec succès !');
 
-            return $this->redirectToRoute('admin_user_show', [
-                'id' => $user->getId(),
-            ]);
+            return $this->redirectToRoute('admin_user_list');
         }
 
         return $this->render('admin/user/create.html.twig', [
@@ -104,9 +102,7 @@ class UserController extends AbstractController
             // Flash message
             $this->addFlash('success', 'Utilisateur modifié avec succès !');
 
-            return $this->redirectToRoute('admin_user_show', [
-                'id' => $user->getId(),
-            ]);
+            return $this->redirectToRoute('admin_user_list');
         }
 
         return $this->render('admin/user/edit.html.twig', [

@@ -14,9 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 
 class UserType extends AbstractType
@@ -49,7 +49,7 @@ class UserType extends AbstractType
                 'mapped' => false,
 
                 // make it optional so we don't have to re-upload the file
-                // every time you edit the Product details
+                // every time you edit the User
                 'required' => false,
 
                 // unmapped fields can't define their validation using annotations

@@ -15,14 +15,20 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title', TextType::class, [
+        $builder->addEventListener( FormEvents::PRE_SET_DATA, function (FormEvent $event)
+        {
+            // Get Form data
+            $form = $event->getForm();
+
+            $form->add('title', TextType::class, [
                 'label' => 'Titre de la sortie *',
                 'required' => true,
             ])
@@ -39,14 +45,14 @@ class EventType extends AbstractType
                 'label' => 'Adresse',
                 'required' => false,
             ])
-            ->add('city', TextType::class, [
+            /*->add('city', TextType::class, [
                 'label' => 'Ville *',
                 'required' => true,
-            ])
+            ])*/
             ->add('maxAttendants', ChoiceType::class, [
                 'label' => 'Nbre max de participants *',
                 'required' => true,
-                'choices' => range(1,20,1),
+                'choices' => range(1, 20, 1),
                 'choice_label' => function ($value) {
                     return $value;
                 }
@@ -65,8 +71,8 @@ class EventType extends AbstractType
                     return $cr->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 },
-            ])
-        ;
+            ]);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
