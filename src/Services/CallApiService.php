@@ -19,18 +19,14 @@ class CallApiService
 
     public function getApi(string $var): array
     {
-
-        $q = str_replace(' ', '+', $var);
-
-
         $response = $this->client->request(
             "GET",
             "https://api-adresse.data.gouv.fr/search/?q={$var}"
             
         );
 
-        return $response->toArray();
+        $array = $response->toArray();
 
+        return $array['features'][0]['geometry']['coordinates'];
     }
-
 }

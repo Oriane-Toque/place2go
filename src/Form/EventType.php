@@ -39,10 +39,6 @@ class EventType extends AbstractType
             ->add('address', HiddenType::class, [
                 'required' => false
             ])
-            ->add('city', TextType::class, [
-                'label' => 'Ville *',
-                'required' => true,
-            ])
             ->add('maxAttendants', ChoiceType::class, [
                 'label' => 'Nbre max de participants *',
                 'required' => true,

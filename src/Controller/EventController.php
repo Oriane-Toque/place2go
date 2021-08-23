@@ -120,12 +120,13 @@ class EventController extends AbstractController
             $event->setAuthor($this->getUser());
             // Add coordinates to Event
 
-            $test = $this->callApiService->getApi($form['address']->getData());
+            $coordinates = $this->callApiService->getApi($form['address']->getData());
 
-            $event->setLon($test['features'][0]['geometry']['coordinates'][0]);
-            $event->setLat($test['features'][0]['geometry']['coordinates'][1]);
+            // set coordinates fetched from geoAPI
+            $event->setLon($coordinates[0]);
+            $event->setLat($coordinates[1]);
             
-            
+            // push into the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             dump($event);
@@ -142,7 +143,6 @@ class EventController extends AbstractController
         return $this->render('event/create.html.twig', [
             'form' => $form->createView(),
         ]);
-                
     }
 
     /**
