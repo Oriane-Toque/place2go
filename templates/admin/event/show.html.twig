@@ -111,7 +111,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            Liste des participants inscrits à la sortie
+                            {{ include("admin/user/_user_list.html.twig", {'users': eventUsers }) }} 
                         </div>
                     </div>
 

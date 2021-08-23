@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,10 +31,18 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/users/{id<\d+>}/show", name="admin_user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(User $user, EventRepository $eventRepository): Response
     {
+        // Last events organise by this user
+		$userLastEvents = $eventRepository->findLastAuthorEvents($user->getId(), 3);
+
+		// Last events in which the user participates
+		$userLastExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
+
         return $this->render('admin/user/show.html.twig', [
             'user' => $user,
+            'userLastEvents' => $userLastEvents,
+            'userLastExits' => $userLastExits,
         ]);
     }
 
