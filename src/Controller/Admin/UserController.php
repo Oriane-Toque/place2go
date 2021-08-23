@@ -130,7 +130,7 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/users/{id<\d+>}/desactive", name="admin_user_desactive", methods={"GET"})
      */
-    public function desactive(User $user, Request $request): Response
+    public function desactive(User $user): Response
     {
         // Set IsActive to 0
         $user->setIsActive(0);
@@ -149,7 +149,7 @@ class UserController extends AbstractController
     /**
      * @Route("/admin/users/{id<\d+>}/active", name="admin_user_active", methods={"GET"})
      */
-    public function active(User $user, Request $request): Response
+    public function active(User $user): Response
     {
         // Set IsActive to 1
         $user->setIsActive(1);

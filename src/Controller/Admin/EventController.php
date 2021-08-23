@@ -116,7 +116,7 @@ class EventController extends AbstractController
     /**
      * @Route("/admin/events/{id<\d+>}/desactive", name="admin_event_desactive", methods={"GET"})
      */
-    public function desactive(Event $event, Request $request): Response
+    public function desactive(Event $event): Response
     {
         // Set IsActive to 0
         $event->setIsActive(0);
@@ -135,7 +135,7 @@ class EventController extends AbstractController
     /**
      * @Route("/admin/events/{id<\d+>}/active", name="admin_event_active", methods={"GET"})
      */
-    public function active(Event $event, Request $request): Response
+    public function active(Event $event): Response
     {
         // Set IsActive to 1
         $event->setIsActive(1);
