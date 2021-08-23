@@ -158,7 +158,7 @@ class EventRepository extends ServiceEntityRepository
 					$query = $query->andWhere('e.city = :city')
 					->setParameter('city', $city);
 				}
-				$query= $query->setParameter('categoryId', $category)
+				$query = $query->setParameter('categoryId', $category)
 				->orderBy('e.event_date', 'DESC');
 				
 				return $query->getQuery()->getResult();
@@ -172,13 +172,15 @@ class EventRepository extends ServiceEntityRepository
 		 */
 		public function findRandEvents(string $city = null): array {
 
-			return $this->createQueryBuilder('e')
-					->where('e.city = :city')
-					->setParameter('city', $city)
-					->orderBy('RAND()')
+			$query = $this->createQueryBuilder('e');
+			if(null !== $city) {
+					$query = $query->where('e.city = :city')
+							->setParameter('city', $city);
+			}
+			$query = $query->orderBy('RAND()')
 					->addOrderBy('e.event_date', 'DESC')
-					->setMaxResults(6)
-					->getQuery()
-					->getResult();
+					->setMaxResults(6);
+
+			return $query->getQuery()->getResult();
 		}
 }

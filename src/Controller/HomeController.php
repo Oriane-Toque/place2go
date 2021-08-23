@@ -21,15 +21,21 @@ class HomeController extends AbstractController
 	 */
 	public function home(Request $request, CategoryRepository $cr, EventRepository $er): Response
 	{
+		// récupération de l'utilisateur
+		$user = $this->getUser();
+
 		// top 6 categories -> meilleur score events
 		$topCategories = $cr->findTopCategories();
-		// 6 random events order by event date
-		$randEvents = $er->findRandEvents("city0");
 
+		// 6 random events order by event date
+		// option en fonction de la ville enregistrée sur le compte utilisateur
+		if($user) $randEvents = $er->findRandEvents($user->getCity());
+
+		$randEvents = $er->findRandEvents();
+
+		dump($randEvents);
 		// top 6 contributors -> meilleur score events
 		$topContributors = $er->findTopContributors();
-
-		dd($randEvents);
 
 		// Init Data for form search, change action to event list to hanfle request
 		$data = new SearchData();
@@ -42,6 +48,7 @@ class HomeController extends AbstractController
 
 		return $this->render('home/home.html.twig', [
 			'topCategories' => $topCategories,
+			'randEvents' => $randEvents,
 			'topContributors' => $topContributors,
 			'form' => $form->createView(),
 		]);
