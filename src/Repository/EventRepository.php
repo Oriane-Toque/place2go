@@ -2,13 +2,10 @@
 
 namespace App\Repository;
 
-use App\Data\SearchData;
 use App\Entity\Event;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Query\Parameter;
+use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -109,38 +106,48 @@ class EventRepository extends ServiceEntityRepository
 
    
     /**
-     * Recover the last three events of the organizer order by event date (DESC)
+     * Recover the last events of the organizer order by event date (DESC)
      *
      * @param Int $userId
-     * @return Array tableau d'objets, les 3 dernières sorties proposées
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties proposées
      */
-    public function findLastThreeAuthorEvents(int $userId): array
+    public function findLastAuthorEvents(int $userId, int $limit = null): array
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->where('e.author = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('e.event_date', 'DESC')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
-     * Recover the last three exits of the user order by event date (DESC)
+     * Recover the last exits of the user order by event date (DESC)
      *
      * @param Int $userId
-     * @return Array tableau d'objets, les 3 dernières sorties auxquels l'utilisateur participe
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties auxquels l'utilisateur participe
      */
-    public function findLastThreeAttendantEvents(int $userId): array
+    public function findLastAttendantEvents(int $userId, int $limit = null): array
     {
-        return $this->createQueryBuilder('e')
+        $qb =  $this->createQueryBuilder('e')
             ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
             ->where('a.user = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('e.event_date', 'DESC')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+            
+        return $qb->getQuery()->getResult();
     }
 
     /**

@@ -36,7 +36,7 @@
 <!-- Content Row -->
 <div class="row">
 
-    <!-- List all events -->
+    <!-- List all items -->
     <div class="col-12">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
@@ -46,20 +46,7 @@
                 
             </div>
             <!-- Card Body -->
-            <div class="card-body">
-                <div class="events-list">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>#Id</th>
-                                <th>Titre</th>
-                                <th>Adresse</th>
-                                <th>Organisateur</th>
-                                <th>Nb Participants</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+            {{ include("admin/event/_event_list.html.twig", {'events': events }) }}  
 
                         <tbody>
                             {% for event in events %}
@@ -68,7 +55,7 @@
                                     <td>
                                         <a href="{{ path('admin_event_show', {id: event.id}) }}">{{ event.title }}</a>
                                     </td>
-                                    <td>{{ event.address }}</td>
+                                    {# <td>{{ event.city }}</td> #}
                                     <td>
                                         {{ event.author.nickname }}
                                     </td>

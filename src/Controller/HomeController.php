@@ -35,7 +35,7 @@ class HomeController extends AbstractController
     } else {
 			$randEvents = $er->findRandEvents();
 		}
-		
+
 		// top 6 contributors -> meilleur score events
 		$topContributors = $er->findTopContributors();
 

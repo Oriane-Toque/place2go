@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class EventController extends AbstractController
 {
@@ -28,10 +30,14 @@ class EventController extends AbstractController
     /**
      * @Route("/admin/events/{id<\d+>}/show", name="admin_event_show", methods={"GET"})
      */
-    public function show(Event $event): Response
+    public function show(Event $event, AttendantRepository $attendantRepository): Response
     {
+        // Attendants for this event
+		$eventUsers = $attendantRepository->findAttendantsByEvent($event);
+
         return $this->render('admin/event/show.html.twig', [
             'event' => $event,
+            'eventUsers' => $eventUsers,
         ]);
     }
 
