@@ -54,15 +54,6 @@
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-/*
-header .bg-image {
-  background-image: url('../img/bg-header.jpeg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 60vh;
-} */
-
 /*****************************************************************? NAVBAR */
 
 #nav {
@@ -213,6 +204,19 @@ header .bg-image {
 }
 
 /*****************************************************************? EVENT LIST */
+
+/*** FILTER FORM ***/
+
+.filter__form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/*** LIST ***/
 
 #list .list__card {
   display: flex;
