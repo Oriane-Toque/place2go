@@ -12,6 +12,7 @@ use App\Services\isAttendant;
 use App\Repository\EventRepository;
 use App\Repository\AttendantRepository;
 use App\Services\CallApiService;
+use App\Services\GeoJson;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,10 +28,12 @@ class EventController extends AbstractController
 {
 
     private $callApiService;
+	private $geoJson;
 
-    public function __construct(CallApiService $callApiService)
+    public function __construct(CallApiService $callApiService, geoJson $geoJson)
     {
         $this->callApiService = $callApiService;
+		$this->geoJson = $geoJson;
     }
 
 		/**
@@ -49,11 +52,16 @@ class EventController extends AbstractController
 
 			// Handle the form request and use $data in custom query to show searched events
 			$form->handleRequest($request);
+			
 			$events = $eventRepository->findSearch($data);
+			$location = $this->callApiService->getApi($data->q);
+			$geoJson = $this->geoJson->createGeoJson($events);
 
 			return $this->render('event/list.html.twig', [
 				'events' => $events,
 				'form' => $form->createView(),
+				'geojson' => $geoJson,
+				'location' => $location,
 			]);
 		}
 
@@ -135,9 +143,9 @@ class EventController extends AbstractController
             $coordinates = $this->callApiService->getApi($form['address']->getData());
 
             // set coordinates fetched from geoAPI
-            $event->setLon($coordinates[0]);
-            $event->setLat($coordinates[1]);
-            
+			$event->setLat($coordinates[0]);
+            $event->setLon($coordinates[1]);
+           
             // push into the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
