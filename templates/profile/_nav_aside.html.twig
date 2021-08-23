@@ -1,23 +1,21 @@
 {# Navigation secondaire du dashboard + informations #}
-<aside
-	class="dashAction --desktop">
+<aside class="dashAction --desktop">
 	{# Info personnel + Ajout Ami + Edition Compte #}
-	<div class="dashAction__item card mt-3">
+	<div class="dashAction__item card">
 		<div
 			class="card-body">
 			{# Infos sur l'utilisateur #}
 			<div class="dashAction__item-infos">
 				<img src="{{ user.avatar }}" alt="photo de {{ user }}">
 				<div class="dashAction__item-infos_details">
-					<p>{{ user.lastname }}</p>
-					<p>{{ user.firstname }}</p>
+					<p>{{ user }}</p>
 					<p>{{ user.email }}</p>
 				</div>
 			</div>
 
 			{# Edition de l'utilisateur #}
-			<p>
-				<a class="btn btn-primary btn-floating" style="background-color: #ac2bac;" href="{{ path('app_profile_edit') }}" role="button">
+			<p class="dashAction__item-button">
+				<a class="--edit btn btn-warning btn-floating" href="{{ path('app_profile_edit') }}" role="button">
 					<i class="fas fa-user-edit"></i>
 				</a>
 			</p>
@@ -25,43 +23,46 @@
 	</div>
 
 	{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
-	<div class="dashAction__item card mt-3">
-		<div
-			class="card-body d-flex">
+	<div class="dashAction__item card">
+
 			{# Bouton qui affiche l'historique #}
-			<p>
-				<a class="btn btn-primary btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="#!" role="button">
 					<i class="far fa-calendar-check"></i>
 				</a>
 			</p>
 
 			{# Bouton qui affiche le tchat privé #}
-			<p>
-				<a class="btn btn-primary btn-floating" style="background-color: #ac2bac;" href="#!" role="button">
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="#!" role="button">
 					<i class="fab fa-rocketchat"></i>
 				</a>
 			</p>
 
 			{# Bouton qui affiche le dashboard/profil #}
-			<p>
-				<a class="btn btn-primary btn-floating" style="background-color: #ac2bac;" href="{{ path("app_profile_profile") }}" role="button">
+			<p class="dashAction__item-action">
+				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button">
 					<i class="fas fa-user-circle"></i>
 				</a>
 			</p>
-		</div>
+
 	</div>
 
 	{# Description de l'utilisateur #}
-	<div class="dashAction__item card mt-3">
-		<div class="card-header">A propos de moi</div>
+	<div class="dashAction__item card">
+		<div class="card-header">
+			<h3>A propos de moi</h3>
+		</div>
 		<div class="card-body">
-			{{ user.description }}
+			<p class="card-text">{{ user.description }}</p>	
 		</div>
 	</div>
 
 	{# Liste des Amis #}
-	<div class="dashAction__item card mt-3">
-		<div class="card-header">My Friends</div>
+	<div class="dashAction__item card">
+		<div class="card-header">
+			<h3>My Friends</h3>
+		</div>
 		<div class="card-body">
 			<img src="#" alt="photo profil ami">
 			<img src="#" alt="photo profil ami">

@@ -4,14 +4,15 @@
 
 {% block body %}
 
+<div id="profile">
 
 	{# Navigation secondaire du dashboard + informations #}
 	{% include "profile/_nav_aside.html.twig" %}
 
 	{# Contenu du profil #}
-	<section class="contentProfile">
+	<div class="contentProfile">
 		{# Les derniers sorties proposées par l'utilisateur #}
-		<div class="contentProfile__lastExits">
+		<section class="contentProfile__lastExits">
 			<h2>Dernières sorties publiées</h2>
 			{# Début carte sortie #}
 			{% for event in userLastExits %}
@@ -61,10 +62,10 @@
 			{% endfor %}
 			
 			{# Fin carte sortie #}
-		</div>
+		</section>
 
 		{# Les dernières sorties auxquelles a participé l'utilisateur #}
-		<div class="contentProfile__lastExits">
+		<section class="contentProfile__lastExits">
 			<h2>Dernières sorties effectuées</h2>
 			{# Début carte sortie #}
 			{% for event in attendantLastExits %}
@@ -108,10 +109,10 @@
 			{# Fin carte sortie #}
 			{% endfor %}
 			
-		</div>
+		</section>
 
 		{# TODO uniquement version supérieur #}
-		<div class="contentProfile__lastExits">
+		<section class="contentProfile__lastExits">
 			<h2>Nouveautés de mes amis</h2>
 			{# Début carte notifications sur les amis #}
 			<div class="card mb-3">
@@ -146,15 +147,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 
 		{# TODO uniquement dans version supérieure #}
-		<div class="contentProfile__lastSearch">
+		<section class="contentProfile__lastSearch">
 			<h2>Ma recherche du moment</h2>
 			<p>Prévoir lien direct vers la recherche sauvegardée</p>
-		</div>
-	</section>
+		</section>
+	</div>
 
-
+</div>
 
 {% endblock %}
