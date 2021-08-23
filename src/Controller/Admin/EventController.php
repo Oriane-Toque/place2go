@@ -112,4 +112,42 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('admin_event_list');
     }
+
+    /**
+     * @Route("/admin/events/{id<\d+>}/desactive", name="admin_event_desactive", methods={"GET"})
+     */
+    public function desactive(Event $event): Response
+    {
+        // Set IsActive to 0
+        $event->setIsActive(0);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        // No persist on edit
+        $entityManager->flush();
+
+        // Flash message
+        //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été désactivé !');
+
+        return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
+            
+    }
+
+    /**
+     * @Route("/admin/events/{id<\d+>}/active", name="admin_event_active", methods={"GET"})
+     */
+    public function active(Event $event): Response
+    {
+        // Set IsActive to 1
+        $event->setIsActive(1);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        // No persist on edit
+        $entityManager->flush();
+
+        // Flash message
+        //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été activé !');
+
+        return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
+            
+    }
 }

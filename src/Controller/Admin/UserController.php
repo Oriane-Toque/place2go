@@ -126,4 +126,42 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('admin_user_list');
     }
+
+    /**
+     * @Route("/admin/users/{id<\d+>}/desactive", name="admin_user_desactive", methods={"GET"})
+     */
+    public function desactive(User $user): Response
+    {
+        // Set IsActive to 0
+        $user->setIsActive(0);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        // No persist on edit
+        $entityManager->flush();
+
+        // Flash message
+        //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été désactivé !');
+
+        return $this->redirectToRoute('admin_user_show', ['id' => $user->getId()]);
+            
+    }
+
+    /**
+     * @Route("/admin/users/{id<\d+>}/active", name="admin_user_active", methods={"GET"})
+     */
+    public function active(User $user): Response
+    {
+        // Set IsActive to 1
+        $user->setIsActive(1);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        // No persist on edit
+        $entityManager->flush();
+
+        // Flash message
+        //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été activé !');
+
+        return $this->redirectToRoute('admin_user_show', ['id' => $user->getId()]);
+            
+    }
 }
