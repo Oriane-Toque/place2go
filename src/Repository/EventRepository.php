@@ -136,6 +136,9 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
+        $query = $query
+                ->orderBy('e.event_date', 'ASC');
+
         return $query->getQuery()->getResult();
     }
 

@@ -1,0 +1,23 @@
+{% extends "admin/layout/base.html.twig" %}
+
+{% block menu_user 'active' %}
+
+{% block title 'Modifier un utilisateur' %}
+
+{% block body %}
+
+<div class="container-xl my-5">
+
+    <section id="user-edit">
+    
+        <div class="mb-4">
+            <h2 class="m-0"><i class="fa fa-edit mr-2"></i>Modifier un utilisateur</h2>
+        </div>
+
+        {{ include("admin/user/_user_form.html.twig", {button_label:'Modifier l\utilisateur'}) }}
+
+    </section>
+
+</div>
+
+{% endblock %}

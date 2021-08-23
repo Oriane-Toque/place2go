@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('admin_home') }}">
         <div class="sidebar-brand-text mx-3">
             <img src="{{ asset('img/logo-place2go-white.svg') }}" class="img-fluid logo" width="150" alt="Place 2 Go">
         </div>
@@ -11,7 +11,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {% block menu_dashboard %}{% endblock %}">
         <a class="nav-link" href="{{ path('admin_home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
