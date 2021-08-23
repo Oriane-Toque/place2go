@@ -229,7 +229,31 @@ header .bg-image {
 	margin: 0 0.5rem 0 1rem;
 }
 
-/*****************************************************************? PROFIL DASHBOARD */
+/*****************************************************************? PROFIL */
+
+.contentProfile {
+	margin: 3rem 1rem 0 1rem;
+}
+
+.contentProfile h2 {
+	text-align: left;
+	color: #2f3640;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 1.5rem;
+	margin: 2rem 0 1rem 0;
+}
+
+.contentProfile h3 {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.contentProfile p,
+.contentProfile h3 {
+	margin: 0;
+}
 
 .dashAction.--desktop {
 	display: none;
@@ -244,7 +268,7 @@ header .bg-image {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 1rem;
+	gap: 2rem;
 	text-align: center;
 	width: 100%;
 	transform: inherit;
@@ -255,7 +279,7 @@ header .bg-image {
 	border-radius: 0.2rem;
 }
 
-.dashAction__item-infos_details > a {
+.dashAction__item-infos_details>a {
 	text-decoration: none;
 	color: #2f3640;
 }
@@ -284,8 +308,8 @@ header .bg-image {
 
 .dashAction__item-action_button {
 	display: block;
-  width: 35px;
-  height: 35px;
+	width: 35px;
+	height: 35px;
 	color: #e74c3c;
 	background-color: #fff;
 	border-radius: 2rem;
@@ -303,6 +327,65 @@ header .bg-image {
 .dashAction__item-action_button:hover {
 	color: #fff;
 	background-color: #c0392b;
+}
+
+/*****************************************************************? PROFIL DASHBOARD */
+
+.contentProfile__lastExits span {
+	display: block;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.contentProfile__lastExits-picture {
+	display: none;
+}
+
+.contentProfile__lastExits-infos>.card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: bold;
+	background-color: #2f3640;
+	color: #fff;
+	border-bottom: solid 2px #e74c3c;
+	border-top-left-radius: 0.2rem;
+	border-top-right-radius: 0.2rem;
+	gap: 1rem;
+}
+
+.contentProfile__lastExits-infos>.card-header>p {
+	text-align: right;
+}
+
+.contentProfile__lastExits-infos_details {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+}
+
+.contentProfile__lastExits-infos_details > p:last-child {
+	text-align: right;
+}
+
+.contentProfile__lastExits-infos_actions {
+	text-align: right;
+}
+
+.contentProfile__lastExits-infos_actions>.--show {
+	background-color: #1266f1;
+}
+
+.contentProfile__lastExits-infos_actions>.--edit {
+	/* background-color: à définir */
+}
+
+.contentProfile__lastExits-infos_actions>.--delete {
+	/* background-color: à définir */
+}
+
+.contentProfile__lastExits-infos_actions>a {
+	margin-left: 0.5rem;
 }
 
 
