@@ -449,6 +449,10 @@
 	flex-wrap: wrap;
 }
 
+.contentProfile.--public {
+	margin: 2rem 1rem 0;
+}
+
 .contentProfile.--public h2 {
 	text-align: center;
 }
@@ -623,10 +627,6 @@ svg.text-light {
 		flex-direction: row;
 	}
 
-	.contentProfile.--public {
-		margin: 2rem 1rem 0;
-	}
-
 	.contentProfile__infos-details,
 	.contentProfile.--public .contentProfile__infos-details>h2 {
 		text-align: left;
@@ -649,6 +649,10 @@ svg.text-light {
 
 	.descriptionPlace__picture {
 		display: block;
+	}
+
+	.contentProfile.--public {
+		margin: 2rem 4rem;
 	}
 }
 
@@ -762,6 +766,10 @@ svg.text-light {
 	.contentProfile__lastExits-infos>.card-header {
 		border-radius: 0;
 	}
+
+	.contentProfile.--public {
+		margin: 2rem 7rem;
+	}
 }
 
 @media screen and (min-width: 1200px) {
@@ -780,6 +788,10 @@ svg.text-light {
 	.dashAction.--desktop .dashAction__item:last-child .card-body {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.contentProfile.--public {
+		margin: 2rem 15rem;
 	}
 }
 
