@@ -21,7 +21,6 @@ class EventTest extends TestCase
             ->setDescription('description')
             ->setEventDate(new DateTime('10-10-2020'))
             ->setAddress('address')
-            ->setCity('city')
             ->setLat('1.0')
             ->setLon('2.0')
             ->setMaxAttendants(10)
@@ -32,7 +31,6 @@ class EventTest extends TestCase
         $this->assertTrue($event->getDescription() === 'description');
         $this->assertEquals($event->getEventDate(), new DateTime('10-10-2020'));
         $this->assertTrue($event->getAddress() === 'address');
-        $this->assertTrue($event->getCity() === 'city');
         $this->assertTrue($event->getLat() === '1.0');
         $this->assertTrue($event->getLon() === '2.0');
         $this->assertTrue($event->getMaxAttendants() === 10);
@@ -48,7 +46,6 @@ class EventTest extends TestCase
             ->setDescription('description')
             ->setEventDate(new DateTime('now'))
             ->setAddress('address')
-            ->setCity('city')
             ->setLat('1.0')
             ->setLon('2.0')
             ->setMaxAttendants(10)
@@ -59,7 +56,6 @@ class EventTest extends TestCase
         $this->assertFalse($event->getDescription() === 'false');
         $this->assertFalse($event->getEventDate() === new DateTime('tomorrow'));
         $this->assertFalse($event->getAddress() === 'false');
-        $this->assertFalse($event->getCity() === 'false');
         $this->assertFalse($event->getLat() === 'false');
         $this->assertFalse($event->getLon() === 'false');
         $this->assertFalse($event->getMaxAttendants() === 5);
@@ -74,7 +70,6 @@ class EventTest extends TestCase
         $this->assertEmpty($event->getDescription());
         $this->assertEmpty($event->getEventDate());
         $this->assertEmpty($event->getAddress());
-        $this->assertEmpty($event->getCity());
         $this->assertEmpty($event->getLat());
         $this->assertEmpty($event->getLon());
         $this->assertEmpty($event->getMaxAttendants());
@@ -88,7 +83,6 @@ class EventTest extends TestCase
             ->setTitle('title')
             ->setDescription('description')
             ->setAddress('address')
-            ->setCity('city')
             ->setLat('1.0')
             ->setLon('2.0')
         ;
@@ -96,7 +90,6 @@ class EventTest extends TestCase
         $this->assertIsString($event->getTitle());
         $this->assertIsString($event->getDescription());
         $this->assertIsString($event->getAddress());
-        $this->assertIsString($event->getCity());
         $this->assertIsString($event->getLat());
         $this->assertIsString($event->getLon());
     }

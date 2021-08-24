@@ -57,6 +57,7 @@ class RegistrationController extends AbstractController
                     ->subject('Bienvenue sur Place 2 go ! Confirmez votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
+            
             // send flash message to display to the user
             $this->addFlash('success', 'Nous vous avons envoyé un email pour vérifier votre compte');
 
