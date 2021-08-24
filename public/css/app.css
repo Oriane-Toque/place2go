@@ -374,7 +374,7 @@
 }
 
 .dashAction__item-action_button>i {
-	transform: translateY(45%);
+	transform: translateY(37%);
 }
 
 .dashAction__item-action_button:hover {
@@ -478,16 +478,35 @@
 	height: auto;
 }
 
-.contentProfile__infos-add {
-	background-color: var(--profile-main-color);
+.contentProfile__infos-buttonText {
 	color: #fff;
 	margin: 1rem 0 0;
 	font-size: .8rem;
 	font-weight: bold;
 }
 
-.contentProfile__infos-add:hover {
+.contentProfile__infos-buttonText.--action {
+	background-color: var(--profile-main-color);
+}
+
+.contentProfile__infos-buttonText.--action:hover {
 	background-color: #c0392b;
+}
+
+.contentProfile__infos-buttonText.--back {
+	background-color: var(--profile-secondary-color);
+}
+
+.contentProfile__infos-buttonText.--back:hover {
+	background-color: #656e7a;
+}
+
+.contentProfile__infos-buttonText>i {
+	margin-right: 1rem;
+}
+
+.contentProfile__buttons {
+	text-align: right;
 }
 
 .contentProfile__friends-list {
@@ -499,6 +518,12 @@
 .contentProfile__description,
 .contentProfile__friends {
 	border-bottom: solid 5px var(--profile-main-color);
+}
+
+/*****************************************************************? PROFILE EDIT EVENT */
+
+.contentProfile h2>i {
+	margin-right: 1rem;
 }
 
 /*****************************************************************? COLOR */

@@ -33,11 +33,11 @@
         </div>
     </div>
 
-    <div class="my-3">
-        <a class="btn btn-secondary me-2" href="{{ path('app_event_list') }}">
+    <div class="contentProfile__buttons my-3">
+        <a class="--back contentProfile__infos-buttonText btn btn-secondary" href="{{ path('app_event_list') }}">
             <i class="fa fa-angle-left"></i>Annuler</a>
         
-        <button type="submit" class="btn btn-success">{{ button_label ?? 'Créer la sortie' }}</button>
+        <button type="submit" class="--action contentProfile__infos-buttonText btn btn-success">{{ button_label ?? 'Créer la sortie' }}</button>
     </div>
 
 {{ form_end(form) }}

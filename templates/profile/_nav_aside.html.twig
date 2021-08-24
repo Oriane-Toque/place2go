@@ -6,10 +6,10 @@
 			class="card-body">
 			{# Infos sur l'utilisateur #}
 			<div class="dashAction__item-infos">
-				<img src="{{ user.avatar }}" alt="photo de {{ user }}">
+				<img src="{{ user.avatar ?? app.user.avatar }}" alt="photo de {{ user ?? app.user }}">
 				<div class="dashAction__item-infos_details">
-					<p>{{ user }}</p>
-					<p>{{ user.email }}</p>
+					<p>{{ user ?? app.user }}</p>
+					<p>{{ user.email ?? app.user.email }}</p>
 				</div>
 			</div>
 
@@ -54,7 +54,7 @@
 			<h3>A propos de moi</h3>
 		</div>
 		<div class="card-body">
-			<p class="card-text">{{ user.description }}</p>	
+			<p class="card-text">{{ user.description ?? app.user.description }}</p>	
 		</div>
 	</div>
 
@@ -96,9 +96,9 @@
 
 	{# Infos sur l'utilisateur #}
 	<div id="infos" class="dashAction__item">
-		<img src="{{ user.avatar }}" alt="photo de {{ user }}">
+		<img src="{{ user.avatar ?? app.user.avatar }}" alt="photo de {{ user ?? app.user }}">
 		<div class="dashAction__item-infos_details">
-			<a href="{{ path("app_profile_show", {id:user.id}) }}">{{ user }}</a> 
+			<a href="{{ path("app_profile_show", {id:user.id ?? app.user.id}) }}">{{ user ?? app.user }}</a> 
 		</div>
 	</div>
 
