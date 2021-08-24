@@ -177,15 +177,7 @@ class EventController extends AbstractController
             ]);
         }
 
-
-			$this->addFlash('success', 'Sortie créée avec succès !');
-
-			return $this->redirectToRoute('app_event_show', [
-				'id' => $event->getId(),
-			]);
-		}
-
-		return $this->render('event/create.html.twig', [
+		return $this->render('event/edit.html.twig', [
 			'form' => $form->createView(),
 		]);
 	}
