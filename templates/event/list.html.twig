@@ -7,8 +7,10 @@
 	<style>
 		#map {
 			width: 100%;
-			height: 100%;
-      		max-height: 800px;
+			min-height: 400px;
+			position: sticky;
+			top: 5rem;
+      max-height: 800px;
 			margin-bottom: 0.8rem;
 		}
 		
@@ -47,7 +49,7 @@
 				<div class="col-8">
 
 					{% for event in events %}
-						<div class="list__card shadow-3">
+						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
 							<div class="list__card_image">
 								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
 									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
@@ -129,27 +131,40 @@
 			zoom: 10, // Starting zoom level
 		});
 
-			// add markers to map
-			geojson.features.forEach(function (marker) {
-			// create a HTML element for each feature
-				var el = document.createElement('div');
-				el.className = 'marker';
-				
-				// make a marker for each feature and add it to the map
-				new mapboxgl.Marker(el)
-					.setLngLat(marker.geometry.coordinates)
-					.setPopup(
-				new mapboxgl.Popup({ offset: 25 }) // add popups
-					.setHTML(
-					'<h5>' +
-					marker.properties.title +
-					'</h5><p>' +
-					marker.properties.description +
-					'</p>'
-					)
-				).addTo(map);
-			});
-	</script>
+		let clickableElements = document.querySelectorAll('.js-event');
+		clickableElements.forEach(element => {
+			element.addEventListener('click', evt => {
+				map.flyTo({
+					center: [element.dataset.lat, element.dataset.lon],
+					essential: true,
+					zoom: 14,
+				});
+			})
+		})
+
+		// add markers to map
+		geojson.features.forEach(function (marker) {
+		// create a HTML element for each feature
+		var el = document.createElement('div');
+		el.className = 'marker';
+		
+		// make a marker for each feature and add it to the map
+		new mapboxgl.Marker(el)
+			.setLngLat(marker.geometry.coordinates)
+			.setPopup(
+		new mapboxgl.Popup({ offset: 25 }) // add popups
+			.setHTML(
+			'<h5>' +
+			marker.properties.title +
+			'</h5><p>' +
+			marker.properties.description +
+			'</p>'
+			)
+		)
+		.addTo(map);
+		});
+    
+</script>
 
 {% endblock %}
 

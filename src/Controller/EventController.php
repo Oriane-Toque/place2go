@@ -48,16 +48,21 @@ class EventController extends AbstractController
 
 			// Handle the form request and use $data in custom query to show searched events
 			$form->handleRequest($request);
+
+			
 			
 			$events = $eventRepository->findSearch($data);
 			$geoJson = $this->geoJson->createGeoJson($events);
 
+			
+
 			if (!empty($data->q)){
 				$location = $this->callApiService->getApi($data->q);
-			} else {
+			} elseif (!empty($events)) {
 				$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
-			};
-			
+			} else {
+				$location = [1, 47];
+			}
 
 			return $this->render('event/list.html.twig', [
 				'events' => $events,

@@ -230,6 +230,7 @@
 	border-bottom-left-radius: 70px;
 	border-top-left-radius: 70px;
 	border: 1px solid rgba(0, 0, 0, 0.05);
+	cursor: pointer;
 }
 
 #list .list__card_content {
