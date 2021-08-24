@@ -155,7 +155,6 @@ class EventController extends AbstractController
             // push into the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
-            dump($event);
             $entityManager->flush();
 
             // Flash message
@@ -182,6 +181,12 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+			$coordinates = $this->callApiService->getApi($form['address']->getData());
+	
+            // set coordinates fetched from geoAPI
+			$event->setLat($coordinates[0]);
+            $event->setLon($coordinates[1]);
 
             $entityManager = $this->getDoctrine()->getManager();
             // No persist on edit

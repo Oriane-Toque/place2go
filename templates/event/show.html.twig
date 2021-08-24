@@ -90,7 +90,7 @@
 								
 								<div class="show__card_content-date ">
 									<i class="fas fa-caret-right"></i>
-									Le {{ event.eventDate | date('d/m/Y') }}
+									Le {{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
 								</div>
 
 								<div class="show__card_address">
@@ -138,9 +138,15 @@
 		let map = new mapboxgl.Map({
 			container: 'map', // Container ID
 			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [1.835895, 48.637596], // Starting position [lng, lat]
-			zoom: 8, // Starting zoom level
+			center: [{{ event.lat}},{{ event.lon}}], // Starting position [lng, lat]
+			zoom: 15.5, // Starting zoom level
 		});
+
+		// Create a default Marker and add it to the map.
+		const marker1 = new mapboxgl.Marker({ color: 'red'})
+		.setLngLat([{{ event.lat }}, {{ event.lon }}])
+		.addTo(map);
+			
 
 	</script>
 
