@@ -287,10 +287,6 @@
 	margin: 3rem 1rem 0 1rem;
 }
 
-.contentProfile.--public h2 {
-	text-align: center;
-}
-
 .contentProfile h2 {
 	text-align: left;
 	color: var(--profile-secondary-color);
@@ -453,6 +449,14 @@
 	flex-wrap: wrap;
 }
 
+.contentProfile.--public h2 {
+	text-align: center;
+}
+
+.contentProfile.--public .contentProfile__infos-details>h2 {
+	margin: 0 0 1rem;
+}
+
 .contentProfile__description {
 	margin: 2rem 0;
 }
@@ -473,7 +477,7 @@
 .contentProfile__infos-add {
 	background-color: var(--profile-main-color);
 	color: #fff;
-	margin: 1rem 1rem;
+	margin: 1rem 0 0;
 	font-size: .8rem;
 	font-weight: bold;
 }
@@ -614,6 +618,21 @@ svg.text-light {
 	.container-xl {
 		padding: 1rem;
 	}
+	/************************************************ PUBLIC PROFILE  */
+	.contentProfile__infos {
+		flex-direction: row;
+	}
+
+	.contentProfile.--public {
+		margin: 2rem 1rem 0;
+	}
+
+	.contentProfile__infos-details,
+	.contentProfile.--public .contentProfile__infos-details>h2 {
+		text-align: left;
+		margin: 0 0 1rem;
+	}
+
 }
 
 @media screen and (min-width: 700px) {
