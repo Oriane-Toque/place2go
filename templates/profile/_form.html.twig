@@ -2,6 +2,12 @@
 
 	{{ form_widget(form) }}
 
-	<button type="submit" class="btn btn-success">{{ button_label }}</button>
+	<div class="contentProfile__buttons my-3">
+		<a class="--back contentProfile__infos-buttonText btn btn-primary" href="{{ path('app_profile_profile') }}" role="button to back">
+			<i class="fa fa-angle-left"></i>Retour
+		</a>
+
+		<button type="submit" class="--action contentProfile__infos-buttonText btn btn-success">{{ button_label }}</button>
+	</div>
 
 {{ form_end(form) }}
