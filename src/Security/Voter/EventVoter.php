@@ -54,6 +54,7 @@ class EventVoter extends Voter
                 // if user is not the author of the event, deny access
                 if ($user !== $event->getAuthor()->getId())     return false;
 
+                return true;
 
                 break;
             case 'EVENT_DELETE':
@@ -63,6 +64,7 @@ class EventVoter extends Voter
                 // if user is not the author of the event, deny access
                 if ($user !== $event->getAuthor()->getId())     return false;
 
+                return true;
 
                 break;
             case 'EVENT_JOIN':
@@ -71,6 +73,10 @@ class EventVoter extends Voter
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // If user is already an attendant of the event, deny access
                 if ($event->getAttendants()->contains($user))   return false;
+                // If user is the author of the event, deny access
+                if ($user === $event->getAuthor()->getId())     return false;
+
+                return true;
 
                 break;
 
@@ -80,6 +86,8 @@ class EventVoter extends Voter
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // If user is not an attendant of the event, deny access
                 if (!$event->getAttendants()->contains($user))  return false;
+                
+                return true;
 
                 break;
         }

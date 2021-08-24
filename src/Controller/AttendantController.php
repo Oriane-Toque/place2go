@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class AttendantController extends AbstractController
 {
@@ -38,7 +38,10 @@ class AttendantController extends AbstractController
      */
     public function join(Event $event, Request $request): Response
     {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted("PRIVATE_ACCESS", $this->getUser(), "Requirements not meet");
+        $this->denyAccessUnlessGranted('EVENT_JOIN', $event, "not good");
+
+        //TODO  WIP VOTERS
 
         //? Vérifier si il y a une place disponible
         // je récupère le max des participants
@@ -52,18 +55,18 @@ class AttendantController extends AbstractController
 
         // je fais appel à mon service qui me permet de vérifier si
         // l'utilisateur participe déjà à cette sortie
-        $isAttendant = $this->isAttendant->checkIsAttendant($attendantList, $user);
+        $isAttendant = $this->isAttendant->checkIsAttendant($attendantList, $this->getUser());
 
         //? Vérifier si l'utilisateur est connecté
-        if ($user) {
+        if ($this->getUser()) {
             // On vérifie si il y a des places de disponible
             if ($nbrAttendants < $maxAttendant) {
 
                 // Si il n'est pas déjà un participant
-                if ($isAttendant === false) {
+                if ($this->isAttendant === false) {
                     $attendant = new Attendant();
 
-                    $attendant->setUser($user);
+                    $attendant->setUser($this->getUser());
                     $attendant->setEvent($event);
 
                     $this->em->persist($attendant);
@@ -80,13 +83,13 @@ class AttendantController extends AbstractController
                 // on indique à l'utilisateur qu'il participe déjà à cette sortie
                 $this->addFlash('warning', 'Vous êtes déjà inscrit à cette sortie !');
 
-                return $this->redirect($request->headers->get('referer'));
+                // return $this->redirect($request->headers->get('referer'));
             }
 
             // on indique à l'utilisateur qu'il n'y a plus de places disponibles
             $this->addFlash('danger', 'Désolé il n\'y a plus de places disponibles sur cette sortie !');
 
-            return $this->redirect($request->headers->get('referer'));
+            // return $this->redirect($request->headers->get('referer'));
         }
 
         // on lui indique qu'il est nécessaire de se connecter pour participer à une sortie
