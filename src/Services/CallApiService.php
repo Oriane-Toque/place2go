@@ -22,7 +22,6 @@ class CallApiService
         $response = $this->client->request(
             "GET",
             "https://api-adresse.data.gouv.fr/search/?q={$var}"
-            
         );
 
         $array = $response->toArray();

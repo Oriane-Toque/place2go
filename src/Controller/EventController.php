@@ -29,69 +29,154 @@ class EventController extends AbstractController
 		$this->geoJson = $geoJson;
 	}
 
-	/**
-	 * @Route("/events", name="app_event_list", methods={"GET"})
-	 * 
-	 * @param Request $request
-	 * @param EventRepository $eventRepository
-	 * 
-	 * @return Response
-	 */
-	public function list(Request $request, EventRepository $eventRepository): Response
-	{
-		// Init Data to handle form search
-		$data = new SearchData();
-		$form = $this->createForm(SearchFormType::class, $data);
+		/**
+		 * @Route("/events", name="app_event_list", methods={"GET"})
+		 * 
+		 * @param Request $request
+		 * @param EventRepository $eventRepository
+		 * 
+		 * @return Response
+		 */
+		public function list(Request $request, EventRepository $eventRepository): Response
+		{
+			// Init Data to handle form search
+			$data = new SearchData();
+			$form = $this->createForm(SearchFormType::class, $data);
 
-		// Handle the form request and use $data in custom query to show searched events
-		$form->handleRequest($request);
+			// Handle the form request and use $data in custom query to show searched events
+			$form->handleRequest($request);
+			
+			$events = $eventRepository->findSearch($data);
+			$geoJson = $this->geoJson->createGeoJson($events);
 
-		// Get results based on user search
-		$events = $eventRepository->findSearch($data);
-		// Get location of current query to show it on the map
-		$location = $this->callApiService->getApi($data->q);
-		// Make a geoJson with all results and send it to view to render pins on map
-		$geoJson = $this->geoJson->createGeoJson($events);
+			if (!empty($data->q)){
+				$location = $this->callApiService->getApi($data->q);
+			} else {
+				$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
+			};
+			
 
-		return $this->render('event/list.html.twig', [
-			'form' => $form->createView(),
-			'events' => $events,
-			'geojson' => $geoJson,
-			'location' => $location,
-		]);
-	}
+			return $this->render('event/list.html.twig', [
+				'events' => $events,
+				'form' => $form->createView(),
+				'geojson' => $geoJson,
+				'location' => $location,
+			]);
+		}
 
-	/**
-	 * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
-	 * @isGranted("ROLE_USER")
-	 * 
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function create(Request $request, EntityManagerInterface $entityManager): Response
-	{
+		/**
+		 * Return all events for one category with city's user in params
+		 *
+		 * @Route("events/category/{id<\d+>}/search", name="app_events_category_search", methods={"GET"})
+		 * 
+		 * @return Response renvoie sur la page liste filtré selon la catégorie et la ville paramétré sur le compte utilisateur
+		 * si pas connecté renvoie toutes les sorties dans n'importe quelle ville selon la catégorie
+		 */
+		public function searchByCategory(Request $request, Category $category, EventRepository $er): Response
+		{
 
-		$event = new Event();
+			// Init Data to handle form search
+			$data = new SearchData();
+			$form = $this->createForm(SearchFormType::class, $data);
 
-		// Create new form associated to entity
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
+			// Handle the form request and use $data in custom query to show searched events
+			$form->handleRequest($request);
+			$events = $er->findSearch($data);
 
-		if ($form->isSubmitted() && $form->isValid()) {
+			if (null === $category) {
+				throw $this->createNotFoundException('404 - Catégorie introuvable');
+			}
 
-			$event->setAuthor($this->getUser());
+			if ($this->getUser()) {
 
-			// Search for coords with geoApi
-			$coordinates = $this->callApiService->getApi($form['address']->getData());
+				$city = $this->getUser()->getCity();
 
-			// set coordinates fetched from geoAPI
+				$events = $er->findEventsByCategory($category->getId(), $city);
+
+				return $this->render('event/list.html.twig', [
+					'events' => $events,
+					'form' => $form->createView(),
+				]);
+			}
+
+			$events = $er->findEventsByCategory($category->getId());
+
+			return $this->render('event/list.html.twig', [
+				'events' => $events,
+				'form' => $form->createView(),
+			]);
+		}
+
+    /**
+     * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
+     */
+    public function create(Request $request): Response
+    {
+        // New object
+        $event = New Event();
+
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->setAuthor($this->getUser());
+            // Add coordinates to Event
+
+            $coordinates = $this->callApiService->getApi($form['address']->getData());
+
+            // set coordinates fetched from geoAPI
 			$event->setLat($coordinates[0]);
-			$event->setLon($coordinates[1]);
+            $event->setLon($coordinates[1]);
+           
+            // push into the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($event);
+            $entityManager->flush();
 
-			// push into the database
-			$entityManager->persist($event);
-			$entityManager->flush();
+            // Flash message
+            $this->addFlash('success', 'Sortie créée avec succès !');
+
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
+
+        return $this->render('event/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
+     */
+    public function edit(Event $event, Request $request): Response
+    {
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+			$coordinates = $this->callApiService->getApi($form['address']->getData());
+	
+            // set coordinates fetched from geoAPI
+			$event->setLat($coordinates[0]);
+            $event->setLon($coordinates[1]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            // No persist on edit
+            $entityManager->flush();
+
+            // Flash message
+            $this->addFlash('success', 'Sortie modifiée avec succès !');
+
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
+
 
 			$this->addFlash('success', 'Sortie créée avec succès !');
 
@@ -105,36 +190,6 @@ class EventController extends AbstractController
 		]);
 	}
 
-	/**
-	 * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
-	 * 
-	 * @param Event $event
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function edit(Event $event, Request $request): Response
-	{
-		// Create new form associated to entity
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->flush();
-
-			$this->addFlash('success', 'Sortie modifiée avec succès !');
-
-			return $this->redirectToRoute('app_event_show', [
-				'id' => $event->getId(),
-			]);
-		}
-
-		return $this->render('event/edit.html.twig', [
-			'form' => $form->createView(),
-		]);
-	}
 
 	/**
 	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})

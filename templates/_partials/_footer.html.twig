@@ -37,45 +37,38 @@
 				</ul>
 			</div>
 
-{# 
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-				<div class="text-uppercase text-xs mb-3 fw-bold fw-bold">Villes populaires</div>
+				<div class="text-uppercase text-xs mb-3 fw-bold fw-bold">Place To Random</div>
 				<ul class="list-unstyled">
-					{# {% if topCities is defined %}
-						{% for city in topCities %}
+						{% for event in eventRepository.findRandEvents(app.user.city ?? '') %}
 							<li class="mb-2">
-								<a href="">{{ city['city'] }}</a>
+								<a href="{{ path("app_event_show", {id: event.id}) }}">{{ event.title }}</a>
 							</li>
 						{% endfor %}
-					{% endif %} #}
 				</ul>
 			</div>
 
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<div class="text-uppercase text-xs mb-3 fw-bold">Catégories populaires</div>
 				<ul class="list-unstyled">
-					{# {% if topCities is defined %}
-						{% for city in topCities %}
+						{% for category in categoryRepository.findTopCategories %}
 							<li class="mb-2">
-								<a href="">{{ city['city'] }}</a>
+								<a href="/events?q=&categories%5B%5D={{ category[0].id }}">{{ category[0].name }}</a>
 							</li>
 						{% endfor %}
-					{% endif %} #}
 				</ul>
 			</div>
 
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<div class="text-uppercase text-xs mb-3 fw-bold">Top Contributeurs</div>
 				<ul class="list-unstyled">
-					{# {% if topCities is defined %}
-						{% for city in topCities %}
+						{% for contributor in eventRepository.findTopContributors %}
 							<li class="mb-2">
-								<a href="">{{ city['city'] }}</a>
+								<a href="{{ path("app_profile_show", {id: contributor[0].id}) }}">{{ contributor[0].nickname }}</a>
 							</li>
 						{% endfor %}
-					{% endif %} #}
 				</ul>
-			</div> #}
+			</div>
 
 		</div>
 

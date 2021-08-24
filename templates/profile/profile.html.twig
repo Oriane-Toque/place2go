@@ -4,22 +4,22 @@
 
 {% block body %}
 
-<div class="d-flex m-3">
+<div id="profile">
 
 	{# Navigation secondaire du dashboard + informations #}
 	{% include "profile/_nav_aside.html.twig" %}
 
 	{# Contenu du profil #}
-	<section class="contentProfile" style="width:75%;">
+	<div class="contentProfile">
 		{# Les derniers sorties proposées par l'utilisateur #}
-		<div class="contentProfile__lastExits-author">
+		<section class="contentProfile__lastExits">
 			<h2>Dernières sorties publiées</h2>
 			{# Début carte sortie #}
 			{% for event in userLastExits %}
 				<div class="card mb-3">
 					<div class="row g-0">
 
-						<div class="col-md-4">
+						<div class="contentProfile__lastExits-picture">
 							{# TODO Image de la sortie (améliorations) #}
 							<img
 								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
@@ -28,30 +28,30 @@
 							/>
 						</div>
 
-						<div class="col-md-8">
+						<div class="contentProfile__lastExits-infos">
 							<div class="card-header">
-								<h5 class="card-title">{{ event.title }}</h5>
-								<p>Date prévue : <time datetime="{{ event.eventDate|date("d-m-Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
+								<h3 class="card-title">{{ event.title }}</h3>
+								<p><time datetime="{{ event.eventDate|date("d-m-Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
 							</div>
 							<div class="card-body">
-								<div class="details">
-									<p class="card-text">Organisé par {{ event.author }}</p>
+								<div class="contentProfile__lastExits-infos_details">
+									<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
 									{# fonction length de twig pour retourner le nombre de participants #}
-									<p class="card-text">Nbr part : {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+									<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
 								</div>
-								<div class="actions">
+								<div class="contentProfile__lastExits-infos_actions">
 									{# Bouton pour voir les détails #}
-									<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
+									<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
 										<i class="far fa-eye"></i>
 									</a>
 
 									{# Bouton pour éditer la sortie #}
-									<a class="btn btn-warning btn-floating" href="#" role="button">
+									<a class="--edit btn btn-warning btn-floating" href="{{ path("app_event_edit", {id:event.id}) }}" role="button">
 										<i class="fas fa-pencil-alt"></i>
 									</a>
 
 									{# Bouton pour supprimer la sortie #}
-									<a class="btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button">
+									<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button">
 										<i class="fas fa-trash-alt"></i>
 									</a>
 								</div>
@@ -62,43 +62,43 @@
 			{% endfor %}
 			
 			{# Fin carte sortie #}
-		</div>
+		</section>
 
 		{# Les dernières sorties auxquelles a participé l'utilisateur #}
-		<div class="contentProfile__lastExits-attendant">
+		<section class="contentProfile__lastExits">
 			<h2>Dernières sorties effectuées</h2>
 			{# Début carte sortie #}
 			{% for event in attendantLastExits %}
 				<div class="card mb-3">
 					<div class="row g-0">
 
-						<div class="col-md-4">
+						<div class="contentProfile__lastExits-picture">
 							{# Image de la sortie #}
 							<img
 								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-								alt="..."
+								alt="Image de la sortie"
 								class="img-fluid"
 							/>
 						</div>
 
-						<div class="col-md-8">
+						<div class="contentProfile__lastExits-infos">
 							<div class="card-header">
-								<h5 class="card-title">{{ event.title }}</h5>
-								<p>Date prévue : <time datetime="{{ event.eventDate|date("d/m/Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
+								<h3 class="card-title">{{ event.title }}</h3>
+								<p><time datetime="{{ event.eventDate|date("d/m/Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
 							</div>
 							<div class="card-body">
-								<div class="details">
-									<p class="card-text">{{ event.author }}</p>
-									<p class="card-text">Nbr part : {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+								<div class="contentProfile__lastExits-infos_details">
+									<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
+									<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
 								</div>
-								<div class="actions">
+								<div class="contentProfile__lastExits-infos_actions">
 									{# Bouton pour voir les détails #}
-									<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
+									<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
 										<i class="far fa-eye"></i>
 									</a>
 
 									{# Bouton pour ne plus participer à la sortie #}
-									<a class="btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+									<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
 										<i class="fas fa-sign-out-alt"></i>
 									</a>
 								</div>
@@ -109,37 +109,37 @@
 			{# Fin carte sortie #}
 			{% endfor %}
 			
-		</div>
+		</section>
 
 		{# TODO uniquement version supérieur #}
-		<div class="contentProfile__newsFriends">
+		<section class="contentProfile__lastExits">
 			<h2>Nouveautés de mes amis</h2>
 			{# Début carte notifications sur les amis #}
 			<div class="card mb-3">
 				<div class="row g-0">
 
-					<div class="col-md-4">
+					<div class="contentProfile__lastExits-picture">
 						{# Image profil de l'Ami #}
 						<img
 							src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-							alt="..."
+							alt="Image de la sortie"
 							class="img-fluid"
 						/>
 					</div>
 
-					<div class="col-md-8">
+					<div class="contentProfile__lastExits-infos">
 						<div class="card-header">
-							<h5 class="card-title">Nom de l'Ami .. participera à X évènements</h5>
-							<p>Date prévue : <time datetime="2025-03-12">2025-03-12</time> à <time datetime=""></time>h</p>
+							<h3 class="card-title">Nom Prénom </br>participera à X évènements</h3>
+							<p><time datetime="2025/03/12">2025/03/12</time></p>
 						</div>
 						<div class="card-body">
-							<div class="details">
-								<p class="card-text">Organisé par Nom de l'organisateur</p>
-								<p class="card-text">Nbr part : 2 / 5</p>
+							<div class="contentProfile__lastExits-infos_details">
+								<p class="card-text"><span>Organisé par :</span> Nom de l'organisateur</p>
+								<p class="card-text"><span>Nbr part :</span> 2 / 5</p>
 							</div>
-							<div class="actions">
+							<div class="contentProfile__lastExits-infos_actions">
 								{# Bouton pour voir les détails #}
-								<a class="btn btn-primary btn-floating" style="background-color:#1266f1;" href="#!" role="button">
+								<a class="--show btn btn-primary btn-floating" href="#!" role="button">
 									<i class="far fa-eye"></i>
 								</a>
 							</div>
@@ -147,15 +147,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 
 		{# TODO uniquement dans version supérieure #}
-		<div class="contentProfile__lastSearch">
+		<section class="contentProfile__lastSearch">
 			<h2>Ma recherche du moment</h2>
 			<p>Prévoir lien direct vers la recherche sauvegardée</p>
-		</div>
-	</section>
-</div>
+		</section>
+	</div>
 
+</div>
 
 {% endblock %}
