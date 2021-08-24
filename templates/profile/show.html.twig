@@ -3,48 +3,55 @@
 {% block title %}{{ user.nickname }}{% endblock %}
 
 {% block body %}
+<div id="profile">
 
-	<section class="card mb-3">
-		<div class="row g-0">
-			<div class="col-md-4">
-				<img src="{{ user.avatar }}" alt="{{ user }}" class="img-fluid"/>
-			</div>
-			<div class="col-md-8">
-				<div class="card-body">
-					<p>{{ user }}</p>
-					<p>{{ user.email }}</p>
-					<p>Né le <time datetime="{{ user.birthday|date("d/m/Y") }}">{{ user.birthday|date("d/m/Y") }}</time></p>
-					<p>Autres infos</p>
+	{# Contenu du profil #}
+	<div class="contentProfile">
+
+		<section class="contentProfile__infos card">
+			<div class="row g-0">
+				<div class="col-md-4">
+					<img src="{{ user.avatar }}" alt="{{ user }}" class="img-fluid"/>
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<p>{{ user }}</p>
+						<p>{{ user.email }}</p>
+						<p>Né le <time datetime="{{ user.birthday|date("d/m/Y") }}">{{ user.birthday|date("d/m/Y") }}</time></p>
+						<p>Autres infos</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<a href="#" type="button" class="btn btn-secondary">Ajouter à ses amis</a>
+		<a href="#" type="button" class="btn btn-secondary">Ajouter à ses amis</a>
 
-	<div class="userDescription">
-		<h2>A propos de moi</h2>
-		<p>{% if user.description %}
-					{{ user.description }}
-			 {% else %}
-					Aucune description pour le moment !
-			 {% endif %}</p>
+		<section class="contentProfile__description">
+			<h2>A propos de moi</h2>
+			<p>{% if user.description %}
+						{{ user.description }}
+				{% else %}
+						Aucune description pour le moment !
+				{% endif %}</p>
+		</section>
+
+		<section class="contentProfile__friends">
+			<div class="userFriends__friend">
+				<img src="#" alt="photo ami">
+				<p>Nom de l'ami</p>
+			</div>
+			<div class="userFriends__friend">
+				<img src="#" alt="photo ami">
+				<p>Nom de l'ami</p>
+			</div>	
+			<div class="userFriends__friend">
+				<img src="#" alt="photo ami">
+				<p>Nom de l'ami</p>
+			</div>	
+		</section>
+
 	</div>
 
-	<div class="userFriends">
-		<div class="userFriends__friend">
-			<img src="#" alt="photo ami">
-			<p>Nom de l'ami</p>
-		</div>
-		<div class="userFriends__friend">
-			<img src="#" alt="photo ami">
-			<p>Nom de l'ami</p>
-		</div>	
-		<div class="userFriends__friend">
-			<img src="#" alt="photo ami">
-			<p>Nom de l'ami</p>
-		</div>	
-	</div>
-
+</div>
 
 {% endblock %}

@@ -15,33 +15,29 @@
 }
 
 .masthead {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
 
-  transform: translateY(-100px);
-  width: 100%;
-  height: 65vh;
-  overflow: hidden;
+	transform: translateY(-100px);
+	width: 100%;
+	height: 65vh;
+	overflow: hidden;
 
-  background-size: cover !important;
-  background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 85%,
-      rgba(255, 255, 255, 0.50) 100%
-    ),
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 65%,
-      rgba(255, 255, 255, 0.9) 100%
-    ),
-    url("../img/bg-header.jpeg") no-repeat center center scroll;
+	background-size: cover !important;
+	background: linear-gradient(to bottom,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0) 85%,
+			rgba(255, 255, 255, 0.50) 100%),
+		linear-gradient(to top,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0) 65%,
+			rgba(255, 255, 255, 0.9) 100%),
+		url("../img/bg-header.jpeg") no-repeat center center scroll;
 }
 
 .masthead__brand {
@@ -57,10 +53,10 @@
 /*****************************************************************? NAVBAR */
 
 #nav {
-  height: 80px;
-  background: transparent;
-  transition: 0.3s all linear;
-  z-index: 1000;
+	height: 80px;
+	background: transparent;
+	transition: 0.3s all linear;
+	z-index: 1000;
 }
 
 #nav .nav-link {
@@ -208,12 +204,12 @@
 /*** FILTER FORM ***/
 
 .filter__form {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
 }
 
 /*** LIST ***/
@@ -241,45 +237,48 @@
 /*****************************************************************? EVENT LIST */
 
 #show .show__card {
-  padding: 1rem;
+	padding: 1rem;
 }
 
 #show .show__card_title {
-  text-align: center;
-  font-size: 1.3rem;
-  padding: 1rem;
-  color: rgb(0,0,0);
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+	text-align: center;
+	font-size: 1.3rem;
+	padding: 1rem;
+	color: rgb(0, 0, 0);
+	text-transform: uppercase;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 #show .show__card_header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 1rem;
 }
 
-#show .show__card_header-author{ 	
-  width: 100%;	
+#show .show__card_header-author {
+	width: 100%;
 }
 
 #show .show__card_content {
-  position: relative;
+	position: relative;
 }
 
-#show .show__card_content-attendants, .show__card_content-date, .show__card_address {
-  color: #757575;
-    font-style: italic;
+#show .show__card_content-attendants,
+.show__card_content-date,
+.show__card_address {
+	color: #757575;
+	font-style: italic;
 }
 
 #show .show__card_content-footer {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  align-items: flex-end;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 2rem;
+	align-items: flex-end;
 }
+
 /*****************************************************************? PROFIL */
 
 .contentProfile {
@@ -483,6 +482,45 @@ svg.text-light {
 	padding-bottom: 6rem !important;
 }
 
+/****************************
+* CHIP
+*****************************/
+
+.chip {
+	display: inline-block;
+	height: 32px;
+	padding: 0 12px;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 32px;
+	color: #fff;
+	cursor: pointer;
+	background-color: #444444;
+	border-radius: 16px;
+	-webkit-transition: all .3s linear;
+	transition: all .3s linear;
+}
+
+.chip img {
+	float: left;
+	width: 32px;
+	height: 32px;
+	margin: 0 8px 0 -12px;
+	border-radius: 50%;
+}
+
+.chip .close {
+	float: right;
+	padding-left: 8px;
+	font-size: 16px;
+	line-height: 35px;
+	cursor: pointer;
+	-webkit-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
 /*****************************************************************? FOOTER */
 
 #footer {
@@ -515,7 +553,7 @@ svg.text-light {
 }
 
 /*****************************************************************/
-/***************************************************************** MEDIA QUERIES */
+/************************************************  MEDIA QUERIES */
 /*****************************************************************/
 
 @media screen and (min-width: 576px) {
@@ -546,7 +584,7 @@ svg.text-light {
 @media screen and (min-width: 992px) {
 
 	/************************************************ PROFILE  */
-	
+
 	.dashAction.--desktop {
 		display: block;
 	}
@@ -611,7 +649,7 @@ svg.text-light {
 
 	.dashAction.--desktop .dashAction__item>.card-header {
 		background-color: #e74c3c;
-    text-align: center;
+		text-align: center;
 	}
 
 	.dashAction.--desktop .dashAction__item>.card-header>h3 {
@@ -633,15 +671,15 @@ svg.text-light {
 
 	.contentProfile__lastExits-picture {
 		display: block;
-    flex: 1;
+		flex: 1;
 		max-width: 100%;
-    max-height: 100%;
-    overflow: hidden;
+		max-height: 100%;
+		overflow: hidden;
 	}
 
 	.contentProfile__lastExits-picture>img {
 		width: 100%;
-    height: auto;
+		height: auto;
 	}
 
 	.contentProfile__lastExits-infos {
@@ -655,15 +693,21 @@ svg.text-light {
 
 @media screen and (min-width: 1200px) {
 
-  /************************************************ CONTAINER  */
-  .container {
-    padding: 0;
-  }
+	/************************************************ CONTAINER  */
+	.container {
+		padding: 0;
+	}
 
-  /************************************************ HOME  */
-  .topScore {
-    grid-template-columns: repeat(3, 1fr);
-  }
+	/************************************************ HOME  */
+	.topScore {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	/************************************************ PROFILE  */
+	.dashAction.--desktop .dashAction__item:last-child .card-body {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 @media screen and (min-width: 1400px) {
@@ -672,4 +716,5 @@ svg.text-light {
 	.contentProfile {
 		flex: 3;
 	}
+
 }
