@@ -1,5 +1,7 @@
 :root {
 	--primary-color: #00b4d4;
+	--profile-main-color: #e74c3c;
+	--profile-secondary-color: #2f3640;
 }
 
 * {
@@ -285,9 +287,13 @@
 	margin: 3rem 1rem 0 1rem;
 }
 
+.contentProfile.--public h2 {
+	text-align: center;
+}
+
 .contentProfile h2 {
 	text-align: left;
-	color: #2f3640;
+	color: var(--profile-secondary-color);
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 1.5rem;
@@ -326,7 +332,7 @@
 	margin: 2rem 0;
 	padding: 1rem 0.2rem;
 	flex-wrap: wrap;
-	background-color: #e74c3c;
+	background-color: var(--profile-main-color);
 	border-radius: 0.2rem;
 }
 
@@ -336,7 +342,7 @@
 
 .dashAction.--mobile .dashAction__item-infos_details>a {
 	text-decoration: none;
-	color: #2f3640;
+	color: var(--profile-secondary-color);
 }
 
 .dashAction.--mobile .dashAction__item#infos {
@@ -365,7 +371,7 @@
 	display: block;
 	width: 35px;
 	height: 35px;
-	color: #e74c3c;
+	color: var(--profile-main-color);
 	background-color: #fff;
 	border-radius: 2rem;
 	transition: .2s linear;
@@ -382,7 +388,7 @@
 
 /*****************************************************************? PROFIL DASHBOARD */
 
-.contentProfile__lastExits span {
+.contentProfile span {
 	display: block;
 	font-weight: bold;
 	text-decoration: underline;
@@ -397,9 +403,9 @@
 	justify-content: space-between;
 	align-items: center;
 	font-weight: bold;
-	background-color: #2f3640;
+	background-color: var(--profile-secondary-color);
 	color: #fff;
-	border-bottom: solid 2px #e74c3c;
+	border-bottom: solid 2px var(--profile-main-color);
 	border-top-left-radius: 0.2rem;
 	border-top-right-radius: 0.2rem;
 	gap: 1rem;
@@ -439,6 +445,53 @@
 	margin-left: 0.5rem;
 }
 
+/*****************************************************************? PUBLIC PROFILE */
+
+.contentProfile__infos {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.contentProfile__description {
+	margin: 2rem 0;
+}
+
+.contentProfile__description>p {
+	padding: 1rem 1.5rem;
+}
+
+.contentProfile__infos-avatar {
+	overflow: hidden;
+}
+
+.contentProfile__infos-avatar>img {
+	width: 100%;
+	height: auto;
+}
+
+.contentProfile__infos-add {
+	background-color: var(--profile-main-color);
+	color: #fff;
+	margin: 1rem 1rem;
+	font-size: .8rem;
+	font-weight: bold;
+}
+
+.contentProfile__infos-add:hover {
+	background-color: #c0392b;
+}
+
+.contentProfile__friends-list {
+	padding: 1rem 1.5rem;
+	-webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+	box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+}
+
+.contentProfile__description,
+.contentProfile__friends {
+	border-bottom: solid 5px var(--profile-main-color);
+}
 
 /*****************************************************************? COLOR */
 
@@ -489,6 +542,7 @@ svg.text-light {
 .chip {
 	display: inline-block;
 	height: 32px;
+	width: 150px;
 	padding: 0 12px;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
@@ -497,7 +551,7 @@ svg.text-light {
 	line-height: 32px;
 	color: #fff;
 	cursor: pointer;
-	background-color: #444444;
+	background-color: var(--profile-secondary-color);
 	border-radius: 16px;
 	-webkit-transition: all .3s linear;
 	transition: all .3s linear;
@@ -612,7 +666,7 @@ svg.text-light {
 	}
 
 	.dashAction.--desktop .dashAction__item:first-child {
-		border-left: solid 15px #e74c3c;
+		border-left: solid 15px var(--profile-main-color);
 	}
 
 	.dashAction.--desktop .dashAction__item:nth-child(2) {
@@ -627,7 +681,7 @@ svg.text-light {
 		margin: 2rem 0;
 		padding: 1rem 0.2rem;
 		flex-wrap: wrap;
-		background-color: #e74c3c;
+		background-color: var(--profile-main-color);
 		border-radius: 0.2rem;
 	}
 
@@ -648,7 +702,7 @@ svg.text-light {
 	}
 
 	.dashAction.--desktop .dashAction__item>.card-header {
-		background-color: #e74c3c;
+		background-color: var(--profile-main-color);
 		text-align: center;
 	}
 
