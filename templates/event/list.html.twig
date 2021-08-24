@@ -7,23 +7,23 @@
 	<style>
 		#map {
 			width: 100%;
-			height: 400px;
+			min-height: 400px;
 			position: sticky;
 			top: 5rem;
-      		/* max-height: 800px; */
+      max-height: 800px;
 			margin-bottom: 0.8rem;
 		}
 		
 		.marker {
-		background-image: url('img/pinmap.png');
-		background-size: cover;
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		cursor: pointer;
+			background-image: url('img/pinmap.png');
+			background-size: cover;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			cursor: pointer;
 		}
 		.mapboxgl-popup {
-		max-width: 150px;
+			max-width: 150px;
 		}
 		.mapboxgl-popup-content {
 		text-align: center;
@@ -31,7 +31,7 @@
 		}
 	</style>
 
-	<div class="container-xl my-5">
+	<div class="container my-5">
 
 		<section id="search">
 
@@ -163,9 +163,12 @@
 		)
 		.addTo(map);
 		});
+    
 </script>
 
 {% endblock %}
+
+
 
 
 

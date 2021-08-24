@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "student/projet-place-2-go",
+    "description": "website to provide a place to meet friends and share activities",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
