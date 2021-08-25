@@ -97,7 +97,7 @@ class EventController extends AbstractController
 			$entityManager->persist($event);
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Sortie créée avec succès !');
+			$this->addFlash('success', 'Votre sortie à bien été créée !');
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),
@@ -134,7 +134,7 @@ class EventController extends AbstractController
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Sortie modifiée avec succès !');
+			$this->addFlash('success', 'Sortie modifiée !');
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),
@@ -165,11 +165,10 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
 	 * 
 	 * @param Event $event
-	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
-	public function delete(Event $event, Request $request): Response
+	public function delete(Event $event): Response
 	{
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
@@ -179,6 +178,6 @@ class EventController extends AbstractController
 		$this->addFlash('success', 'Sortie supprimée avec succès');
 
 		//? Handle redirect to previous visited page
-		return $this->redirect($request->headers->get('referer'));
+		return $this->redirectToRoute('app_event_list');
 	}
 }
