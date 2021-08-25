@@ -4,13 +4,13 @@
 
 {% block stylesheets %}
 	<style>
-		#map {
+		#map {			
 			width: 100%;
-			min-height: 400px;
+			min-height: 100vh;
 			height: 100%;
+			max-height: calc(100vh - 5rem);
 			position: sticky;
 			top: 5rem;
-			max-height: calc(100vh - 5rem);
 			margin-bottom: 0.8rem;
 		}
 
@@ -41,17 +41,17 @@
 		<section id="search">
 
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12 ">
 					{% include 'event/_filter.html.twig' %}
 				</div>
 			</div>
 
 		</section>
 
-		<section id="list" class="mt-5">
+		<section id="list" class="mt-sm-2 mt-md-5">
 
 			<div class="row">
-				<div class="col-8">
+				<div class="col-sm-12 col-md-8">
 
 					{% for event in events %}
 						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
@@ -63,24 +63,21 @@
 
 							<div class="list__card_content">
 								<div class="flex-between">
-									<div class="list__cards_author">
+									<div class="list__card_author">
 										<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
 											{{ event.author.nickname }}
 										</a>
 									</div>
 									<div class="list__card_date">
-										<small class="text-muted fst-italic">
-                      le
-											{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
-                    </small>
-
+										le
+										{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
 									</div>
 								</div>
 
 								<div class="flex-between">
 									<div class="list__card_title">
 										<i class="fas fa-long-arrow-alt-right"></i>
-										<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
+										<a href="{{ path('app_event_show', {id: event.id}) }}" class="text-decoration-underline">{{ event.title }}</a>
 									</div>
 									<div class="list__cards_attendants">
 										{{ event.attendants | length }}
@@ -97,7 +94,7 @@
 									</div>
 								</div>
 
-								<div class="flex-between">
+								<div class="list__card_footer">
 									<p class="list__card_categories m-0">
 										{% for category in event.categories %}
 											{{ category.name }}{{ loop.last ? '' : ' - ' }}
@@ -107,13 +104,13 @@
 									<div class="list__cards_join">
 										{% if is_granted('EVENT_LEAVE', event) %}
 											{# Bouton pour ne plus participer à la sortie #}
-											<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+											<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
 												<i class="fas fa-sign-out-alt"></i>
 											</a>
 										{% endif %}
 										{% if is_granted('EVENT_JOIN', event) %}
 											{# Bouton pour participer à la sortie #}
-											<a href="{{ path("app_event_join", {id: event.id}) }}" class="--show btn btn-primary btn-floating ms-2">
+											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-primary btn-floating-sm ms-2">
 												<i class="fas fa-user-plus"></i>
 											</a>
 										{% endif %}
@@ -129,7 +126,7 @@
 					{% endfor %}
 				</div>
 
-				<div class="col-4 mb-2">
+				<div class="col-sm-12 col-md-4 mb-2">
 					<div id='map' class=""></div>
 				</div>
 
@@ -139,35 +136,35 @@
 		<script>
 
 			mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-			var geojson = {{ geojson|json_encode|raw }};
-			let map = new mapboxgl.Map({
-			container: 'map', // Container ID
-			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [
-			{{ location[0] }}, {{ location[1] }}
-			], // Starting position [lng, lat]
-			zoom: 10, // Starting zoom level
-			});
-			let clickableElements = document.querySelectorAll('.js-event');
-			clickableElements.forEach(element => {
-			element.addEventListener('click', evt => {
-			map.flyTo({
-			center: [
-			element.dataset.lat, element.dataset.lon
-			],
-			essential: true,
-			zoom: 14
-			});
-			})
-			})
-			// add markers to map
-			geojson.features.forEach(function (marker) { // create a HTML element for each feature
-			var el = document.createElement('div');
-			el.className = 'marker';
+var geojson = {{ geojson|json_encode|raw }};
+let map = new mapboxgl.Map({
+container: 'map', // Container ID
+style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+center: [
+{{ location[0] }}, {{ location[1] }}
+], // Starting position [lng, lat]
+zoom: 10, // Starting zoom level
+});
+let clickableElements = document.querySelectorAll('.js-event');
+clickableElements.forEach(element => {
+element.addEventListener('click', evt => {
+map.flyTo({
+center: [
+element.dataset.lat, element.dataset.lon
+],
+essential: true,
+zoom: 14
+});
+})
+})
+// add markers to map
+geojson.features.forEach(function (marker) { // create a HTML element for each feature
+var el = document.createElement('div');
+el.className = 'marker';
 
-			// make a marker for each feature and add it to the map
-			new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(new mapboxgl.Popup({offset: 25})) // add popups.setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>')).addTo(map);
-			});
+// make a marker for each feature and add it to the map
+new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(new mapboxgl.Popup({offset: 25})) // add popups.setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>')).addTo(map);
+});
 		</script>
 
-{% endblock %}
+	{% endblock %}
