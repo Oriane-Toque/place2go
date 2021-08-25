@@ -40,7 +40,9 @@
 					<div class="card-body">
 						<h3 class="card-title text-center">{{ category[0].name }}</h3>
 					</div>
+					{% if category.nbrEvents > 0 %}
 					<span class="badge bg-danger">{{ category.nbrEvents }} sorties</span>
+					{% endif %}
 				</div>
 
 			{% endfor %}
