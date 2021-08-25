@@ -47,41 +47,41 @@
 	</div>
 
 	<script>
-			// TO MAKE THE MAP APPEAR YOU MUST
-			// ADD YOUR ACCESS TOKEN FROM
-			// https://account.mapbox.com
-			mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-			const map = new mapboxgl.Map({
-			container: 'map',
-			style: 'mapbox://styles/mapbox/streets-v11',
-			center: [
-			2, 47
-			],
-			zoom: 4.5
-			});
+		// TO MAKE THE MAP APPEAR YOU MUST
+		// ADD YOUR ACCESS TOKEN FROM
+		// https://account.mapbox.com
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+		const map = new mapboxgl.Map({
+		container: 'map',
+		style: 'mapbox://styles/mapbox/streets-v11',
+		center: [
+		2, 47
+		],
+		zoom: 4.5
+		});
 
-			// Add the control to the map.
-			const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
+		// Add the control to the map.
+		const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
 
-			document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
-
-			const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
-			const eventAddress = document.querySelector('#event_address');
-			console.log(eventAddress);
-			let value;
-
-			input.addEventListener('change', handle);
-			input.addEventListener('keydown', handle);
-
-			input.value = eventAddress.value;
+		document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 
-			function handle(e) {
-			let value = e.target.value;
-			console.log(value);
-			eventAddress.value = value;
-			}
+		const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+		const eventAddress = document.querySelector('#event_address');
+		console.log(eventAddress);
+		let value;
+
+		input.addEventListener('change', handle);
+		input.addEventListener('keydown', handle);
+
+		input.value = eventAddress.value;
+
+
+		function handle(e) {
+		let value = e.target.value;
+		console.log(value);
+		eventAddress.value = value;
+		}
 	</script>
 
 {% endblock %}

@@ -34,7 +34,7 @@
 		{% endblock %}
 
 		<title>
-			{% block title %}{% endblock %}- Place 2 Go</title>
+			{% block title %}{% endblock %} - Place 2 Go</title>
 	</head>
 
 	<body>
@@ -46,8 +46,10 @@
 		</header>
 
 		<div class="container-fluid p-0 m-0 g-0">
-			<div class="container">
-				{% include "_partials/_flashmessages.html.twig" %}
+			<div class="row">
+				<div class="col-6">
+					{% include "_partials/_flashmessages.html.twig" %}
+				</div>
 			</div>
 
 			{% block body %}{% endblock %}
