@@ -2,7 +2,6 @@
 window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar')
     navbar.classList.toggle('sticky', window.scrollY > 0)
-
 })  
 
 // Auto close Flashmessage after 6sec
@@ -18,3 +17,7 @@ if (window.location.pathname == '/') {
     document.querySelector('#q').style.height = '2.5rem'
 }
 
+// Sidenav
+function toggleSidenav() {
+    document.querySelector('.sidenav').classList.toggle('open');
+}
