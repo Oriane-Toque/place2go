@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block meta %}{% endblock %}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		{% block meta %}{% endblock %}
 
 		{# MDB #}
 		<link
@@ -14,14 +16,14 @@
 		{# CSS #}
 		<link
 		rel="stylesheet" href="{{ asset('css/app.css') }}">
-		{# MAPBOX #}
-		<link
-		href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet'/>
-		<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+		{# MAPBOX CSS #}
+		<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet'/>
 		<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+		{# MAPBOX JS #}
+		<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 		<script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
 		<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
 
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
@@ -44,7 +46,9 @@
 		</header>
 
 		<div class="container-fluid p-0 m-0 g-0">
-			{% include "_partials/_flashmessages.html.twig" %}
+			<div class="container">
+				{% include "_partials/_flashmessages.html.twig" %}
+			</div>
 
 			{% block body %}{% endblock %}
 		</div>
@@ -55,6 +59,5 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 		{# JS #}
 		<script src="{{ asset('js/app.js') }}"></script>
-
 	</body>
 </html>

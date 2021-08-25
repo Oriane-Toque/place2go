@@ -9,6 +9,25 @@
 	box-sizing: border-box;
 }
 
+/*****************************************************************? MDB */
+
+.form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: var(--primary-color);
+    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+}
+
+.form-check-input[type=checkbox]:checked {
+    background-image: none;
+    background-color: var(--primary-color);
+}
+
+.form-check-input[type=checkbox]:checked:focus {
+    background-color: var(--primary-color);
+}
+
 /*****************************************************************? HEADER */
 
 #header {
@@ -217,6 +236,12 @@
   align-items: center;
 }
 
+#q {
+	display: flex;
+	max-width: 100%;
+	width: 100%;
+}
+
 /*** LIST ***/
 
 #list .list__card {
@@ -230,8 +255,14 @@
 
 	border-bottom-left-radius: 70px;
 	border-top-left-radius: 70px;
-	border: 1px solid rgba(0, 0, 0, 0.05);
+	border: 1px solid rgba(0, 0, 0, 0.04);
 	cursor: pointer;
+	transition: 0.2s all linear;
+}
+
+#list .list__card:hover {
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 10px 15px 0 rgba(0,0,0,.10)!important;
 }
 
 #list .list__card_image img {
@@ -270,6 +301,9 @@
 	align-items: flex-end;
 }
 
+#list .list__card_address {
+	font-size: 0.9rem;
+}
 
 #list .flex-between {
 	display: flex;
