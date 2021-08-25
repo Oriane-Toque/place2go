@@ -6,7 +6,8 @@ window.addEventListener('scroll', function () {
 })  
 
 // Auto close Flashmessage after 6sec
-if (document.getElementById('flash_messages') != null) {
+const flashMessage = document.querySelector('#flash_message')
+if (flashMessage != null) {
     setTimeout(() =>
     {
         flashMessage.style.display = 'none'

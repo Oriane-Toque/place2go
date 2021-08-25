@@ -1,6 +1,6 @@
 :root {
-	--secondary-color: #be2c00;
 	--primary-color: #00b4d4;
+	--secondary-color: #be2c00;
 	--profile-main-color: #e74c3c;
 	--profile-secondary-color: #2f3640;
 
@@ -30,6 +30,21 @@
 .form-check-input[type=checkbox]:checked:focus {
     background-color: var(--primary-color);
 }
+
+.btn-floating-sm {
+	border-radius: 50%;
+    padding: 0;
+    position: relative;
+	width: 2rem;
+	height: 2rem;
+}
+
+.btn-floating-sm .fab, .btn-floating-sm .far, .btn-floating-sm .fas {
+    width: 2rem;
+    line-height: 2rem;
+}
+
+
 
 /*****************************************************************? HEADER */
 
@@ -224,22 +239,31 @@
 
 /*****************************************************************? EVENT LIST */
 
-/*** FILTER FORM ***/
+/*** SEARCH FORM ***/
 
-.filter__form {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	align-content: center;
-	justify-content: center;
-	align-items: center;
+.search__form {
+	width: 100%;
+	padding: 1rem;
 }
 
-#q {
+.search__form_input {
 	display: flex;
-	max-width: 100%;
+	justify-content: space-between;
+	align-items: center;
 	width: 100%;
 }
+
+.search__form #q {
+
+}
+
+.search__form #categories {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-top: 1rem;
+}
+
 
 /*** LIST ***/
 
@@ -271,15 +295,35 @@
 	border-radius: 50%;
 }
 
-#list .list__cards_author a {
+
+#list .list__card_image img:hover {
+	filter: drop-shadow(4px 0 6px rgba(37, 37, 37, 0.20));
+}
+
+#list .list__card_author a {
+	font-size: 1.2rem;
 	font-weight: bold;
-	color: var(--secondary-color);
 	text-transform: uppercase;
+	color: #555555;
+}
+
+#list .list__card_author a:hover {
+	color: var(--primary-color);
+}
+
+				
+#list .list__card_date {
+	color: #757575;
+	font-style: italic;
+	font-size: 0.85rem;		
+}
+
+#list .list__card_date a {
 	text-decoration: underline;
 }
 
-#list .fas.fa-user {
-	color: var(--secondary-color);
+#list .list__card_date a:hover {
+	color: #07347e
 }
 
 #list .list__cards_attendants {
@@ -291,6 +335,12 @@
 #list .list__card_content {
 	width: 100%;
 	margin: 0 0.5rem 0 1rem;
+}
+
+#list .list__card_footer {
+	display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 #list .list__card_categories {
@@ -309,34 +359,49 @@
 	justify-content: space-between;
 }
 
-/*****************************************************************? EVENT LIST */
+/*****************************************************************? EVENT SHOW */
 
 #show .show__card {
-	padding: 1rem;
-}
-
-#show .show__card_title {
-	text-align: center;
-	font-size: 1.3rem;
-	padding: 1rem;
-	color: rgb(0, 0, 0);
-	text-transform: uppercase;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+	height: 100%;
+	min-height: 350px;
+	box-shadow: 0 2px 10px 0 rgba(0,0,0,.05);
+	transition: 0.2s all linear;
 }
 
 #show .show__card_header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-bottom: 1rem;
-}
-
-#show .show__card_header-author {
+	height: 150px;
 	width: 100%;
 }
 
+#show .show__card_header_image {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
 #show .show__card_content {
-	position: relative;
+	padding: 1rem;
+}
+
+#show .show__card_content-author {
+	display: flex;
+    align-items: center;
+	justify-content: space-between;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: 0.2s all linear;
+}
+
+#show .show__card_content-author a {
+	color: #555555;
+}
+
+#show .show__card_content-author a:hover {
+	color: var(--primary-color);
+}
+
+#show .show__card_content-details {
+	margin: 1rem 0.5rem;
 }
 
 #show .show__card_content-attendants,
@@ -346,12 +411,23 @@
 	font-style: italic;
 }
 
+#show .show__card_content-description {
+	text-align: center;
+}
+
+#show .show__card_content-description .--title{
+	text-decoration: underline;
+	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
 #show .show__card_content-footer {
-	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin-top: 2rem;
 	align-items: flex-end;
+	width: 100%;
+	margin-top: 2rem;
+	padding: 1rem;
 }
 
 /*****************************************************************? PROFIL */
@@ -716,10 +792,24 @@ svg.text-light {
 /************************************************  MEDIA QUERIES */
 /*****************************************************************/
 
-@media screen and (min-width: 576px) {
-	.container-xl {
-		padding: 1rem;
+@media screen and (max-width: 575px) {
+	.container {
+		padding: 0.5rem!important;
+		margin: 0 auto!important;
 	}
+
+	/************************************************ PAGE LIST  */
+	#list .flex-between {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+	}
+}
+@media screen and (min-width: 576px) {
+	.container {
+		margin: 1rem auto!important;
+	}
+	
 	/************************************************ PUBLIC PROFILE  */
 	.contentProfile__infos {
 		flex-direction: row;
@@ -754,10 +844,16 @@ svg.text-light {
 	}
 }
 
-@media screen and (min-width: 768px) {}
+@media screen and (min-width: 768px) {
+	.container {
+		margin: 1.5rem auto!important;
+	}
+}
 
 @media screen and (min-width: 992px) {
-
+	.container {
+		padding: 0!important;
+	}
 	/************************************************ PROFILE  */
 
 	.dashAction.--desktop {
@@ -871,11 +967,6 @@ svg.text-light {
 }
 
 @media screen and (min-width: 1200px) {
-
-	/************************************************ CONTAINER  */
-	.container {
-		padding: 0;
-	}
 
 	/************************************************ HOME  */
 	.topScore {
