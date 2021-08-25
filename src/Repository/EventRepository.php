@@ -179,7 +179,7 @@ class EventRepository extends ServiceEntityRepository
 
         $query = $query
         // sql query to get event of the day
-                // ->andWhere('e.event_date >= CURDATE()')
+                ->andWhere('e.event_date > CURRENT_DATE()')
                 ->orderBy('e.event_date', 'ASC');
 
 

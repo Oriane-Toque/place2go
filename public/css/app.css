@@ -1,6 +1,9 @@
 :root {
-	--primary-color: #00ccf0;
 	--secondary-color: #be2c00;
+	--primary-color: #00b4d4;
+	--profile-main-color: #e74c3c;
+	--profile-secondary-color: #2f3640;
+
 }
 
 * {
@@ -35,33 +38,29 @@
 }
 
 .masthead {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
 
-  transform: translateY(-100px);
-  width: 100%;
-  height: 65vh;
-  overflow: hidden;
+	transform: translateY(-100px);
+	width: 100%;
+	height: 65vh;
+	overflow: hidden;
 
-  background-size: cover !important;
-  background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 85%,
-      rgba(255, 255, 255, 0.50) 100%
-    ),
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 65%,
-      rgba(255, 255, 255, 0.9) 100%
-    ),
-    url("../img/bg-header.jpeg") no-repeat center center scroll;
+	background-size: cover !important;
+	background: linear-gradient(to bottom,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0) 85%,
+			rgba(255, 255, 255, 0.50) 100%),
+		linear-gradient(to top,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0) 65%,
+			rgba(255, 255, 255, 0.9) 100%),
+		url("../img/bg-header.jpeg") no-repeat center center scroll;
 }
 
 .masthead__brand {
@@ -77,10 +76,10 @@
 /*****************************************************************? NAVBAR */
 
 #nav {
-  height: 80px;
-  background: transparent;
-  transition: 0.3s all linear;
-  z-index: 1000;
+	height: 80px;
+	background: transparent;
+	transition: 0.3s all linear;
+	z-index: 1000;
 }
 
 #nav .nav-link {
@@ -228,12 +227,12 @@
 /*** FILTER FORM ***/
 
 .filter__form {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
 }
 
 #q {
@@ -313,45 +312,48 @@
 /*****************************************************************? EVENT LIST */
 
 #show .show__card {
-  padding: 1rem;
+	padding: 1rem;
 }
 
 #show .show__card_title {
-  text-align: center;
-  font-size: 1.3rem;
-  padding: 1rem;
-  color: rgb(0,0,0);
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+	text-align: center;
+	font-size: 1.3rem;
+	padding: 1rem;
+	color: rgb(0, 0, 0);
+	text-transform: uppercase;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 #show .show__card_header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 1rem;
 }
 
-#show .show__card_header-author{ 	
-  width: 100%;	
+#show .show__card_header-author {
+	width: 100%;
 }
 
 #show .show__card_content {
-  position: relative;
+	position: relative;
 }
 
-#show .show__card_content-attendants, .show__card_content-date, .show__card_address {
-  color: #757575;
-    font-style: italic;
+#show .show__card_content-attendants,
+.show__card_content-date,
+.show__card_address {
+	color: #757575;
+	font-style: italic;
 }
 
 #show .show__card_content-footer {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  align-items: flex-end;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 2rem;
+	align-items: flex-end;
 }
+
 /*****************************************************************? PROFIL */
 
 .contentProfile {
@@ -360,7 +362,7 @@
 
 .contentProfile h2 {
 	text-align: left;
-	color: #2f3640;
+	color: var(--profile-secondary-color);
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 1.5rem;
@@ -399,7 +401,7 @@
 	margin: 2rem 0;
 	padding: 1rem 0.2rem;
 	flex-wrap: wrap;
-	background-color: #e74c3c;
+	background-color: var(--profile-main-color);
 	border-radius: 0.2rem;
 }
 
@@ -409,7 +411,7 @@
 
 .dashAction.--mobile .dashAction__item-infos_details>a {
 	text-decoration: none;
-	color: #2f3640;
+	color: var(--profile-secondary-color);
 }
 
 .dashAction.--mobile .dashAction__item#infos {
@@ -438,7 +440,7 @@
 	display: block;
 	width: 35px;
 	height: 35px;
-	color: #e74c3c;
+	color: var(--profile-main-color);
 	background-color: #fff;
 	border-radius: 2rem;
 	transition: .2s linear;
@@ -455,7 +457,7 @@
 
 /*****************************************************************? PROFIL DASHBOARD */
 
-.contentProfile__lastExits span {
+.contentProfile span {
 	display: block;
 	font-weight: bold;
 	text-decoration: underline;
@@ -470,9 +472,9 @@
 	justify-content: space-between;
 	align-items: center;
 	font-weight: bold;
-	background-color: #2f3640;
+	background-color: var(--profile-secondary-color);
 	color: #fff;
-	border-bottom: solid 2px #e74c3c;
+	border-bottom: solid 2px var(--profile-main-color);
 	border-top-left-radius: 0.2rem;
 	border-top-right-radius: 0.2rem;
 	gap: 1rem;
@@ -510,6 +512,91 @@
 
 .contentProfile__lastExits-infos_actions>a {
 	margin-left: 0.5rem;
+}
+
+/*****************************************************************? PUBLIC PROFILE */
+
+.contentProfile__infos {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.contentProfile.--public {
+	margin: 2rem 1rem 0;
+}
+
+.contentProfile.--public h2 {
+	text-align: center;
+}
+
+.contentProfile.--public .contentProfile__infos-details>h2 {
+	margin: 0 0 1rem;
+}
+
+.contentProfile__description {
+	margin: 2rem 0;
+}
+
+.contentProfile__description>p {
+	padding: 1rem 1.5rem;
+}
+
+.contentProfile__infos-avatar {
+	overflow: hidden;
+}
+
+.contentProfile__infos-avatar>img {
+	width: 100%;
+	height: auto;
+}
+
+.contentProfile__infos-buttonText {
+	color: #fff;
+	margin: 1rem 0 0;
+	font-size: .8rem;
+	font-weight: bold;
+}
+
+.contentProfile__infos-buttonText.--action {
+	background-color: var(--profile-main-color);
+}
+
+.contentProfile__infos-buttonText.--action:hover {
+	background-color: #c0392b;
+}
+
+.contentProfile__infos-buttonText.--back {
+	background-color: var(--profile-secondary-color);
+}
+
+.contentProfile__infos-buttonText.--back:hover {
+	background-color: #656e7a;
+}
+
+.contentProfile__infos-buttonText>i {
+	margin-right: 1rem;
+}
+
+.contentProfile__buttons {
+	text-align: right;
+}
+
+.contentProfile__friends-list {
+	padding: 1rem 1.5rem;
+	-webkit-box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+	box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+}
+
+.contentProfile__description,
+.contentProfile__friends {
+	border-bottom: solid 5px var(--profile-main-color);
+}
+
+/*****************************************************************? PROFILE EDIT EVENT */
+
+.contentProfile h2>i {
+	margin-right: 1rem;
 }
 
 /*****************************************************************? COLOR */
@@ -554,6 +641,46 @@ svg.text-light {
 	padding-bottom: 6rem !important;
 }
 
+/****************************
+* CHIP
+*****************************/
+
+.chip {
+	display: inline-block;
+	height: 32px;
+	width: 150px;
+	padding: 0 12px;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 32px;
+	color: #fff;
+	cursor: pointer;
+	background-color: var(--profile-secondary-color);
+	border-radius: 16px;
+	-webkit-transition: all .3s linear;
+	transition: all .3s linear;
+}
+
+.chip img {
+	float: left;
+	width: 32px;
+	height: 32px;
+	margin: 0 8px 0 -12px;
+	border-radius: 50%;
+}
+
+.chip .close {
+	float: right;
+	padding-left: 8px;
+	font-size: 16px;
+	line-height: 35px;
+	cursor: pointer;
+	-webkit-transition: all .1s linear;
+	transition: all .1s linear;
+}
+
 /*****************************************************************? FOOTER */
 
 #footer {
@@ -586,13 +713,24 @@ svg.text-light {
 }
 
 /*****************************************************************/
-/***************************************************************** MEDIA QUERIES */
+/************************************************  MEDIA QUERIES */
 /*****************************************************************/
 
 @media screen and (min-width: 576px) {
 	.container-xl {
 		padding: 1rem;
 	}
+	/************************************************ PUBLIC PROFILE  */
+	.contentProfile__infos {
+		flex-direction: row;
+	}
+
+	.contentProfile__infos-details,
+	.contentProfile.--public .contentProfile__infos-details>h2 {
+		text-align: left;
+		margin: 0 0 1rem;
+	}
+
 }
 
 @media screen and (min-width: 700px) {
@@ -610,6 +748,10 @@ svg.text-light {
 	.descriptionPlace__picture {
 		display: block;
 	}
+
+	.contentProfile.--public {
+		margin: 2rem 4rem;
+	}
 }
 
 @media screen and (min-width: 768px) {}
@@ -617,7 +759,7 @@ svg.text-light {
 @media screen and (min-width: 992px) {
 
 	/************************************************ PROFILE  */
-	
+
 	.dashAction.--desktop {
 		display: block;
 	}
@@ -645,7 +787,7 @@ svg.text-light {
 	}
 
 	.dashAction.--desktop .dashAction__item:first-child {
-		border-left: solid 15px #e74c3c;
+		border-left: solid 15px var(--profile-main-color);
 	}
 
 	.dashAction.--desktop .dashAction__item:nth-child(2) {
@@ -660,7 +802,7 @@ svg.text-light {
 		margin: 2rem 0;
 		padding: 1rem 0.2rem;
 		flex-wrap: wrap;
-		background-color: #e74c3c;
+		background-color: var(--profile-main-color);
 		border-radius: 0.2rem;
 	}
 
@@ -681,8 +823,8 @@ svg.text-light {
 	}
 
 	.dashAction.--desktop .dashAction__item>.card-header {
-		background-color: #e74c3c;
-    text-align: center;
+		background-color: var(--profile-main-color);
+		text-align: center;
 	}
 
 	.dashAction.--desktop .dashAction__item>.card-header>h3 {
@@ -704,15 +846,15 @@ svg.text-light {
 
 	.contentProfile__lastExits-picture {
 		display: block;
-    flex: 1;
+		flex: 1;
 		max-width: 100%;
-    max-height: 100%;
-    overflow: hidden;
+		max-height: 100%;
+		overflow: hidden;
 	}
 
 	.contentProfile__lastExits-picture>img {
 		width: 100%;
-    height: auto;
+		height: auto;
 	}
 
 	.contentProfile__lastExits-infos {
@@ -722,19 +864,33 @@ svg.text-light {
 	.contentProfile__lastExits-infos>.card-header {
 		border-radius: 0;
 	}
+
+	.contentProfile.--public {
+		margin: 2rem 7rem;
+	}
 }
 
 @media screen and (min-width: 1200px) {
 
-  /************************************************ CONTAINER  */
-  .container {
-    padding: 0;
-  }
+	/************************************************ CONTAINER  */
+	.container {
+		padding: 0;
+	}
 
-  /************************************************ HOME  */
-  .topScore {
-    grid-template-columns: repeat(3, 1fr);
-  }
+	/************************************************ HOME  */
+	.topScore {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	/************************************************ PROFILE  */
+	.dashAction.--desktop .dashAction__item:last-child .card-body {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.contentProfile.--public {
+		margin: 2rem 15rem;
+	}
 }
 
 @media screen and (min-width: 1400px) {
@@ -743,4 +899,5 @@ svg.text-light {
 	.contentProfile {
 		flex: 3;
 	}
+
 }
