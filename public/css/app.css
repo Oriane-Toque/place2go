@@ -193,6 +193,15 @@
 
 /*****************************************************************? HOME PAGE */
 
+.card {
+  position: relative;
+}
+.card .badge {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
 .topScore {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -234,6 +243,9 @@
 .topContributors a:hover h3 {
 	text-decoration: underline;
 }
+
+
+
 
 .topScore__content {
 	display: flex;
