@@ -117,6 +117,7 @@
   z-index: 1;
   top: 0;
   left: 0;
+  color: #999;
   background-color: #111;
   overflow-x: hidden;
   padding-top: 60px;
@@ -128,9 +129,13 @@
 .sidenav a {
   padding: 8px;
   text-decoration: none;
-  color: #818181;
+  color: #999;
   display: block;
   transition: 0.3s;
+}
+
+.sidenav .form-control {
+  color: #ccc;
 }
 
 /* When you mouse over the navigation links, change their color */
