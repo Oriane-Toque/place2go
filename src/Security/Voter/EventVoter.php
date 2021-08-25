@@ -2,6 +2,7 @@
 
 namespace App\Security\Voter;
 
+use App\Repository\AttendantRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -10,10 +11,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class EventVoter extends Voter
 {
     private Security $security;
+    private AttendantRepository $attendantRepository;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, AttendantRepository $attendantRepository)
     {
         $this->security = $security;
+        $this->attendantRepository = $attendantRepository;
     }
 
     protected function supports(string $attribute, $subject): bool
@@ -71,10 +74,10 @@ class EventVoter extends Voter
 
                 if (!$user instanceof UserInterface)            return false;
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
-                // If user is already an attendant of the event, deny access
-                if ($event->getAttendants()->contains($user))   return false;
                 // If user is the author of the event, deny access
-                if ($user === $event->getAuthor()->getId())     return false;
+                if ($user === $event->getAuthor())              return false;
+                // If user is already an attendant, deny access
+                if ($this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) return false;
 
                 return true;
 
@@ -84,14 +87,15 @@ class EventVoter extends Voter
 
                 if (!$user instanceof UserInterface)            return false;
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
-                // If user is not an attendant of the event, deny access
-                if (!$event->getAttendants()->contains($user))  return false;
-                
+                // If user is the author of the event, deny access
+                if ($user === $event->getAuthor())              return false;
+                // If user is not an attendant, deny access
+                if (!$this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) return false;
+      
                 return true;
 
                 break;
         }
-
         return false;
     }
 }
