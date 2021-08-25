@@ -43,18 +43,22 @@
 							<div class="my-3">
 								<div class="show__card_content-attendants">
 									<i class="fas fa-caret-right"></i>
-									<span class="">Nombre de Participants :</span> 
-									{{ event.attendants|length }} / {{ event.maxAttendants }}
+									<span class="">Nombre de Participants :</span>
+									{{ event.attendants|length }}
+									/
+									{{ event.maxAttendants }}
 								</div>
-								
+
 								<div class="show__card_content-date ">
 									<i class="fas fa-caret-right"></i>
-									Le {{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
+									Le
+									{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
 								</div>
 
 								<div class="show__card_address">
 									<i class="fas fa-caret-right"></i>
-									<span class="text-decoration-underline"></span> {{ event.address }}
+									<span class="text-decoration-underline"></span>
+									{{ event.address }}
 								</div>
 							</div>
 
@@ -70,43 +74,49 @@
 								</div>
 
 								<div class="show__cards_join">
-									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-floating">
-										<i class="fas fa-user-minus"></i>
-									</a>
-									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-floating ms-2">
-										<i class="fas fa-user-plus"></i>
-									</a>
+									<div class="list__cards_join">
+										{% if is_granted('EVENT_LEAVE', event) %}
+											{# Bouton pour ne plus participer à la sortie #}
+											<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+												<i class="fas fa-sign-out-alt"></i>
+											</a>
+										{% endif %}
+										{% if is_granted('EVENT_JOIN', event) %}
+											<a href="{{ path("app_event_join", {id: event.id}) }}" class="--show btn btn-primary btn-floating ms-2">
+												<i class="fas fa-user-plus"></i>
+											</a>
+										{% endif %}
+									</div>
 								</div>
+
+
 							</div>
+
 						</div>
-
 					</div>
-				</div>
 
-				<div class="col-6">
-					<div id='map' class="shadow-1"></div>
-				</div>
+					<div class="col-6">
+						<div id='map' class="shadow-1"></div>
+					</div>
 
-			</section>
-		</div>
+				</section>
+			</div>
 
-	<script>
+			<script>
 
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+				mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 
-		let map = new mapboxgl.Map({
-			container: 'map', // Container ID
-			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ event.lat}},{{ event.lon}}], // Starting position [lng, lat]
-			zoom: 15.5, // Starting zoom level
-		});
+let map = new mapboxgl.Map({
+container: 'map', // Container ID
+style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+center: [
+{{ event.lat }}, {{ event.lon }}
+], // Starting position [lng, lat]
+zoom: 15.5, // Starting zoom level
+});
 
-		// Create a default Marker and add it to the map.
-		const marker1 = new mapboxgl.Marker({ color: 'red'})
-		.setLngLat([{{ event.lat }}, {{ event.lon }}])
-		.addTo(map);
-			
+// Create a default Marker and add it to the map.
+const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+			</script>
 
-	</script>
-
-{% endblock %}
+		{% endblock %}

@@ -2,18 +2,18 @@
 
 {% block title 'Sorties' %}
 
-{% block body %}
-
+{% block stylesheets %}
 	<style>
 		#map {
 			width: 100%;
 			min-height: 400px;
+			height: 100%;
 			position: sticky;
 			top: 5rem;
-      max-height: 800px;
+			max-height: calc(100vh - 5rem);
 			margin-bottom: 0.8rem;
 		}
-		
+
 		.marker {
 			background-image: url('img/pinmap.png');
 			background-size: cover;
@@ -22,14 +22,19 @@
 			border-radius: 50%;
 			cursor: pointer;
 		}
+
 		.mapboxgl-popup {
 			max-width: 150px;
 		}
+
 		.mapboxgl-popup-content {
-		text-align: center;
-		font-family: 'Open Sans', sans-serif;
+			text-align: center;
+			font-family: 'Open Sans', sans-serif;
 		}
 	</style>
+{% endblock %}
+
+{% block body %}
 
 	<div class="container my-5">
 
@@ -52,62 +57,74 @@
 						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
 							<div class="list__card_image">
 								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
-									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
+									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class=""/>
 								</a>
 							</div>
 
 							<div class="list__card_content">
-								<div class="d-flex justify-content-between mb-2">
+								<div class="flex-between">
 									<div class="list__cards_author">
-										<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark text-decoration-underline">{{ event.author.nickname }}</a>
+										<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+											{{ event.author.nickname }}
+										</a>
 									</div>
 									<div class="list__card_date">
-										<small class="text-muted fst-italic">le
-											{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}</small>
+										<small class="text-muted fst-italic">
+                      le
+											{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
+                    </small>
+
 									</div>
 								</div>
 
-								<div class="d-flex justify-content-between">
+								<div class="flex-between">
 									<div class="list__card_title">
+										<i class="fas fa-long-arrow-alt-right"></i>
 										<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
 									</div>
-									<div class="list__cards_attendants text-muted">
-										<small class="text-muted fst-italic">
-											{{ event.attendants|length }}
-											/
-											{{ event.maxAttendants }}
-										</small>
+									<div class="list__cards_attendants">
+										{{ event.attendants | length }}
+										/
+										{{ event.maxAttendants }}
+										<i class="fas fa-users"></i>
 									</div>
 								</div>
 
-								<div class="d-flex justify-content-between">
+								<div class="flex-between">
 									<div class="list__card_address">
+										<i class="fas fa-long-arrow-alt-right fs-6"></i>
 										{{ event.address }}
 									</div>
 								</div>
 
-								<div class="d-flex justify-content-between align-items-end mt-2">
-									<div>
+								<div class="flex-between">
+									<p class="list__card_categories m-0">
 										{% for category in event.categories %}
-											<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+											{{ category.name }}{{ loop.last ? '' : ' - ' }}
 										{% endfor %}
-									</div>
+									</p>
 
 									<div class="list__cards_join">
-										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
-											<i class="fas fa-user-minus"></i>
-										</a>
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
-											<i class="fas fa-user-plus"></i>
-										</a>
+										{% if is_granted('EVENT_LEAVE', event) %}
+											{# Bouton pour ne plus participer à la sortie #}
+											<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+												<i class="fas fa-sign-out-alt"></i>
+											</a>
+										{% endif %}
+										{% if is_granted('EVENT_JOIN', event) %}
+											{# Bouton pour participer à la sortie #}
+											<a href="{{ path("app_event_join", {id: event.id}) }}" class="--show btn btn-primary btn-floating ms-2">
+												<i class="fas fa-user-plus"></i>
+											</a>
+										{% endif %}
 									</div>
 								</div>
 
 							</div>
 						</div>
 					{% else %}
-						<div>
-							Aucun résultat trouvé.
+						<div class="text-center fw-bold">
+							Aucune sortie ne correspond à vos critères.
 						</div>
 					{% endfor %}
 				</div>
@@ -119,56 +136,38 @@
 			</section>
 		</div>
 
-	<script>
+		<script>
 
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-		var geojson = {{ geojson|json_encode|raw }};
-
-		let map = new mapboxgl.Map({
+			mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+			var geojson = {{ geojson|json_encode|raw }};
+			let map = new mapboxgl.Map({
 			container: 'map', // Container ID
 			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ location[0]}},{{ location[1]}}], // Starting position [lng, lat]
+			center: [
+			{{ location[0] }}, {{ location[1] }}
+			], // Starting position [lng, lat]
 			zoom: 10, // Starting zoom level
-		});
-
-		let clickableElements = document.querySelectorAll('.js-event');
-		clickableElements.forEach(element => {
+			});
+			let clickableElements = document.querySelectorAll('.js-event');
+			clickableElements.forEach(element => {
 			element.addEventListener('click', evt => {
-				map.flyTo({
-					center: [element.dataset.lat, element.dataset.lon],
-					essential: true,
-					zoom: 14,
-				});
+			map.flyTo({
+			center: [
+			element.dataset.lat, element.dataset.lon
+			],
+			essential: true,
+			zoom: 14
+			});
 			})
-		})
+			})
+			// add markers to map
+			geojson.features.forEach(function (marker) { // create a HTML element for each feature
+			var el = document.createElement('div');
+			el.className = 'marker';
 
-		// add markers to map
-		geojson.features.forEach(function (marker) {
-		// create a HTML element for each feature
-		var el = document.createElement('div');
-		el.className = 'marker';
-		
-		// make a marker for each feature and add it to the map
-		new mapboxgl.Marker(el)
-			.setLngLat(marker.geometry.coordinates)
-			.setPopup(
-		new mapboxgl.Popup({ offset: 25 }) // add popups
-			.setHTML(
-			'<h5>' +
-			marker.properties.title +
-			'</h5><p>' +
-			marker.properties.description +
-			'</p>'
-			)
-		)
-		.addTo(map);
-		});
-    
-</script>
+			// make a marker for each feature and add it to the map
+			new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(new mapboxgl.Popup({offset: 25})) // add popups.setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>')).addTo(map);
+			});
+		</script>
 
 {% endblock %}
-
-
-
-
-

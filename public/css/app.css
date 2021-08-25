@@ -1,13 +1,34 @@
 :root {
+	--secondary-color: #be2c00;
 	--primary-color: #00b4d4;
 	--profile-main-color: #e74c3c;
 	--profile-secondary-color: #2f3640;
+
 }
 
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+}
+
+/*****************************************************************? MDB */
+
+.form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: var(--primary-color);
+    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+}
+
+.form-check-input[type=checkbox]:checked {
+    background-image: none;
+    background-color: var(--primary-color);
+}
+
+.form-check-input[type=checkbox]:checked:focus {
+    background-color: var(--primary-color);
 }
 
 /*****************************************************************? HEADER */
@@ -214,6 +235,12 @@
 	align-items: center;
 }
 
+#q {
+	display: flex;
+	max-width: 100%;
+	width: 100%;
+}
+
 /*** LIST ***/
 
 #list .list__card {
@@ -223,12 +250,42 @@
 	align-items: center;
 
 	margin-bottom: 0.8rem;
-	padding: 0.4rem 0.8rem;
+	padding: 0.5rem;
 
 	border-bottom-left-radius: 70px;
 	border-top-left-radius: 70px;
-	border: 1px solid rgba(0, 0, 0, 0.05);
+	border: 1px solid rgba(0, 0, 0, 0.04);
 	cursor: pointer;
+	transition: 0.2s all linear;
+}
+
+#list .list__card:hover {
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 10px 15px 0 rgba(0,0,0,.10)!important;
+}
+
+#list .list__card_image img {
+	max-width: 120px;
+	max-height: 120px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+#list .list__cards_author a {
+	font-weight: bold;
+	color: var(--secondary-color);
+	text-transform: uppercase;
+	text-decoration: underline;
+}
+
+#list .fas.fa-user {
+	color: var(--secondary-color);
+}
+
+#list .list__cards_attendants {
+    color: #555555;
+    font-style: italic;
+    font-size: 0.90rem;
 }
 
 #list .list__card_content {
@@ -236,6 +293,21 @@
 	margin: 0 0.5rem 0 1rem;
 }
 
+#list .list__card_categories {
+	color: #555555;
+    font-style: italic;
+    font-size: 0.90rem;
+	align-items: flex-end;
+}
+
+#list .list__card_address {
+	font-size: 0.9rem;
+}
+
+#list .flex-between {
+	display: flex;
+	justify-content: space-between;
+}
 
 /*****************************************************************? EVENT LIST */
 
@@ -418,7 +490,7 @@
 	margin-bottom: 2rem;
 }
 
-.contentProfile__lastExits-infos_details>p:last-child {
+.contentProfile__lastExits-infos_details > p:last-child {
 	text-align: right;
 }
 
@@ -426,15 +498,15 @@
 	text-align: right;
 }
 
-.contentProfile__lastExits-infos_actions>.--show {
+.contentProfile__lastExits-infos_actions > .--show {
 	background-color: #1266f1;
 }
 
-.contentProfile__lastExits-infos_actions>.--edit {
+.contentProfile__lastExits-infos_actions > .--edit {
 	/* background-color: à définir */
 }
 
-.contentProfile__lastExits-infos_actions>.--delete {
+.contentProfile__lastExits-infos_actions > .--delete {
 	/* background-color: à définir */
 }
 
