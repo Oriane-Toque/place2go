@@ -73,61 +73,64 @@
 
 	<!-- Sidenav -->
 	<div id="sidenav-1" class="sidenav sidenav-primary" role="navigation">
-		<a href="javascript:void(0)" class="closebtn" onclick="toggleSidenav()">&times;</a>
-		<a class="ripple d-flex justify-content-center py-4" href="{{ path('app_home') }}" data-ripple-color="primary">
-			<img src="{{ asset('img/logo-place2go-white.svg') }}" width="150" alt="Place 2 Go" draggable="false">
-		</a>
-
-		<ul class="navbar-nav m-auto">
-			<li class="sidenav-item">
-				<a class="sidenav-link ripple-surface" href="{{ path('app_category_list') }}" tabindex="1">
-					<i class="fas fa-tag pe-3"></i>Catégories</a>
-			</li>
-			<li class="sidenav-item dropdown">
-				<a class="sidenav-link ripple-surface ripple-surface-primary collapsed" href="#events" data-mdb-toggle="collapse" role="button" tabindex="1">
-					<i class="fas fa-calendar pe-3"></i>Sorties
-				</a>
-				<ul class="sidenav-collapse collapse show" id="events">
-					<li class="sidenav-item">
-						<a class="sidenav-link ripple-surface" href="{{ path('app_event_list') }}" tabindex="1">Voir toutes les sorties</a>
-					</li>
-					<li class="sidenav-item">
-						<a class="sidenav-link ripple-surface" href="{{ path('app_event_create') }}" tabindex="1">Créer une sortie</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-
-		{% if is_granted('ROLE_USER') %}
-			<!-- Authenticated User Menu -->
-			<ul class="navbar-nav m-auto">
+		<div class="mx-2">
+			<a href="javascript:void(0)" class="closebtn" onclick="toggleSidenav()">&times;</a>
+			<a class="ripple d-flex justify-content-center py-4" href="{{ path('app_home') }}" data-ripple-color="primary">
+				<img src="{{ asset('img/logo-place2go-white.svg') }}" width="150" alt="Place 2 Go" draggable="false">
+			</a>
+			
+			<ul class="navbar-nav">
 				<li class="sidenav-item">
-					<a class="sidenav-link ripple-surface" href="{{ path('app_profile_profile') }}" tabindex="1">
-						<i class="fas fa-user pe-3"></i>Mon espace perso</a>
-				</li>
-				<li class="sidenav-item">
-					<a class="sidenav-link ripple-surface" href="{{ path('app_logout') }}" tabindex="1">
-						<i class="fas fa-power-off pe-3"></i>Déconnexion</a>
-				</li>				
-			</ul>
-
-		{% else %}
-
-			<!-- Register Dropdown Menu -->
-			<ul class="navbar-nav m-auto">
-				<li class="sidenav-item">
-					<a class="sidenav-link ripple-surface" href="{{ path('app_register') }}" tabindex="1">
-						<i class="fas fa-tag pe-3"></i>Inscription</a>
+					<a class="sidenav-link ripple-surface" href="{{ path('app_category_list') }}" tabindex="1">
+						<i class="fas fa-tag pe-3"></i>Catégories</a>
 				</li>
 				<li class="sidenav-item dropdown">
-					<a class="sidenav-link ripple-surface ripple-surface-primary collapsed" href="#login" data-mdb-toggle="collapse" role="button" tabindex="1">
-						<i class="fas fa-calendar pe-3"></i>Connexion
+					<a class="sidenav-link ripple-surface ripple-surface-primary collapsed" href="#events" data-mdb-toggle="collapse" role="button" tabindex="1">
+						<i class="fas fa-calendar pe-3"></i>Sorties
 					</a>
-					<div class="sidenav-collapse collapse px-3 py-4" id="login">
-						{% include "_partials/_dropdown_login.html.twig" %}
-					</div>
+					<ul class="sidenav-collapse collapse show" id="events">
+						<li class="sidenav-item">
+							<a class="sidenav-link ripple-surface" href="{{ path('app_event_list') }}" tabindex="1">Voir toutes les sorties</a>
+						</li>
+						<li class="sidenav-item">
+							<a class="sidenav-link ripple-surface" href="{{ path('app_event_create') }}" tabindex="1">Créer une sortie</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
-		{% endif %}
+
+			{% if is_granted('ROLE_USER') %}
+
+				<!-- Authenticated User Menu -->
+				<ul class="navbar-nav">
+					<li class="sidenav-item">
+						<a class="sidenav-link ripple-surface" href="{{ path('app_profile_profile') }}" tabindex="1">
+							<i class="fas fa-user pe-3"></i>Mon espace perso</a>
+					</li>
+					<li class="sidenav-item">
+						<a class="sidenav-link ripple-surface" href="{{ path('app_logout') }}" tabindex="1">
+							<i class="fas fa-power-off pe-3"></i>Déconnexion</a>
+					</li>				
+				</ul>
+
+			{% else %}
+
+				<!-- Register Menu -->
+				<ul class="navbar-nav">
+					<li class="sidenav-item">
+						<a class="sidenav-link ripple-surface" href="{{ path('app_register') }}" tabindex="1">
+							<i class="fas fa-tasks pe-3"></i>Inscription</a>
+					</li>
+					<li class="sidenav-item dropdown">
+						<a class="sidenav-link ripple-surface ripple-surface-primary collapsed" href="#login" data-mdb-toggle="collapse" role="button" tabindex="1">
+							<i class="fas fa-power-off pe-3"></i>Connexion
+						</a>
+						<div class="sidenav-collapse collapse px-3 py-4" id="login">
+							{% include "_partials/_dropdown_login.html.twig" %}
+						</div>
+					</li>
+				</ul>
+			{% endif %}
+		</div>
 	</div>
 </nav>

@@ -1,6 +1,7 @@
 <footer id="footer" class="py-5 mt-5">
 	<div class="container">
 
+		<!-- Social Networks -->
 		<div class="row">
 			<div class="col-5 m-auto text-center">
 				<div class="icon-list-social d-flex justify-content-around">
@@ -17,9 +18,13 @@
 			</div>
 		</div>
 
+		<!-- Divider -->
 		<hr class="my-5">
 
+		<!-- Widget Columns -->
 		<div class="row">
+
+			<!-- About Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<ul class="list-unstyled footer__links">
 					<li class="mb-2">
@@ -37,17 +42,19 @@
 				</ul>
 			</div>
 
+			<!-- Place To Random Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<div class="text-uppercase text-xs mb-3 fw-bold fw-bold">Place To Random</div>
 				<ul class="list-unstyled">
-						{% for event in eventRepository.findRandEvents(app.user.city ?? '') %}
-							<li class="mb-2">
-								<a href="{{ path("app_event_show", {id: event.id}) }}">{{ event.title }}</a>
-							</li>
-						{% endfor %}
+					{% for event in eventRepository.findRandEvents(app.user.city ?? '') %}
+						<li class="mb-2">
+							<a href="{{ path("app_event_show", {id: event.id}) }}">{{ event.title }}</a>
+						</li>
+					{% endfor %}
 				</ul>
 			</div>
 
+			<!-- Popular Categories Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<div class="text-uppercase text-xs mb-3 fw-bold">Catégories populaires</div>
 				<ul class="list-unstyled">
@@ -59,6 +66,7 @@
 				</ul>
 			</div>
 
+			<!-- Top Contributors Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<div class="text-uppercase text-xs mb-3 fw-bold">Top Contributeurs</div>
 				<ul class="list-unstyled">
@@ -72,6 +80,7 @@
 
 		</div>
 
+		<!-- Copyright Bottom -->
 		<div class="mt-5">
 			<div class="text-center">Copyright © 2021</div>
 

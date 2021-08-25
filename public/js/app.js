@@ -13,9 +13,9 @@ if (document.getElementById('flash_messages') != null) {
 }
 
 // Set home page ibnput to 2.5rem height on homepage only
-if (window.location.pathname == '/') {
+/*if (window.location.pathname == '/') {
     document.querySelector('#q').style.height = '2.5rem'
-}
+}*/
 
 // Sidenav
 function toggleSidenav() {
