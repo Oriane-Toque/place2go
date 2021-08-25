@@ -55,7 +55,7 @@ class EventVoter extends Voter
                 if (!$user instanceof UserInterface)            return false;
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor()->getId())     return false;
+                if ($user !== $event->getAuthor())              return false;
 
                 return true;
 
@@ -65,7 +65,7 @@ class EventVoter extends Voter
                 if (!$user instanceof UserInterface)            return false;
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor()->getId())     return false;
+                if ($user !== $event->getAuthor())              return false;
 
                 return true;
 
