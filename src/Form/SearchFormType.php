@@ -29,10 +29,6 @@ class SearchFormType extends AbstractType
                 'class' => Category::class,
                 'expanded' => true,
                 'multiple' => true,
-                'attr' => [
-                    'class' => 'd-flex justify-content-between',
-                    'style' => 'width: 100%; flex-wrap: wrap;',
-                ],
             ]);
         
         ;
