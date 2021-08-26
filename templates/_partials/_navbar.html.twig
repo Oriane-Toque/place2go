@@ -1,7 +1,7 @@
 <nav id="nav" class="navbar navbar-expand-lg">
 	<div class="container">
 
-		<a class="navbar-brand" href="/">
+		<a class="navbar-brand" href="{{ path('app_home') }}">
 			<img src="{{ asset('img/logo-place2go.svg') }}" class="logo-sticky" width="150" alt="Place 2 Go">
 		</a>
 
@@ -24,11 +24,13 @@
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuEvent" data-mdb-toggle="dropdown" aria-expanded="false">Sorties</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuEvent">
 						<li>
-							<a class="dropdown-item" href="{{ path('app_event_list') }}">Voir toutes les sorties</a>
+							<a class="dropdown-item" href="{{ path('app_event_list') }}">Voir les sorties</a>
 						</li>
-						<li>
-							<a class="dropdown-item" href="{{ path('app_event_create') }}">Créer une sortie</a>
-						</li>
+						{% if is_granted('USER_ACCESS', app.user) %}
+							<li>
+								<a class="dropdown-item" href="{{ path('app_event_create') }}">Ajouter une sortie</a>
+							</li>
+						{% endif %}
 					</ul>
 				</li>
 			</ul>
@@ -55,11 +57,11 @@
 				<!-- Register Dropdown Menu -->
 				<div class="navbar-nav align-items-lg-center nav-right">
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+						<a class="nav-link me-2" href="{{ path('app_register') }}">Inscription</a>
 					</li>
 
 					<li class="nav-item dropdown">
-						<button class="btn btn-primary mb-3 mb-lg-0" id="loginDropdown" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
+						<button class="btn button-primary" id="loginDropdown" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
 
 						<div class="dropdown-menu login-form px-3 py-4" aria-labelledby="loginDropdown">
 							{% include "_partials/_dropdown_login.html.twig" %}
@@ -90,11 +92,13 @@
 					</a>
 					<ul class="sidenav-collapse collapse show" id="events">
 						<li class="sidenav-item">
-							<a class="sidenav-link ripple-surface" href="{{ path('app_event_list') }}" tabindex="1">Voir toutes les sorties</a>
+							<a class="sidenav-link ripple-surface" href="{{ path('app_event_list') }}" tabindex="1">Voir les sorties</a>
 						</li>
-						<li class="sidenav-item">
-							<a class="sidenav-link ripple-surface" href="{{ path('app_event_create') }}" tabindex="1">Créer une sortie</a>
-						</li>
+						{% if is_granted('USER_ACCESS', app.user) %}
+							<li class="sidenav-item">
+								<a class="sidenav-link ripple-surface" href="{{ path('app_event_create') }}" tabindex="1">Ajouter une sortie</a>
+							</li>
+						{% endif %}
 					</ul>
 				</li>
 			</ul>

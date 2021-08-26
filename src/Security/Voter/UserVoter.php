@@ -18,7 +18,7 @@ class UserVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, ["BASIC_ACCESS", "PRIVATE_ACCESS", "ADMIN_ACCESS"])
+        return in_array($attribute, ["BASIC_ACCESS", "USER_ACCESS", "ADMIN_ACCESS"])
             && $subject instanceof \App\Entity\User;
     }
 
@@ -40,7 +40,7 @@ class UserVoter extends Voter
 
             break;
 
-            case "PRIVATE_ACCESS":
+            case "USER_ACCESS":
 
                 if (!$user === $userSubject)                    return false;
                 if (!$user instanceof UserInterface)            return false;
