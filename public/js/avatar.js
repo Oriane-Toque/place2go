@@ -6,9 +6,13 @@ const avatar = {
 
 		// je récupère le bouton pour générer un avatar
 		const buttonAvatar = document.getElementById("avatar__generate");
-
+		// je récupère mon image
+		const imgAvatar = document.querySelector('.avatar__generated > img');
+		
 		// je pose un écouteur d'évènement au click
 		buttonAvatar.addEventListener("click", avatar.handleLoadAvatar);
+		// je pose un écouteur d'évènement au chargement de l'image
+		imgAvatar.addEventListener("load", avatar.handleStopLoader);
 	},
 
 	/**
@@ -20,6 +24,10 @@ const avatar = {
 
 		evt.preventDefault();
 
+		// Anime un loader pour patienter durant la génération de l'avatar
+		const buttonAvatar = evt.currentTarget;
+		buttonAvatar.classList.add('button--loading');
+		
 		// Id aléatoire à chaque génération
 		let avatarId = Math.floor(Math.random() * 300);
 		
@@ -32,6 +40,18 @@ const avatar = {
 		// méthode pour changer la value de mon hidden input
 		avatar.setAvatar(avatarPng);
 	},
+
+	/**
+	 * Stop le loader quand l'image de l'avatar est chargé
+	 * 
+	 * @param {*} evt 
+	 */
+	 handleStopLoader: function(evt) {
+		// retire la classe enclenchant l'animation du loader
+		const buttonAvatar = document.getElementById("avatar__generate");
+		buttonAvatar.classList.remove('button--loading');
+	},
+
 
 	/**
 	 * Prévisualise l'avatar généré
