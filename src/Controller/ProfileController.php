@@ -134,7 +134,7 @@ class ProfileController extends AbstractController
 		$sender = $this->getUser();
 
 		// Check if request was already been made
-		$verify = $friendRepository->findBy([
+		$verify = $friendRepository->findOneBy([
 			'sender' => $sender,
 			'receiver' => $receiver,
 		]);
@@ -147,6 +147,7 @@ class ProfileController extends AbstractController
             $friendRequest
                 ->setSender($sender)
                 ->setReceiver($receiver)
+				->setStatus(1)
                 ->setCreatedAt(new \DateTimeImmutable());
 
             // Push in database
@@ -156,6 +157,9 @@ class ProfileController extends AbstractController
 
             $this->addFlash('success', 'Votre demande a bien été envoyé !');
         }
+		elseif ($verify->getStatus() == 1){
+			$this->addFlash('success', 'Vous êtes déjà amis !');
+		}
 		else
 		{
 			$this->addFlash('warning', 'Votre demande a déjà été envoyé !');
