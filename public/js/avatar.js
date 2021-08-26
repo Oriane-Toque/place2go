@@ -11,6 +11,22 @@ const avatar = {
 		buttonAvatar.addEventListener("click", avatar.handleLoadAvatar);
 	},
 
+	/**
+	 * Récupère un avatar aléatoire sous forme png
+	 * 
+	 * @param {*} evt
+	 */
+	 handleLoadAvatar: function(evt) {
+
+		evt.preventDefault();
+
+		// Id aléatoire à chaque génération
+		let avatarId = Math.floor(Math.random() * 300);
+		
+		// Récupération de l'avatar 
+		let avatarPng = avatar.apiBaseUrl+avatarId+'.png';
+		console.log(avatarPng);
+	},
 };
 
 document.addEventListener('DOMContentLoaded', avatar.init);
