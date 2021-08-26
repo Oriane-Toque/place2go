@@ -40,5 +40,24 @@ cancelbtn.onclick = function () {
     } 
 };
 
+//counting characters in comment area
+let textarea = document.getElementById('comment_content');
+
+textarea.addEventListener("input", event => {
+    const target = event.currentTarget;
+    const currentLength = target.value.length;
+    
+    var count = document.getElementById('count');
+    count.innerHTML = `${currentLength}/500 caractères`;
+
+    if(currentLength > 500){
+        textarea.style.border ="1px solid red"
+        count.innerHTML = "Vous avez dépassé la limite de caractères autorisés"
+    } else {
+        textarea.style.border ="1px solid #00b4d4"
+    }
+});
+
+
 
 

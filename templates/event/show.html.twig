@@ -111,7 +111,6 @@
 
 			</div>
 			<h4 class="mt-5 mb-2 text-center">Commentaires</h4>
-
 			<div class="row">
 
 				{% for comment in event.comments %}
@@ -120,12 +119,13 @@
 							<div class="show__author_avatar">
 								<img class="author__avatar" src="{{comment.author.avatar }}" alt="comment_author_avatar">
 							</div>
-
 							<div class="show__comments_content">
 								<div class="show__comment_header">
 									Ecrit par
-									<span class="fw-bold">{{ comment.author.nickname }}</span>
-									, le
+									<span class="fw-bold">{{ comment.author.nickname }}</span>, 
+									{% if event.author.id is same as comment.author.id %}
+									<span class="event__author">(Organisateur),</span>
+									{% endif %} le
 									{{ comment.createdAt | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
 								</div>
 								<div class="show__comment_content">
@@ -157,8 +157,14 @@
 
 				{{ form_start(form) }}
 				{{ form_widget(form) }}
-				<button id="cancel__comment" class="btn btn-primary">Annuler</button>
-				<button type="submit" class="btn btn-primary">Soumettre</button>
+				
+				<div class="d-flex justify-content-between">
+					<button id="cancel__comment" class="btn btn-primary">Annuler</button>
+					<button type="submit" class="btn btn-primary">Soumettre</button>
+					<p id="count" class="ms-auto"></p>
+				</div>
+				
+				
 				{{ form_end(form) }}
 			</div>
 		</div>
