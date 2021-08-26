@@ -169,4 +169,36 @@ class ProfileController extends AbstractController
             return $this->redirect($referer);
 	}
 
+	/**
+	 * List all friend requests
+	 * 
+	 * @Route("/profile/friend/request", name="app_profile_friend_request", methods={"GET"})
+	 * @isGranted("ROLE_USER")
+	 * 
+	 * @param FriendRepository $friendRepository
+	 * 
+	 * @return Response
+	 */
+	public function listFriendRequestReceive(FriendRepository $friendRepository): Response
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+		// Get current User
+		$user = $this->getUser();
+
+		// List all friend requests received
+		$friendRequestReceived = $friendRepository->findBy(['receiver' => $user]);
+		
+		// List all friend requests send
+		$friendRequestSend = $friendRepository->findBy(['sender' => $user]);
+
+		return $this->renderForm('profile/friend_request.html.twig', [
+			'friendRequestReceived' => $friendRequestReceived,
+			'friendRequestSend' => $friendRequestSend,
+		]);
+	}
+
 }
