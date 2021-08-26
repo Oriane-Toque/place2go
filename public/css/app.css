@@ -2,6 +2,8 @@
 	--primary-color: #10CEAA;
 	--secondary-color: #42435F;
 	--hover-color: #0b9e83;
+	--secondary-hover-color: #303146;
+
 
 	--profile-main-color: #10CEAA;
 	--profile-secondary-color: #42435F;
@@ -38,6 +40,16 @@
 
 .button-primary:hover {
 	background-color: var(--hover-color);
+	color: white;
+}
+
+.button-secondary {
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+.button-secondary:hover {
+	background-color: var(--secondary-hover-color);
 	color: white;
 }
 
@@ -1031,6 +1043,34 @@
 	-webkit-transition: all .1s linear;
 	transition: all .1s linear;
 }
+
+/*****************************************************************? REGISTER */
+
+#register {
+	position: relative;
+	margin: 3rem auto;
+}
+
+#register .pinmap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	filter: opacity(0.15);
+}
+
+
+#register .register__form {
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
 
 /*****************************************************************? FOOTER */
 
