@@ -1,136 +1,138 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Home {% endblock %}
+{% block title %}Home
+{% endblock %}
 
 {% block banner %}
 
 	<!-- Top Banner -->
 	<div class="masthead" role="img" aria-label="Image Description">
-		<div class="container-fluid">
-			<h1 class="masthead__brand my-5">BE / MOVE / PARTY / MAKE FRIENDS</h1>			
-			<div class="row justify-content-center">
-				<div class="col-sm-12 col-md-8">
-					{% include "event/_filter_home.html.twig" %}
-				</div>
+		<div class="row w-100">
+			<div class="col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+				<h1 class="masthead__brand my-5">BE / MOVE / PARTY / MAKE FRIENDS</h1>
+				{% include "event/_filter_home.html.twig" %}
 			</div>
+		</div>
 	</div>
-	
+
 {% endblock %}
 
 {% block body %}
 
-	<section class="container-xl topCategories">
-		<h2>Top Catégories</h2>
+	<section class="container topCategories">
+		<h2 class="home__title">Top Catégories</h2>
 
 		<div class="topScore">
+
 			{% for category in topCategories %}
-				
-				<div class="card">
+				<div class="topScore__card">
 					<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-						<img
-						src="{{ category[0].picture }}"
-						class="img-fluid"
-						alt="Catégorie {{ category[0].name }}"
-						/>
-						<a href="/events?q=&categories%5B%5D={{ category[0].id }}">
-						<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+						<img src="{{ category[0].picture }}" class="card-img-top" alt="Catégorie {{ category[0].name }}"/>
+						<a href="/events?q=&categories%5B%5D={{ category[0].id }}" class="card-img-overlay">
+							<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+							<h3 class="text-center">{{ category[0].name }}</h3>
+							{% if category.nbrEvents > 0 %}
+								<span class="badge badge-primary">
+									{{ category.nbrEvents }}
+									sorties
+								</span>
+							{% endif %}
 						</a>
 					</div>
-					<div class="card-body">
-						<h3 class="card-title text-center">{{ category[0].name }}</h3>
-					</div>
-					{% if category.nbrEvents > 0 %}
-					<span class="badge bg-danger">{{ category.nbrEvents }} sorties</span>
-					{% endif %}
 				</div>
-
 			{% endfor %}
+
 		</div>
 	</section>
 
-	<section class="descriptionPlace my-5">
+	<section class="descriptionPlace">
 		<div class="descriptionPlace__picture">
-			<img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="image du site">
+			<img src="{{ asset('img/ville-silhouette.jpg') }}" alt="image du site" class="">
 		</div>
+
 		<div class="descriptionPlace__description">
 			<h2>Bienvenue sur Place 2 Go !</h2>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat quod facere eligendi amet nostrum nihil tempore vel natus, harum voluptate. Non blanditiis quibusdam, harum consectetur soluta quas vel consequatur esse.</p>
+			<p>
+				Place 2 Go c'est The Place pour participer à toutes sortes d'activités, faire des rencontres, et partager des bons moments. Pour cela, rien de plus simple... Inscrivez-vous sur le site, et proposer une sortie !
+				Que ce soit une simple balade, un concert, ou un p'tit resto dans votre lieu favori, vous avez l'embarras du choix.
+			</p>
+			<img src="{{ asset('img/pinmap.png') }}" alt="">
 		</div>
 	</section>
 
-	<section class="container-xl topCities">
-		<h2>Sorties du moment</h2>
+	<section class="container topCities">
+		<h2 class="home__title">Sorties du moment</h2>
 
 		<div class="topScore">
 			{% for event in randEvents %}
-						<div class="list__card shadow-3">
+				<div class="list__card shadow-3">
 
-							<div class="list__card_image">
-								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
-									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
+					<div class="list__card_image">
+						<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+							<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle" height="120" width="120"/>
+						</a>
+					</div>
+
+					<div class="list__card_content">
+						<div class="d-flex justify-content-between mb-2">
+							<div class="list__cards_author">
+								<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark text-decoration-underline">{{ event.author.nickname }}</a>
+							</div>
+							<div class="list__card_date">
+								<small class="text-muted fst-italic">le
+									{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}</small>
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-between">
+							<div class="list__card_title">
+								<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
+							</div>
+							<div class="list__cards_attendants text-muted">
+								<small class="text-muted fst-italic">
+									{{ event.attendants|length }}
+									/
+									{{ event.maxAttendants }}
+								</small>
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-between">
+							<div class="list__card_address">
+								{{ event.address }}
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-between align-items-end mt-2">
+							<div>
+								{% for category in event.categories %}
+									<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+								{% endfor %}
+							</div>
+
+							<div class="list__cards_join">
+								<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
+									<i class="fas fa-user-minus"></i>
+								</a>
+								<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
+									<i class="fas fa-user-plus"></i>
 								</a>
 							</div>
-
-							<div class="list__card_content">
-								<div class="d-flex justify-content-between mb-2">
-									<div class="list__cards_author">
-										<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark text-decoration-underline">{{ event.author.nickname }}</a>
-									</div>
-									<div class="list__card_date">
-										<small class="text-muted fst-italic">le
-											{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}</small>
-									</div>
-								</div>
-
-								<div class="d-flex justify-content-between">
-									<div class="list__card_title">
-										<a href="{{ path('app_event_show', {id: event.id}) }}">{{ event.title }}</a>
-									</div>
-									<div class="list__cards_attendants text-muted">
-										<small class="text-muted fst-italic">
-											{{ event.attendants|length }}
-											/
-											{{ event.maxAttendants }}
-										</small>
-									</div>
-								</div>
-
-								<div class="d-flex justify-content-between">
-									<div class="list__card_address">
-										{{ event.address }}
-									</div>
-								</div>
-
-								<div class="d-flex justify-content-between align-items-end mt-2">
-									<div>
-										{% for category in event.categories %}
-											<span class="text-muted">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
-										{% endfor %}
-									</div>
-
-									<div class="list__cards_join">
-										<a href="{{ path("app_event_leave", {id: event.id}) }}" class="text-danger">
-											<i class="fas fa-user-minus"></i>
-										</a>
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="text-info ms-2">
-											<i class="fas fa-user-plus"></i>
-										</a>
-									</div>
-								</div>
-
-							</div>
-
 						</div>
-						{% else %}
-						<div>
-							Aucun résultat trouvé.
-						</div>
+
+					</div>
+
+				</div>
+			{% else %}
+				<div>
+					Aucun résultat trouvé.
+				</div>
 			{% endfor %}
 		</div>
 	</section>
 
-	<section class="container-xl topContributors">
-		<h2>Top Contributeurs</h2>
+	<section class="container topContributors">
+		<h2 class="home__title">Top Contributeurs</h2>
 
 		<div class="topScore">
 			{% for contributors in topContributors %}
