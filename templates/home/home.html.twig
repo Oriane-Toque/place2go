@@ -4,13 +4,15 @@
 
 {% block banner %}
 
+	<!-- Top Banner -->
 	<div class="masthead" role="img" aria-label="Image Description">
-		
-		<div class="container">
-			<h1 class="masthead__brand">PLACE 2 GO / BE / MOVE / PARTY / MAKE FRIENDS</h1>
-			{% include "event/_filter.html.twig" %}
-		</div>
-
+		<div class="container-fluid">
+			<h1 class="masthead__brand my-5">BE / MOVE / PARTY / MAKE FRIENDS</h1>			
+			<div class="row justify-content-center">
+				<div class="col-sm-12 col-md-8">
+					{% include "event/_filter_home.html.twig" %}
+				</div>
+			</div>
 	</div>
 	
 {% endblock %}
@@ -22,19 +24,26 @@
 
 		<div class="topScore">
 			{% for category in topCategories %}
-				<a href="/events?q=&categories%5B%5D={{ category[0].id }}">
-					<div class="card">
-						<img src="{{ category[0].picture }}" class="card-img-top" alt="Catégorie {{ category[0].name }}"/>
-						<div class="card-body">
-							<h3 class="card-title text-center">{{ category[0].name }}</h3>
-							<p class="card-text">
-								Score :
-								{{ category.nbrEvents }}
-								sorties
-							</p>
-						</div>
+				
+				<div class="card">
+					<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+						<img
+						src="{{ category[0].picture }}"
+						class="img-fluid"
+						alt="Catégorie {{ category[0].name }}"
+						/>
+						<a href="/events?q=&categories%5B%5D={{ category[0].id }}">
+						<div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+						</a>
 					</div>
-				</a>
+					<div class="card-body">
+						<h3 class="card-title text-center">{{ category[0].name }}</h3>
+					</div>
+					{% if category.nbrEvents > 0 %}
+					<span class="badge bg-danger">{{ category.nbrEvents }} sorties</span>
+					{% endif %}
+				</div>
+
 			{% endfor %}
 		</div>
 	</section>

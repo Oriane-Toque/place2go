@@ -2,7 +2,6 @@
 window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar')
     navbar.classList.toggle('sticky', window.scrollY > 0)
-
 })  
 
 // Auto close Flashmessage after 6sec
@@ -15,9 +14,10 @@ if (flashMessage != null) {
 }
 
 // Set home page ibnput to 2.5rem height on homepage only
-if (window.location.pathname == '/') {
+/*if (window.location.pathname == '/') {
     document.querySelector('#q').style.height = '2.5rem'
-}
+}*/
+
 
 // toggle comment box
 const targetDiv = document.querySelector(".create__comment");
@@ -58,6 +58,7 @@ textarea.addEventListener("input", event => {
     }
 });
 
-
-
-
+// Home Side
+function toggleSidenav() {
+    document.querySelector('.sidenav').classList.toggle('open');
+}

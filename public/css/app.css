@@ -53,29 +53,32 @@
 }
 
 .masthead {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	text-align: center;
-	flex-wrap: wrap;
-	align-content: center;
-	justify-content: center;
+  padding: 5rem 0;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  margin-top: -80px;
+  width: 100%;
+  min-height: 55vh;
+  overflow: hidden;
 
-	transform: translateY(-100px);
-	width: 100%;
-	height: 65vh;
-	overflow: hidden;
-
-	background-size: cover !important;
-	background: linear-gradient(to bottom,
-			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 0) 85%,
-			rgba(255, 255, 255, 0.50) 100%),
-		linear-gradient(to top,
-			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 0) 65%,
-			rgba(255, 255, 255, 0.9) 100%),
-		url("../img/bg-header.jpeg") no-repeat center center scroll;
+  background-size: cover !important;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 85%,
+      rgba(255, 255, 255, 0.50) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 65%,
+      rgba(255, 255, 255, 0.9) 100%
+    ),
+    url("../img/bg-header.jpeg") no-repeat center center scroll;
 }
 
 .masthead__brand {
@@ -86,6 +89,37 @@
 	letter-spacing: 0.03em;
 	margin-top: 2rem;
 	text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.home-search {
+  border: 1px solid #DDDDDD !important;
+  border-radius: 32px !important;
+  padding: 5px 20px;
+  color: #222222 !important;
+  display: flex !important;
+  position: relative !important;
+  width: 100% !important;
+  box-shadow: 0px 16px 32px rgb(0 0 0 / 15%), 0px 3px 8px rgb(0 0 0 / 10%) !important;
+  background-color: rgba(255,255,255,.8) !important;
+}
+
+.home-search input[type=text] {
+  font-size: 1em;
+  background-color:transparent;
+}
+.home-search input[type=text],
+.home-search input[type=text]:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.home-search button[type=submit] {
+  margin-left: -6px !important;
+  padding-right: 9px !important;
+  top: 3px;
+  right: 3px;
+  position: absolute !important;
+  z-index: 5 !important;
 }
 
 /*****************************************************************? NAVBAR */
@@ -142,7 +176,64 @@
 	background-color: rgba(255, 255, 255, 1);
 }
 
+/*** Sidenav ***/
+
+.sidenav {
+  height: 100%;
+  width: 0; 
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  color: #999;
+  background-color: rgba(0,0,0,0.9);
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+  transform: translateX(0%);
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px;
+  text-decoration: none;
+  color: #999;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav .form-control {
+  color: #ccc;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav.open{
+  width: 250px;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
 /*****************************************************************? HOME PAGE */
+
+.card {
+  position: relative;
+}
+.card .badge {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
 
 .topScore {
 	display: grid;
@@ -252,6 +343,7 @@
 	align-items: center;
 	width: 100%;
 }
+
 
 .search__form #q {
 
@@ -722,6 +814,38 @@
 	border-bottom: solid 5px var(--profile-main-color);
 }
 
+/* classe pour le loader du bouton qui génère l'avatar */
+.button--loading > span {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button--loading::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 /*****************************************************************? PROFILE EDIT EVENT */
 
 .contentProfile h2>i {
@@ -851,6 +975,9 @@ svg.text-light {
 		margin: 0 auto!important;
 	}
 
+  .masthead__brand {
+    font-size: 2rem;
+  }
 	/************************************************ PAGE LIST  */
 	#list .flex-between {
 		display: flex;
@@ -858,6 +985,7 @@ svg.text-light {
 		align-items: baseline;
 	}
 }
+
 @media screen and (min-width: 576px) {
 	.container {
 		margin: 1rem auto!important;
