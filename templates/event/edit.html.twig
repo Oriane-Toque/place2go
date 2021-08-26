@@ -2,11 +2,12 @@
 
 {% block title 'Modifier une sortie' %}
 
-{% block menu_events %}active{% endblock %}
+{% block menu_events %}active
+{% endblock %}
 
 {% block body %}
 
-<style>
+	<style>
 		.mapboxgl-ctrl-geocoder,
 		.mapboxgl-ctrl-geocoder .suggestions {
 			box-shadow: 0 0 0 0 rgb(0 0 0 / 0%) !important;
@@ -21,17 +22,28 @@
 		}
 	</style>
 
-<div class="container-xl my-5">
-		<div class="mb-4">
-			<h2 class="m-0">
-				<i class="fa fa-edit mr-2"></i>Modifier une sortie</h2>
-		</div>
+	<div id="profile">
 
-		<div class="row">
-			<div class="col-12 py-5">
-                {{ include("event/_event_form.html.twig", {button_label:'Modifier ma sortie'}) }}
+			{# Navigation secondaire du dashboard + informations #}
+			{% include "profile/_nav_aside.html.twig" %}
+
+			{# Contenu du profil #}
+			<div class="contentProfile">
+
+				<div class="container-xl">
+					<div class="mb-4">
+						<h2 class="m-0">
+							<i class="fa fa-edit mr-2"></i>Modifier une sortie</h2>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							{{ include("event/_event_form.html.twig", {button_label:'Modifier ma sortie'}) }}
+						</div>
+					</div>
+				</div>
+
 			</div>
-		</div>
 	</div>
 
 	<script>
@@ -62,8 +74,8 @@
 		input.addEventListener('change', handle);
 		input.addEventListener('keydown', handle);
 
-        input.value = eventAddress.value;
-       
+		input.value = eventAddress.value;
+
 
 		function handle(e) {
 		let value = e.target.value;

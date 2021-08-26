@@ -10,103 +10,119 @@
 		#map {
 			width: 100%;
 			height: 100%;
+			min-height: 350px;
 			margin-bottom: 0.8rem;
 		}
 	</style>
 
-	<div class="container-xl my-5">
-		<section id="show" class="mt-5">
+	<div class="container">
+		<section id="show">
 
 			<div class="row">
-				<div class="col-6">
+				<div class="col-sm-12 col-lg-6">
 
-					<div class="show__card shadow-1">
-						<div class="show__card_title">
-							{{ event.title }}
-						</div>
+					<div class="show__card">
 						<div class="show__card_header">
-							<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">
-								<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class="img-fluid rounded-circle show__card_header-avatar" height="120" width="120"/>
-							</a>
-
-							<div class="show__card_header-author">
-								<div class="text-decoration-underline ms-3">
-									organisateur :
-								</div>
-								<div class="ms-3">
-									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="fw-bold text-dark show__card_header-author">{{ event.author.nickname }}</a>
-								</div>
-							</div>
+							<img src="{{ event.categories[0].picture }}" alt="{{ event.categories[0].name }}" class="show__card_header_image">
 						</div>
 
 						<div class="show__card_content">
-							<div class="my-3">
+							<div class="show__card_content-author">
+								<div>
+									<i class="fas fa-user-alt"></i>
+									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="ms-2">{{ event.author.nickname }}</a>
+								</div>
+								<div>
+									{# Render delete button if user is the event's author #}
+									{% if is_granted('EVENT_DELETE', event) %}
+										<a href="{{ path('app_event_delete', {id: event.id}) }}" class="">
+											<i class="fas fa-trash"></i>
+										</a>
+									{% endif %}
+									{# Render edit button if user is the event's author #}
+									{% if is_granted('EVENT_EDIT', event) %}
+										<a href="{{ path('app_event_edit', {id: event.id}) }}" class="ms-2">
+											<i class="fas fa-edit"></i>
+										</a>
+									{% endif %}
+								</div>
+							</div>
+
+							<div class="show__card_content-details">
 								<div class="show__card_content-attendants">
 									<i class="fas fa-caret-right"></i>
-									<span class="">Nombre de Participants :</span> 
-									{{ event.attendants|length }} / {{ event.maxAttendants }}
+									<span class="">Nombre de Participants :</span>
+									{{ event.attendants|length }}
+									/
+									{{ event.maxAttendants }}
 								</div>
-								
+
 								<div class="show__card_content-date ">
 									<i class="fas fa-caret-right"></i>
-									Le {{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
+									Le
+									{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
 								</div>
 
 								<div class="show__card_address">
 									<i class="fas fa-caret-right"></i>
-									<span class="text-decoration-underline"></span> {{ event.address }}
+									{{ event.address }}
 								</div>
 							</div>
 
 							<div class="show__card_content-description">
+								<div class='--title'>Détails sur l'activité</div>
 								{{ event.description }}
-							</div>
-
-							<div class="show__card_content-footer">
-								<div>
-									{% for category in event.categories %}
-										<span class="text-muted fst-italic">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
-									{% endfor %}
-								</div>
-
-								<div class="show__cards_join">
-									<a href="{{ path("app_event_leave", {id: event.id}) }}" class="btn btn-floating">
-										<i class="fas fa-user-minus"></i>
-									</a>
-									<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-floating ms-2">
-										<i class="fas fa-user-plus"></i>
-									</a>
-								</div>
 							</div>
 						</div>
 
+						<div class="show__card_content-footer">
+							<div>
+								{% for category in event.categories %}
+									<span class="text-muted fst-italic">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+								{% endfor %}
+							</div>
+
+							<div class="show__cards_join">
+								<div class="list__cards_join">
+									{% if is_granted('EVENT_LEAVE', event) %}
+										{# Bouton pour ne plus participer à la sortie #}
+										<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+											<i class="fas fa-sign-out-alt"></i>
+										</a>
+									{% endif %}
+									{% if is_granted('EVENT_JOIN', event) %}
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-primary btn-floating-sm ms-2">
+											<i class="fas fa-user-plus"></i>
+										</a>
+									{% endif %}
+								</div>
+							</div>
+						</div>
 					</div>
+
 				</div>
 
-				<div class="col-6">
-					<div id='map' class="shadow-1"></div>
+				<div class="col-sm-6 col-lg-6">
+
+					<div id='map' class="shadow-1">
+					</div>
+
 				</div>
+			</div>
+	</section>
 
-			</section>
-		</div>
+</div>
 
-	<script>
-
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-
-		let map = new mapboxgl.Map({
-			container: 'map', // Container ID
-			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ event.lat}},{{ event.lon}}], // Starting position [lng, lat]
-			zoom: 15.5, // Starting zoom level
-		});
-
-		// Create a default Marker and add it to the map.
-		const marker1 = new mapboxgl.Marker({ color: 'red'})
-		.setLngLat([{{ event.lat }}, {{ event.lon }}])
-		.addTo(map);
-			
-
-	</script>
-
-{% endblock %}
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+let map = new mapboxgl.Map({
+container: 'map', // Container ID
+style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+center: [
+{{ event.lat }}, {{ event.lon }}
+], // Starting position [lng, lat]
+zoom: 15.5, // Starting zoom level
+});
+// Create a default Marker and add it to the map.
+const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+</script>{% endblock %}
