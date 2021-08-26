@@ -12,9 +12,7 @@
 		{# Font Awesome #}
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
 		{# CSS #}
-
-		<link
-		rel="stylesheet" href="{{ asset('css/app.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 		{# MAPBOX CSS #}
 		<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
@@ -38,7 +36,7 @@
 			{% block banner %}{% endblock %}
 		</header>
 
-		<div class="container container-fluid">
+		<div class="container-fluid p-0">
 			{% include "_partials/_flashmessages.html.twig" %}
 
 			{% block body %}{% endblock %}
