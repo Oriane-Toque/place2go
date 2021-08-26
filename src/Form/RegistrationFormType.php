@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -94,6 +95,7 @@ class RegistrationFormType extends AbstractType
                         ->add('description', TextareaType::class, [
                             'label' => 'Description',
                         ])
+												->add('avatar', HiddenType::class)
                         ->add('email', EmailType::class)
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
