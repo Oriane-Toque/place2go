@@ -179,7 +179,7 @@ class ProfileController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function listFriendRequestReceive(FriendRepository $friendRepository): Response
+	public function listFriendRequest(FriendRepository $friendRepository): Response
 	{
 		// If not connected
         if (!$this->getUser()) {
@@ -191,7 +191,7 @@ class ProfileController extends AbstractController
 
 		// List all friend requests received
 		$friendRequestReceived = $friendRepository->findBy(['receiver' => $user]);
-		
+
 		// List all friend requests send
 		$friendRequestSend = $friendRepository->findBy(['sender' => $user]);
 
