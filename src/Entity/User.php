@@ -123,11 +123,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $attendants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Friend::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $friends;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->attendants = new ArrayCollection();
         $this->isActive = true;
+        $this->friends = new ArrayCollection();
     }
 
     public function __toString()
@@ -397,6 +403,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($attendant->getUser() === $this) {
                 $attendant->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Friend[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(Friend $friend): self
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends[] = $friend;
+            $friend->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(Friend $friend): self
+    {
+        if ($this->friends->removeElement($friend)) {
+            // set the owning side to null (unless already changed)
+            if ($friend->getSender() === $this) {
+                $friend->setSender(null);
             }
         }
 
