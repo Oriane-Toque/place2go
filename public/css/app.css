@@ -442,9 +442,8 @@
 	align-items: center;
 	height: 120px;
 	margin-top: 5rem;
-}
-
-.topCities .home__card .home__card_image {
+	border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .topCities .home__card .home__card_image img {
@@ -469,6 +468,22 @@
 	font-size: 0.9rem;
 	font-style: italic;
 	color: #404040;
+}
+
+.topContributors .topScore .topScore__content .card-body {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.topContributors .topScore .topScore__content .card-body h3{
+	margin: 0;
+}
+
+.topContributors .topScore .topScore__content .card-body .badge {
+	position: relative;
+	top: 0;
+	right: 0;
 }
 
 

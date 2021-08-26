@@ -103,11 +103,12 @@
 						</div>
 						<div class="card-body">
 							<h3 class="card-title">{{ contributors[0].nickname }}</h3>
-							<p class="card-text">
-								Score :
-								{{ contributors.nbrEvents }}
-								sorties
-							</p>
+							{% if contributors.nbrEvents > 0 %}
+								<span class="badge badge-primary">
+									{{ contributors.nbrEvents }}
+									sorties
+								</span>
+							{% endif %}
 						</div>
 					</div>
 				</a>
