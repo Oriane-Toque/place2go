@@ -1,5 +1,6 @@
 <footer id="footer">
-	<div class="container">
+	<div
+		class="container">
 
 		<!-- Social Networks -->
 		<div class="row">
@@ -19,10 +20,12 @@
 		</div>
 
 		<!-- Divider -->
-		<hr class="footer__divider">
+		<hr
+		class="footer__divider">
 
 		<!-- Widget Columns -->
-		<div class="row">
+		<div
+			class="row">
 
 			<!-- About Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
@@ -32,15 +35,15 @@
 						<a href="#">A propos</a>
 					</li>
 					<li class="mb-2">
-					<i class="fas fa-caret-right"></i>
+						<i class="fas fa-caret-right"></i>
 						<a href="#">Mentions légales</a>
 					</li>
 					<li class="mb-2">
-					<i class="fas fa-caret-right"></i>
+						<i class="fas fa-caret-right"></i>
 						<a href="#">Contactez-nous</a>
 					</li>
 					<li class="mb-2">
-					<i class="fas fa-caret-right"></i>
+						<i class="fas fa-caret-right"></i>
 						<a href="#">Team</a>
 					</li>
 				</ul>
@@ -48,7 +51,7 @@
 
 			<!-- Place To Random Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-				<div class="text-uppercase text-xs mb-3 fw-bold fw-bold">Place To Random</div>
+				<div class="footer__title">Place To Random</div>
 				<ul class="list-unstyled">
 					{% for event in eventRepository.findRandEvents(app.user.city ?? '') %}
 						<li class="mb-2">
@@ -60,25 +63,25 @@
 
 			<!-- Popular Categories Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-				<div class="text-uppercase text-xs mb-3 fw-bold">Catégories populaires</div>
+				<div class="footer__title">Catégories populaires</div>
 				<ul class="list-unstyled">
-						{% for category in categoryRepository.findTopCategories %}
-							<li class="mb-2">
-								<a href="/events?q=&categories%5B%5D={{ category[0].id }}">{{ category[0].name }}</a>
-							</li>
-						{% endfor %}
+					{% for category in categoryRepository.findTopCategories %}
+						<li class="mb-2">
+							<a href="/events?q=&categories%5B%5D={{ category[0].id }}">{{ category[0].name }}</a>
+						</li>
+					{% endfor %}
 				</ul>
 			</div>
 
 			<!-- Top Contributors Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-				<div class="text-uppercase text-xs mb-3 fw-bold">Top Contributeurs</div>
+				<div class="footer__title">Top Contributeurs</div>
 				<ul class="list-unstyled">
-						{% for contributor in eventRepository.findTopContributors %}
-							<li class="mb-2">
-								<a href="{{ path("app_profile_show", {id: contributor[0].id}) }}">{{ contributor[0].nickname }}</a>
-							</li>
-						{% endfor %}
+					{% for contributor in eventRepository.findTopContributors %}
+						<li class="mb-2">
+							<a href="{{ path("app_profile_show", {id: contributor[0].id}) }}">{{ contributor[0].nickname }}</a>
+						</li>
+					{% endfor %}
 				</ul>
 			</div>
 
