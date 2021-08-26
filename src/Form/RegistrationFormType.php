@@ -39,6 +39,9 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Pseudo',
                 'required' => true,
             ])
+						->add('avatar', HiddenType::class, [
+								'required' => false,
+						])
             // ajout d'un évènement sur le formulaire pour différencier l'édition de la création d'un utilisateur
             // mapped false pour le password afin de ne pas relier à l'entité en cas de modification de password
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -95,7 +98,6 @@ class RegistrationFormType extends AbstractType
                         ->add('description', TextareaType::class, [
                             'label' => 'Description',
                         ])
-												->add('avatar', HiddenType::class)
                         ->add('email', EmailType::class)
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
