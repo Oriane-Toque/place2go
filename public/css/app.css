@@ -430,6 +430,36 @@
 	padding: 1rem;
 }
 
+.show__comments {
+	display: flex;
+	margin-top: 1.5rem;
+	border-radius: 3rem;
+	box-shadow: 0 2px 10px 0 rgba(0,0,0,.05);
+}
+
+.show__author_avatar img{
+	max-width: 100px;
+	max-height: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.show__comments_content{
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	padding-left: 1rem;
+}
+
+.show__comment_header {
+	color: #757575;
+	font-style: italic;
+	font-size: 0.85rem;	
+	margin-bottom: 0.7rem;
+}
+
+
+
 /*****************************************************************? PROFIL */
 
 .contentProfile {

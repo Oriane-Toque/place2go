@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Data\SearchData;
+use App\Entity\Comment;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
 use App\Services\CallApiService;
@@ -154,10 +155,11 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function show(Event $event): Response
+	public function show(Event $event, Comment $comments): Response
 	{
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
+			'comments' => $comments,
 		]);
 	}
 
