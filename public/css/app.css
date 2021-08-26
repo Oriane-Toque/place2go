@@ -522,6 +522,59 @@
 	padding: 1rem;
 }
 
+.show__comments {
+	display: flex;
+	margin-top: 1rem;
+	border-radius: 3rem;
+	box-shadow: 0 2px 10px 0 rgba(0,0,0,.10);
+}
+
+.show__author_avatar img{
+	max-width: 100px;
+	max-height: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.show__comments_content{
+	width: 100%;
+	flex-wrap: wrap;
+	padding-left: 1rem;
+}
+
+.show__comment_header {
+	color: #757575;
+	font-style: italic;
+	font-size: 0.85rem;	
+	margin-bottom: 0.7rem;
+}
+
+.comments__button {
+	display : flex;
+	justify-content: flex-end;
+	margin-top: 1rem;
+}
+
+#comment_content{
+	height: 8rem;
+}
+
+#cancel__comment{
+	margin-right: 1rem;
+}
+
+.create__comment{
+	display: none;
+}
+
+.create__comment_toggle{
+	display: block;
+}
+
+.event__author {
+	color: var(--primary-color);
+}
+
 /*****************************************************************? PROFIL */
 
 .contentProfile {
