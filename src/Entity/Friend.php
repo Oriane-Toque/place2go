@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\FriendRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestamps;
 
 /**
  * @ORM\Entity(repositoryClass=FriendRepository::class)
  */
 class Friend
 {
+    use Timestamps;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,10 +37,10 @@ class Friend
      */
     private $status;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
+    public function __construct()
+    {
+        $this->status = false;
+    }
 
     public function getId(): ?int
     {
@@ -80,15 +83,4 @@ class Friend
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 }

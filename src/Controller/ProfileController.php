@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Friend;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
+use App\Repository\FriendRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -103,4 +105,64 @@ class ProfileController extends AbstractController
 			'form' => $form,
 		]);
 	}
+
+	/**
+	 * Send a friend request
+	 * 
+	 * @Route("/profile/friends/{id<\d+>}/add", name="app_profile_friend_add", methods={"GET"})
+	 * @isGranted("ROLE_USER")
+	 * 
+	 * @param Request $request
+	 * @param User $receiver
+	 * @param FriendRepository $friendRepository
+	 * 
+	 * @return Response
+	 */
+	public function addFriend(Request $request, User $receiver, FriendRepository $friendRepository): Response
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // User you want to add cannot be found
+        if (null === $receiver) {
+            throw $this->createNotFoundException('Utilisateur introuvable');
+        }
+
+		// Get current User
+		$sender = $this->getUser();
+
+		// Check if request was already been made
+		$verify = $friendRepository->findBy([
+			'sender' => $sender,
+			'receiver' => $receiver,
+		]);
+
+		// If request is new
+        if (null === $verify)
+		{
+            // Create a friend request
+            $friendRequest = new Friend();
+            $friendRequest
+                ->setSender($sender)
+                ->setReceiver($receiver)
+                ->setCreatedAt(new \DateTimeImmutable());
+
+            // Push in database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($friendRequest);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre demande a bien été envoyé !');
+        }
+		else
+		{
+			$this->addFlash('warning', 'Votre demande a déjà été envoyé !');
+		}
+
+		$referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+	}
+
 }
