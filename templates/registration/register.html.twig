@@ -4,25 +4,68 @@
 
 {% block body %}
 
-	<div class="container-xl my-5">
+<section id="register">
 
-		<section id="register">
+	<div class="container">
+		<h1>Inscription</h1>
 
-			<h1>Register</h1>
+		{% for flashError in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+		{% endfor %}
 
-			<div class="container">
-				{% for flashError in app.flashes('verify_email_error') %}
-					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-				{% endfor %}
+		{{ form_start(registrationForm, { attr:{ novalidate: 'novalidate' }}) }}
 
-				{{ form_start(registrationForm, { attr:{ novalidate: 'novalidate' }}) }}
-				{{ form_widget(registrationForm) }}
-				<button type="submit" class="btn">Register</button>
-				{{ form_end(registrationForm) }}
+		<div class="row">
+			<div class="col-md-6">
+				{{ form_row(registrationForm.firstname) }}
 			</div>
+			<div class="col-md-6">
+				{{ form_row(registrationForm.lastname) }}
+			</div>
+		</div>
 
-		</section>
+		<div class="row">
+			<div class="col-md-6">
+				{{ form_row(registrationForm.nickname) }}
+			</div>
+			<div class="col-md-6">
+				{{ form_row(registrationForm.city) }}
+			</div>
+		</div>
 
-	<div>
+		<div class="row">
+			<div class="col-md-12">
+				{{ form_row(registrationForm.birthday) }}
+			</div>
+		</div>
+
+
+		<!-- Divider -->
+		<hr>
+
+		<div class="row">
+			<div class="col-md-6">
+				{{ form_row(registrationForm.email) }}
+			</div>
+			<div class="col-md-6">
+				{{ form_row(registrationForm.password) }}
+			</div>
+		</div>
+
+		<!-- Divider -->
+		<hr>
+
+		<div class="my-3">
+			<a class="btn btn-lg btn-default me-2" href="{{ path('app_home') }}">
+				<i class="fas fa-angle-left me-2"></i>Retour</a>
+
+			<button type="submit" class="btn btn-lg btn-success">M'inscrire</button>
+		</div>
+
+		{{ form_end(registrationForm) }}
+
+	</div>
+
+</section>
 
 {% endblock %}
