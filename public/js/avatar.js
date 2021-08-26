@@ -25,8 +25,39 @@ const avatar = {
 		
 		// Récupération de l'avatar 
 		let avatarPng = avatar.apiBaseUrl+avatarId+'.png';
-		console.log(avatarPng);
+
+		// méthode pour afficher la prévisualisation de l'avatar
+		avatar.previewAvatar(avatarPng);
+
+		// méthode pour changer la value de mon hidden input
+		avatar.setAvatar(avatarPng);
 	},
+
+	/**
+	 * Prévisualise l'avatar généré
+	 * 
+	 * @param {*} avatarPng 
+	 */
+		 previewAvatar: function(avatarPng) {
+
+			// je récupère mon image
+			const avatarImg = document.querySelector('.avatar__generated > img');
+			// j'injecte mon Png à l'intérieur
+			avatarImg.src = avatarPng;
+		},
+	
+		/**
+		 * Set la valeur de l'input avec l'avatar généré
+		 * 
+		 * @param {*} avatarPng 
+		 */
+		setAvatar: function(avatarPng) {
+	
+			// je récupère l'input pour mon avatar
+			const inputAvatar = document.getElementById("registration_form_avatar");
+			// je lui donne pour value l'adresse de mon png
+			inputAvatar.value = avatarPng;
+		}
 };
 
 document.addEventListener('DOMContentLoaded', avatar.init);
