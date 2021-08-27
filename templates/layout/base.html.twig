@@ -37,9 +37,9 @@
 		</header>
 
 		<div class="container-fluid p-0">
-			{% include "_partials/_flashmessages.html.twig" %}
-
-			{% block body %}{% endblock %}
+			{% block body %}
+				{% include "_partials/_flashmessages.html.twig" %}
+			{% endblock %}
 		</div>
 
 		{% include "_partials/_footer.html.twig" %}
@@ -53,7 +53,6 @@
 		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
 		{% endblock %}
-
 		{# JS #}
 		<script src="{{ asset('js/app.js') }}"></script>
 	</body>
