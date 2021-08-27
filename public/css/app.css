@@ -923,7 +923,10 @@
 }
 
 .dashAction__item-action_button>i {
-	transform: translateY(38%);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
 }
 
 .dashAction__item-action_button:hover {
@@ -1105,6 +1108,28 @@
 
 .contentProfile h2>i {
 	margin-right: 1rem;
+}
+
+.avatar {
+	gap: 1rem;
+}
+
+#avatar__generate>span i {
+	font-size: 1.5rem;
+}
+
+#avatar__generate {
+	background-color: var(--primary-color);
+	color: #fff;
+}
+
+#avatar__generate:hover {
+	background-color: var(--hover-color);
+}
+
+.avatar__generated {
+	width:50px; 
+	height:50px;
 }
 
 /*****************************************************************? COLOR */
