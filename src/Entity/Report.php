@@ -33,7 +33,9 @@ class Report
     private $message;
 
     /**
-     * @ORM\Column(type="boolean")
+		 * false: En cours, true: Traité
+		 * 
+     * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $status;
 
