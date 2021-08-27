@@ -16,9 +16,9 @@ class ReportController extends AbstractController
 	/**
 	 * Signalement d'un utilisateur
 	 *
-	 * @Route("/report/user/{id<\d+>}", name="app_report", methods={"GET", "POST"})
+	 * @Route("/report/user/{id<\d+>}", name="app_report_user", methods={"GET", "POST"})
 	 */
-	public function report(Request $request, User $user, EntityManagerInterface $em)
+	public function user(Request $request, User $user, EntityManagerInterface $em)
 	{
 		// création d'un nouveau signalement
 		$report = new Report;
@@ -43,5 +43,9 @@ class ReportController extends AbstractController
 
 			return $this->redirect($request->headers->get('referer'));
 		}
+
+		return $this->render('report/report.html.twig', [
+			'form' => $form->createView(),
+		]);
 	}
 }

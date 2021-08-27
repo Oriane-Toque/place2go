@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Report;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,15 +20,16 @@ class ReportType extends AbstractType
 							'multiple' => false,
 							'placeholder' => 'Raison du signalement',
 							'choices' => [
-								'violence_physique' => 'Violence physique',
-								'violence_verbale' => 'Violence verbale',
-								'harcelement' => 'Harcèlement (spams, contacts abusifs)',
-								'comportements_haineux' => 'Comportements Haineux',
-								'autre' => 'Autre',
+								'Violence physique' => 'violence_physique',
+								'Violence verbale' => 'violence_verbale',
+								'Harcèlement (spams, contacts abusifs)' => 'harcelement',
+								'Comportements Haineux' => 'comportements_haineux',
+								'Autre' => 'autre',
 							]
 						])
-            ->add('message', TextType::class, [
-							'label' => 'Préciser la situation'
+            ->add('message', TextareaType::class, [
+							'label' => 'Préciser la situation',
+							'help' => 'Détaillez au maximum, circonstances (en ligne, au cours d\'une sortie), quand ? ...',
 						])
         ;
     }
