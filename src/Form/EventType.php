@@ -46,6 +46,12 @@ class EventType extends AbstractType
                 'label' => 'Adresse',
                 'required' => false,
             ])
+            ->add('lat', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('lon', HiddenType::class, [
+                'required' => false,
+            ])
             ->add('maxAttendants', ChoiceType::class, [
                 'label' => 'Nbre max de participants *',
                 'required' => true,
@@ -53,9 +59,6 @@ class EventType extends AbstractType
                 'choice_label' => function ($value) {
                     return $value;
                 }
-            ])
-            ->add('isActive', HiddenType::class, [
-                'data' => true,
             ])
             ->add('categories', EntityType::class, [
                 'label' => 'Catégories *',
