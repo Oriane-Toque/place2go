@@ -31,7 +31,7 @@
 						<div class="contentProfile__lastExits-infos">
 							<div class="card-header">
 								<h3 class="card-title">{{ event.title }}</h3>
-								<p><time datetime="{{ event.eventDate|date("d-m-Y") }}">{{ event.eventDate|date("d/m/Y") }}</time> à <time datetime="{{ event.eventDate|date("H:i") }}">{{ event.eventDate|date("H:i") }}</time>h</p>
+								<p><time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time></p>
 							</div>
 							<div class="card-body">
 								<div class="contentProfile__lastExits-infos_details">
