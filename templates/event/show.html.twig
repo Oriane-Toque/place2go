@@ -144,10 +144,13 @@
 
 		</section>
 
-
+	{% if is_granted ('USER_ACCESS', app.user) %}
+	
 		<div class="comments__button">
 			<button id="toggle__comments" class="btn button-primary">Ecrire un commentaire</button>
 		</div>
+		{% endif %}
+		
 
 
 		<div class="row ">
