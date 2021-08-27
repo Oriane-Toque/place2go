@@ -654,6 +654,14 @@
 	color: #07347e
 }
 
+#list .list__card_title a {
+	color: var(--primary-color);
+}
+
+#list .list__card_title a {
+	color: var(--hover-color);
+}
+
 #list .list__cards_attendants {
     color: #555555;
     font-style: italic;
@@ -689,6 +697,10 @@
 
 /*****************************************************************? EVENT SHOW */
 
+#show {
+	margin: 5rem auto 0;
+
+}
 #show .show__card {
 	height: 100%;
 	min-height: 350px;
@@ -706,33 +718,40 @@
 	width: 100%;
 	height: 100%;
 }
+
+#show .show__card_title {
+	text-align: center;
+}
+
+#show .show__card_title h3 {
+	margin: 1.5rem auto 0;
+	color: var(--primary-color);
+
+}
+
 #show .show__card_content {
 	padding: 1rem;
-}
-
-#show .show__card_content-author {
-	display: flex;
-    align-items: center;
-	justify-content: space-between;
-	font-size: 1.2rem;
-	font-weight: bold;
-	text-transform: uppercase;
-	transition: 0.2s all linear;
-}
-
-#show .show__card_content-author a {
-	color: #555555;
-}
-
-#show .show__card_content-author a:hover {
-	color: var(--primary-color);
 }
 
 #show .show__card_content-details {
 	margin: 1rem 0.5rem;
 }
 
-#show .show__card_content-attendants,
+#show .show__card_content-author {
+	text-transform: uppercase;
+	text-decoration: underline;
+	transition: 0.2s all linear;
+}
+
+#show .show__card_content-author a {
+	color: #757575;
+}
+
+#show .show__card_content-author a:hover {
+	color: var(--hover-color);
+}
+
+#show .show__card_content-author, .show__card_content-attendants,
 .show__card_content-date,
 .show__card_address {
 	color: #757575;
@@ -1070,7 +1089,31 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/*****************************************************************? LOGIN */
 
+#login {
+	position: relative;
+	margin: 3rem auto;
+}
+
+#login .pinmap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 400px;
+	filter: opacity(0.15);
+}
+
+
+#login .login__form {
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
 /*****************************************************************? FOOTER */
 

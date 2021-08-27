@@ -26,29 +26,17 @@
 							<img src="{{ event.categories[0].picture }}" alt="{{ event.categories[0].name }}" class="show__card_header_image">
 						</div>
 
-						<div class="show__card_content">
-							<div class="show__card_content-author">
-								<div>
-									<i class="fas fa-user-alt"></i>
-									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="ms-2">{{ event.author.nickname }}</a>
-								</div>
-								<div>
-									{# Render delete button if user is the event's author #}
-									{% if is_granted('EVENT_DELETE', event) %}
-										<a href="{{ path('app_event_delete', {id: event.id}) }}" class="">
-											<i class="fas fa-trash"></i>
-										</a>
-									{% endif %}
-									{# Render edit button if user is the event's author #}
-									{% if is_granted('EVENT_EDIT', event) %}
-										<a href="{{ path('app_event_edit', {id: event.id}) }}" class="ms-2">
-											<i class="fas fa-edit"></i>
-										</a>
-									{% endif %}
-								</div>
-							</div>
+						<div class="show__card_title">
+							<h3>{{ event.title }}</h3>
+						</div>
 
-							<div class="show__card_content-details">
+						<div class="show__card_content">
+								<div class="show__card_content-details">
+								<div class="show__card_content-author">
+									<i class="fas fa-caret-right"></i>
+									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">{{ event.author.nickname }}</a>
+								</div>
+
 								<div class="show__card_content-attendants">
 									<i class="fas fa-caret-right"></i>
 									<span class="">Nombre de Participants :</span>
@@ -86,12 +74,12 @@
 								<div class="list__cards_join">
 									{% if is_granted('EVENT_LEAVE', event) %}
 										{# Bouton pour ne plus participer à la sortie #}
-										<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+										<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
 											<i class="fas fa-sign-out-alt"></i>
 										</a>
 									{% endif %}
 									{% if is_granted('EVENT_JOIN', event) %}
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-primary btn-floating-sm ms-2">
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2">
 											<i class="fas fa-user-plus"></i>
 										</a>
 									{% endif %}
