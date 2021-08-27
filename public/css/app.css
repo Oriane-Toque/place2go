@@ -1151,9 +1151,46 @@
 		margin: 0 auto!important;
 	}
 
-  .masthead__brand {
-    font-size: 2rem;
-  }
+	.masthead__brand {
+		font-size: 2rem;
+	}
+
+	/************************************************ HOME  */
+	.home__title {
+		margin: 3rem 0;
+		font-size: 3rem;
+	}
+
+	.home__title:after {
+		width: 30%;
+	}
+
+	
+	.descriptionPlace {
+		display: flex;
+		margin: 3rem auto 0;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.descriptionPlace .descriptionPlace__description img {
+		left: 50%;
+		top: 20%;
+	}
+
+	.descriptionPlace .descriptionPlace__description {
+		padding: 1rem 3rem;
+	}
+
+	.descriptionPlace .descriptionPlace__description h2 {
+		margin: 1rem;
+	}
+
+	.descriptionPlace .descriptionPlace__description p {
+		font-size: 1.1rem;
+	}
+
 	/************************************************ PAGE LIST  */
 	#list .flex-between {
 		display: flex;
@@ -1165,6 +1202,39 @@
 @media screen and (min-width: 576px) {
 	.container {
 		margin: 1rem auto!important;
+	}
+
+	.home__title {
+		margin: 3rem 0;
+		font-size: 3.5rem;
+	}
+
+	/************************************************ HOME  */
+	.descriptionPlace {
+		display: block;
+		margin: 4rem 1rem 0;
+	}
+
+	.descriptionPlace .descriptionPlace__description {
+		padding: 1rem 3rem;
+	}
+
+	.descriptionPlace .descriptionPlace__picture img {
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.descriptionPlace .descriptionPlace__description p {
+		font-size: 1.2rem;
+	}
+	
+	.descriptionPlace .descriptionPlace__description h2 {
+		font-size: 2.5rem;
+	}
+
+	.descriptionPlace .descriptionPlace__description img {
+		top: 20%;
+		left: 50%;
 	}
 	
 	/************************************************ PUBLIC PROFILE  */
@@ -1201,6 +1271,22 @@
 @media screen and (min-width: 992px) {
 	.container {
 		padding: 0!important;
+	}
+
+	.home__title {
+		margin: 4rem 0;
+		font-size: 4rem;
+	}
+
+	/************************************************ HOME  */
+	.descriptionPlace {
+		display: flex;
+		margin: 6rem 2rem 0;
+
+	}
+
+	.descriptionPlace .descriptionPlace__picture img {
+		width: auto;
 	}
 	/************************************************ PROFILE  */
 
@@ -1318,6 +1404,18 @@
 	/************************************************ HOME  */
 	.topScore {
 		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.home__title {
+		margin: 6rem 0;
+	}
+
+	.home__title:after {
+		width: 50%;
+	}
+
+	.descriptionPlace {
+		margin: 7rem 2rem 0;
 	}
 
 	/************************************************ PROFILE  */
