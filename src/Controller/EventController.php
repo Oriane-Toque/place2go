@@ -91,7 +91,7 @@ class EventController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$event->setAuthor($this->getUser());
-			
+
 			// Get address coords from API service
 			$coordinates = $this->callApiService->getApi($form['address']->getData());
 
@@ -161,22 +161,27 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function show(Event $event, Comment $comments, Request $request): Response
+	public function show(Event $event, Request $request): Response
 	{
 		$comment = new Comment();
-	
-		// Create new form associated to entity
+
 		$form = $this->createForm(CommentType::class, $comment);
 		$form->handleRequest($request);
 
+		if($this->getUser() == null){
+			$this->addFlash('warning', 'Vous devez vous connecter pour pouvoir écrire un commentaire');
+		}
+
+		// Create new form associated to entity
 		if ($form->isSubmitted() && $form->isValid()) {
+			$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
 			// set the author to the  associated commenb
 			$comment->setAuthor($this->getUser());
 			// set the event
 			$comment->setEvent($event);
 			// set the date
 			$comment->setCreatedAt(new DateTimeImmutable());
-		
+
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($comment);
 			$entityManager->flush();
@@ -187,11 +192,11 @@ class EventController extends AbstractController
 				'id' => $event->getId(),
 			]);
 		}
-
+	
 
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
-			'comments' => $comments,
+			'comments' => $comment,
 			'form' => $form->createView(),
 		]);
 	}
@@ -203,7 +208,7 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function delete(Event $event): Response
+	public function delete(Event $event, Request $request): Response
 	{
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
@@ -213,6 +218,6 @@ class EventController extends AbstractController
 		$this->addFlash('success', 'Sortie supprimée avec succès');
 
 		//? Handle redirect to previous visited page
-		return $this->redirectToRoute('app_event_list');
+		return $this->redirect($request->headers->get('referer'));
 	}
 }

@@ -103,4 +103,33 @@ class ProfileController extends AbstractController
 			'form' => $form,
 		]);
 	}
+
+
+	/**
+	 * Display all events created by the user
+	 * 
+	 * @Route("/profile/events", name="app_profile_events", methods={"GET"})
+	 * @isGranted("ROLE_USER")
+	 * 
+	 * @param EventRepository $eventRepository
+	 * 
+	 * @return Response
+	 */
+	public function showEvents(EventRepository $eventRepository): Response
+	{
+		if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+		// Get current User
+		$user = $this->getUser();
+
+		// All created events by the user ordered by date
+		$authorEvents = $eventRepository->findLastAuthorEvents($user->getId());
+
+		return $this->render('profile/eventslist.html.twig', [
+			"user" => $user,
+			"userEvents" => $authorEvents,
+		]);
+	}
 }
