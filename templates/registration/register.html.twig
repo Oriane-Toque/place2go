@@ -40,8 +40,11 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							{{ form_row(registrationForm.birthday) }}
+						</div>
+						<div class="col-md-6">
+							{% include "_partials/_avatar.html.twig" %}
 						</div>
 					</div>
 
@@ -70,38 +73,9 @@
 					</div>
 
 				{{ form_end(registrationForm) }}
-			
 			</div>
 		</div>
-
-		<!-- Divider -->
-		<hr>
-
-		<div class="row">
-			<div class="col-md-6">
-				{{ form_row(registrationForm.email) }}
-
-				{% include "_partials/_avatar.html.twig" %}
-			</div>
-			<div class="col-md-6">
-				{{ form_row(registrationForm.password) }}
-			</div>
-		</div>
-
-		<!-- Divider -->
-		<hr>
-
-		<div class="my-3">
-			<a class="btn btn-lg btn-default me-2" href="{{ path('app_home') }}">
-				<i class="fas fa-angle-left me-2"></i>Retour</a>
-
-			<button type="submit" class="btn btn-lg btn-success">M'inscrire</button>
-		</div>
-
-		{{ form_end(registrationForm) }}
-
 	</div>
-
 </section>
 
 {% endblock %}
