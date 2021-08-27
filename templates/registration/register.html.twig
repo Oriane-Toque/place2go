@@ -9,7 +9,6 @@
 
 		<img src="{{ asset('img/pinmap.png') }}" alt="logo" class="pinmap">
 
-		<h1 class="home__title">Inscription</h1>
 
 		{% for flashError in app.flashes('verify_email_error') %}
 			<div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -17,6 +16,8 @@
 
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
+			
+			<h2 class="home__title">Inscription</h2>
 
 				{{ form_start(registrationForm, { attr: {class: 'register__form' }}) }}
 
@@ -73,9 +74,7 @@
 			</div>
 		</div>
 
-
 	</section>
 </div>
-
 
 {% endblock %}
