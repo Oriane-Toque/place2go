@@ -133,6 +133,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
+		/**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="author", cascade={"remove"})
+     */
+    private $reports_author;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();

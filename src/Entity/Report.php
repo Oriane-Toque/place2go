@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\Timestamps;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReportRepository::class)
@@ -16,19 +17,14 @@ class Report
 		use Timestamps;
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
      * @ORM\Column(type="string", length=255)
+		 * @Assert\NotBlank()
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
+		 * @Assert\NotBlank()
      */
     private $message;
 
@@ -42,14 +38,21 @@ class Report
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
+		 * @ORM\Id
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports_author")
      * @ORM\JoinColumn(nullable=false)
+		 * @ORM\Id
      */
     private $author;
+
+		public function __construct()
+		{
+			$this->status = false;
+		}
 
     public function getId(): ?int
     {
