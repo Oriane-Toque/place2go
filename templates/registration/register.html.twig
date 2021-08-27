@@ -4,41 +4,75 @@
 
 {% block body %}
 
-<section id="register">
-
 	<div class="container">
-		<h1>Inscription</h1>
+		<section id="register">
+
+		<img src="{{ asset('img/pinmap.png') }}" alt="logo" class="pinmap">
+
 
 		{% for flashError in app.flashes('verify_email_error') %}
 			<div class="alert alert-danger" role="alert">{{ flashError }}</div>
 		{% endfor %}
 
-		{{ form_start(registrationForm, { attr:{ novalidate: 'novalidate' }}) }}
-
 		<div class="row">
-			<div class="col-md-6">
-				{{ form_row(registrationForm.firstname) }}
-			</div>
-			<div class="col-md-6">
-				{{ form_row(registrationForm.lastname) }}
+			<div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
+			
+			<h2 class="home__title">Inscription</h2>
+
+				{{ form_start(registrationForm, { attr: {class: 'register__form' }}) }}
+
+					<div class="row">
+						<div class="col-md-6">
+							{{ form_row(registrationForm.firstname) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.lastname) }}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							{{ form_row(registrationForm.nickname) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.city) }}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							{{ form_row(registrationForm.birthday) }}
+						</div>
+					</div>
+
+
+					<!-- Divider -->
+					<hr>
+
+					<div class="row">
+						<div class="col-md-12">
+							{{ form_row(registrationForm.email) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_row(registrationForm.password.first) }}
+							{{ form_row(registrationForm.password.second) }}
+						</div>
+					</div>
+
+					<!-- Divider -->
+					<hr>
+
+					<div class="my-3">
+						<a class="btn button-secondary me-2" href="{{ path('app_home') }}">
+							<i class="fas fa-angle-left me-2"></i>Retour</a>
+
+						<button type="submit" class="btn button-primary">M'inscrire</button>
+					</div>
+
+				{{ form_end(registrationForm) }}
+			
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-md-6">
-				{{ form_row(registrationForm.nickname) }}
-			</div>
-			<div class="col-md-6">
-				{{ form_row(registrationForm.city) }}
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-				{{ form_row(registrationForm.birthday) }}
-			</div>
-		</div>
-
 
 		<!-- Divider -->
 		<hr>

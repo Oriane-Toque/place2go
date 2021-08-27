@@ -16,17 +16,16 @@
 		<label class="form-check-label" for="formLoginRemember">Se souvenir de moi</label>
 	</div>
 
-
-	<!-- Submit button -->
 	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-	<button type="submit" class="btn btn-primary btn-block mt-4">Connexion</button>
+	<button type="submit" class="btn button-primary btn-block mt-4 my-4">Connexion</button>
 
 </form>
 
-	<div class="text-center mt-3">
-		<a href="">Mot de passe oublié ?</a>
-	</div>
+<div class="text-center mt-3">
+	<a href="">Mot de passe oublié ?</a>
+</div>
 
-    <div class="text-center mt-2">
-        Pas encore de compte... <a href="{{ path('app_register') }}" class="">Créez en un !</a>
-    </div>
+<div class="text-center mt-2">
+	Pas encore de compte...
+	<a href="{{ path('app_register') }}" class="">Créez en un !</a>
+</div>
