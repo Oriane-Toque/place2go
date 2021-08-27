@@ -2,33 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\FriendRepository;
+use App\Repository\FriendshipRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\Timestamps;
 
 /**
- * @ORM\Entity(repositoryClass=FriendRepository::class)
+ * @ORM\Entity(repositoryClass=FriendshipRepository::class)
  */
-class Friend
+class Friendship
 {
-    use Timestamps;
-
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="friends")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\Id
      */
     private $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="friendsWithMe")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\Id
      */
     private $receiver;
 
@@ -37,9 +30,15 @@ class Friend
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $createdAt;
+
     public function __construct()
     {
-        $this->status = false;
+        $this->status = 1;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -79,6 +78,18 @@ class Friend
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

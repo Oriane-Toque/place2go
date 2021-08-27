@@ -124,9 +124,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $attendants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Friend::class, mappedBy="sender", orphanRemoval=true)
+     * The people who I think are my friends.
+     * 
+     * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="sender", orphanRemoval=true)
      */
     private $friends;
+
+    /**
+     * The people who think that I’m their friend.
+     * 
+     * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="receiver", orphanRemoval=true)
+     */
+    private $friendsWithMe;
 
     public function __construct()
     {
@@ -134,6 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->attendants = new ArrayCollection();
         $this->isActive = true;
         $this->friends = new ArrayCollection();
+        $this->friendsWithMe = new ArrayCollection();
     }
 
     public function __toString()
@@ -410,29 +420,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Friend[]
+     * @return Collection|Friendship[]
      */
     public function getFriends(): Collection
     {
         return $this->friends;
     }
 
-    public function addFriend(Friend $friend): self
+    /*public function addFriend(Friendship $friendship): self
     {
-        if (!$this->friends->contains($friend)) {
-            $this->friends[] = $friend;
-            $friend->setSender($this);
+        if (!$this->friends->contains($friendship)) {
+            $this->friends[] = $friendship;
+            $friendship->setSender($this);
+        }
+
+        return $this;
+    }*/
+
+    public function addFriendship(Friendship $friendship): self
+    {
+        if (!$this->friends->contains($friendship)) {
+            $this->friends[] = $friendship;
+            $friendship->setSender($this);
         }
 
         return $this;
     }
 
-    public function removeFriend(Friend $friend): self
+    public function addFriendshipWithMe(Friendship $friendship): self
     {
-        if ($this->friends->removeElement($friend)) {
+        if (!$this->friendsWithMe->contains($friendship)) {
+            $this->friendsWithMe[] = $friendship;
+            $friendship->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function addFriend(User $friend)
+    {
+        $friendship = new Friendship();
+        $friendship->setSender($this);
+        $friendship->setReceiver($friend);
+        $friendship->setStatus(1);
+
+        $this->addFriendship($friendship);
+
+        return $friendship;
+    }
+
+    public function removeFriend(Friendship $friendship): self
+    {
+        if ($this->friends->removeElement($friendship)) {
             // set the owning side to null (unless already changed)
-            if ($friend->getSender() === $this) {
-                $friend->setSender(null);
+            if ($friendship->getSender() === $this) {
+                $friendship->setSender(null);
             }
         }
 

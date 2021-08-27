@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Friend;
+use App\Entity\Friendship;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
-use App\Repository\FriendRepository;
+use App\Repository\FriendshipRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -114,11 +115,11 @@ class ProfileController extends AbstractController
 	 * 
 	 * @param Request $request
 	 * @param User $receiver
-	 * @param FriendRepository $friendRepository
+	 * @param FriendshipRepository $friendshipRepository
 	 * 
 	 * @return Response
 	 */
-	public function addFriend(Request $request, User $receiver, FriendRepository $friendRepository): Response
+	public function addFriend(Request $request, User $friend, FriendshipRepository $friendshipRepository): Response
 	{
 		// If not connected
         if (!$this->getUser()) {
@@ -126,38 +127,50 @@ class ProfileController extends AbstractController
         }
 
         // User you want to add cannot be found
-        if (null === $receiver) {
+        if (null === $friend) {
             throw $this->createNotFoundException('Utilisateur introuvable');
         }
 
 		// Get current User
-		$sender = $this->getUser();
+		$user = $this->getUser();
 
-		// Check if request was already been made
-		$verify = $friendRepository->findOneBy([
-			'sender' => $sender,
-			'receiver' => $receiver,
+		$user->addFriend($friend);
+
+		// Check if request has already been made
+		$friendship = $friendshipRepository->findOneBy([
+			'sender' => $user,
+			'receiver' => $friend,
 		]);
 
-		// If request is new
-        if (null === $verify)
+		// If friendship is new
+        if (null === $friendship)
 		{
             // Create a friend request
-            $friendRequest = new Friend();
+            /*$friendRequest = new Friendship();
             $friendRequest
-                ->setSender($sender)
-                ->setReceiver($receiver)
-				->setStatus(1)
-                ->setCreatedAt(new \DateTimeImmutable());
+                ->setSender($user)
+                ->setReceiver($friend)
+				//->setStatus(1)
+                //->setCreatedAt(new \DateTimeImmutable());
 
             // Push in database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($friendRequest);
-            $entityManager->flush();
+            $entityManager->flush();*/
+
+			$user->addFriend($friend);
+
+			//dd($request);
+
+			// Push in database
+            /*$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($request);
+            $entityManager->flush();*/
+
 
             $this->addFlash('success', 'Votre demande a bien été envoyé !');
         }
-		elseif ($verify->getStatus() == 1){
+		elseif ($friendship->getStatus() == 1){
 			$this->addFlash('success', 'Vous êtes déjà amis !');
 		}
 		else
@@ -175,11 +188,11 @@ class ProfileController extends AbstractController
 	 * @Route("/profile/friend/request", name="app_profile_friend_request", methods={"GET"})
 	 * @isGranted("ROLE_USER")
 	 * 
-	 * @param FriendRepository $friendRepository
+	 * @param FriendshipRepository $friendshipRepository
 	 * 
 	 * @return Response
 	 */
-	public function listFriendRequest(FriendRepository $friendRepository): Response
+	public function listFriendRequest(FriendshipRepository $friendshipRepository): Response
 	{
 		// If not connected
         if (!$this->getUser()) {
@@ -190,15 +203,83 @@ class ProfileController extends AbstractController
 		$user = $this->getUser();
 
 		// List all friend requests received
-		$friendRequestReceived = $friendRepository->findBy(['receiver' => $user]);
+		$friendRequestReceived = $friendshipRepository->findBy(['receiver' => $user]);
 
 		// List all friend requests send
-		$friendRequestSend = $friendRepository->findBy(['sender' => $user]);
+		$friendRequestSend = $friendshipRepository->findBy(['sender' => $user]);
 
 		return $this->renderForm('profile/friend_request.html.twig', [
 			'friendRequestReceived' => $friendRequestReceived,
 			'friendRequestSend' => $friendRequestSend,
 		]);
+	}
+
+	/**
+	 * List all friend
+	 * 
+	 * @Route("/profile/friend", name="app_profile_friend", methods={"GET"})
+	 * @isGranted("ROLE_USER")
+	 * 
+	 * @param FriendshipRepository $friendshipRepository
+	 * 
+	 * @return Response
+	 */
+	public function friendList(FriendshipRepository $friendshipRepository): Response
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+		// Get current User
+		$user = $this->getUser();
+
+		// List all friend requests received
+		$friends = $friendshipRepository->findBy(['receiver' => $user]);
+
+
+		return $this->renderForm('profile/friend.html.twig', [
+			'friends' => $friends,
+		]);
+	}
+
+	/**
+	 * List all friends in user profile
+	 * 
+	*/
+	public function friendsList(FriendshipRepository $friendshipRepository): Response
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+		// Get current User
+		$user = $this->getUser();
+
+		$friends = $friendshipRepository->findFriends($user->getId());
+		//$friends = $user->getFriends();
+
+		dump($friends);
+
+		return $this->render('profile/_friend_list.html.twig', [
+            'friends' => $friends
+		]);
+	}
+
+
+
+	public function getCountFriendRequest(FriendshipRepository $friendshipRepository)
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+		// Get current User
+		$user = $this->getUser();
+
+		return $friendshipRepository->getTotalFriendRequest($user->getId());
 	}
 
 }
