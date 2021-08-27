@@ -28,16 +28,25 @@ class RegistrationFormType extends AbstractType
         // adding constraints 
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'Prénom *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : Jean'
+                ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom de famille',
+                'label' => 'Nom de famille *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : Dupont'
+                ]
             ])
             ->add('nickname', TextType::class, [
-                'label' => 'Pseudo',
+                'label' => 'Pseudo *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : jd'
+                ]
             ])
 						->add('avatar', HiddenType::class, [
 								'required' => false,
@@ -65,10 +74,19 @@ class RegistrationFormType extends AbstractType
                             'format' => 'ddMMMMyyyy'
                         ])
                         ->add('city', TextType::class, [
-                            'label' => 'Ville',
+                            'label' => 'Ville *',
                             'required' => true,
+                            'attr' => [
+                                'placeholder' => 'ex : Paris'
+                            ]
                         ])
-                        ->add('email', EmailType::class)
+                        ->add('email', EmailType::class, [
+                            'label' => 'Adresse email *',
+                            'required' => true,
+                            'attr' => [
+                                'placeholder' => 'ex : email@exemple.fr'
+                            ]
+                        ])
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
                             'invalid_message' => 'Les mots de passe ne correspondent pas.',
@@ -79,11 +97,11 @@ class RegistrationFormType extends AbstractType
                                     new NotCompromisedPassword(),
                                     new NotBlank(),
                                 ],
-                                'label' => 'Mot de passe',
+                                'label' => 'Mot de passe *',
                                 'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
                             ],
                             'second_options' => [
-                                'label' => 'Répéter le mot de passe',
+                                'label' => 'Répéter le mot de passe *',
                                 'constraints' => [
                                     new NotBlank(),
                                 ],

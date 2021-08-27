@@ -11,7 +11,7 @@
 				<div class="carousel-item {% if loop.first %}active{% endif %}">
 					<img src="{{ category.picture }}" class="d-block w-100 carousel__img img-fluid" alt="{{ category.name }}"/>
 					<div class="carousel-caption d-none d-md-block">
-						<h5>{{ category.name }}</h5>
+						<h5 class="carousel-title">{{ category.name }}</h5>
 					</div>
 				</div>
 			{% endfor %}
@@ -28,20 +28,22 @@
 		</button>
 	</div>
 
-	<div class="container-xl px-3 px-lg-0">
+	<div class="container">
 
 		<section id="category">
 
-            <h1 class="my-5 category__title">Catégories de nos sorties</h1>
+            <h1 class="home__title">Catégories de nos sorties</h1>
 
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
 				
                 {% for category in categories %}
                     <div class="col">
-                        <div class="card bg-dark h-100 bg-image hover-zoom rounded category__card">
+                        <div class="bg-image hover-zoom category__card">
                             <img src="{{ category.picture }}" class="card-img-top category__card_img" alt="{{ category.name }}"/>
                             <a href="events?q=&categories%5B%5D={{ category.id }}" class="card-img-overlay p-0">
-                                <h5 class="card-title category__card_title">{{ category.name }}</h5>
+                                <h5 class="card-title category__card_title">
+									{{ category.name }}
+								</h5>
                             </a>
                         </div>
                     </div>

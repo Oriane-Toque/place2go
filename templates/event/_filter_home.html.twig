@@ -1,24 +1,19 @@
 {{ form_start(form)}}
 
-	<div>
-
 		<div class="home-search">	
 			{{ form_widget(form.q, { attr: {'class': 'form-control-lg me-5'} }) }}
 
-            <button class="btn btn-danger btn-floating btn-lg ms-3" type="submit" data-mdb-ripple-color="dark">
+            <button class="btn btn-floating" type="submit" data-mdb-ripple-color="dark">
                 <i class="fas fa-search"></i>
             </button>
-
 		</div>
 
 		{% if app.request.get('_route') == 'app_home' %}
-			{{ form_widget(form.categories, {'attr': {'style': 'visibility:hidden'}})}}
+			{{ form_widget(form.categories, {'attr': {'style': 'display:none'}})}}
 			{{ form_errors(form.categories) }}
 		{% else %}
 			{{ form_widget(form.categories)}}
 			{{ form_errors(form.categories) }}
 		{% endif %}
-
-	</div>
 
 {{ form_end(form)}}

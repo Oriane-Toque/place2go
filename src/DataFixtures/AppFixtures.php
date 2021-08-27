@@ -49,6 +49,7 @@ class AppFixtures extends Fixture
             $user->setAvatar('https://picsum.photos/id/' .mt_rand(100, 500) . '/300/300');
             $user->setCity("city$i");
             $user->setIsActive(true);
+            $user->isVerified(true);
 			$user->setBirthday(new DateTime("1996-03-05"));
 			$user->setDescription("Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore fuga nam earum facere deserunt quos, pariatur aliquid quisquam accusantium autem beatae accusamus, ipsum reprehenderit sunt sint aperiam? Repellat, explicabo consequuntur.");
 
