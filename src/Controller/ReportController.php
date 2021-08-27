@@ -20,6 +20,9 @@ class ReportController extends AbstractController
 	 */
 	public function user(Request $request, User $user, EntityManagerInterface $em)
 	{
+
+		$this->denyAccessUnlessGranted("PRIVATE_ACCESS", $this->getUser(), "Requirements not met");
+
 		// création d'un nouveau signalement
 		$report = new Report;
 
