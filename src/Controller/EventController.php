@@ -2,13 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Event;
+use App\Entity\Comment;
 use App\Form\EventType;
 use App\Data\SearchData;
+use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
+use App\Repository\CommentRepository;
 use App\Services\CallApiService;
 use App\Repository\EventRepository;
+use DateTime;
+use DateTimeImmutable;
+use DoctrineExtensions\Query\Mysql\Now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -148,16 +155,44 @@ class EventController extends AbstractController
 
 
 	/**
-	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
+	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
 	 * 
 	 * @param Event $event
 	 * 
 	 * @return Response
 	 */
-	public function show(Event $event): Response
+	public function show(Event $event, Comment $comments, Request $request): Response
 	{
+		$comment = new Comment();
+	
+		// Create new form associated to entity
+		$form = $this->createForm(CommentType::class, $comment);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			// set the author to the  associated commenb
+			$comment->setAuthor($this->getUser());
+			// set the event
+			$comment->setEvent($event);
+			// set the date
+			$comment->setCreatedAt(new DateTimeImmutable());
+		
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($comment);
+			$entityManager->flush();
+
+			$this->addFlash('success', 'Votre commentaire a bien été enregistré');
+
+			return $this->redirectToRoute('app_event_show', [
+				'id' => $event->getId(),
+			]);
+		}
+
+
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
+			'comments' => $comments,
+			'form' => $form->createView(),
 		]);
 	}
 
