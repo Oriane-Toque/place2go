@@ -32,14 +32,14 @@
 
 		<header id="header" role="banner">
 			{% include "_partials/_navbar.html.twig" %}
-
+			
 			{% block banner %}{% endblock %}
 		</header>
 
 		<div class="container-fluid p-0">
-
+			{% include "_partials/_flashmessages.html.twig" %}
 			{% block body %}
-				{% include "_partials/_flashmessages.html.twig" %}
+				
 			{% endblock %}
 		</div>
 
