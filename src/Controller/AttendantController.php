@@ -39,7 +39,7 @@ class AttendantController extends AbstractController
     public function join(Event $event, Request $request): Response
     {
         //check autorizations
-        $this->denyAccessUnlessGranted("PRIVATE_ACCESS", $this->getUser(), "Requirements not meet");
+        $this->denyAccessUnlessGranted("USER_ACCESS", $this->getUser(), "Requirements not met");
         $this->denyAccessUnlessGranted('EVENT_JOIN', $event, "Vous ne pouvez pas rejoindre cette sortie");
 
         // If the current number of attendants is equal or superior to the maximum number of attendants, redirect
@@ -73,7 +73,7 @@ class AttendantController extends AbstractController
      */
     public function leave(Event $event, Request $request): Response
     {
-        $this->denyAccessUnlessGranted("PRIVATE_ACCESS", $this->getUser(), "Requirements not meet");
+        $this->denyAccessUnlessGranted("USER_ACCESS", $this->getUser(), "Requirements not meet");
         $this->denyAccessUnlessGranted('EVENT_LEAVE', $event, "Vous ne pouvez pas quitter une sortie dont vous êtes l'auteur !");
 
         $attendant = $this->attendantRepository->findOneBy(['event' => $event, 'user' => $this->getUser()]);
