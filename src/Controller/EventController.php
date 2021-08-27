@@ -208,7 +208,7 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function delete(Event $event): Response
+	public function delete(Event $event, Request $request): Response
 	{
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
@@ -218,6 +218,6 @@ class EventController extends AbstractController
 		$this->addFlash('success', 'Sortie supprimée avec succès');
 
 		//? Handle redirect to previous visited page
-		return $this->redirectToRoute('app_event_list');
+		return $this->redirect($request->headers->get('referer'));
 	}
 }

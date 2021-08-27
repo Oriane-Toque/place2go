@@ -95,7 +95,7 @@ class Event
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="event", cascade={"remove"})
      */
     private $comments;
 
