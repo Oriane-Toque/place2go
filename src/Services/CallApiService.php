@@ -19,13 +19,19 @@ class CallApiService
 
     public function getApi(string $var): array
     {
+        $var = implode(',',array_unique(explode(', ', $var)));
+        $var = str_replace(" ", "+", $var);
+        $var = str_replace("-", "+", $var);
+        $var = strtolower($var);
+
+        dump($var);
         $response = $this->client->request(
             "GET",
-            "https://api-adresse.data.gouv.fr/search/?q={$var}"
+            "https://api.mapbox.com/geocoding/v5/mapbox.places/{$var}.json?access_token=pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ"
         );
 
         $array = $response->toArray();
-
+        dd($array);
         return $array['features'][0]['geometry']['coordinates'];
     }
 }

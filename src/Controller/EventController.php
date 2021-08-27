@@ -89,16 +89,10 @@ class EventController extends AbstractController
 		$form = $this->createForm(EventType::class, $event);
 		$form->handleRequest($request);
 
+	
+
 		if ($form->isSubmitted() && $form->isValid()) {
 			$event->setAuthor($this->getUser());
-
-			// Get address coords from API service
-			$coordinates = $this->callApiService->getApi($form['address']->getData());
-
-			// set coordinates fetched from geoAPI
-			$event->setLat($coordinates[0]);
-			$event->setLon($coordinates[1]);
-
 			// push into the database
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($event);

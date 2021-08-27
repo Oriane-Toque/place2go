@@ -73,7 +73,7 @@ class Event
     private $maxAttendants;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : 1})
      * @Assert\NotBlank()
      */
     private $isActive;
