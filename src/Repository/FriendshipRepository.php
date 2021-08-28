@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Friendship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,14 +22,60 @@ class FriendshipRepository extends ServiceEntityRepository
 
 
     // Return list of friends
-    public function findFriends($userId): ?Friendship
+    public function findAllFriends($userId): array
     {
-        return $this->createQueryBuilder('f')
+        /*$entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT fs
+            FROM App\Entity\Friendship fs
+            WHERE (fs.sender = :userId
+            AND fs.status = 1)'
+        )->setParameter('userId', $userId);
+        $receivers = $query->getResult();
+
+        $query = $entityManager->createQuery(
+            'SELECT fs
+            FROM App\Entity\Friendship fs
+            WHERE (fs.receiver = :userId
+            AND fs.status = 1)'
+        )->setParameter('userId', $userId);
+        $senders = $query->getResult();*/
+
+        // Find all users who accepted my requests
+        $results = $this->createQueryBuilder('f')
+            ->where('f.sender = :userId')
+            ->andwhere('f.status = 1')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+        foreach($results as $result)
+        {
+            $friends[] = $result->getReceiver();
+        }
+
+        // Find all users who requested me
+        $results = $this->createQueryBuilder('f')
+            ->where('f.receiver = :userId')
+            ->andwhere('f.status = 1')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+        foreach($results as $result)
+        {
+            $friends[] = $result->getSender();
+        }
+
+        return $friends;
+
+        /*return $this->createQueryBuilder('f')
             ->where('f.sender = :userId OR f.receiver = :userId')
             ->andwhere('f.status = 1')
             ->setParameter('userId', $userId)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();*/
     }
 
     /**

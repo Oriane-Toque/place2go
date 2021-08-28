@@ -1,6 +1,6 @@
 {% for friend in friends %}
 <div class="chip">
-    <img src="{{ friend.avatar ?? app.friend.avatar }}" alt="Friend"> {{ friend|capitalize }}
+    <img src="{{ friend.avatar ?? app.friend.avatar }}" alt="Friend"> {{ friend.nickname|capitalize }}
     <i class="close fas fa-times"></i>
 </div>
 {% else %}

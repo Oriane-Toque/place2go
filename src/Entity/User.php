@@ -427,17 +427,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->friends;
     }
 
-    /*public function addFriend(Friendship $friendship): self
+    public function addFriend(User $friend)
     {
-        if (!$this->friends->contains($friendship)) {
-            $this->friends[] = $friendship;
-            $friendship->setSender($this);
-        }
+        /*$friendship = new Friendship();
+        $friendship->setSender($this);
+        $friendship->setReceiver($friend);
+        $friendship->setStatus(1);
 
-        return $this;
-    }*/
+        $this->addFriendship($friendship);
 
-    public function addFriendship(Friendship $friendship): self
+        return $friendship;*/
+    }
+
+    public function addFriends(Friendship $friendship): self
     {
         if (!$this->friends->contains($friendship)) {
             $this->friends[] = $friendship;
@@ -447,7 +449,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function addFriendshipWithMe(Friendship $friendship): self
+    public function removeFriends(Friendship $friendship): self
+    {
+        if ($this->friendship->removeElement($friendship)) {
+            // set the owning side to null (unless already changed)
+            if ($friendship->getSender() === $this) {
+                $friendship->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Friendship[]
+     */
+    public function getFriendsWithMe(): Collection
+    {
+        return $this->friendsWithMe;
+    }
+
+    public function addFriendsWithMe(Friendship $friendship): self
     {
         if (!$this->friendsWithMe->contains($friendship)) {
             $this->friendsWithMe[] = $friendship;
@@ -457,27 +479,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function addFriend(User $friend)
+    public function removeFriendsWithMe(Friendship $friendship): self
     {
-        $friendship = new Friendship();
-        $friendship->setSender($this);
-        $friendship->setReceiver($friend);
-        $friendship->setStatus(1);
-
-        $this->addFriendship($friendship);
-
-        return $friendship;
-    }
-
-    public function removeFriend(Friendship $friendship): self
-    {
-        if ($this->friends->removeElement($friendship)) {
+        if ($this->friendship->removeElement($friendship)) {
             // set the owning side to null (unless already changed)
-            if ($friendship->getSender() === $this) {
-                $friendship->setSender(null);
+            if ($friendship->getReceiver() === $this) {
+                $friendship->setReceiver(null);
             }
         }
 
         return $this;
     }
+
 }

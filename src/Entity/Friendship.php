@@ -3,25 +3,37 @@
 namespace App\Entity;
 
 use App\Repository\FriendshipRepository;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=FriendshipRepository::class)
+ * @ORM\Table(name="friendship", 
+ *    uniqueConstraints={
+ *        @UniqueConstraint(name="friendship_unique", 
+ *            columns={"sender_id", "receiver_id"})
+ *    }
+ * )
  */
 class Friendship
 {
 
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="friends")
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\Id
      */
     private $sender;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="friendsWithMe")
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\Id
      */
     private $receiver;
 

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210827001104 extends AbstractMigration
+final class Version20210827090131 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,15 +20,12 @@ final class Version20210827001104 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE friendship MODIFY id INT NOT NULL');
-        $this->addSql('ALTER TABLE friendship DROP PRIMARY KEY');
-        $this->addSql('ALTER TABLE friendship DROP id');
-        $this->addSql('ALTER TABLE friendship ADD PRIMARY KEY (sender_id, receiver_id)');
+        $this->addSql('CREATE UNIQUE INDEX friendship_unique ON friendship (sender_id, receiver_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE friendship ADD id INT AUTO_INCREMENT NOT NULL, DROP PRIMARY KEY, ADD PRIMARY KEY (id)');
+        $this->addSql('DROP INDEX friendship_unique ON friendship');
     }
 }
