@@ -355,13 +355,6 @@
   top: 20px;
 }
 
-.topCategories,
-.topCities,
-.descriptionPlace,
-.topContributors {
-	margin-top: 2rem;
-}
-
 .descriptionPlace {
 	display: flex;
     justify-content: center;
@@ -460,7 +453,7 @@
 	justify-content: space-between;
 	align-items: center;
 	height: 120px;
-	margin-top: 5rem;
+	margin-top: 3rem;
 	border-top-left-radius: 30px;
     border-bottom-right-radius: 30px;
 }
@@ -1190,7 +1183,8 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 400px;
-	filter: opacity(0.15);
+	filter: opacity(0.1);
+	z-index: -10;
 }
 
 
@@ -1212,11 +1206,13 @@
 
 #login .pinmap {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 300px;
-	filter: opacity(0.15);
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+	filter: opacity(0.1);
+	-webkit-filter: opacity(0.1);
+	z-index: -10;
 }
 
 
@@ -1321,7 +1317,6 @@
 	.home__title:after {
 		width: 30%;
 	}
-
 	
 	.descriptionPlace {
 		display: flex;
@@ -1390,7 +1385,7 @@
 	}
 
 	.descriptionPlace .descriptionPlace__description img {
-		top: 20%;
+		top: 40%;
 		left: 50%;
 	}
 	
@@ -1423,6 +1418,11 @@
 	.container {
 		margin: 1.5rem auto!important;
 	}
+
+	.descriptionPlace .descriptionPlace__description img {
+		top: 50%;
+		left: 50%;
+	}
 }
 
 @media screen and (min-width: 992px) {
@@ -1439,11 +1439,15 @@
 	.descriptionPlace {
 		display: flex;
 		margin: 6rem 2rem 0;
-
 	}
-
+	
 	.descriptionPlace .descriptionPlace__picture img {
 		width: auto;
+	}
+
+	.descriptionPlace .descriptionPlace__description img {
+		top: 15%;
+		left: 50%;
 	}
 	/************************************************ PROFILE  */
 
@@ -1573,6 +1577,11 @@
 
 	.descriptionPlace {
 		margin: 7rem 2rem 0;
+	}
+
+	.descriptionPlace .descriptionPlace__description img {
+		top: 0%;
+		left: 50%;
 	}
 
 	/************************************************ PROFILE  */
