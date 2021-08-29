@@ -179,18 +179,23 @@
 
 #nav {
 	height: 80px;
-	background: transparent;
+	background: var(--secondary-color);
 	transition: 0.3s all linear;
+	box-shadow: 0 0 15px rgba(0 0 0 / 35%);
 	z-index: 1000;
+}
+
+#nav .navbar-toggler {
+	color: white;
 }
 
 #nav .nav-link {
 	font-size: 1.1rem;
-	color: #404040;
+	color: rgb(216, 216, 216);
 }
 
 #nav .nav-link:hover {
-	color: #111111;
+	color: var(--primary-color);
 }
 
 #nav .navbar .btn {
@@ -225,8 +230,7 @@
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 65px;
-	background-color: rgba(255, 255, 255, 1);
+	height: 65px;;
 }
 
 /*** Sidenav ***/
@@ -239,7 +243,7 @@
   top: 0;
   right: 0;
   color: #999;
-  background-color: rgb(66, 67, 95, 0.9);
+  background-color: rgb(66, 67, 95, 0.95);
   overflow-x: hidden;
   padding-top: 60px;
   transition: 0.5s;
