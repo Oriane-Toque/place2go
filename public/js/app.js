@@ -13,11 +13,6 @@ if (flashMessage != null) {
     }, 6000)
 }
 
-// Set home page ibnput to 2.5rem height on homepage only
-/*if (window.location.pathname == '/') {
-    document.querySelector('#q').style.height = '2.5rem'
-}*/
-
 
 // toggle comment box
 const targetDiv = document.querySelector(".create__comment");
@@ -31,6 +26,7 @@ btn.onclick = function () {
     }
 };
 
+
 //cancel comment
 const cancelbtn = document.getElementById("cancel__comment");
 cancelbtn.onclick = function () {
@@ -39,6 +35,7 @@ cancelbtn.onclick = function () {
         btn.style.display = "block"
     } 
 };
+
 
 //counting characters in comment area
 let textarea = document.getElementById('comment_content');
@@ -57,6 +54,7 @@ textarea.addEventListener("input", event => {
         textarea.style.border ="1px solid #00b4d4"
     }
 });
+
 
 // Home Side
 function toggleSidenav() {
