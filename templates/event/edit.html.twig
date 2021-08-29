@@ -55,9 +55,9 @@
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v11',
 		center: [
-		2, 47
+		{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}
 		],
-		zoom: 4.5
+		zoom: 15.5
 		});
 
 		// Add the control to the map.
@@ -76,39 +76,14 @@
 
 		input.value = eventAddress.value;
 
+		// Create a default Marker and add it to the map.
+		const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}]).addTo(map);
+
 
 		function handle(e) {
 		let value = e.target.value;
 		console.log(value);
 		eventAddress.value = value;
-		}
-
-		// TO MAKE THE MAP APPEAR YOU MUST
-		// ADD YOUR ACCESS TOKEN FROM
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-		const map = new mapboxgl.Map({
-			container: 'map',
-			style: 'mapbox://styles/mapbox/streets-v11',
-			center: [
-			2, 47
-			],
-			zoom: 4.5
-		});
-
-		// Add the control to the map.
-		const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
-
-		document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
-		const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
-		const eventAddress = document.querySelector('#event_address');
-
-		input.addEventListener('change', handle);
-		input.addEventListener('keydown', handle);
-
-		function handle(e) {
-			let value = e.target.value;
-			eventAddress.value = value;
 		}
 
 		//Listen for the result event from the geocoder.
