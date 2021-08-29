@@ -1,0 +1,41 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Signalement {% endblock %}
+
+{% block body %}
+<section id="register">
+
+	<div class="container">
+		<h1>Signaler des abus</h1>
+
+		{{ form_start(form, { attr:{ novalidate: 'novalidate' }}) }}
+
+		<div class="row">
+			<div class="col-md-12">
+				{{ form_row(form.type) }}
+			</div>
+		</div>
+
+		<!-- Divider -->
+		<hr>
+
+		<div class="row">
+			<div class="col-md-12">
+				{{ form_row(form.message) }}
+			</div>
+		</div>
+
+		<div class="my-3">
+			<a class="btn btn-lg btn-default me-2" href="{{ path('app_home') }}">
+				<i class="fas fa-angle-left me-2"></i>Retour</a>
+
+			<button type="submit" class="btn btn-lg btn-success">Signaler</button>
+		</div>
+
+		{{ form_end(form) }}
+
+	</div>
+
+</section>
+
+{% endblock %}

@@ -43,6 +43,7 @@ security:
         - { path: ^/admin,          roles: ROLE_ADMIN }
         - { path: ^/profile/\d+$,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/profile,        roles: ROLE_USER }
+        - { path: ^/report,        roles: ROLE_USER }
 
 
     # Role heritage
