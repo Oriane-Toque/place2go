@@ -56,7 +56,7 @@ class EventRepository extends ServiceEntityRepository
 				->getResult();
     }
 
-    /**
+  /**
 	 * Get count of all events
 	 *
 	 * @return Int
