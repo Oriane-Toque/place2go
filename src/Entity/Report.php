@@ -49,6 +49,11 @@ class Report
      */
     private $author;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Event::class, inversedBy="report", cascade={"persist", "remove"})
+     */
+    private $event;
+
 		public function __construct()
 		{
 			$this->status = false;
@@ -115,6 +120,18 @@ class Report
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }
