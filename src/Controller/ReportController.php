@@ -51,7 +51,7 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
         }
 
-				$this->addFlash('danger', 'Vous avez déjà signalé cet utilisateur !');
+				$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
 
 				return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
 		}
@@ -91,12 +91,12 @@ class ReportController extends AbstractController
 			// sortie de l'utilisateur signalé
 			$report->setEvent($event);
 			
-        if (!$reportRepository->findOneBy(["event" => $event, "author" => $author])) {
+        if (!$reportRepository->findOneBy(["user" => $user, "author" => $author])) {
 
             $em->persist($report);
             $em->flush();
 
-            $this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
+            $this->addFlash('success', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
 
             return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
         }
