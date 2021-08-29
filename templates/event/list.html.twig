@@ -104,13 +104,13 @@
 									<div class="list__cards_join">
 										{% if is_granted('EVENT_LEAVE', event) %}
 											{# Bouton pour ne plus participer à la sortie #}
-											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
 												<i class="fas fa-times fa-lg"></i>
 											</a>
 										{% endif %}
 										{% if is_granted('EVENT_JOIN', event) %}
 											{# Bouton pour participer à la sortie #}
-											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2">
+											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
 												<i class="fas fa-user-plus"></i>
 											</a>
 										{% endif %}

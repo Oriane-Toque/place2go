@@ -21,11 +21,9 @@ class ReportController extends AbstractController
 	 */
 	public function user(Request $request, User $user = null, EntityManagerInterface $em, ReportRepository $reportRepository)
 	{
-		if(null === $user) {
-			throw $this->createNotFoundException("404");
-		}
-
+		// vérifie si l'auteur est connecté
 		$this->denyAccessUnlessGranted("USER_ACCESS", $this->getUser(), "Requirements not met");
+
 
 		// création d'un nouveau signalement
 		$report = new Report;
