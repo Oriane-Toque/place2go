@@ -19,6 +19,8 @@ class ReportController extends AbstractController
 	 * Signalement d'un utilisateur
 	 *
 	 * @Route("/report/user/{id<\d+>}", name="app_report_user", methods={"GET", "POST"})
+	 * 
+	 * @return Response
 	 */
 	public function user(Request $request, User $user = null, EntityManagerInterface $em, ReportRepository $reportRepository)
 	{
@@ -61,10 +63,12 @@ class ReportController extends AbstractController
 		]);
 	}
 
-		/**
-	 * Signalement d'un utilisateur
+	/**
+	 * Signalement d'une sortie
 	 *
 	 * @Route("/report/event/{id<\d+>}", name="app_report_event", methods={"GET", "POST"})
+	 * 
+	 * @return Response
 	 */
 	public function event(Request $request, Event $event, EntityManagerInterface $em, ReportRepository $reportRepository)
 	{
@@ -96,14 +100,14 @@ class ReportController extends AbstractController
             $em->persist($report);
             $em->flush();
 
-            $this->addFlash('success', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
+            $this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
 
-            return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
         }
 
-				$this->addFlash('danger', 'Vous avez déjà signalé cet utilisateur !');
+				$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
 
-				return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
+				return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
 		}
 
 		return $this->render('report/report.html.twig', [
