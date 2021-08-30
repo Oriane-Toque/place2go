@@ -463,6 +463,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->friends[] = $friendship;
             $friendship->setSender($this);
         }
+
+        return $this;
     }
     
     /*
@@ -491,6 +493,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $friendship->setSender(null);
             }
         }
+
+        return $this;
     }
 
     public function removeComment(Comment $comment): self
@@ -519,6 +523,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->friendsWithMe[] = $friendship;
             $friendship->setReceiver($this);
         }
+
+        return $this;
     }
     
     /*
@@ -548,6 +554,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $friendship->setReceiver(null);
             }
         }
+
+        return $this;
     }
 
     public function removeReport(Report $report): self
