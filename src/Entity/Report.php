@@ -16,6 +16,30 @@ class Report
 {
 		use Timestamps;
 
+		/**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+		/**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+		/**
+     * @ORM\OneToOne(targetEntity=Event::class, inversedBy="report", cascade={"persist", "remove"})
+     */
+    private $event;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports_author")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     /**
      * @ORM\Column(type="string", length=255)
 		 * @Assert\NotBlank()
@@ -34,20 +58,6 @@ class Report
      * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $status;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @ORM\JoinColumn(nullable=false)
-		 * @ORM\Id
-     */
-    private $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports_author")
-     * @ORM\JoinColumn(nullable=false)
-		 * @ORM\Id
-     */
-    private $author;
 
 		public function __construct()
 		{
@@ -115,6 +125,18 @@ class Report
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }
