@@ -1181,6 +1181,50 @@
 	transition: all .1s linear;
 }
 
+/*****************************************************************? SKEDITOR */
+
+#cke_1_top {
+	background-color: var(--primary-color);
+}
+
+.cke_combo::after {
+	border-right: 1px solid var(--secondary-color)!important;
+}
+
+.cke_button::after {
+	border-right: 1px solid var(--secondary-color)!important;
+}
+
+.cke_toolbar_separator {
+	background-color: var(--secondary-color)!important;
+}
+
+.cke_button:hover,
+.cke_combo_button:hover,
+.cke_button_on,
+.cke_combo_on {
+	cursor: pointer!important;
+	background-color: var(--hover-color)!important;
+	border: none!important;
+}
+
+#cke_1_bottom {
+	background-color: var(--secondary-hover-color);
+}
+
+.cke_path_item {
+	color: #fff!important;
+}
+
+.cke_path_item:hover {
+	cursor: pointer;
+	background-color: var(--primary-color)!important;
+}
+
+#cke_contact_message {
+	border: 2px solid var(--primary-color);
+}
+
 /*****************************************************************? REGISTER */
 
 #register {
