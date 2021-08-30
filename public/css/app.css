@@ -1789,6 +1789,17 @@
 		top: 15%;
 		left: 50%;
 	}
+	/************************************************ REGISTER FORM  */
+	.invalid-feedback {
+		position: initial;
+		margin-top: 0;
+	}
+
+	.form-control.is-invalid {
+		margin-bottom:0;
+	}
+
+
 	/************************************************ PROFILE  */
 
 	.dashAction.--desktop {
