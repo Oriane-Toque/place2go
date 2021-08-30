@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-intl": "^7.4",
@@ -97,10 +97,12 @@
         "post-install-cmd": [
             "@auto-scripts",
             "@db-migrations",
+            "@db-fixtures",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "php bin/console cache:clear"
         ],
         "db-migrations": [
             "php bin/console doctrine:migrations:migrate --no-interaction"

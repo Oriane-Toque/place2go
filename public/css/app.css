@@ -429,6 +429,10 @@
 	height: 100%;
 }
 
+.topScore .topScore__card .bg-image img.card-img-top {
+	height: 100%;
+}
+
 .topScore .topScore__card h3 {
     text-transform: capitalize;
     position: absolute;
@@ -1405,15 +1409,14 @@
 /*****************************************************************? CHIP */
 
 .chip {
-	display: inline-block;
+	display: inline-flex;
 	height: 32px;
-	width: 150px;
+	min-width: 150px;
+	align-items: center;
 	padding: 0 12px;
-	margin-right: 1rem;
-	margin-bottom: 1rem;
+	margin: 0 1rem 0 0;
 	font-size: 13px;
 	font-weight: 500;
-	line-height: 32px;
 	color: #fff;
 	cursor: pointer;
 	background-color: var(--profile-secondary-color);
@@ -1424,11 +1427,18 @@
 }
 
 .chip img {
-	float: left;
-	width: 32px;
-	height: 32px;
+	width: inherit;
+	height: inherit;
 	margin: 0 8px 0 -12px;
-	border-radius: 50%;
+	border-radius: 100%;
+}
+
+.chip a {
+	color: #fff;
+}
+
+.chip a:hover {
+	color: var(--profile-main-color);
 }
 
 .chip .close {
@@ -1440,6 +1450,20 @@
 	-webkit-transition: all .1s linear;
 	-o-transition: all .1s linear;
 	transition: all .1s linear;
+}
+
+.chip .close:hover{
+	color:#fff;
+}
+
+.chip.chip-md {
+    height: 42px;
+    border-radius: 21px;
+}
+
+.chip.chip-lg {
+    height: 52px;
+    border-radius: 26px;
 }
 
 /*****************************************************************? SKEDITOR */
