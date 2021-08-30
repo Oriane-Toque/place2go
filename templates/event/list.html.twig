@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 	<style>
-		#map {			
+		#map {
 			width: 100%;
 			min-height: 100vh;
 			height: 100%;
@@ -31,6 +31,15 @@
 			text-align: center;
 			font-family: 'Open Sans', sans-serif;
 		}
+
+		@media screen and (max-width: 768px) {
+			#map {
+				width: 100%;
+				min-height: 350px;
+				height: 100%;
+				margin: 3rem auto 0;
+			}
+		}
 	</style>
 {% endblock %}
 
@@ -51,7 +60,7 @@
 		<section id="list" class="mt-sm-2 mt-md-5">
 
 			<div class="row">
-				<div class="col-sm-12 col-md-8">
+				<div class="col-sm-12 col-lg-7">
 
 					{% for event in events %}
 						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
@@ -114,9 +123,11 @@
 												<i class="fas fa-user-plus"></i>
 											</a>
 										{% endif %}
-											<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+										{% if is_granted('USER_ACCESS', app.user) %}
+											<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
 												<i class="fas fa-exclamation"></i>
 											</a>
+										{% endif %}
 									</div>
 								</div>
 
@@ -129,14 +140,15 @@
 					{% endfor %}
 				</div>
 
-				<div class="col-sm-12 col-md-4 mb-2">
+				<div class="col-sm-12 col-lg-5 mb-2">
 					<div id='map' class=""></div>
 				</div>
 
 			</section>
 		</div>
 
-	<script>
+{% block javascripts %}
+<script>
 
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 		var geojson = {{ geojson|json_encode|raw }};
@@ -183,4 +195,6 @@
     
 </script>
 
-	{% endblock %}
+{% endblock %}
+
+{% endblock %}

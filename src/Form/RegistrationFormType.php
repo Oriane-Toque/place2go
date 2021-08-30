@@ -89,11 +89,10 @@ class RegistrationFormType extends AbstractType
                         ])
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
-                            'invalid_message' => 'Les mots de passe ne correspondent pas.',
                             'required' => true,
                             'first_options'  => [
                                 'constraints' => [
-                                    new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
+                                    new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/', 'Ce mot de passe ne convient pas.'),
                                     new NotCompromisedPassword(),
                                     new NotBlank(),
                                 ],
