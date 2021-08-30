@@ -64,10 +64,10 @@ class AppFixtures extends Fixture
             $event = new Event();
             $event->setTitle($faker->text(mt_rand(15,50)));
             $event->setDescription($faker->text(mt_rand(100,250)));
-            $event->setEventDate(new DateTimeImmutable('now +' . mt_rand(1,10) . 'days'));
+            $event->setEventDate(new DateTimeImmutable('now +' . mt_rand(9,12) . 'days'));
             $event->setAddress($faker->address());
-            $event->setLat($faker->latitude(46, 48));
-            $event->setLon($faker->longitude(0, 2));
+            $event->setLat($faker->latitude(0, 5));
+            $event->setLon($faker->longitude(44, 49));
             $event->setMaxAttendants(mt_rand(3,20));
             $event->setIsActive(true);
             $event->setAuthor($users[array_rand($users)]);
