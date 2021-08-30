@@ -94,7 +94,11 @@
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@db-migrations"
+        ],
+        "db-migrations": [
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ]
     },
     "conflict": {
