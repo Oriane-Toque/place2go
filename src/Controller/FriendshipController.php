@@ -86,7 +86,7 @@ class FriendshipController extends AbstractController
 
         $friends = $friendshipRepository->findAllFriends($user->getId());
 
-        return $this->render('profile/_friend_list.html.twig', [
+        return $this->render('profile/_private_friend_list.html.twig', [
             'friends' => $friends
         ]);
     }
