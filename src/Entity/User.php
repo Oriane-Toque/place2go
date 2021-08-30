@@ -31,8 +31,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $id;
 
-     /**
-      * @var string
+    /**
+     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank()
      */
@@ -71,6 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -133,7 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
-		/**
+    /**
      * @ORM\OneToMany(targetEntity=Report::class, mappedBy="author", cascade={"remove"})
      */
     private $reports_author;
@@ -149,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-       return $this->firstname . ' ' . $this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function getId(): ?int

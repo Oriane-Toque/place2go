@@ -24,6 +24,10 @@ class ReportController extends AbstractController
 	 */
 	public function user(Request $request, User $user = null, EntityManagerInterface $em, ReportRepository $reportRepository)
 	{
+        if (null === $user) {
+            throw $this->createNotFoundException('Utilisateur inconnu');
+        }
+		
 		// vérifie si l'auteur est connecté
 		$this->denyAccessUnlessGranted("USER_ACCESS", $this->getUser(), "Requirements not met");
 
@@ -38,24 +42,23 @@ class ReportController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-
 			$report->setAuthor($author);
 			// utilisateur signalé
 			$report->setUser($user);
-			
-        if (!$reportRepository->findOneBy(["user" => $user, "author" => $author])) {
 
-            $em->persist($report);
-            $em->flush();
+			if (!$reportRepository->findOneBy(["user" => $user, "author" => $author])) {
 
-            $this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
+				$em->persist($report);
+				$em->flush();
 
-            return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
-        }
-
-				$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
+				$this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
 
 				return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
+			}
+
+			$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
+
+			return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
 		}
 
 		return $this->render('report/report.html.twig', [
@@ -74,6 +77,7 @@ class ReportController extends AbstractController
 	{
 		// vérifie si l'auteur est connecté
 		$this->denyAccessUnlessGranted("USER_ACCESS", $this->getUser(), "Requirements not met");
+		$this->denyAccessUnlessGranted('EVENT_SHOW', $event, "Requirements not met");
 
 		// création d'un nouveau signalement
 		$report = new Report;
@@ -94,20 +98,20 @@ class ReportController extends AbstractController
 			$report->setUser($user);
 			// sortie de l'utilisateur signalé
 			$report->setEvent($event);
-			
-        if (!$reportRepository->findOneBy(["user" => $user, "author" => $author])) {
 
-            $em->persist($report);
-            $em->flush();
+			if (!$reportRepository->findOneBy(["user" => $user, "author" => $author])) {
 
-            $this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
+				$em->persist($report);
+				$em->flush();
 
-            return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
-        }
-
-				$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
+				$this->addFlash('success', 'Votre rapport a bien été envoyé aux modérateurs ! Et sera traité dans les plus brefs délais');
 
 				return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
+			}
+
+			$this->addFlash('danger', 'Cet utilisateur fait déjà l\'objet d\'un signalement de votre part !');
+
+			return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
 		}
 
 		return $this->render('report/report.html.twig', [

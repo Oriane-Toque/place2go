@@ -2,13 +2,13 @@
 	<div class="container">
 
 		<a class="navbar-brand" href="{{ path('app_home') }}">
-			<img src="{{ asset('img/logo-place2go-white.svg') }}" class="logo-sticky" width="150" alt="Place 2 Go">
+			<img src="{{ asset('img/logo-place2go-white.svg') }}" class="logo-sticky" width="150" alt="Place 2 Go" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Accueil">
 		</a>
 
 		<!-- Toggle button -->
 		{#<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<i class="fas fa-bars"></i>
-				</button>#}
+							<i class="fas fa-bars"></i>
+						</button>#}
 
 		<button class="navbar-toggler" type="button" onclick="toggleSidenav()">
 			<i class="fas fa-bars"></i>
@@ -19,7 +19,7 @@
 			<ul class="navbar-nav m-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_category_list') }}">
-					Catégories
+						Catégories
 					</a>
 				</li>
 				<li>
@@ -29,7 +29,7 @@
 				</li>
 				{% if is_granted('USER_ACCESS', app.user) %}
 					<li>
-						<a class="nav-link" href="{{ path('app_event_create') }}" title="Ajouter une sortie">
+						<a class="nav-link" href="{{ path('app_event_create') }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Ajouter une sortie">
 							<i class="fas fa-map-marker-alt"></i>
 						</a>
 					</li>
