@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 	<style>
-		#map {			
+		#map {
 			width: 100%;
 			min-height: 100vh;
 			height: 100%;
@@ -114,9 +114,11 @@
 												<i class="fas fa-user-plus"></i>
 											</a>
 										{% endif %}
+										{% if is_granted('USER_ACCESS', app.user) %}
 											<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
 												<i class="fas fa-exclamation"></i>
 											</a>
+										{% endif %}
 									</div>
 								</div>
 
@@ -136,51 +138,41 @@
 			</section>
 		</div>
 
-	<script>
+		<script>
 
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-		var geojson = {{ geojson|json_encode|raw }};
+			mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+var geojson = {{ geojson|json_encode|raw }};
 
-		let map = new mapboxgl.Map({
-			container: 'map', // Container ID
-			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ location[0]}},{{ location[1]}}], // Starting position [lng, lat]
-			zoom: 10, // Starting zoom level
-		});
+let map = new mapboxgl.Map({
+container: 'map', // Container ID
+style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+center: [
+{{ location[0] }}, {{ location[1] }}
+], // Starting position [lng, lat]
+zoom: 10, // Starting zoom level
+});
 
-		let clickableElements = document.querySelectorAll('.js-event');
-		clickableElements.forEach(element => {
-			element.addEventListener('click', evt => {
-				map.flyTo({
-					center: [element.dataset.lat, element.dataset.lon],
-					essential: true,
-					zoom: 14,
-				});
-			})
-		})
+let clickableElements = document.querySelectorAll('.js-event');
+clickableElements.forEach(element => {
+element.addEventListener('click', evt => {
+map.flyTo({
+center: [
+element.dataset.lat, element.dataset.lon
+],
+essential: true,
+zoom: 14
+});
+})
+})
 
-		// add markers to map
-		geojson.features.forEach(function (marker) {
-		// create a HTML element for each feature
-		var el = document.createElement('div');
-		el.className = 'marker';
-		
-		// make a marker for each feature and add it to the map
-		new mapboxgl.Marker(el)
-			.setLngLat(marker.geometry.coordinates)
-			.setPopup(
-		new mapboxgl.Popup({ offset: 25 }) // add popups
-			.setHTML(
-			'<h5>' +
-			marker.properties.title +
-			'</h5><p>' +
-			marker.properties.description +
-			'</p>'
-			)
-		)
-		.addTo(map);
-		});
-    
-</script>
+// add markers to map
+geojson.features.forEach(function (marker) { // create a HTML element for each feature
+var el = document.createElement('div');
+el.className = 'marker';
+
+// make a marker for each feature and add it to the map
+new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(new mapboxgl.Popup({offset: 25}) // add popups.setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>')).addTo(map);
+});
+		</script>
 
 	{% endblock %}
