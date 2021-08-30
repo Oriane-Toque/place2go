@@ -20,13 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
-
-	private $callApiService;
 	private $geoJson;
 
-	public function __construct(CallApiService $callApiService, geoJson $geoJson)
+	public function __construct(geoJson $geoJson)
 	{
-		$this->callApiService = $callApiService;
 		$this->geoJson = $geoJson;
 	}
 
@@ -54,9 +51,7 @@ class EventController extends AbstractController
 		$geoJson = $this->geoJson->createGeoJson($events);
 
 		// Get coords of the requested city
-		if (!empty($data->q)) {
-			$location = $this->callApiService->getApi($data->q);
-		} elseif (!empty($events)) {
+		if (!empty($events)) {
 			$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
 		} else {
 			$location = [1, 47];
@@ -144,6 +139,7 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
@@ -155,10 +151,6 @@ class EventController extends AbstractController
 
 		$form = $this->createForm(CommentType::class, $comment);
 		$form->handleRequest($request);
-
-		if($this->getUser() == null){
-			$this->addFlash('warning', 'Vous devez vous connecter pour pouvoir écrire un commentaire');
-		}
 
 		// Create new form associated to entity
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -174,13 +166,12 @@ class EventController extends AbstractController
 			$entityManager->persist($comment);
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Votre commentaire a bien été enregistré');
+			$this->addFlash('success', 'Votre commentaire a été ajouté');
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),
 			]);
 		}
-	
 
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
@@ -193,6 +184,7 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
