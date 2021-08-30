@@ -99,6 +99,11 @@ class Event
      */
     private $comments;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Report::class, mappedBy="event", cascade={"persist", "remove"})
+     */
+    private $report;
+
     public function __construct()
     {
         $this->attendants = new ArrayCollection();
@@ -300,6 +305,28 @@ class Event
                 $comment->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReport(): ?Report
+    {
+        return $this->report;
+    }
+
+    public function setReport(?Report $report): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($report === null && $this->report !== null) {
+            $this->report->setEvent(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($report !== null && $report->getEvent() !== $this) {
+            $report->setEvent($this);
+        }
+
+        $this->report = $report;
 
         return $this;
     }
