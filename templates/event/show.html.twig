@@ -84,7 +84,7 @@
 										</a>
 									{% endif %}
 									{% if is_granted('USER_ACCESS', app.user) %}
-										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
 											<i class="fas fa-exclamation"></i>
 										</a>
 									{% endif %}
@@ -164,7 +164,7 @@
 		</div>
 	</div>
 
-
+	{{ dump(event.lat, event.lon)}}
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 let map = new mapboxgl.Map({
