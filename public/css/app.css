@@ -429,6 +429,10 @@
 	height: 100%;
 }
 
+.topScore .topScore__card .bg-image img.card-img-top {
+	height: 100%;
+}
+
 .topScore .topScore__card h3 {
     text-transform: capitalize;
     position: absolute;
