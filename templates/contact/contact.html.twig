@@ -1,0 +1,47 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title 'Contact' %}
+
+{% block body %}
+
+<div class="container">
+	<section id="register">
+
+		<img src="{{ asset('img/pinmap.png') }}" alt="logo" class="pinmap" draggable=false>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
+				<h1 class="home__title">Contact</h1>
+
+				{{ form_start(form, { attr:{ novalidate: 'novalidate' }}) }}
+
+				<div class="row">
+					<div class="col-md-12">
+						{{ form_row(form.subject) }}
+					</div>
+				</div>
+
+				<!-- Divider -->
+				<hr>
+
+				<div class="row">
+					<div class="col-md-12">
+						{{ form_row(form.message) }}
+					</div>
+				</div>
+
+				<div class="my-3">
+					<a class="btn button-secondary me-2" href="{{ path('app_home') }}">
+						<i class="fas fa-angle-left me-2"></i>Retour</a>
+
+					<button type="submit" class="btn button-primary">Envoyer</button>
+				</div>
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+</section>
+
+
+{% endblock %}

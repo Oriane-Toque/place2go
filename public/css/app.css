@@ -1449,7 +1449,7 @@
 }
 
 .chip .close:hover{
-	color:#fff
+	color:#fff;
 }
 
 .chip.chip-md {
@@ -1460,6 +1460,50 @@
 .chip.chip-lg {
     height: 52px;
     border-radius: 26px;
+}
+
+/*****************************************************************? SKEDITOR */
+
+#cke_1_top {
+	background-color: var(--primary-color);
+}
+
+.cke_combo::after {
+	border-right: 1px solid var(--secondary-color)!important;
+}
+
+.cke_button::after {
+	border-right: 1px solid var(--secondary-color)!important;
+}
+
+.cke_toolbar_separator {
+	background-color: var(--secondary-color)!important;
+}
+
+.cke_button:hover,
+.cke_combo_button:hover,
+.cke_button_on,
+.cke_combo_on {
+	cursor: pointer!important;
+	background-color: var(--hover-color)!important;
+	border: none!important;
+}
+
+#cke_1_bottom {
+	background-color: var(--secondary-hover-color);
+}
+
+.cke_path_item {
+	color: #fff!important;
+}
+
+.cke_path_item:hover {
+	cursor: pointer;
+	background-color: var(--primary-color)!important;
+}
+
+#cke_contact_message {
+	border: 2px solid var(--primary-color);
 }
 
 /*****************************************************************? REGISTER */
@@ -1644,7 +1688,7 @@
 @media screen and (max-width: 575px) {
 	.container {
 		padding: 0.5rem!important;
-		margin: 0 auto!important;
+		margin: 0!important;
 	}
 
 	.masthead__brand {
@@ -1708,7 +1752,7 @@
 
 @media screen and (min-width: 576px) {
 	.container {
-		margin: 1rem auto!important;
+		padding: 0 1rem!important;
 	}
 
 	.home__title {
@@ -1773,9 +1817,6 @@
 }
 
 @media screen and (min-width: 768px) {
-	.container {
-		margin: 1.5rem auto!important;
-	}
 
 	.descriptionPlace .descriptionPlace__description img {
 		top: 50%;
