@@ -31,8 +31,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $id;
 
-     /**
-      * @var string
+    /**
+     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank()
      */
@@ -71,6 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -124,6 +125,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $attendants;
 
     /**
+     * The people who I think are my friends.
+     * 
+     * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="sender", orphanRemoval=true)
+     */
+    private $friends;
+
+    /**
+     * The people who think that I’m their friend.
+     * 
+     * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="receiver", orphanRemoval=true)
+     */
+    private $friendsWithMe;
+  
+    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author")
      */
     private $comments;
@@ -133,7 +148,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
-		/**
+    /**
      * @ORM\OneToMany(targetEntity=Report::class, mappedBy="author", cascade={"remove"})
      */
     private $reports_author;
@@ -143,13 +158,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->events = new ArrayCollection();
         $this->attendants = new ArrayCollection();
         $this->isActive = true;
+        $this->friends = new ArrayCollection();
+        $this->friendsWithMe = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->reports = new ArrayCollection();
     }
 
     public function __toString()
     {
-       return $this->firstname . ' ' . $this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function getId(): ?int
@@ -421,6 +438,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection|Friendship[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(User $friend)
+    {
+        /*$friendship = new Friendship();
+        $friendship->setSender($this);
+        $friendship->setReceiver($friend);
+        $friendship->setStatus(1);
+
+        $this->addFriendship($friendship);
+
+        return $friendship;*/
+    }
+
+    public function addFriends(Friendship $friendship): self
+    {
+        if (!$this->friends->contains($friendship)) {
+            $this->friends[] = $friendship;
+            $friendship->setSender($this);
+        }
+
+        return $this;
+    }
+    
+    /*
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -433,6 +480,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
             $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriends(Friendship $friendship): self
+    {
+        if ($this->friendship->removeElement($friendship)) {
+            // set the owning side to null (unless already changed)
+            if ($friendship->getSender() === $this) {
+                $friendship->setSender(null);
+            }
         }
 
         return $this;
@@ -451,6 +510,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection|Friendship[]
+     */
+    public function getFriendsWithMe(): Collection
+    {
+        return $this->friendsWithMe;
+    }
+
+    public function addFriendsWithMe(Friendship $friendship): self
+    {
+        if (!$this->friendsWithMe->contains($friendship)) {
+            $this->friendsWithMe[] = $friendship;
+            $friendship->setReceiver($this);
+        }
+
+        return $this;
+    }
+    
+    /*
      * @return Collection|Report[]
      */
     public function getReports(): Collection
@@ -468,6 +545,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function removeFriendsWithMe(Friendship $friendship): self
+    {
+        if ($this->friendship->removeElement($friendship)) {
+            // set the owning side to null (unless already changed)
+            if ($friendship->getReceiver() === $this) {
+                $friendship->setReceiver(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function removeReport(Report $report): self
     {
         if ($this->reports->removeElement($report)) {
@@ -479,4 +569,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }
