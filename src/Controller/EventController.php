@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use DateTimeImmutable;
+use App\Entity\Comment;
 use App\Form\EventType;
 use App\Data\SearchData;
+use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
 use App\Services\CallApiService;
@@ -17,13 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
-
-	private $callApiService;
 	private $geoJson;
 
-	public function __construct(CallApiService $callApiService, geoJson $geoJson)
+	public function __construct(geoJson $geoJson)
 	{
-		$this->callApiService = $callApiService;
 		$this->geoJson = $geoJson;
 	}
 
@@ -51,9 +51,7 @@ class EventController extends AbstractController
 		$geoJson = $this->geoJson->createGeoJson($events);
 
 		// Get coords of the requested city
-		if (!empty($data->q)) {
-			$location = $this->callApiService->getApi($data->q);
-		} elseif (!empty($events)) {
+		if (!empty($events)) {
 			$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
 		} else {
 			$location = [1, 47];
@@ -76,6 +74,7 @@ class EventController extends AbstractController
 	 */
 	public function create(Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 		$event = new Event();
 
 		// Create new form associated to entity
@@ -84,14 +83,6 @@ class EventController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$event->setAuthor($this->getUser());
-			
-			// Get address coords from API service
-			$coordinates = $this->callApiService->getApi($form['address']->getData());
-
-			// set coordinates fetched from geoAPI
-			$event->setLat($coordinates[0]);
-			$event->setLon($coordinates[1]);
-
 			// push into the database
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($event);
@@ -119,17 +110,14 @@ class EventController extends AbstractController
 	 */
 	public function edit(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_EDIT', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Create new form associated to entity
 		$form = $this->createForm(EventType::class, $event);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			// Update the coords from API service
-			$coordinates = $this->callApiService->getApi($form['address']->getData());
-
-			// set coordinates fetched from geoAPI
-			$event->setLat($coordinates[0]);
-			$event->setLon($coordinates[1]);
 
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->flush();
@@ -148,16 +136,47 @@ class EventController extends AbstractController
 
 
 	/**
-	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET"})
+	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
-	public function show(Event $event): Response
+	public function show(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted("EVENT_SHOW", $event, "Impossible d'effectuer cette action");
+
+		$comment = new Comment();
+
+		$form = $this->createForm(CommentType::class, $comment);
+		$form->handleRequest($request);
+
+		// Create new form associated to entity
+		if ($form->isSubmitted() && $form->isValid()) {
+			$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
+			// set the author to the  associated commenb
+			$comment->setAuthor($this->getUser());
+			// set the event
+			$comment->setEvent($event);
+			// set the date
+			$comment->setCreatedAt(new DateTimeImmutable());
+
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($comment);
+			$entityManager->flush();
+
+			$this->addFlash('success', 'Votre commentaire a été ajouté');
+
+			return $this->redirectToRoute('app_event_show', [
+				'id' => $event->getId(),
+			]);
+		}
+
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
+			'comments' => $comment,
+			'form' => $form->createView(),
 		]);
 	}
 
@@ -165,11 +184,15 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
-	public function delete(Event $event): Response
+	public function delete(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_DELETE', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($event);
@@ -178,6 +201,6 @@ class EventController extends AbstractController
 		$this->addFlash('success', 'Sortie supprimée avec succès');
 
 		//? Handle redirect to previous visited page
-		return $this->redirectToRoute('app_event_list');
+		return $this->redirect($request->headers->get('referer'));
 	}
 }

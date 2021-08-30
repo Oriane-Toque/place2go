@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,17 +28,29 @@ class RegistrationFormType extends AbstractType
         // adding constraints 
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'Prénom *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : Jean'
+                ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom de famille',
+                'label' => 'Nom de famille *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : Dupont'
+                ]
             ])
             ->add('nickname', TextType::class, [
-                'label' => 'Pseudo',
+                'label' => 'Pseudo *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'ex : jd'
+                ]
             ])
+						->add('avatar', HiddenType::class, [
+								'required' => false,
+						])
             // ajout d'un évènement sur le formulaire pour différencier l'édition de la création d'un utilisateur
             // mapped false pour le password afin de ne pas relier à l'entité en cas de modification de password
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -61,10 +74,19 @@ class RegistrationFormType extends AbstractType
                             'format' => 'ddMMMMyyyy'
                         ])
                         ->add('city', TextType::class, [
-                            'label' => 'Ville',
+                            'label' => 'Ville *',
                             'required' => true,
+                            'attr' => [
+                                'placeholder' => 'ex : Paris'
+                            ]
                         ])
-                        ->add('email', EmailType::class)
+                        ->add('email', EmailType::class, [
+                            'label' => 'Adresse email *',
+                            'required' => true,
+                            'attr' => [
+                                'placeholder' => 'ex : email@exemple.fr'
+                            ]
+                        ])
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
                             'invalid_message' => 'Les mots de passe ne correspondent pas.',
@@ -75,11 +97,11 @@ class RegistrationFormType extends AbstractType
                                     new NotCompromisedPassword(),
                                     new NotBlank(),
                                 ],
-                                'label' => 'Mot de passe',
+                                'label' => 'Mot de passe *',
                                 'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
                             ],
                             'second_options' => [
-                                'label' => 'Répéter le mot de passe',
+                                'label' => 'Répéter le mot de passe *',
                                 'constraints' => [
                                     new NotBlank(),
                                 ],

@@ -25,13 +25,15 @@ class AppFixtures extends Fixture
    
     public function load(ObjectManager $manager)
     {
+        $faker = \Faker\Factory::create('fr_FR');
+
         $categories = [];
         // create 10 categories! Bam!
         for ($i = 0; $i < 10; $i++) {
             $category = new Category();
-            $category->setName('category' . $i);
+            $category->setName($faker->word());
             $category->setPicture('https://picsum.photos/id/' . mt_rand(100, 500) . '/600/400');
-            
+
             $categories[] = $category;
             $manager->persist($category);
         }
@@ -40,17 +42,17 @@ class AppFixtures extends Fixture
         // create 10 users! Bam!
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
-            $user->setEmail("user$i@user.com");
+            $user->setEmail($faker->email());
             $user->setRoles(["ROLE_USER"]);
             $user->setPassword($this->passwordHasher->hashPassword($user,'dada'));
-            $user->setNickname("dada$i");
-            $user->setFirstname("user$i");
-            $user->setLastname("dodo$i");
-            $user->setAvatar('https://picsum.photos/id/' .mt_rand(100, 500) . '/300/300');
-            $user->setCity("city$i");
+            $user->setNickname($faker->userName());
+            $user->setFirstname($faker->firstName());
+            $user->setLastname($faker->lastName());
+            $user->setAvatar('https://api.multiavatar.com/' . mt_rand(1,500) . '.png');
+            $user->setCity($faker->city());
             $user->setIsActive(true);
-			$user->setBirthday(new DateTime("1996-03-05"));
-			$user->setDescription("Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore fuga nam earum facere deserunt quos, pariatur aliquid quisquam accusantium autem beatae accusamus, ipsum reprehenderit sunt sint aperiam? Repellat, explicabo consequuntur.");
+			$user->setBirthday(new DateTimeImmutable('now -' . mt_rand(20,60) . 'years'));
+			$user->setDescription($faker->text(mt_rand(100,500)));
 
             $users[] = $user;
             $manager->persist($user);
@@ -58,15 +60,15 @@ class AppFixtures extends Fixture
 
         $events = [];
         // create 10 events! Bam!
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $event = new Event();
-            $event->setTitle("event $i");
-            $event->setDescription("ceci est l'event n°$i, alonzy !");
-            $event->setEventDate(new DateTime());
-            $event->setAddress("12 rue du dada");
-            $event->setLat("4.25641654897456");
-            $event->setLon("4.25641654897456");
-            $event->setMaxAttendants(7);
+            $event->setTitle($faker->text(mt_rand(15,50)));
+            $event->setDescription($faker->text(mt_rand(100,250)));
+            $event->setEventDate(new DateTimeImmutable('now +' . mt_rand(9,12) . 'days'));
+            $event->setAddress($faker->address());
+            $event->setLat($faker->latitude(0, 5));
+            $event->setLon($faker->longitude(44, 49));
+            $event->setMaxAttendants(mt_rand(3,20));
             $event->setIsActive(true);
             $event->setAuthor($users[array_rand($users)]);
 
@@ -80,7 +82,7 @@ class AppFixtures extends Fixture
 
         $attendants = [];
         // create 5 events! Bam!
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $attendant = new Attendant();
             $attendant->setUser($users[array_rand($users)]);
             $attendant->setEvent($events[array_rand($events)]);

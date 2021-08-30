@@ -26,29 +26,17 @@
 							<img src="{{ event.categories[0].picture }}" alt="{{ event.categories[0].name }}" class="show__card_header_image">
 						</div>
 
-						<div class="show__card_content">
-							<div class="show__card_content-author">
-								<div>
-									<i class="fas fa-user-alt"></i>
-									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="ms-2">{{ event.author.nickname }}</a>
-								</div>
-								<div>
-									{# Render delete button if user is the event's author #}
-									{% if is_granted('EVENT_DELETE', event) %}
-										<a href="{{ path('app_event_delete', {id: event.id}) }}" class="">
-											<i class="fas fa-trash"></i>
-										</a>
-									{% endif %}
-									{# Render edit button if user is the event's author #}
-									{% if is_granted('EVENT_EDIT', event) %}
-										<a href="{{ path('app_event_edit', {id: event.id}) }}" class="ms-2">
-											<i class="fas fa-edit"></i>
-										</a>
-									{% endif %}
-								</div>
-							</div>
+						<div class="show__card_title">
+							<h3>{{ event.title }}</h3>
+						</div>
 
-							<div class="show__card_content-details">
+						<div class="show__card_content">
+								<div class="show__card_content-details">
+								<div class="show__card_content-author">
+									<i class="fas fa-caret-right"></i>
+									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">{{ event.author.nickname }}</a>
+								</div>
+
 								<div class="show__card_content-attendants">
 									<i class="fas fa-caret-right"></i>
 									<span class="">Nombre de Participants :</span>
@@ -86,13 +74,18 @@
 								<div class="list__cards_join">
 									{% if is_granted('EVENT_LEAVE', event) %}
 										{# Bouton pour ne plus participer à la sortie #}
-										<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+										<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
 											<i class="fas fa-sign-out-alt"></i>
 										</a>
 									{% endif %}
 									{% if is_granted('EVENT_JOIN', event) %}
-										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-primary btn-floating-sm ms-2">
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
 											<i class="fas fa-user-plus"></i>
+										</a>
+									{% endif %}
+									{% if is_granted('USER_ACCESS', app.user) %}
+										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+											<i class="fas fa-exclamation"></i>
 										</a>
 									{% endif %}
 								</div>
@@ -102,19 +95,78 @@
 
 				</div>
 
+
 				<div class="col-sm-6 col-lg-6">
 
-					<div id='map' class="shadow-1">
-					</div>
+					<div id='map' class="shadow-1"></div>
 
 				</div>
+
 			</div>
-	</section>
+			
+			<h3 class="mt-5 mb-2 text-center">Commentaires</h3>
+			
+			<div class="row">
 
-</div>
+				{% for comment in event.comments %}
+					<div class="col-lg-8 mx-auto">
+						<div class="show__comments">
+							<div class="show__author_avatar">
+								<img class="author__avatar" src="{{comment.author.avatar }}" alt="comment_author_avatar">
+							</div>
+							<div class="show__comments_content">
+								<div class="show__comment_header">
+									Ecrit par
+									<span class="fw-bold">{{ comment.author.nickname }}</span>, 
+									{% if event.author.id is same as comment.author.id %}
+									<span class="event__author">(Organisateur),</span>
+									{% endif %} le
+									{{ comment.createdAt | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
+								</div>
+								<div class="show__comment_content pe-4">
+									{{comment.content}}
+								</div>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					Aucun commentaire à afficher pour cette sortie
+				{% endfor %}
 
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+			</div>
+
+		</section>
+
+		{% if is_granted ('USER_ACCESS', app.user) %}
+			<div class="comments__button">
+				<button id="toggle__comments" class="btn button-primary">Ecrire un commentaire</button>
+			</div>
+		{% endif %}
+		
+
+
+		<div class="row ">
+
+			<div class="col-lg-8 mt-5 mx-auto create__comment">
+				<h3>Votre commentaire</h3>
+
+				{{ form_start(form) }}
+				{{ form_widget(form) }}
+				
+				<div class="d-flex justify-content-between">
+					<button id="cancel__comment" class="btn button-secondary">Annuler</button>
+					<button type="submit" class="btn button-primary">Soumettre</button>
+					<p id="count" class="ms-auto"></p>
+				</div>
+				
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+
+	{{ dump(event.lat, event.lon)}}
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 let map = new mapboxgl.Map({
 container: 'map', // Container ID
 style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
@@ -125,4 +177,5 @@ zoom: 15.5, // Starting zoom level
 });
 // Create a default Marker and add it to the map.
 const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
-</script>{% endblock %}
+	</script>
+{% endblock %}

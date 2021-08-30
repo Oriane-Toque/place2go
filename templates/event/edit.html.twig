@@ -55,9 +55,9 @@
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v11',
 		center: [
-		2, 47
+		{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}
 		],
-		zoom: 4.5
+		zoom: 15.5
 		});
 
 		// Add the control to the map.
@@ -76,12 +76,27 @@
 
 		input.value = eventAddress.value;
 
+		// Create a default Marker and add it to the map.
+		const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}]).addTo(map);
+
 
 		function handle(e) {
 		let value = e.target.value;
 		console.log(value);
 		eventAddress.value = value;
 		}
+
+		//Listen for the result event from the geocoder.
+		//'result' event is triggered when the user makes a selection
+		geocoder.on('result', function(e) {
+			const lat = document.getElementById('event_lat');
+			const lon = document.getElementById('event_lon');
+
+			var latlong = e.result.geometry.coordinates;
+			lat.value = latlong[0];
+			lon.value = latlong[1];
+		});
+
 	</script>
 
 {% endblock %}

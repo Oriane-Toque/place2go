@@ -18,7 +18,7 @@ class UserVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, ["BASIC_ACCESS", "PRIVATE_ACCESS", "ADMIN_ACCESS"])
+        return in_array($attribute, ["BASIC_ACCESS", "USER_ACCESS", "ADMIN_ACCESS"])
             && $subject instanceof \App\Entity\User;
     }
 
@@ -30,24 +30,26 @@ class UserVoter extends Voter
         /**@var \App\Entity\User $userSubject */
         $userSubject = $subject;
         
-        // if requested user does not exist, return false
+        // if current user does not exist, return false
         if (null === $user) return false;
         
         switch ($attribute) {
             case "BASIC_ACCESS":
+                
+                if (null === $userSubject) return false;
 
                 return true;
-
-            break;
-
-            case "PRIVATE_ACCESS":
-
+                
+                break;
+                
+                case "USER_ACCESS":
+                
                 if (!$user === $userSubject)                    return false;
                 if (!$user instanceof UserInterface)            return false;
                 if (!$userSubject->isVerified() === true)       return false;
                 if (!$userSubject->getIsActive() === true)      return false;
                 if (!$this->security->isGranted('ROLE_USER'))   return false;
-
+                    
                 return true;
 
             break;

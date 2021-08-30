@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Count;
 
 class EventType extends AbstractType
 {
@@ -31,19 +32,31 @@ class EventType extends AbstractType
             $form->add('title', TextType::class, [
                 'label' => 'Titre de la sortie *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Sortie au cinéma, Aller boire un coup, ...',
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description de la sortie *',
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Détaillez votre sortie (description, organisation, lieu...)',
+                ]
             ])
             ->add('event_date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de la sortie *',
-                'data' => new DateTime(),
+                'data' => new DateTime('now'),
                 'required' => true,
             ])
             ->add('address', HiddenType::class, [
                 'label' => 'Adresse',
+                'required' => false,
+            ])
+            ->add('lat', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('lon', HiddenType::class, [
                 'required' => false,
             ])
             ->add('maxAttendants', ChoiceType::class, [
@@ -54,13 +67,10 @@ class EventType extends AbstractType
                     return $value;
                 }
             ])
-            ->add('isActive', HiddenType::class, [
-                'data' => true,
-            ])
             ->add('categories', EntityType::class, [
+                'class' => Category::class,
                 'label' => 'Catégories *',
                 'required' => true,
-                'class' => Category::class,
                 'multiple' => true,
                 'choice_label' => 'name',
                 'expanded' => true,
@@ -68,6 +78,13 @@ class EventType extends AbstractType
                     return $cr->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 },
+                'constraints' => [
+                    new Count(['min' => 1, 'minMessage' => 'Vous devez choisir au moins une catégorie']),
+                    new Count(['max' => 3, 'maxMessage' => 'Vous ne pouvez pas choisir plus de 3 catégories']),
+                ],
+                'attr' => [
+                    'style' => 'columns: 2'
+                ]
             ]);
         });
     }

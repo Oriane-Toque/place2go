@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 	<style>
-		#map {			
+		#map {
 			width: 100%;
 			min-height: 100vh;
 			height: 100%;
@@ -15,7 +15,7 @@
 		}
 
 		.marker {
-			background-image: url('img/pinmap.png');
+			background-image: url('img/pinmap2.png');
 			background-size: cover;
 			width: 50px;
 			height: 50px;
@@ -104,14 +104,19 @@
 									<div class="list__cards_join">
 										{% if is_granted('EVENT_LEAVE', event) %}
 											{# Bouton pour ne plus participer à la sortie #}
-											<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
-												<i class="fas fa-sign-out-alt"></i>
+											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
+												<i class="fas fa-times fa-lg"></i>
 											</a>
 										{% endif %}
 										{% if is_granted('EVENT_JOIN', event) %}
 											{# Bouton pour participer à la sortie #}
-											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn btn-primary btn-floating-sm ms-2">
+											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
 												<i class="fas fa-user-plus"></i>
+											</a>
+										{% endif %}
+										{% if is_granted('USER_ACCESS', app.user) %}
+											<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+												<i class="fas fa-exclamation"></i>
 											</a>
 										{% endif %}
 									</div>
@@ -133,38 +138,54 @@
 			</section>
 		</div>
 
-		<script>
+{% block javascripts %}
+<script>
 
-			mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-var geojson = {{ geojson|json_encode|raw }};
-let map = new mapboxgl.Map({
-container: 'map', // Container ID
-style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-center: [
-{{ location[0] }}, {{ location[1] }}
-], // Starting position [lng, lat]
-zoom: 10, // Starting zoom level
-});
-let clickableElements = document.querySelectorAll('.js-event');
-clickableElements.forEach(element => {
-element.addEventListener('click', evt => {
-map.flyTo({
-center: [
-element.dataset.lat, element.dataset.lon
-],
-essential: true,
-zoom: 14
-});
-})
-})
-// add markers to map
-geojson.features.forEach(function (marker) { // create a HTML element for each feature
-var el = document.createElement('div');
-el.className = 'marker';
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+		var geojson = {{ geojson|json_encode|raw }};
 
-// make a marker for each feature and add it to the map
-new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).setPopup(new mapboxgl.Popup({offset: 25})) // add popups.setHTML('<h5>' + marker.properties.title + '</h5><p>' + marker.properties.description + '</p>')).addTo(map);
-});
-		</script>
+		let map = new mapboxgl.Map({
+			container: 'map', // Container ID
+			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+			center: [{{ location[0]}},{{ location[1]}}], // Starting position [lng, lat]
+			zoom: 10, // Starting zoom level
+		});
 
-	{% endblock %}
+		let clickableElements = document.querySelectorAll('.js-event');
+		clickableElements.forEach(element => {
+			element.addEventListener('click', evt => {
+				map.flyTo({
+					center: [element.dataset.lat, element.dataset.lon],
+					essential: true,
+					zoom: 14,
+				});
+			})
+		})
+
+		// add markers to map
+		geojson.features.forEach(function (marker) {
+		// create a HTML element for each feature
+		var el = document.createElement('div');
+		el.className = 'marker';
+		
+		// make a marker for each feature and add it to the map
+		new mapboxgl.Marker(el)
+			.setLngLat(marker.geometry.coordinates)
+			.setPopup(
+		new mapboxgl.Popup({ offset: 25 }) // add popups
+			.setHTML(
+			'<h5>' +
+			marker.properties.title +
+			'</h5><p>' +
+			marker.properties.description +
+			'</p>'
+			)
+		)
+		.addTo(map);
+		});
+    
+</script>
+
+{% endblock %}
+
+{% endblock %}

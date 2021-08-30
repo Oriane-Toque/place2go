@@ -31,8 +31,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $id;
 
-     /**
-      * @var string
+    /**
+     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank()
      */
@@ -71,6 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -136,6 +137,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="receiver", orphanRemoval=true)
      */
     private $friendsWithMe;
+  
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="user", cascade={"remove"})
+     */
+    private $reports;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="author", cascade={"remove"})
+     */
+    private $reports_author;
 
     public function __construct()
     {
@@ -144,11 +160,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isActive = true;
         $this->friends = new ArrayCollection();
         $this->friendsWithMe = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function __toString()
     {
-       return $this->firstname . ' ' . $this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function getId(): ?int
@@ -445,6 +463,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->friends[] = $friendship;
             $friendship->setSender($this);
         }
+    }
+    
+    /*
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
 
         return $this;
     }
@@ -455,6 +489,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($friendship->getSender() === $this) {
                 $friendship->setSender(null);
+            }
+        }
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
 
@@ -475,9 +519,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->friendsWithMe[] = $friendship;
             $friendship->setReceiver($this);
         }
+    }
+    
+    /*
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
 
         return $this;
     }
+
 
     public function removeFriendsWithMe(Friendship $friendship): self
     {
@@ -485,6 +546,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($friendship->getReceiver() === $this) {
                 $friendship->setReceiver(null);
+            }
+        }
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
             }
         }
 

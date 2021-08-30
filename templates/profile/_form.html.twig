@@ -1,13 +1,28 @@
 {{ form_start(form, { attr:{ novalidate: 'novalidate' }}) }}
 
-	{{ form_widget(form) }}
+	{{ form_row(form.firstname) }}
+	{{ form_row(form.lastname) }}
+	
+	<div class="mb-3 row">
+		<div class="col-md-6">
+			{{ form_row(form.nickname) }}
+		</div>
+		<div class="col-md-6">
+			{% include "_partials/_avatar.html.twig" %}
+		</div>
+	</div>
+
+	{{ form_row(form.city) }}
+	{{ form_row(form.description) }}
+	{{ form_row(form.email) }}
+	{{ form_row(form.password) }}
 
 	<div class="contentProfile__buttons my-3">
 		<a class="--back contentProfile__infos-buttonText btn btn-primary" href="{{ path('app_profile_profile') }}" role="button to back">
 			<i class="fa fa-angle-left"></i>Retour
 		</a>
 
-		<button type="submit" class="--action contentProfile__infos-buttonText btn btn-success">{{ button_label }}</button>
+		<button type="submit" id="submit_button" class="--action contentProfile__infos-buttonText btn btn-success">{{ button_label }}</button>
 	</div>
 
 {{ form_end(form) }}

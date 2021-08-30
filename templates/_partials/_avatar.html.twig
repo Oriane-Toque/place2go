@@ -1,0 +1,11 @@
+	<label for="registration_form_avatar" class="form-label">Click pour générer ton avatar</label>
+	<div class="avatar d-flex">
+		<div class="avatar__generated me-2">
+			<img src="{{ app.user.avatar ?? 'uploads/avatar/default-profile.svg' }}" style="width: 100%">
+		</div>
+		<button id="avatar__generate" class="btn">
+			<span><i class="fas fa-sync"></i></span>
+		</button>
+		{{ form_row(form.avatar ?? registrationForm.avatar) }}
+	</div>
+
