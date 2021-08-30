@@ -32,78 +32,10 @@
 		<section class="contentProfile__friends">
 			<h2>Mes Amis</h2>
 			<div class="contentProfile__friends-list">
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
-				<div class="chip">
-					<img src="{{ asset('uploads/avatar/default-profile.svg') }}" alt="Contact Person"> John Doe
-					<i class="close fas fa-times"></i>
-				</div>
+				{{ render(controller(
+					'App\\Controller\\FriendshipController::friendsList',
+					{ id: user.id }
+				)) }}
 			</div>
 		</section>
 

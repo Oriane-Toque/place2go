@@ -74,7 +74,7 @@ class FriendshipController extends AbstractController
      *
      * @return Response
      */
-    public function friendsList(FriendshipRepository $friendshipRepository): Response
+    public function privateFriendsList(FriendshipRepository $friendshipRepository): Response
     {
         // If not connected
         if (!$this->getUser()) {
@@ -85,6 +85,23 @@ class FriendshipController extends AbstractController
         $user = $this->getUser();
 
         $friends = $friendshipRepository->findAllFriends($user->getId());
+
+        return $this->render('profile/_friend_list.html.twig', [
+            'friends' => $friends
+        ]);
+    }
+
+    /**
+     * List all friends in the public user profile
+     *
+     * @param Int $id
+     * @param FriendshipManager $friendshipManager
+     *
+     * @return Response
+     */
+    public function friendsList(Int $id, FriendshipRepository $friendshipRepository): Response
+    {
+        $friends = $friendshipRepository->findAllFriends($id);
 
         return $this->render('profile/_friend_list.html.twig', [
             'friends' => $friends
