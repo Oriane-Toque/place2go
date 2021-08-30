@@ -1053,7 +1053,7 @@
 }
 
 .contentProfile__infos-buttonText.--action:hover {
-	background-color: #c0392b;
+	background-color: var(--hover-color);
 }
 
 .contentProfile__infos-buttonText.--back {
