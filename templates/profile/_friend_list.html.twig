@@ -1,0 +1,9 @@
+<div id="friend-list">
+    {% for friend in friends %}
+    <div class="chip">
+        <img src="{{ friend.avatar ?? app.friend.avatar }}" alt="Friend"> <span class="name">{{ friend.nickname|capitalize }}</span>
+    </div>
+    {% else %}
+    <p>Aucun ami pour le moment</p>
+    {% endfor %}
+</div>

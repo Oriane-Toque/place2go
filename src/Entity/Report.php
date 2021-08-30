@@ -14,22 +14,41 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Report
 {
-		use Timestamps;
+    use Timestamps;
 
-		/**
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
-		/**
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $message;
+
+    /**
+     * false: En cours, true: Traité
+     * 
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $status;
+
+     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
-		/**
+    /**
      * @ORM\OneToOne(targetEntity=Event::class, inversedBy="report", cascade={"persist", "remove"})
      */
     private $event;
@@ -40,29 +59,10 @@ class Report
      */
     private $author;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-		 * @Assert\NotBlank()
-     */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-		 * @Assert\NotBlank()
-     */
-    private $message;
-
-    /**
-		 * false: En cours, true: Traité
-		 * 
-     * @ORM\Column(type="boolean", options={"default" : false})
-     */
-    private $status;
-
-		public function __construct()
-		{
-			$this->status = false;
-		}
+    public function __construct()
+    {
+        $this->status = false;
+    }
 
     public function getId(): ?int
     {

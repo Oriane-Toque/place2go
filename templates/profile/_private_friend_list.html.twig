@@ -1,0 +1,10 @@
+<div id="friend-list">
+    {% for friend in friends %}
+    <div class="chip">
+        <img src="{{ friend.avatar ?? app.friend.avatar }}" alt="Friend"> <span class="name">{{ friend.nickname|capitalize }}</span>             
+        <a onclick="removeFriend(this)" data-url="{{ path('app_friend_delete', {id: friend.id})}}" data-nickname="{{friend.nickname|capitalize}}"><i class="close fas fa-times"></i></a>
+    </div>
+    {% else %}
+    <p>Aucun ami pour le moment</p>
+    {% endfor %}
+</div>

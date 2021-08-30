@@ -2,20 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Event;
+use DateTimeImmutable;
 use App\Entity\Comment;
 use App\Form\EventType;
 use App\Data\SearchData;
 use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
-use App\Repository\CommentRepository;
 use App\Services\CallApiService;
 use App\Repository\EventRepository;
-use DateTime;
-use DateTimeImmutable;
-use DoctrineExtensions\Query\Mysql\Now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EventController extends AbstractController
 {
-
-	private $callApiService;
 	private $geoJson;
 
-	public function __construct(CallApiService $callApiService, geoJson $geoJson)
+	public function __construct(geoJson $geoJson)
 	{
-		$this->callApiService = $callApiService;
 		$this->geoJson = $geoJson;
 	}
 
@@ -58,9 +51,7 @@ class EventController extends AbstractController
 		$geoJson = $this->geoJson->createGeoJson($events);
 
 		// Get coords of the requested city
-		if (!empty($data->q)) {
-			$location = $this->callApiService->getApi($data->q);
-		} elseif (!empty($events)) {
+		if (!empty($events)) {
 			$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
 		} else {
 			$location = [1, 47];
@@ -83,6 +74,7 @@ class EventController extends AbstractController
 	 */
 	public function create(Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 		$event = new Event();
 
 		// Create new form associated to entity
@@ -118,6 +110,9 @@ class EventController extends AbstractController
 	 */
 	public function edit(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_EDIT', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Create new form associated to entity
 		$form = $this->createForm(EventType::class, $event);
 		$form->handleRequest($request);
@@ -144,19 +139,18 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
 	public function show(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted("EVENT_SHOW", $event, "Impossible d'effectuer cette action");
+
 		$comment = new Comment();
 
 		$form = $this->createForm(CommentType::class, $comment);
 		$form->handleRequest($request);
-
-		if($this->getUser() == null){
-			$this->addFlash('warning', 'Vous devez vous connecter pour pouvoir écrire un commentaire');
-		}
 
 		// Create new form associated to entity
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -172,13 +166,12 @@ class EventController extends AbstractController
 			$entityManager->persist($comment);
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Votre commentaire a bien été enregistré');
+			$this->addFlash('success', 'Votre commentaire a été ajouté');
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),
 			]);
 		}
-	
 
 		return $this->render('event/show.html.twig', [
 			'event' => $event,
@@ -191,11 +184,15 @@ class EventController extends AbstractController
 	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
 	 * 
 	 * @param Event $event
+	 * @param Request $request
 	 * 
 	 * @return Response
 	 */
 	public function delete(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_DELETE', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($event);

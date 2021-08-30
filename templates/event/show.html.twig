@@ -4,8 +4,7 @@
 	{{ event.title }}
 {% endblock %}
 
-{% block body %}
-
+{% block stylesheets %}
 	<style>
 		#map {
 			width: 100%;
@@ -14,6 +13,9 @@
 			margin-bottom: 0.8rem;
 		}
 	</style>
+{% endblock %}
+
+{% block body %}
 
 	<div class="container">
 		<section id="show">
@@ -79,13 +81,17 @@
 										</a>
 									{% endif %}
 									{% if is_granted('EVENT_JOIN', event) %}
+										{# Bouton pour participer à la sortie #}
 										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
 											<i class="fas fa-user-plus"></i>
 										</a>
 									{% endif %}
-										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+									{% if is_granted('USER_ACCESS', app.user) %}
+										{# Bouton pour report à la sortie #}
+										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
 											<i class="fas fa-exclamation"></i>
 										</a>
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -101,7 +107,9 @@
 				</div>
 
 			</div>
-			<h4 class="mt-5 mb-2 text-center">Commentaires</h4>
+			
+			<h3 class="mt-5 mb-2 text-center">Commentaires</h3>
+			
 			<div class="row">
 
 				{% for comment in event.comments %}
@@ -119,10 +127,8 @@
 									{% endif %} le
 									{{ comment.createdAt | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
 								</div>
-								<div class="show__comment_content">
-									<div>
-										{{comment.content}}
-									</div>
+								<div class="show__comment_content pe-4">
+									{{comment.content}}
 								</div>
 							</div>
 						</div>
@@ -135,47 +141,48 @@
 
 		</section>
 
-	{% if is_granted ('USER_ACCESS', app.user) %}
-	
-		<div class="comments__button">
-			<button id="toggle__comments" class="btn button-primary">Ecrire un commentaire</button>
-		</div>
+		{# TOGLLE BUTTON TO ADD A COMMENT #}
+		{% if is_granted ('USER_ACCESS', app.user) %}
+			<div class="comments__button">
+				<button id="toggle__comments" class="btn button-primary">Ecrire un commentaire</button>
+			</div>
 		{% endif %}
-		
-
 
 		<div class="row ">
 
 			<div class="col-lg-8 mt-5 mx-auto create__comment">
-				<h4>Votre commentaire</h4>
+				<h3>Votre commentaire</h3>
 
 				{{ form_start(form) }}
 				{{ form_widget(form) }}
 				
 				<div class="d-flex justify-content-between">
-					<button id="cancel__comment" class="btn btn-primary">Annuler</button>
-					<button type="submit" class="btn btn-primary">Soumettre</button>
+					<button id="cancel__comment" class="btn button-secondary">Annuler</button>
+					<button type="submit" class="btn button-primary">Soumettre</button>
 					<p id="count" class="ms-auto"></p>
 				</div>
-				
 				
 				{{ form_end(form) }}
 			</div>
 		</div>
 	</div>
 
+	{% block javascripts %}
 
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-let map = new mapboxgl.Map({
-container: 'map', // Container ID
-style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-center: [
-{{ event.lat }}, {{ event.lon }}
-], // Starting position [lng, lat]
-zoom: 15.5, // Starting zoom level
-});
-// Create a default Marker and add it to the map.
-const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+		let map = new mapboxgl.Map({
+		container: 'map', // Container ID
+		style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+		center: [
+		{{ event.lat }}, {{ event.lon }}
+		], // Starting position [lng, lat]
+		zoom: 15.5, // Starting zoom level
+		});
+		// Create a default Marker and add it to the map.
+		const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
 	</script>
+	
+	{% endblock %}
+
 {% endblock %}

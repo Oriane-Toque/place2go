@@ -1,0 +1,23 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Email de réinitialisation envoyé
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<section id="register">
+
+			<h2 class="home__title">Vérification</h2>
+			<img src="{{ asset('img/pinmap.png') }}" alt="logo" class="pinmap" draggable="false">
+		<p>
+            Si un compte existe avec votre email, vous recevrez un email qui vous permettra de réinitialiser votre mot de passe.			
+			        Ce lien expirera dans 
+			{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+		</p>
+		<p>Si vous n'avez rien reçu, vérifiez votre boite de spams ou bien 
+			<a href="{{ path('app_forgot_password_request') }}">veuillez réessayer</a>.</p>
+
+		<a class="btn button-primary" href="{{ path('app_home') }}">Retour à l'accueil</a>
+		</section>
+	</div>
+{% endblock %}

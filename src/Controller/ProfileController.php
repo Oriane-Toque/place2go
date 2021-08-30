@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Friendship;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
+use App\Repository\FriendshipRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,8 +27,10 @@ class ProfileController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function show(User $user = null): Response
+	public function show(User $user): Response
 	{
+		$this->denyAccessUnlessGranted('BASIC_ACCESS', $user, "Impossible d'accéder à ce profil");
+
 		return $this->render('profile/show.html.twig', [
 			"user" => $user,
 		]);
@@ -43,12 +48,9 @@ class ProfileController extends AbstractController
 	 */
 	public function profile(EventRepository $eventRepository): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 		// (MVP) je dois récupérer le nom, prénom, email, description du user
 		// TODO (V2) je dois récupérer les notifications au sujet de mes amis
-
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
 
 		// rGet current User
 		$user = $this->getUser();
@@ -78,6 +80,8 @@ class ProfileController extends AbstractController
 	 */
 	public function edit(Request $request, UserPasswordHasherInterface $passwordHasher): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+
 		// je récupère l'utilisateur courant
 		$user = $this->getUser();
 
@@ -87,7 +91,7 @@ class ProfileController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			// Password hash if user is trying to update it
-			if ($form->get('password')->getData() != '') {
+			if (!empty($form->get('password')->getData())) {
 				$hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->getData());
 				$user->setPassword($hashedPassword);
 			}
@@ -104,7 +108,6 @@ class ProfileController extends AbstractController
 		]);
 	}
 
-
 	/**
 	 * Display all events created by the user
 	 * 
@@ -117,9 +120,7 @@ class ProfileController extends AbstractController
 	 */
 	public function showEvents(EventRepository $eventRepository): Response
 	{
-		if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 
 		// Get current User
 		$user = $this->getUser();

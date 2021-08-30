@@ -30,24 +30,25 @@ class UserVoter extends Voter
         /**@var \App\Entity\User $userSubject */
         $userSubject = $subject;
         
-        // if requested user does not exist, return false
+        // if current user does not exist, return false
         if (null === $user) return false;
         
         switch ($attribute) {
             case "BASIC_ACCESS":
+                
+                if (null === $userSubject) return false;
 
                 return true;
-
-            break;
-
-            case "USER_ACCESS":
-
+                
+                break;
+                
+                case "USER_ACCESS":
+                
                 if (!$user === $userSubject)                    return false;
                 if (!$user instanceof UserInterface)            return false;
                 if (!$userSubject->isVerified() === true)       return false;
                 if (!$userSubject->getIsActive() === true)      return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
-
+                if (!$this->security->isGranted('ROLE_USER') || !$this->security->getUser()->getRoles('ROLE_ADMIN'))   return false;
                 return true;
 
             break;
