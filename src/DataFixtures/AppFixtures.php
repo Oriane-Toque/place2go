@@ -51,6 +51,7 @@ class AppFixtures extends Fixture
             $user->setAvatar('https://api.multiavatar.com/' . mt_rand(1,500) . '.png');
             $user->setCity($faker->city());
             $user->setIsActive(true);
+            $user->setIsVerified(true);
 			$user->setBirthday(new DateTimeImmutable('now -' . mt_rand(20,60) . 'years'));
 			$user->setDescription($faker->text(mt_rand(100,500)));
 
