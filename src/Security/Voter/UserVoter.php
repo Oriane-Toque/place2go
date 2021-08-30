@@ -48,7 +48,7 @@ class UserVoter extends Voter
                 if (!$user instanceof UserInterface)            return false;
                 if (!$userSubject->isVerified() === true)       return false;
                 if (!$userSubject->getIsActive() === true)      return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$this->security->isGranted('ROLE_USER') || $this->security->getUser()->getRoles('ROLE_ADMIN'))   return false;
                     
                 return true;
 
