@@ -31,22 +31,24 @@ class UserVoter extends Voter
         $userSubject = $subject;
         
         // if current user does not exist, return false
-        if (null === $user)         return false;
+        if (null === $user) return false;
         
         switch ($attribute) {
             case "BASIC_ACCESS":
                 
+                if (null === $userSubject) return false;
+
                 return true;
                 
                 break;
                 
                 case "USER_ACCESS":
-                    
-                    if (!$user === $userSubject)                    return false;
-                    if (!$user instanceof UserInterface)            return false;
-                    if (!$userSubject->isVerified() === true)       return false;
-                    if (!$userSubject->getIsActive() === true)      return false;
-                    if (!$this->security->isGranted('ROLE_USER'))   return false;
+                
+                if (!$user === $userSubject)                    return false;
+                if (!$user instanceof UserInterface)            return false;
+                if (!$userSubject->isVerified() === true)       return false;
+                if (!$userSubject->getIsActive() === true)      return false;
+                if (!$this->security->isGranted('ROLE_USER'))   return false;
                     
                 return true;
 
