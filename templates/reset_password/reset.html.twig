@@ -4,11 +4,14 @@
 
 {% block body %}
 <div class="container">
-    <h1>Changez votre mot de passe</h1>
+    <section id="login">
+
+    <h2 class="home__title">Changez votre mot de passe</h2>
 
     {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
         <button class="btn button-primary">Modifier</button>
     {{ form_end(resetForm) }}
+    </section>
     </div>
 {% endblock %}

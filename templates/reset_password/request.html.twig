@@ -4,10 +4,14 @@
 
 {% block body %}
     <div class="container">
+      		<section id="login">
+
+			<img src="{{ asset('img/pinmap.png') }}" alt="logo" class="pinmap" draggable="false">
+
     {% for flashError in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
-    <h1>Reinitialisez votre mot de passe</h1>
+    <h2 class="home__title">Reinitialisez votre mot de passe</h2>
 
     {{ form_start(requestForm) }}
         {{ form_row(requestForm.email) }}
@@ -19,6 +23,6 @@
 
         <button class="btn button-primary">Envoyer</button>
     {{ form_end(requestForm) }}
-
+    </section>
     </div>
 {% endblock %}
