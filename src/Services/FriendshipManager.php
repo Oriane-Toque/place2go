@@ -39,19 +39,34 @@ class FriendshipManager
     }
 
     /**
-     * Find a friendship relation between two users
+     * Delete a friendship between two users
      * 
-     * @param User $sender
-     * @param User $receiver
+     * @param User $user
+     * @param User $friend
      *
     */
-    public function get(User $sender, User $receiver)
+    public function delete(User $user, User $friend)
     {
-        $friendship = $this->friendshipRepository->findOneBy(['sender' => $sender, 'receiver' => $receiver]);
+        $friendship = $this->get($user, $friend);
+
+        $this->entityManager->remove($friendship);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * Find a friendship relation between two users
+     * 
+     * @param User $user
+     * @param User $friend
+     *
+    */
+    public function get(User $user, User $friend)
+    {
+        $friendship = $this->friendshipRepository->findOneBy(['sender' => $user, 'receiver' => $friend]);
 
         if (null === $friendship)
         {
-            $friendship = $this->friendshipRepository->findOneBy(['sender' => $receiver, 'receiver' => $sender]);
+            $friendship = $this->friendshipRepository->findOneBy(['sender' => $friend, 'receiver' => $user]);
         }
         return $friendship;
     }
@@ -59,17 +74,17 @@ class FriendshipManager
     /**
      * Find all friendship relation between from a user
      * 
-     * @param User $sender
-     * @param User $receiver
+     * @param User $user
+     * @param User $friend
      *
     */
-    public function getAll(User $sender, User $receiver)
+    public function getAll(User $user, User $friend)
     {
-        $friendship = $this->friendshipRepository->findBy(['sender' => $sender, 'receiver' => $receiver]);
+        $friendship = $this->friendshipRepository->findBy(['sender' => $user, 'receiver' => $friend]);
 
         if (null === $friendship)
         {
-            $friendship = $this->friendshipRepository->findBy(['sender' => $receiver, 'receiver' => $sender]);
+            $friendship = $this->friendshipRepository->findBy(['sender' => $friend, 'receiver' => $user]);
         }
         return $friendship;
     }

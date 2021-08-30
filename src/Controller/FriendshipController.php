@@ -21,13 +21,13 @@ class FriendshipController extends AbstractController
      * @Route("/profile/friends/{id<\d+>}/add", name="app_friend_add", methods={"GET"})
      * @isGranted("ROLE_USER")
      *
-     * @param Request $request
      * @param User $friend
-     * @param FriendshipRepository $friendshipRepository
+     * @param FriendshipManager $friendshipManager
+     * @param Request $request
      *
      * @return Response
      */
-    public function addFriend(Request $request, User $friend, FriendshipManager $friendshipManager): Response
+    public function addFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
     {
         // If not connected
         if (!$this->getUser()) {
@@ -42,29 +42,20 @@ class FriendshipController extends AbstractController
         // Get current User
         $user = $this->getUser();
 
-        // Check if request has already been made
-        /*$friendship = $friendshipRepository->findOneBy([
-            'sender' => $user,
-            'receiver' => $friend,
-        ]);*/
+        // Check if friendship request has not already been made
+        // In this case we create it
         $friendship = $friendshipManager->get($user, $friend);
 
-        // If friendship is new
         if (null === $friendship)
         {   
             $friendshipManager->create($user, $friend);         
-            /*$req = $user->addFriend($friend);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($req);
-            $entityManager->flush();*/
 
             //$this->addFlash('success', 'Votre demande a bien été envoyé !');
             $this->addFlash('success', $friend->getNickname().' a été ajouté à vos amis !');
         } 
         elseif ($friendship->getStatus() == 1)
         {
-            $this->addFlash('success', 'Vous êtes déjà amis !');
+            $this->addFlash('success', 'Vous êtes déjà ami avec ' . $friend->getNickname() . ' !');
         } 
         else
         {
@@ -76,9 +67,13 @@ class FriendshipController extends AbstractController
     }
 
     /**
-     * List all friends
+     * List all friends in the user profile
+     * @isGranted("ROLE_USER")
      *
-    */
+     * @param FriendshipManager $friendshipManager
+     *
+     * @return Response
+     */
     public function friendsList(FriendshipRepository $friendshipRepository): Response
     {
         // If not connected
@@ -94,6 +89,68 @@ class FriendshipController extends AbstractController
         return $this->render('profile/_friend_list.html.twig', [
             'friends' => $friends
         ]);
+    }
+
+    /**
+     * Delete a friend from friendlist
+     * 
+     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET"})
+     * @isGranted("ROLE_USER")
+     * 
+     * @param User $friend
+     * @param FriendshipManager $friendshipManager
+     * @param Request $request
+     * 
+     * @return Response
+     *
+    */
+    public function deleteAction(User $friend, FriendshipManager $friendshipManager, Request $request): Response
+    {
+        // If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Get current User
+        $user = $this->getUser();
+
+        if($friendshipManager->delete($user, $friend))
+
+		$this->addFlash('success', 'Supprimer ' . $friend->getNickname() . ' ? <a href=""');
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
+
+    /**
+     * Delete a friend from friendlist
+     * 
+     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
+     * @isGranted("ROLE_USER")
+     * 
+     * @param User $friend
+     * @param FriendshipManager $friendshipManager
+     * @param Request $request
+     * 
+     * @return Response
+     *
+    */
+    public function deleteFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
+    {
+        // If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Get current User
+        $user = $this->getUser();
+
+        if($friendshipManager->delete($user, $friend))
+
+		$this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
 

@@ -22,25 +22,9 @@ class FriendshipRepository extends ServiceEntityRepository
 
 
     // Return list of friends
-    public function findAllFriends($userId): array
+    public function findAllFriends($userId)
     {
-        /*$entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT fs
-            FROM App\Entity\Friendship fs
-            WHERE (fs.sender = :userId
-            AND fs.status = 1)'
-        )->setParameter('userId', $userId);
-        $receivers = $query->getResult();
-
-        $query = $entityManager->createQuery(
-            'SELECT fs
-            FROM App\Entity\Friendship fs
-            WHERE (fs.receiver = :userId
-            AND fs.status = 1)'
-        )->setParameter('userId', $userId);
-        $senders = $query->getResult();*/
+        $friends = [];
 
         // Find all users who accepted my requests
         $results = $this->createQueryBuilder('f')
@@ -63,19 +47,13 @@ class FriendshipRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
         foreach($results as $result)
         {
             $friends[] = $result->getSender();
         }
 
         return $friends;
-
-        /*return $this->createQueryBuilder('f')
-            ->where('f.sender = :userId OR f.receiver = :userId')
-            ->andwhere('f.status = 1')
-            ->setParameter('userId', $userId)
-            ->getQuery()
-            ->getResult();*/
     }
 
     /**
