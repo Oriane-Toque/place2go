@@ -31,6 +31,15 @@
 			text-align: center;
 			font-family: 'Open Sans', sans-serif;
 		}
+
+		@media screen and (max-width: 768px) {
+			#map {
+				width: 100%;
+				min-height: 350px;
+				height: 100%;
+				margin: 3rem auto 0;
+			}
+		}
 	</style>
 {% endblock %}
 
@@ -51,7 +60,7 @@
 		<section id="list" class="mt-sm-2 mt-md-5">
 
 			<div class="row">
-				<div class="col-sm-12 col-md-8">
+				<div class="col-sm-12 col-lg-7">
 
 					{% for event in events %}
 						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
@@ -131,7 +140,7 @@
 					{% endfor %}
 				</div>
 
-				<div class="col-sm-12 col-md-4 mb-2">
+				<div class="col-sm-12 col-lg-5 mb-2">
 					<div id='map' class=""></div>
 				</div>
 
