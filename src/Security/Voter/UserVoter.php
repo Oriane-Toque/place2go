@@ -32,7 +32,6 @@ class UserVoter extends Voter
         
         // if current user does not exist, return false
         if (null === $user)         return false;
-        if (null === $userSubject)  return false;
         
         switch ($attribute) {
             case "BASIC_ACCESS":
