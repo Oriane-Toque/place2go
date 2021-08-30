@@ -42,17 +42,17 @@
 									</div>
 									<div class="contentProfile__lastExits-infos_actions">
 										{# Bouton pour voir les détails #}
-										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
+										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 											<i class="far fa-eye"></i>
 										</a>
 
 										{# Bouton pour éditer la sortie #}
-										<a class="--edit btn btn-warning btn-floating" href="{{ path("app_event_edit", {id:event.id}) }}" role="button">
+										<a class="--edit btn btn-warning btn-floating" href="{{ path("app_event_edit", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer sortie">
 											<i class="fas fa-pencil-alt"></i>
 										</a>
 
 										{# Bouton pour supprimer la sortie #}
-										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button">
+										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
 											<i class="fas fa-trash-alt"></i>
 										</a>
 									</div>
@@ -95,12 +95,12 @@
 									</div>
 									<div class="contentProfile__lastExits-infos_actions">
 										{# Bouton pour voir les détails #}
-										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button">
+										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 											<i class="far fa-eye"></i>
 										</a>
 
 										{# Bouton pour ne plus participer à la sortie #}
-										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button">
+										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
 											<i class="fas fa-sign-out-alt"></i>
 										</a>
 									</div>
