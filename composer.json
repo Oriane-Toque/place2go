@@ -95,7 +95,10 @@
             "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@db-migrations",
+            "@db-fixtures",
+            "php bin/console cache:clear"
         ],
         "post-update-cmd": [
             "@auto-scripts",
