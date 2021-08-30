@@ -2,20 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Event;
+use DateTimeImmutable;
 use App\Entity\Comment;
 use App\Form\EventType;
 use App\Data\SearchData;
 use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
-use App\Repository\CommentRepository;
 use App\Services\CallApiService;
 use App\Repository\EventRepository;
-use DateTime;
-use DateTimeImmutable;
-use DoctrineExtensions\Query\Mysql\Now;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,6 +79,7 @@ class EventController extends AbstractController
 	 */
 	public function create(Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 		$event = new Event();
 
 		// Create new form associated to entity
@@ -118,6 +115,9 @@ class EventController extends AbstractController
 	 */
 	public function edit(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_EDIT', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Create new form associated to entity
 		$form = $this->createForm(EventType::class, $event);
 		$form->handleRequest($request);
@@ -149,6 +149,8 @@ class EventController extends AbstractController
 	 */
 	public function show(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted("EVENT_SHOW", $event, "Impossible d'effectuer cette action");
+
 		$comment = new Comment();
 
 		$form = $this->createForm(CommentType::class, $comment);
@@ -196,6 +198,9 @@ class EventController extends AbstractController
 	 */
 	public function delete(Event $event, Request $request): Response
 	{
+		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+		$this->denyAccessUnlessGranted('EVENT_DELETE', $event, "Vous n'avez pas les autorisations nécessaires");
+
 		// Remove from BDD
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($event);
