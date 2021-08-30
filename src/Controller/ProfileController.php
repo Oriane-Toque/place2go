@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Friendship;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
+use App\Repository\FriendshipRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -104,7 +107,6 @@ class ProfileController extends AbstractController
 			'form' => $form,
 		]);
 	}
-
 
 	/**
 	 * Display all events created by the user
