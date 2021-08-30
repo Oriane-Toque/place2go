@@ -1624,7 +1624,7 @@
 @media screen and (max-width: 575px) {
 	.container {
 		padding: 0.5rem!important;
-		margin: 0 auto!important;
+		margin: 0!important;
 	}
 
 	.masthead__brand {
@@ -1688,7 +1688,7 @@
 
 @media screen and (min-width: 576px) {
 	.container {
-		margin: 1rem auto!important;
+		padding: 0 1rem!important;
 	}
 
 	.home__title {
@@ -1753,9 +1753,6 @@
 }
 
 @media screen and (min-width: 768px) {
-	.container {
-		margin: 1.5rem auto!important;
-	}
 
 	.descriptionPlace .descriptionPlace__description img {
 		top: 50%;
