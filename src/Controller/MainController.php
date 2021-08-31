@@ -54,4 +54,17 @@ class MainController extends AbstractController {
 			'form' => $form->createView(),
 		]);
 	}
+
+
+	/**
+	 * Team's page
+	 * 
+	 * @Route("/team", name="app__main_team", methods={"GET"})
+	 *
+	 * @return Response
+	 */
+	public function team(): Response
+	{
+		return $this->render('team/team.html.twig');
+	}
 }

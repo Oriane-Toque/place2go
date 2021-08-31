@@ -4,11 +4,14 @@ namespace App\Form;
 
 use App\Data\SearchData;
 use App\Entity\Category;
+use Doctrine\Common\Collections\Collection;
+use PhpParser\ErrorHandler\Collecting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Collection as ConstraintsCollection;
 
 /**
  * Form to handle Events search
@@ -25,8 +28,8 @@ class SearchFormType extends AbstractType
                 ]
             ])
             ->add('categories', EntityType::class, [
-                'required' => false,
                 'class' => Category::class,
+                'required' => false,
                 'expanded' => true,
                 'multiple' => true,
             ]);
