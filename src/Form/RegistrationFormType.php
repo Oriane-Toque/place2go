@@ -116,6 +116,11 @@ class RegistrationFormType extends AbstractType
                             'label' => 'Description',
                         ])
                         ->add('email', EmailType::class)
+												->add('oldpassword', PasswordType::class, [
+													'label' => 'Ancien mot de passe',
+													'mapped' => false,
+													'help' => 'Si vous désirez changer de mot de passe, veuillez renseigner votre ancien mot de passe au préalable !',
+												])
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
                             'invalid_message' => 'Les mots de passe ne correspondent pas.',
@@ -126,7 +131,7 @@ class RegistrationFormType extends AbstractType
                                     new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
                                     new NotCompromisedPassword(),
                                 ],
-                                'label' => 'Mot de passe',
+                                'label' => 'Nouveau mot de passe',
                                 'help' => 'Minimum huit caractères, une lettre, un chiffre et un caractère spécial.'
                             ],
                             'second_options' => [
