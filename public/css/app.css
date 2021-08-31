@@ -12,8 +12,6 @@
 	--secondary-color: #42435F;
 	--hover-color: #0b9e83;
 	--secondary-hover-color: #303146;
-
-
 	--profile-main-color: #10CEAA;
 	--profile-secondary-color: #42435F;
 }
@@ -659,15 +657,12 @@ body {
 	right: 0;
 }
 
-
-
 /*****************************************************************? CATEGORY LIST */
 
 #categoryCarousel .carousel__img {
 	max-height: 600px;
 	-o-object-fit: cover;
 	   object-fit: cover;
-
 }
 
 #categoryCarousel .carousel-title {
@@ -707,7 +702,6 @@ body {
     width: 50%;
     height: 2px;
     background-color: var(--primary-color);
-
 }
 
 #category .category__card {
@@ -1530,8 +1524,8 @@ body {
 	    -ms-transform: translate(-50%, -50%);
 	        transform: translate(-50%, -50%);
 	width: 400px;
-	-webkit-filter: opacity(0.1);
-	        filter: opacity(0.1);
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
 	z-index: -10;
 }
 
@@ -1560,8 +1554,8 @@ body {
         -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
     width: 350px;
-	filter: opacity(0.1);
-	-webkit-filter: opacity(0.1);
+	filter: opacity(0.07);
+	-webkit-filter: opacity(0.07);
 	z-index: -10;
 }
 
@@ -1590,11 +1584,10 @@ body {
 	    -ms-transform: translate(-50%, -50%);
 	        transform: translate(-50%, -50%);
 	width: 500px;
-	-webkit-filter: opacity(0.1);
-	        filter: opacity(0.1);
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
 	z-index: -10;
 }
-
 
 #create .create__form {
 	padding: 1.5rem;
@@ -1737,6 +1730,118 @@ body {
 	filter: drop-shadow( 0px 0px 4px rgba(63, 75, 95, 0.2) );
 }
 
+/*****************************************************************? REPORT */
+
+#report {
+	position: relative;
+	margin: 0 auto;
+}
+
+#report .pinmap {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	    -ms-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+	width: 350px;
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
+	z-index: -10;
+}
+
+#report .report__form {
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#report .report__form #report_message {
+	height: 120px;
+}
+
+/*****************************************************************? REQUEST */
+
+#request {
+	position: relative;
+	margin: 0 auto;
+}
+
+#request .pinmap {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	    -ms-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+	width: 350px;
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
+	z-index: -10;
+}
+
+#request .request__form {
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+/*****************************************************************? CHECK EMAIL */
+
+#checkEmail {
+	position: relative;
+	margin: 0 auto 10rem;
+}
+
+#checkEmail .pinmap {
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	    -ms-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+	width: 350px;
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
+	z-index: -10;
+}
+
+/*****************************************************************? RESET PASSWORD */
+
+#reset {
+	position: relative;
+	margin: 0 auto;
+}
+
+#reset .pinmap {
+	position: absolute;
+	top: 35%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	    -ms-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+	width: 350px;
+	-webkit-filter: opacity(0.07);
+	        filter: opacity(0.07);
+	z-index: -10;
+}
+
+#reset .reset__form {
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 /*****************************************************************? FOOTER */
 
 #footer {
@@ -1835,7 +1940,7 @@ body {
 	/************************************************ HOME  */
 	.home__title {
 		margin: 3rem 0;
-		font-size: 3rem;
+		font-size: 2.5rem;
 	}
 
 	.home__title:after {
@@ -1894,7 +1999,7 @@ body {
 
 	.home__title {
 		margin: 3rem 0;
-		font-size: 3.5rem;
+		font-size: 3rem;
 	}
 
 	/************************************************ HOME  */
@@ -2139,7 +2244,7 @@ body {
 
 	/************************************************ HOME  */
 	.topScore {
-		-ms-grid-columns: (1fr)[3];
+		-ms-grid-columns: repeat(3, 1fr);
 		grid-template-columns: repeat(3, 1fr);
 	}
 
