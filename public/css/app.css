@@ -101,6 +101,10 @@ body {
     box-shadow: inset 0 0 0 1px var(--primary-color);
 }
 
+.form-check .form-check-input{
+	float:none;
+}
+
 .form-check-input[type=checkbox]:checked {
     background-image: none;
     background-color: var(--primary-color);
@@ -908,8 +912,8 @@ body {
 
 #show {
 	margin: 5rem auto 0;
-
 }
+
 #show .show__card {
 	height: 100%;
 	min-height: 350px;
@@ -1331,6 +1335,10 @@ body {
 	border-bottom: solid 5px var(--profile-main-color);
 }
 
+.user__name {
+	text-align: left;
+}
+
 /* classe pour le loader du bouton qui génère l'avatar */
 .button--loading > span {
   visibility: hidden;
@@ -1600,6 +1608,19 @@ body {
 
 #create .create__form #event_description {
 	height: 200px;
+}
+
+#event_event_date .input-group{
+	padding-bottom: 0.3rem;
+}
+
+.col-form-label{
+	padding-top : 0;
+}
+
+#event_event_date_date_month{
+	margin-right: 0.1rem;
+	margin-left: 0.1rem;
 }
 
 /*****************************************************************? TEAM */
@@ -2273,15 +2294,5 @@ body {
 
 	.contentProfile.--public {
 		margin: 2rem 15rem;
-	}
-}
-
-@media screen and (min-width: 1400px) {
-
-	/************************************************ PROFILE  */
-	.contentProfile {
-		-webkit-box-flex: 3;
-		    -ms-flex: 3;
-		        flex: 3;
 	}
 }

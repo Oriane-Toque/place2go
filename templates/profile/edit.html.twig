@@ -1,22 +1,24 @@
-
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Edition profil{% endblock %}
+{% block title %}Edition profil
+{% endblock %}
 
 {% block body %}
+	<div class="container">
+		<div
+			id="profile">
 
-<div id="profile">
+			{# Navigation secondaire du dashboard + informations #}
+			{% include "profile/_nav_aside.html.twig" %}
 
-	{# Navigation secondaire du dashboard + informations #}
-	{% include "profile/_nav_aside.html.twig" %}
-	
-	<section class="contentProfile">
-    <h2>Edition du Profil</h2>
+			<section class="contentProfile">
+				<h2>Edition du Profil</h2>
 
-    {% include 'profile/_form.html.twig' with {'button_label': 'Editer'} %}
+				{% include 'profile/_form.html.twig' with {'button_label': 'Editer'} %}
 
-	</section>
-</div>
+			</section>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
