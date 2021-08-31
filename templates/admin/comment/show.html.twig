@@ -1,0 +1,135 @@
+{% extends "admin/layout/base.html.twig" %}
+
+{% block menu_comment 'active' %}
+
+{% block title %}Commentaire{% endblock %}
+
+
+{% block body %}
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Commentaires</h1>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{{ path('admin_comment_edit', {id: comment.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-trash fa-sm text-white-50"></i> Modifier</a>
+        {# {% if comment.isActive %}
+        <a href="{{ path('admin_comment_desactive', {id: comment.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
+            class="fas fa-ban fa-sm text-white-50"></i> Bloquer</a>
+        {% else %}
+        <a href="{{ path('admin_comment_active', {id: comment.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
+            class="fas fa-ban fa-sm text-white-50"></i> Activer</a>
+        {% endif %} #}
+        <a href="{{ path('admin_comment_delete', {id: comment.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+            class="fas fa-trash fa-sm text-white-50"></i> Supprimer</a>
+    </div>
+</div>
+
+<!-- Item Details Row -->
+<div class="row">
+
+    <!-- Create Box -->
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Détails du commentaire</h6>           
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="comment-details">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Info</h3>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>Auteur</th>
+                                        <td><a href="{{ path('admin_user_show', {id: comment.author.id}) }}">{{ comment.author|capitalize }} ({{ comment.author.nickname|capitalize }})</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sortie</th>
+                                        <td><a href="{{ path('admin_event_show', {id: comment.event.id}) }}">{{ comment.event.title }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>     
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Contenu</h3>
+                            {{ comment.content }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Event Attendants Row -->
+<div class="row">
+
+    <!-- Create Box -->
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">L'auteur du commentaire</h6>
+                
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="event-attendants">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% set users = [comment.author] %}
+                            {{ include("admin/user/_user_list.html.twig", {'users': users }) }} 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Event Attendants Row -->
+<div class="row">
+
+    <!-- Create Box -->
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">La sortie associée</h6>
+                
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="event-attendants">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% set events = [comment.event] %}
+                            {{ include("admin/event/_event_list.html.twig", {'events': events }) }} 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
