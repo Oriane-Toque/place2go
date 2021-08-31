@@ -76,4 +76,15 @@ class MainController extends AbstractController {
 
 		return $this->render("contact/privacy_policy.html.twig");
 	}
+
+	/**
+	 * Display CGU page
+	 *
+	 * @Route("/cgu", name="app_cgu", methods={"GET"})
+	 * @return Response
+	 */
+	public function cgu(): Response {
+
+		return $this->render("contact/cgu.html.twig");
+	}
 }
