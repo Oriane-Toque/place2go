@@ -54,4 +54,15 @@ class MainController extends AbstractController {
 			'form' => $form->createView(),
 		]);
 	}
+
+	/**
+	 * Display legal notice page
+	 *
+	 * @Route("/legal-notice", name="app_legal_notice", methods={"GET", "POST"})
+	 * @return Response
+	 */
+	public function legalNotice(): Response {
+
+		return $this->render("contact/legal_notice.html.twig");
+	}
 }
