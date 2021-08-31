@@ -162,6 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->friendsWithMe = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->reports = new ArrayCollection();
+				$this->avatar = 'uploads/avatar/default-profile.svg';
     }
 
     public function __toString()
