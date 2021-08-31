@@ -29,17 +29,10 @@ class FriendshipController extends AbstractController
      */
     public function addFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
     {
-        // If not connected
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Vous ne pouvez pas accéder à cette page');
+        $this->denyAccessUnlessGranted('USER_ACCESS', $friend, 'Vous ne pouvez pas accéder à cette page');
 
-        // User you want to add cannot be found
-        if (null === $friend) {
-            throw $this->createNotFoundException('Utilisateur introuvable');
-        }
-
-        // Get current User
+           // Get current User
         $user = $this->getUser();
 
         // Check if friendship request has not already been made
