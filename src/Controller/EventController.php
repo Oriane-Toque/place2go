@@ -134,7 +134,6 @@ class EventController extends AbstractController
 		]);
 	}
 
-
 	/**
 	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
 	 * 

@@ -100,9 +100,9 @@ class Event
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity=Report::class, mappedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="event")
      */
-    private $report;
+    private $reports;
 
     public function __construct()
     {
@@ -110,6 +110,7 @@ class Event
         $this->categories = new ArrayCollection();
         $this->isActive = true;
         $this->comments = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,24 +310,32 @@ class Event
         return $this;
     }
 
-    public function getReport(): ?Report
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
     {
-        return $this->report;
+        return $this->reports;
     }
 
-    public function setReport(?Report $report): self
+    public function addReport(Report $report): self
     {
-        // unset the owning side of the relation if necessary
-        if ($report === null && $this->report !== null) {
-            $this->report->setEvent(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($report !== null && $report->getEvent() !== $this) {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
             $report->setEvent($this);
         }
 
-        $this->report = $report;
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getEvent() === $this) {
+                $report->setEvent(null);
+            }
+        }
 
         return $this;
     }
