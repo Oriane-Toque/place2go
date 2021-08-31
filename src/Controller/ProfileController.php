@@ -91,9 +91,12 @@ class ProfileController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			// Password hash if user is trying to update it
-			if (!empty($form->get('password')->getData())) {
+			// si ancien mdp (et correspondant au mdp user) + new mdp transmis
+			if (!empty($form->get('oldpassword')->getData()) && !empty($form->get('password')->getData()) && $passwordHasher->isPasswordValid($user, $form->get('oldpassword')->getData())) {
 				$hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->getData());
 				$user->setPassword($hashedPassword);
+
+				$this->addFlash('success', 'Mot de passe modifié !');
 			}
 
 			$this->getDoctrine()->getManager()->flush();
