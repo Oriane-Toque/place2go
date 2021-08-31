@@ -6,15 +6,22 @@
 	<div class="container">
 		<section id="reset">
 
-			<h2 class="home__title">Changez votre mot de passe</h2>
+			<div class="row">
+				<div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
 
-			{{ form_start(resetForm) }}
+					<h2 class="home__title">Changez votre mot de passe</h2>
 
-                {{ form_row(resetForm.plainPassword) }}
-                <button class="btn button-primary">Modifier</button>
+					{{ form_start(resetForm, {attr: {class: 'reset__form'}}) }}
 
-			{{ form_end(resetForm) }}
-            
+						{{ form_row(resetForm.plainPassword) }}
+
+						<button type="submit" class="btn button-primary mt-3">Modifier</button>
+
+					{{ form_end(resetForm) }}
+
+				</div>
+			</div>
+
 		</section>
 	</div>
 {% endblock %}
