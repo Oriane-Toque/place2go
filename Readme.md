@@ -82,11 +82,12 @@ npm run build
 
 #### Webpack features
 
-Place 2 go is also using :
+Place 2 go is also using with webpack :
 
 * Sass-Loader
 * Sass
-* 
+* PostCSS
+* Autoprefixer
 
 <!-- CONTACT -->
 ## Project Team
@@ -106,6 +107,7 @@ Fred **fred@gmail.com**
 ## Licence
 
 _Code propriétaire_
+Toute reproduction est explicetement interdite sans l'accord de tous les créateurs du projet.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
