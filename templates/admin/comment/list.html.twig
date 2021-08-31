@@ -1,14 +1,14 @@
 {% extends "admin/layout/base.html.twig" %}
 
-{% block menu_event 'active' %}
+{% block menu_comment 'active' %}
 
-{% block title 'Sorties' %}
+{% block title 'Commentaires' %}
 
 {% block body %}
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Sorties</h1>
+    <h1 class="h3 mb-0 text-gray-800">Commentaires</h1>
 </div>
 
 <!-- Content Row -->
@@ -42,11 +42,13 @@
             <!-- Card Header - Dropdown -->
             <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Liste des sorties</h6>            
+                <h6 class="m-0 font-weight-bold text-primary">Liste des commentaires</h6>            
             </div>
             <!-- Card Body -->
-            <div class="card-body">        
-                {{ include("admin/event/_event_list.html.twig", {'events': events }) }} 
+            <div class="card-body">
+                <div class="events-list">        
+                {{ include("admin/comment/_comment_list.html.twig", {'comments': comments }) }} 
+                </div>
             </div> 
         </div>
     </div>

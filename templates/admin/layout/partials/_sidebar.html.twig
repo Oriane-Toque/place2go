@@ -77,7 +77,7 @@
 
     <!-- Nav Item - Comments Menu -->
     <li class="nav-item {% block menu_comment %}{% endblock %}">
-        <a class="nav-link" href="#"><i class="fas fa-fw fa-comments"></i><span>Commentaires</span></a>
+        <a class="nav-link" href="{{ path('admin_comment_list') }}"><i class="fas fa-fw fa-comments"></i><span>Commentaires</span></a>
     </li>
 
     <!-- Nav Item - Signalments Menu -->
@@ -104,7 +104,6 @@
             </div>
         </div>
     </li>
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
