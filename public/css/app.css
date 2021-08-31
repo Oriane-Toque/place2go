@@ -45,12 +45,12 @@ p {
 	text-align: justify;
 }
 
-a, a:visited {
-	color: var(--secondary-color);
+.pages a, .pages a:visited {
+	color: var(--primary-color);
 }
 
-a:hover, a:focus {
-	color: var(--secondary-hover-color);
+.pages a:hover, .pages a:focus {
+	color: var(--hover-color);
 }
 
 /*****************************************************************? CUSTOM CLASS */
