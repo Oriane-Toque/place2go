@@ -4,12 +4,40 @@
 
 {% block title %}{{ event.title }}{% endblock %}
 
+{% block stylesheets %}
+
+{# MAPBOX #}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+{# MAPBOX #}
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+    let map = new mapboxgl.Map({
+        container: 'map', // Container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+        center: [{{ event.lat }}, {{ event.lon }}], // Starting position [lng, lat]
+        zoom: 15.5, // Starting zoom level
+    });
+    // Create a default Marker and add it to the map.
+    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+</script>
+
+{% endblock %}
+
 {% block body %}
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Sorties</h1>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{{ path('admin_event_edit', {id: event.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-trash fa-sm text-white-50"></i> Modifier</a>
         {% if event.isActive %}
         <a href="{{ path('admin_event_desactive', {id: event.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i
             class="fas fa-ban fa-sm text-white-50"></i> Bloquer</a>
@@ -31,23 +59,15 @@
             <!-- Card Header - Dropdown -->
             <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Détails de la sortie</h6>
-                
+                <h6 class="m-0 font-weight-bold text-primary">Détails de la sortie</h6>           
             </div>
             <!-- Card Body -->
             <div class="card-body">
                 <div class="event-details">
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
                             <h2>{{ event.title }}</h2>
-                        </div>
-                        <div class="col-md-6">
-                            {% if event.isActive %}
-                            <button type="button" class="btn btn-success">Actif</button>
-                            {% else %}
-                            <button type="button" class="btn btn-danger">Désactivé</button>
-                            {% endif %}
                         </div>
                     </div>
 
@@ -56,6 +76,16 @@
                             <h3>Info</h3>
                             <table class="table table-hover">
                                 <tbody>
+                                     <tr>
+                                        <th>Etat</th>
+                                        <td>
+                                            {% if event.isActive %}
+                                            <span class="badge bg-success">Activée</span>
+                                            {% else %}
+                                            <span class="badge bg-danger">Désactivée</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th>Organisateur</th>
                                         <td>{{ event.author }}</td>
@@ -69,7 +99,7 @@
                                         <td>{{ event.eventDate|date('d/m/Y H:i') }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nbre max participants</th>
+                                        <th>Nbre participants</th>
                                         <td>{{ event.attendants|length }}/{{ event.maxAttendants }}</td>
                                     </tr>
                                     <tr>
@@ -83,7 +113,7 @@
                             {{ event.description }}
                         </div>
                         <div class="col-md-6">
-                            La carte ici
+                            <div id='map' class="w-100 h-100"></div>
                         </div>
                     </div>
                 </div>
@@ -140,7 +170,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            Liste des commentaires associés à la sortie
+                            {{ include("admin/comment/_comment_list.html.twig", {'comments': event.comments }) }}
                         </div>
                     </div>
 

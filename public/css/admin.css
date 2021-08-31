@@ -24,7 +24,7 @@
   --white: #fff;
   --gray: #858796;
   --gray-dark: #5a5c69;
-  --primary: #4e73df;
+  --primary: #42435f;
   --secondary: #858796;
   --success: #1cc88a;
   --info: #36b9cc;
@@ -10677,6 +10677,10 @@ a:focus {
 
 .sidebar-light #sidebarToggle:hover {
   background-color: #dddfeb;
+}
+
+.sidebar-dark {
+  background-color: var(--primary);
 }
 
 .sidebar-dark .sidebar-brand {

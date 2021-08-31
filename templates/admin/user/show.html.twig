@@ -38,16 +38,9 @@
             <div class="card-body">
                 <div class="user-details">
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2>{{ user.firstname }} {{ user.lastname }}</h2>
-                        </div>
-                        <div class="col-md-6">
-                            {% if user.isActive %}
-                            <button type="button" class="btn btn-success">Actif</button>
-                            {% else %}
-                            <button type="button" class="btn btn-danger">Désactivé</button>
-                            {% endif %}
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <h2>{{ user.firstname }} {{ user.lastname }} ({{ user.nickname }})</h2>
                         </div>
                     </div>
 
@@ -56,6 +49,16 @@
                             <h3>Info</h3>
                             <table class="table table-hover">
                                 <tbody>
+                                    <tr>
+                                        <th>Etat</th>
+                                        <td>
+                                        {% if user.isActive %}
+                                        <span class="badge bg-success">Activé</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Désactivé</span>
+                                        {% endif %}
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th>Ville</th>
                                         <td>{{ user.city }}</td>
@@ -82,9 +85,9 @@
                             <h3>Description</h3>
                             {{ user.description }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 text-center">
                             {% if 'http' in user.avatar %}
-                            <img src="{{ user.avatar }}" class="img-fluid">
+                            <img src="{{ user.avatar }}" width="300" class="img-fluid">
                             {% else %}
                             <img src="{{ asset('uploads/avatar/') ~ user.avatar ?? 'default-profile.svg' }}" class="img-fluid">
                             {% endif %}
