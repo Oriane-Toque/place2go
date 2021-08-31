@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+	{{ parent() }}
 	<style>
 		#map {
 			width: 100%;
@@ -33,7 +34,7 @@
 						</div>
 
 						<div class="show__card_content">
-								<div class="show__card_content-details">
+							<div class="show__card_content-details">
 								<div class="show__card_content-author">
 									<i class="fas fa-caret-right"></i>
 									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">{{ event.author.nickname }}</a>
@@ -107,9 +108,9 @@
 				</div>
 
 			</div>
-			
+
 			<h3 class="mt-5 mb-2 text-center">Commentaires</h3>
-			
+
 			<div class="row">
 
 				{% for comment in event.comments %}
@@ -121,10 +122,11 @@
 							<div class="show__comments_content">
 								<div class="show__comment_header">
 									Ecrit par
-									<span class="fw-bold">{{ comment.author.nickname }}</span>, 
+									<span class="fw-bold">{{ comment.author.nickname }}</span>,
 									{% if event.author.id is same as comment.author.id %}
-									<span class="event__author">(Organisateur),</span>
-									{% endif %} le
+										<span class="event__author">(Organisateur),</span>
+									{% endif %}
+									le
 									{{ comment.createdAt | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
 								</div>
 								<div class="show__comment_content pe-4">
@@ -155,19 +157,17 @@
 
 				{{ form_start(form) }}
 				{{ form_widget(form) }}
-				
+
 				<div class="d-flex justify-content-between">
 					<button id="cancel__comment" class="btn button-secondary">Annuler</button>
 					<button type="submit" class="btn button-primary">Soumettre</button>
 					<p id="count" class="ms-auto"></p>
 				</div>
-				
+
 				{{ form_end(form) }}
 			</div>
 		</div>
 	</div>
-
-	{% block javascripts %}
 
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
@@ -182,7 +182,5 @@
 		// Create a default Marker and add it to the map.
 		const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
 	</script>
-	
-	{% endblock %}
 
 {% endblock %}
