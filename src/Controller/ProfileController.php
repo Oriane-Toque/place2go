@@ -128,7 +128,7 @@ class ProfileController extends AbstractController
 		// All created events by the user ordered by date
 		$authorEvents = $eventRepository->findLastAuthorEvents($user->getId());
 
-		return $this->render('profile/eventslist.html.twig', [
+		return $this->render('profile/historical.html.twig', [
 			"user" => $user,
 			"userEvents" => $authorEvents,
 		]);
