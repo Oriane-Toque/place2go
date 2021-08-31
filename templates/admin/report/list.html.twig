@@ -8,7 +8,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">Signalements en Cours</h1>
+		<h1 class="h3 mb-0 text-gray-800">Signalements</h1>
 	</div>
 
 	<!-- Content Row -->
@@ -44,7 +44,7 @@
 				class="card shadow mb-4">
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">Liste des signalements</h6>
+					<h6 class="m-0 font-weight-bold text-primary">Liste des signalements {% if app.request.attributes.get('_route') is same as('admin_report_list') %}en cours{% else %}traités{% endif %}</h6>
 
 				</div>
 				<!-- Card Body -->
@@ -87,7 +87,7 @@
 											{{ report.event.title }}
 										</td>
 										<td>{{ report.type|capitalize }}</td>
-										<td>{% if report.status is same as(false) %}En cours{% endif %}Traité</td>
+										<td>{% if report.status is same as(false) %}En cours{% else %}Traité{% endif %}</td>
 										<td>{{ report.createdAt|date('d/m/Y') }}</td>
 										<td>
 											{# Voir les détails #}
@@ -96,12 +96,16 @@
 											</a>
 											{% if app.request.attributes.get('_route') is same as('admin_report_list') %}
 												{# Archiver/Traiter #}
-												<a href="#" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Traiter">
+												<a href="{{ path('admin_report_status', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut traité">
 													<i class="fas fa-check-square text-success"></i>
 												</a>
 											{% else %}
+												{# Remettre en cours #}
+												<a href="{{ path('admin_report_status', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut en cours">
+													<i class="fas fa-undo-alt text-warning"></i>
+												</a>
 												{# Supprimer #}
-												<a href="#" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
+												<a href="{{ path('admin_report_delete', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
 													<i class="fas fa-trash-alt text-danger"></i>
 												</a>
 											{% endif %}
