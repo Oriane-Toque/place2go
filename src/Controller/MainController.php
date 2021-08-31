@@ -54,4 +54,49 @@ class MainController extends AbstractController {
 			'form' => $form->createView(),
 		]);
 	}
+
+	/**
+	 * Display legal notice page
+	 *
+	 * @Route("/legal-notice", name="app_legal_notice", methods={"GET"})
+	 * @return Response
+	 */
+	public function legalNotice(): Response {
+
+		return $this->render("contact/legal_notice.html.twig");
+	}
+
+	/**
+	 * Display privacy policy page
+	 *
+	 * @Route("/privacy_policy", name="app_privacy_policy", methods={"GET"})
+	 * @return Response
+	 */
+	public function privacyPolicy(): Response {
+
+		return $this->render("contact/privacy_policy.html.twig");
+	}
+
+	/**
+	 * Display CGU page
+	 *
+	 * @Route("/cgu", name="app_cgu", methods={"GET"})
+	 * @return Response
+	 */
+	public function cgu(): Response {
+
+		return $this->render("contact/cgu.html.twig");
+  }
+
+	/**
+	 * Team's page
+	 * 
+	 * @Route("/team", name="app__main_team", methods={"GET"})
+	 *
+	 * @return Response
+	 */
+	public function team(): Response
+	{
+		return $this->render('team/team.html.twig');
+	}
 }
