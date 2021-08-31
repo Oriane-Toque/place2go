@@ -48,11 +48,26 @@ class ReportController extends AbstractController {
 			'reports' => $reports,
 		]);
 	}
+	
+	/**
+	 * Page détail d'un signalement
+	 *
+	 * @Route("/admin/reports/{id<\d+>}", name="admin_report_show", methods={"GET"})
+	 *
+	 * @param Report $report
+	 * @return Response
+	 */
+	public function show(Report $report): Response {
+
+		return $this->render('admin/report/show.html.twig', [
+			'report' => $report,
+		]);
+	}
 
 	/**
 	 * Change le statut d'un signalement (en cours/traité)
 	 *
-	 * @Route("/admin/reports/{id}/status", name="admin_report_status", methods={"GET"})
+	 * @Route("/admin/reports/{id<\d+>}/status", name="admin_report_status", methods={"GET"})
 	 * @param Report $report
 	 * @param EntityManagerInterface $em
 	 * @param Request $request
@@ -75,8 +90,13 @@ class ReportController extends AbstractController {
 	 * Supprimer un signalement
 	 *
 	 * @Route("/admin/report/{id<\d+>}/delete", name="admin_report_delete", methods={"GET"})
+	 *
+	 * @param Report $report
+	 * @param EntityManagerInterface $em
+	 * @param Request $request
+	 * @return RedirectResponse
 	 */
-	public function delete(Report $report, EntityManagerInterface $em, Request $request) {
+	public function delete(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse {
 
 		$em->remove($report);
 		$em->flush();

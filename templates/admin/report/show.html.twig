@@ -1,0 +1,96 @@
+{% extends "admin/layout/base.html.twig" %}
+
+{% block menu_report 'active' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Signalements</h1>
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			{% if app.request.attributes.get('_route') is same as('admin_report_list') %}
+				{# Archiver/Traiter #}
+				<a href="{{ path('admin_report_status', {id: report.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut traité">
+					<i class="fas fa-check-square"></i>Marquer traité
+				</a>
+			{% else %}
+				{# Remettre en cours #}
+				<a href="{{ path('admin_report_status', {id: report.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut en cours">
+					<i class="fas fa-undo-alt"></i>Marquer en cours
+				</a>
+				{# Supprimer #}
+				<a href="{{ path('admin_report_delete', {id: report.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
+					<i class="fas fa-trash-alt"></i>Supprimer
+				</a>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Report Details Row -->
+	<div
+		class="row">
+
+		<!-- Create Box -->
+		<div class="col-12">
+			<div
+				class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">Détails du signalements</h6>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body">
+					<div class="event-details">
+
+						<div class="row mb-3">
+							<div class="col-md-12">
+								<h2>{{ report.user }} signalé(e) pour {{ report.type }}</h2>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<h3>Info</h3>
+								<table class="table table-hover">
+									<tbody>
+										<tr>
+											<th>Auteur du signalement</th>
+											<td>{{ report.author }}</td>
+										</tr>
+										<tr>
+											<th>Utilisateur signalé</th>
+											<td>{{ report.user }}</td>
+										</tr>
+										<tr>
+											<th>Sortie signalée</th>
+											<td>{% if report.event %}<a href="{{ path('admin_event_show', {id: report.event.id}) }}">{{ report.event.title }}</a>{% else %}Pas préciser {% endif %}</td>
+										</tr>
+										<tr>
+											<th>Type du signalement</th>
+											<td>{{ report.type }}</td>
+										</tr>
+										<tr>
+											<th>Statut</th>
+											<td>{% if report.status is same as(true) %}Traité{% else %}En cours{% endif %}</td>
+										</tr>
+										<tr>
+											<th>Date du signalement</th>
+											<td>{{ report.createdAt|date('d/m/Y') }}</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<h3>Message</h3>
+								{{ report.message }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}
