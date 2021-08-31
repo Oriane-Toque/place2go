@@ -19,7 +19,6 @@
           {# ajouter aux amis #}
 					<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Ajouter à ses amis</a>
           {# signaler l'utilisateur #}
-					<a href="#" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Ajouter à ses amis</a>
 					{% if is_granted('USER_ACCESS', app.user) and app.user.id != user.id %}
 						<a href="{{ path('app_report_user', {id:user.id}) }}" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Signaler</a>
 					{% endif %}

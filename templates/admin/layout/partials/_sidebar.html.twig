@@ -81,8 +81,19 @@
     </li>
 
     <!-- Nav Item - Signalments Menu -->
-    <li class="nav-item {% block menu_signalment %}{% endblock %}">
-        <a class="nav-link" href="#"><i class="fas fa-fw fa-bullhorn"></i><span>Signalements</span></a>
+		<li class="nav-item {% block menu_report %}{% endblock %}">
+        <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseReports"
+            aria-expanded="true" aria-controls="collapseReports">
+            <i class="fas fa-fw fa-bullhorn"></i>
+            <span>Signalements</span>
+        </a>
+        <div id="collapseReports" class="collapse" aria-labelledby="headingReports" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Signalements</h6>
+                <a class="collapse-item" href="{{ path('admin_report_list') }}">Signalements en Cours</a>
+                <a class="collapse-item" href="#">Signalements Traités</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->

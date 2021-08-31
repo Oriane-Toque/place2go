@@ -44,20 +44,20 @@ class Report
 
      /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Event::class, inversedBy="report", cascade={"persist", "remove"})
-     */
-    private $event;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports_author")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="reports")
+     */
+    private $event;
 
     public function __construct()
     {
