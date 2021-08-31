@@ -1671,9 +1671,14 @@ p {
 	
 	transform-style: preserve-3d;
 	transform: perspective(1000px);
+	transition: 0.4s all linear;
 }
 
 #team .team_cards .team__card:hover {
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
 	box-shadow: 0 10px 20px 0 rgba(0,0,0,.2);
 }
 
