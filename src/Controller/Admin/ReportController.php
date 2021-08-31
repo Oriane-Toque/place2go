@@ -48,7 +48,7 @@ class ReportController extends AbstractController {
 			'reports' => $reports,
 		]);
 	}
-	
+
 	/**
 	 * Page détail d'un signalement
 	 *
@@ -77,8 +77,12 @@ class ReportController extends AbstractController {
 
 		if($report->getStatus() === false){
 			$report->setStatus(true);
+
+			$this->addFlash('success', 'Signalement traité !');
 		} else {
 			$report->setStatus(false);
+
+			$this->addFlash('success', 'Signalement en cours de traitement !');
 		} 
 
 		$em->flush();
@@ -101,6 +105,8 @@ class ReportController extends AbstractController {
 		$em->remove($report);
 		$em->flush();
 
-		return $this->redirect($request->headers->get('referer'));
+		$this->addFlash('success', 'Signalement supprimé');
+
+		return $this->redirectToRoute('admin_report_list');
 	}
 }

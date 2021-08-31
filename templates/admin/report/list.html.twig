@@ -8,7 +8,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">Signalements</h1>
+		<h1 class="h3 mb-0 text-gray-800">Signalements {% if app.request.attributes.get('_route') is same as('admin_report_list') %}en cours{% else %}traités{% endif %}</h1>
 	</div>
 
 	<!-- Content Row -->
@@ -81,10 +81,14 @@
 											{{ report.user }}
 										</td>
 										<td>
+										{% if report.event %}
 											<a href="{{ path('admin_event_show', {id: report.event.id}) }}" data-mdb-toggle="tooltip" class="me-2" data-mdb-placement="bottom" title="Voir">
 												<i class="fas fa-sign-in-alt"></i>
 											</a>
 											{{ report.event.title }}
+										{% else %}
+											Pas précisée
+										{% endif %}
 										</td>
 										<td>{{ report.type|capitalize }}</td>
 										<td>{% if report.status is same as(false) %}En cours{% else %}Traité{% endif %}</td>
