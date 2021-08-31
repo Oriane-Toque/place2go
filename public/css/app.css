@@ -1833,10 +1833,15 @@
 		    -ms-flex-align: center;
 		        align-items: center;
 	}
+
+	.descriptionPlace .descriptionPlace__picture img {
+		height: 290px;
+	}
 	
 	.descriptionPlace .descriptionPlace__description img {
 		left: 50%;
-		top: 20%;
+		top: 30%;
+		height: 450px;
 	}
 
 	.descriptionPlace .descriptionPlace__description {
@@ -1886,7 +1891,9 @@
 
 	.descriptionPlace .descriptionPlace__picture img {
 		margin: 0 auto;
-		width: 100%;
+		width: 90%;
+		display: flex;
+		justify-content: center;
 	}
 
 	.descriptionPlace .descriptionPlace__description p {
@@ -1935,6 +1942,7 @@
 	.descriptionPlace .descriptionPlace__description img {
 		top: 50%;
 		left: 50%;
+		height: 500px;
 	}
 }
 
