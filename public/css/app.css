@@ -1164,6 +1164,7 @@ p {
 
 .dashAction__item>p {
 	margin: 0;
+	text-align: center;
 }
 
 .dashAction.--mobile .dashAction__item-infos_details {
