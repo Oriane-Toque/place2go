@@ -45,6 +45,18 @@ body {
 
 }
 
+p {
+	text-align: justify;
+}
+
+.pages a, .pages a:visited {
+	color: var(--primary-color);
+}
+
+.pages a:hover, .pages a:focus {
+	color: var(--hover-color);
+}
+
 /*****************************************************************? CUSTOM CLASS */
 
 .button-primary {
@@ -72,6 +84,10 @@ body {
 	padding: 0.4rem 0.6rem;
     -webkit-box-shadow: 0 0 15px rgb(0 0 0 / 35%);
             box-shadow: 0 0 15px rgb(0 0 0 / 35%);
+}
+
+.text-justify {
+	text-align: justify;
 }
 
 /*****************************************************************? FLASH MESSAGES */
