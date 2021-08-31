@@ -58,11 +58,22 @@ class MainController extends AbstractController {
 	/**
 	 * Display legal notice page
 	 *
-	 * @Route("/legal-notice", name="app_legal_notice", methods={"GET", "POST"})
+	 * @Route("/legal-notice", name="app_legal_notice", methods={"GET"})
 	 * @return Response
 	 */
 	public function legalNotice(): Response {
 
 		return $this->render("contact/legal_notice.html.twig");
+	}
+
+	/**
+	 * Display privacy policy page
+	 *
+	 * @Route("/privacy_policy", name="app_privacy_policy", methods={"GET"})
+	 * @return Response
+	 */
+	public function privacyPolicy(): Response {
+
+		return $this->render("contact/privacy_policy.html.twig");
 	}
 }
