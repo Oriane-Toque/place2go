@@ -96,7 +96,6 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "@db-migrations",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
