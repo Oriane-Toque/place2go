@@ -12,6 +12,7 @@ use App\Services\GeoJson;
 use App\Form\SearchFormType;
 use App\Services\CallApiService;
 use App\Repository\EventRepository;
+use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,7 +73,7 @@ class EventController extends AbstractController
 	 * 
 	 * @return Response
 	 */
-	public function create(Request $request): Response
+	public function create(Request $request, FriendshipManager $friendshipManager): Response
 	{
 		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 		$event = new Event();
@@ -89,6 +90,9 @@ class EventController extends AbstractController
 			$entityManager->flush();
 
 			$this->addFlash('success', 'Votre sortie à bien été créée !');
+
+			// Email all my friends
+			$friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),
@@ -133,7 +137,6 @@ class EventController extends AbstractController
 			'form' => $form->createView(),
 		]);
 	}
-
 
 	/**
 	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})

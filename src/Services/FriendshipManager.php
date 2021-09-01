@@ -2,20 +2,27 @@
 
 namespace App\Services;
 
+use App\Entity\Event;
 use App\Entity\Friendship;
 use App\Entity\User;
 use App\Repository\FriendshipRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 
 class FriendshipManager
 {
+    private $mailer;
     private $entityManager;
     private $friendshipRepository;
 
-    public function __construct(FriendshipRepository $friendshipRepository, EntityManagerInterface $entityManager)
+    public function __construct(FriendshipRepository $friendshipRepository, EntityManagerInterface $entityManager, MailerInterface $mailer)
     {
         $this->friendshipRepository = $friendshipRepository;
         $this->entityManager = $entityManager;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -87,6 +94,38 @@ class FriendshipManager
             $friendship = $this->friendshipRepository->findBy(['sender' => $friend, 'receiver' => $user]);
         }
         return $friendship;
+    }
+
+    /**
+     * Notify all friends of an user
+     * 
+     * @param User $user
+     * @param Event $event
+     * 
+    */
+    public function eventAllFriendsNotifier(User $user, Event $event)
+    {
+        // Get all friends
+        $friends = $this->friendshipRepository->findAllFriends($user);
+
+        // Init the email to send
+        $email = (new TemplatedEmail())
+            ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
+            ->subject('Nouvelle sortie de ' . $user->getNickname())
+            ->htmlTemplate('event/friends_notifier_email.html.twig')
+            ->context([
+                'user' => $user,
+                'event' => $event,
+            ])
+        ;
+
+        // Send email to all friends
+        foreach($friends as $friend)
+        {
+            $email->to($friend->getEmail());
+            $this->mailer->send($email);
+        }
+
     }
 
 }
