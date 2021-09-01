@@ -97,6 +97,7 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
+            "@CkEditor",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
@@ -112,6 +113,10 @@
         "db-reset": [
             "php bin/console doctrine:database:drop --force",
             "php bin/console doctrine:database:create"
+        ],
+        "@CkEditor": [
+            "php bin/console ckeditor:install",
+            "php bin/console assets:install public"
         ]
     },
     "conflict": {
