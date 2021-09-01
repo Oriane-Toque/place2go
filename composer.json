@@ -98,7 +98,7 @@
             "@auto-scripts",
             "@db-reset",
             "@db-migrations",
-            "db-fixtures",
+            "@db-fixtures",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
