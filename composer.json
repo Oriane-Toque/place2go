@@ -98,7 +98,6 @@
         "post-install-cmd": [
             "@auto-scripts",
             "@CkEditor",
-            "npm run build",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
