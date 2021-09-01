@@ -120,9 +120,14 @@ class MainController extends AbstractController {
 
 		$notif = $friendshipManager->eventAllFriendsNotifier($this->getUser(), $events[0]);
 		
-		if($notif){
-			dd($notif);
+		
+		if ($notif === true) {
+			dump('Votre sortie à bien été créée et vos amis ont été notifié par email !');
 		}
+		else {
+			dump('Votre sortie à bien été créée ! '. $notif);
+		}
+
 
 		return $this->render("event/friends_notifier_email_test.html.twig", [
 			'user' => $this->getUser(),

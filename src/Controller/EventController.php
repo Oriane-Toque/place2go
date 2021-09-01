@@ -89,10 +89,15 @@ class EventController extends AbstractController
 			$entityManager->persist($event);
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Votre sortie à bien été créée !');
-
 			// Email all my friends
-			$friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
+			$notif = $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
+
+            if ($notif === true) {
+                $this->addFlash('success', 'Votre sortie à bien été créée et vos amis ont été notifié par email !');
+            }
+			else {
+                $this->addFlash('success', 'Votre sortie à bien été créée ! ' . $notif);
+            }
 
 			return $this->redirectToRoute('app_event_show', [
 				'id' => $event->getId(),

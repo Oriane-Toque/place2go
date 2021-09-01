@@ -119,6 +119,8 @@ class FriendshipManager
             ])
         ;
 
+        if(count($friends) == 0) return 'Aucune notification envoyée';
+
         // Send email to all friends
         foreach($friends as $friend)
         {
@@ -128,7 +130,7 @@ class FriendshipManager
             } 
             catch (TransportExceptionInterface $e)
             {
-                return false;
+                return 'Vos amis n\'ont pas pu être notifié';
             }
         }
 
