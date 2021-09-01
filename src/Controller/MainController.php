@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
+use App\Repository\EventRepository;
+use App\Services\FriendshipManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,10 +85,10 @@ class MainController extends AbstractController {
 	 * @Route("/cgu", name="app_cgu", methods={"GET"})
 	 * @return Response
 	 */
-	public function cgu(): Response {
-
+	public function cgu(): Response 
+	{
 		return $this->render("contact/cgu.html.twig");
-  }
+  	}
 
 	/**
 	 * Team's page
@@ -99,4 +101,23 @@ class MainController extends AbstractController {
 	{
 		return $this->render('team/team.html.twig');
 	}
+
+	// /**
+	//  * Display email template
+	//  *
+	//  * @Route("/template", name="app_template", methods={"GET"})
+	//  * 
+	//  * @return Response
+	//  */
+	// public function template(EventRepository $eventRepository, FriendshipManager $friendshipManager): Response
+	// {
+	// 	$events = $eventRepository->findAll();
+
+	// 	$friendshipManager->eventAllFriendsNotifier($this->getUser(), $events[0]);
+
+	// 	return $this->render("event/friends_notifier_email.html.twig", [
+	// 		'user' => $this->getUser(),
+	// 		'event' => $events[0]
+	// 	]);
+	// }
 }
