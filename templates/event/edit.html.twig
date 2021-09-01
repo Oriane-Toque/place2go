@@ -2,11 +2,8 @@
 
 {% block title 'Modifier une sortie' %}
 
-{% block menu_events %}active
-{% endblock %}
-
-{% block body %}
-
+{% block stylesheets %}
+	{{ parent() }}
 	<style>
 		.mapboxgl-ctrl-geocoder,
 		.mapboxgl-ctrl-geocoder .suggestions {
@@ -22,36 +19,38 @@
 			width: 100%;
 		}
 	</style>
+{% endblock %}	
+
+{% block body %}
+	
 	<div class="container">
 		<div id="profile">
 			{# Navigation secondaire du dashboard + informations #}
 			{% include "profile/_nav_aside.html.twig" %}
 
-			{# Contenu du profil #}
-			<div class="contentProfile">
+		{# Contenu du profil #}
+		<div class="contentProfile">
 
-				<div class="container-xl">
-					<div class="mb-4">
-						<h2 class="m-0">
-							<i class="fa fa-edit mr-2 mt-3"></i>Modifier une sortie</h2>
-					</div>
+			<div class="container">
+				<div class="mb-4">
+					<h2 class="m-0">
+						<i class="fa fa-edit mr-2"></i>Modifier une sortie</h2>
+				</div>
 
-					<div class="row">
-						<div class="col-12">
-							{{ include("event/_event_form.html.twig", {button_label:'Modifier ma sortie'}) }}
-						</div>
+				<div class="row">
+					<div class="col-12">
+						{{ include("event/_event_form.html.twig", {button_label:'Modifier ma sortie'}) }}
 					</div>
 				</div>
 			</div>
+
 		</div>
+
 	</div>
 
 	<script>
-	// TO MAKE THE MAP APPEAR YOU MUST
-	// ADD YOUR ACCESS TOKEN FROM
-	// https://account.mapbox.com
-	mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-	const map = new mapboxgl.Map({
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+		const map = new mapboxgl.Map({
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v11',
 		center: [
@@ -84,18 +83,18 @@
 		let value = e.target.value;
 		console.log(value);
 		eventAddress.value = value;
-	}
+		}
 
-// Listen for the result event from the geocoder.
-// 'result' event is triggered when the user makes a selection
-	geocoder.on('result', function (e) {
-		const lat = document.getElementById('event_lat');
-		const lon = document.getElementById('event_lon');
+		//Listen for the result event from the geocoder.
+		//'result' event is triggered when the user makes a selection
+		geocoder.on('result', function(e) {
+			const lat = document.getElementById('event_lat');
+			const lon = document.getElementById('event_lon');
 
-		var latlong = e.result.geometry.coordinates;
-		lat.value = latlong[0];
-		lon.value = latlong[1];
-	});
+			var latlong = e.result.geometry.coordinates;
+			lat.value = latlong[0];
+			lon.value = latlong[1];
+		});
 	</script>
 
 {% endblock %}

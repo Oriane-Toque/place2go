@@ -3,6 +3,7 @@
 {% block title 'Sorties' %}
 
 {% block stylesheets %}
+	{{ parent() }}
 	<style>
 		#map {
 			width: 100%;
@@ -45,9 +46,8 @@
 
 {% block body %}
 
-	<div class="container my-5">
-
-		<section id="search">
+	<div class="container">
+		<section id="search" class=" my-5">
 
 			<div class="row">
 				<div class="col-12 ">
@@ -147,19 +147,15 @@
 			</section>
 		</div>
 
-{% block javascripts %}
-<script>
-
+	<script>
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 		var geojson = {{ geojson|json_encode|raw }};
-
 		let map = new mapboxgl.Map({
 			container: 'map', // Container ID
 			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
 			center: [{{ location[0]}},{{ location[1]}}], // Starting position [lng, lat]
 			zoom: 10, // Starting zoom level
 		});
-
 		let clickableElements = document.querySelectorAll('.js-event');
 		clickableElements.forEach(element => {
 			element.addEventListener('click', evt => {
@@ -170,7 +166,6 @@
 				});
 			})
 		})
-
 		// add markers to map
 		geojson.features.forEach(function (marker) {
 		// create a HTML element for each feature
@@ -191,10 +186,8 @@
 			)
 		)
 		.addTo(map);
-		});
-    
-</script>
+		});   
+	</script>
 
 {% endblock %}
 
-{% endblock %}
