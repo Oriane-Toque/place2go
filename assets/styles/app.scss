@@ -90,6 +90,10 @@ body {
 	text-align: justify;
 }
 
+.mt-6 {
+	margin-top: 6rem;
+}
+
 /*****************************************************************? FLASH MESSAGES */
 
 #flash_messages {
@@ -1223,14 +1227,8 @@ body {
 }
 
 .contentProfile__lastExits-infos>.card-header {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-pack: justify;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
 	        align-items: center;
 	font-weight: bold;
 	background-color: var(--profile-secondary-color);
@@ -1283,6 +1281,8 @@ body {
 	        flex-direction: column;
 	-ms-flex-wrap: wrap;
 	    flex-wrap: wrap;
+		align-items: center;
+		padding: 1rem;
 }
 
 .contentProfile.--public {
@@ -1298,7 +1298,7 @@ body {
 }
 
 .contentProfile__description {
-	margin: 2rem 0;
+	margin: 4rem auto;
 }
 
 .contentProfile__description>p {
@@ -1310,8 +1310,7 @@ body {
 }
 
 .contentProfile__infos-avatar>img {
-	width: 100%;
-	height: auto;
+	width: 200px;
 }
 
 .contentProfile__infos-buttonText {
@@ -1631,7 +1630,7 @@ body {
 	height: 200px;
 }
 
-#event_event_date .input-group{
+#event_event_date .input-group {
 	padding-bottom: 0.3rem;
 }
 
@@ -2094,8 +2093,7 @@ body {
 
 	.contentProfile__infos-details,
 	.contentProfile.--public .contentProfile__infos-details>h2 {
-		text-align: left;
-		margin: 0 0 1rem;
+		margin-left: 2rem;
 	}
 
 }
@@ -2184,7 +2182,8 @@ body {
 		-webkit-box-flex: 2;
 		    -ms-flex: 2;
 		        flex: 2;
-		margin: 0 1rem;
+		margin: 0;
+		margin-left: 2rem;
 	}
 
 	.dashAction.--desktop>.dashAction__item {
@@ -2258,11 +2257,9 @@ body {
 
 	/************************************************ DASHBOARD  */
 
-	.contentProfile__lastExits>.card>div {
-		display: -webkit-box;
-		display: -ms-flexbox;
+	.contentProfile__lastExits > .card > div {
 		display: flex;
-		height: 230px;
+		height: 190px;
 	}
 
 	.contentProfile__lastExits-picture {
@@ -2276,8 +2273,8 @@ body {
 	}
 
 	.contentProfile__lastExits-picture>img {
-		width: 100%;
-		height: auto;
+		object-fit: cover;
+		height: 100%;
 	}
 
 	.contentProfile__lastExits-infos {

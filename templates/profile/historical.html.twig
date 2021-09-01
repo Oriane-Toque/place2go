@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div
-			id="profile">
+			id="profile" class="mt-6">
 
 			{# Navigation secondaire du dashboard + informations #}
 			{% include "profile/_nav_aside.html.twig" %}
@@ -68,6 +68,8 @@
 								</div>
 							</div>
 						</div>
+					{% else %}
+						<div>Aucune donnée à afficher pour le moment.</div>	
 					{% endfor %}
 
 					{# Fin carte sortie #}
