@@ -32,26 +32,21 @@ class FriendshipController extends AbstractController
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Vous ne pouvez pas accéder à cette page');
         $this->denyAccessUnlessGranted('USER_ACCESS', $friend, 'Vous ne pouvez pas accéder à cette page');
 
-           // Get current User
+        // Get current User
         $user = $this->getUser();
 
         // Check if friendship request has not already been made
         // In this case we create it
         $friendship = $friendshipManager->get($user, $friend);
 
-        if (null === $friendship)
-        {   
-            $friendshipManager->create($user, $friend);         
+        if (null === $friendship) {
+            $friendshipManager->create($user, $friend);
 
             //$this->addFlash('success', 'Votre demande a bien été envoyé !');
             $this->addFlash('success', $friend->getNickname().' a été ajouté à vos amis !');
-        } 
-        elseif ($friendship->getStatus() == 1)
-        {
+        } elseif ($friendship->getStatus() == 1) {
             $this->addFlash('success', 'Vous êtes déjà ami avec ' . $friend->getNickname() . ' !');
-        } 
-        else
-        {
+        } else {
             $this->addFlash('warning', 'Votre demande a déjà été envoyé !');
         }
 
@@ -103,14 +98,14 @@ class FriendshipController extends AbstractController
 
     /**
      * Delete a friend from friendlist
-     * 
+     *
      * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET"})
      * @isGranted("ROLE_USER")
-     * 
+     *
      * @param User $friend
      * @param FriendshipManager $friendshipManager
      * @param Request $request
-     * 
+     *
      * @return Response
      *
     */
@@ -124,9 +119,9 @@ class FriendshipController extends AbstractController
         // Get current User
         $user = $this->getUser();
 
-        if($friendshipManager->delete($user, $friend))
-
-		$this->addFlash('success', 'Supprimer ' . $friend->getNickname() . ' ? <a href=""');
+        if ($friendshipManager->delete($user, $friend)) {
+            $this->addFlash('success', 'Supprimer ' . $friend->getNickname() . ' ? <a href=""');
+        }
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
@@ -134,14 +129,14 @@ class FriendshipController extends AbstractController
 
     /**
      * Delete a friend from friendlist
-     * 
+     *
      * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
      * @isGranted("ROLE_USER")
-     * 
+     *
      * @param User $friend
      * @param FriendshipManager $friendshipManager
      * @param Request $request
-     * 
+     *
      * @return Response
      *
     */
@@ -155,13 +150,11 @@ class FriendshipController extends AbstractController
         // Get current User
         $user = $this->getUser();
 
-        if($friendshipManager->delete($user, $friend))
-
-		$this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
+        if ($friendshipManager->delete($user, $friend)) {
+            $this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
+        }
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
-
-
 }

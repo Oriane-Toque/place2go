@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-
 
 class CallApiService
 {
-
     private $client;
 
     public function __construct(HttpClientInterface $client)
@@ -19,7 +16,7 @@ class CallApiService
 
     public function getApi(string $var): array
     {
-        $var = implode(',',array_unique(explode(', ', $var)));
+        $var = implode(',', array_unique(explode(', ', $var)));
         $var = str_replace(" ", "+", $var);
         $var = str_replace("-", "+", $var);
         $var = strtolower($var);

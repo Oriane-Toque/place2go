@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
@@ -126,14 +125,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * The people who I think are my friends.
-     * 
+     *
      * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="sender", orphanRemoval=true)
      */
     private $friends;
 
     /**
      * The people who think that I’m their friend.
-     * 
+     *
      * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="receiver", orphanRemoval=true)
      */
     private $friendsWithMe;
@@ -162,7 +161,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->friendsWithMe = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->reports = new ArrayCollection();
-				$this->avatar = 'uploads/avatar/default-profile.svg';
+        $this->avatar = 'uploads/avatar/default-profile.svg';
     }
 
     public function __toString()
@@ -570,5 +569,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }

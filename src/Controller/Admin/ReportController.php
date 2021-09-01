@@ -11,102 +11,103 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ReportController extends AbstractController {
+class ReportController extends AbstractController
+{
 
-	/**
-	 * Liste les signalements en cours de traitement
-	 *
-	 * @Route("/admin/reports", name="admin_report_list", methods={"GET"})
-	 * @param ReportRepository $rr
-	 * @return Response
-	 */
-	public function list(ReportRepository $rr): Response {
+    /**
+     * Liste les signalements en cours de traitement
+     *
+     * @Route("/admin/reports", name="admin_report_list", methods={"GET"})
+     * @param ReportRepository $rr
+     * @return Response
+     */
+    public function list(ReportRepository $rr): Response
+    {
+        $reports = $rr->findBy(['status' => false], [
+            'createdAt' => 'DESC',
+        ]);
 
-		$reports = $rr->findBy(['status' => false],[
-			'createdAt' => 'DESC',
-		]);
+        return $this->render("admin/report/list.html.twig", [
+            'reports' => $reports,
+        ]);
+    }
 
-		return $this->render("admin/report/list.html.twig", [
-			'reports' => $reports,
-		]);
-	}
+    /**
+     * Liste les signalements traités/archivés
+     *
+     * @Route("/admin/reports/archive", name="admin_report_archive", methods={"GET"})
+     * @param ReportRepository $rr
+     * @return Response
+     */
+    public function archive(ReportRepository $rr): Response
+    {
+        $reports = $rr->findBy(['status' => true], [
+            'createdAt' => 'DESC',
+        ]);
 
-	/**
-	 * Liste les signalements traités/archivés
-	 *
-	 * @Route("/admin/reports/archive", name="admin_report_archive", methods={"GET"})
-	 * @param ReportRepository $rr
-	 * @return Response
-	 */
-	public function archive(ReportRepository $rr): Response {
+        return $this->render("admin/report/list.html.twig", [
+            'reports' => $reports,
+        ]);
+    }
 
-		$reports = $rr->findBy(['status' => true],[
-			'createdAt' => 'DESC',
-		]);
+    /**
+     * Page détail d'un signalement
+     *
+     * @Route("/admin/reports/{id<\d+>}", name="admin_report_show", methods={"GET"})
+     *
+     * @param Report $report
+     * @return Response
+     */
+    public function show(Report $report): Response
+    {
+        return $this->render('admin/report/show.html.twig', [
+            'report' => $report,
+        ]);
+    }
 
-		return $this->render("admin/report/list.html.twig", [
-			'reports' => $reports,
-		]);
-	}
+    /**
+     * Change le statut d'un signalement (en cours/traité)
+     *
+     * @Route("/admin/reports/{id<\d+>}/status", name="admin_report_status", methods={"GET"})
+     * @param Report $report
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function process(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse
+    {
+        if ($report->getStatus() === false) {
+            $report->setStatus(true);
 
-	/**
-	 * Page détail d'un signalement
-	 *
-	 * @Route("/admin/reports/{id<\d+>}", name="admin_report_show", methods={"GET"})
-	 *
-	 * @param Report $report
-	 * @return Response
-	 */
-	public function show(Report $report): Response {
+            $this->addFlash('success', 'Signalement traité !');
+        } else {
+            $report->setStatus(false);
 
-		return $this->render('admin/report/show.html.twig', [
-			'report' => $report,
-		]);
-	}
+            $this->addFlash('success', 'Signalement en cours de traitement !');
+        }
 
-	/**
-	 * Change le statut d'un signalement (en cours/traité)
-	 *
-	 * @Route("/admin/reports/{id<\d+>}/status", name="admin_report_status", methods={"GET"})
-	 * @param Report $report
-	 * @param EntityManagerInterface $em
-	 * @param Request $request
-	 * @return RedirectResponse
-	 */
-	public function process(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse {
+        $em->flush();
 
-		if($report->getStatus() === false){
-			$report->setStatus(true);
+        return $this->redirect($request->headers->get('referer'));
+    }
 
-			$this->addFlash('success', 'Signalement traité !');
-		} else {
-			$report->setStatus(false);
+    /**
+     * Supprimer un signalement
+     *
+     * @Route("/admin/report/{id<\d+>}/delete", name="admin_report_delete", methods={"GET"})
+     *
+     * @param Report $report
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse
+    {
+        $em->remove($report);
+        $em->flush();
 
-			$this->addFlash('success', 'Signalement en cours de traitement !');
-		} 
+        $this->addFlash('success', 'Signalement supprimé');
 
-		$em->flush();
-
-		return $this->redirect($request->headers->get('referer'));
-	}
-
-	/**
-	 * Supprimer un signalement
-	 *
-	 * @Route("/admin/report/{id<\d+>}/delete", name="admin_report_delete", methods={"GET"})
-	 *
-	 * @param Report $report
-	 * @param EntityManagerInterface $em
-	 * @param Request $request
-	 * @return RedirectResponse
-	 */
-	public function delete(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse {
-
-		$em->remove($report);
-		$em->flush();
-
-		$this->addFlash('success', 'Signalement supprimé');
-
-		return $this->redirectToRoute('admin_report_list');
-	}
+        return $this->redirectToRoute('admin_report_list');
+    }
 }

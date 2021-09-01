@@ -33,7 +33,9 @@ class EventVoter extends Voter
         $event = $subject;
 
         // If event does not exist, deny access
-        if (null === $event) return false;
+        if (null === $event) {
+            return false;
+        }
 
 
         switch ($attribute) {
@@ -44,40 +46,64 @@ class EventVoter extends Voter
                 break;
             case 'EVENT_CREATE':
 
-                if (!$user instanceof UserInterface)            return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$user instanceof UserInterface) {
+                    return false;
+                }
+                if (!$this->security->isGranted('ROLE_USER')) {
+                    return false;
+                }
 
                 return true;
 
                 break;
             case 'EVENT_EDIT':
 
-                if (!$user instanceof UserInterface)            return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$user instanceof UserInterface) {
+                    return false;
+                }
+                if (!$this->security->isGranted('ROLE_USER')) {
+                    return false;
+                }
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor())              return false;
+                if ($user !== $event->getAuthor()) {
+                    return false;
+                }
 
                 return true;
 
                 break;
             case 'EVENT_DELETE':
 
-                if (!$user instanceof UserInterface)            return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$user instanceof UserInterface) {
+                    return false;
+                }
+                if (!$this->security->isGranted('ROLE_USER')) {
+                    return false;
+                }
                 // if user is not the author of the event, deny access
-                if ($user !== $event->getAuthor())              return false;
+                if ($user !== $event->getAuthor()) {
+                    return false;
+                }
 
                 return true;
 
                 break;
             case 'EVENT_JOIN':
 
-                if (!$user instanceof UserInterface)            return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$user instanceof UserInterface) {
+                    return false;
+                }
+                if (!$this->security->isGranted('ROLE_USER')) {
+                    return false;
+                }
                 // If user is the author of the event, deny access
-                if ($user === $event->getAuthor())              return false;
+                if ($user === $event->getAuthor()) {
+                    return false;
+                }
                 // If user is already an attendant, deny access
-                if ($this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) return false;
+                if ($this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) {
+                    return false;
+                }
 
                 return true;
 
@@ -85,12 +111,20 @@ class EventVoter extends Voter
 
             case 'EVENT_LEAVE':
 
-                if (!$user instanceof UserInterface)            return false;
-                if (!$this->security->isGranted('ROLE_USER'))   return false;
+                if (!$user instanceof UserInterface) {
+                    return false;
+                }
+                if (!$this->security->isGranted('ROLE_USER')) {
+                    return false;
+                }
                 // If user is the author of the event, deny access
-                if ($user === $event->getAuthor())              return false;
+                if ($user === $event->getAuthor()) {
+                    return false;
+                }
                 // If user is not an attendant, deny access
-                if (!$this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) return false;
+                if (!$this->attendantRepository->findOneBy(['event' => $event, 'user' => $user])) {
+                    return false;
+                }
       
                 return true;
 

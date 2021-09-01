@@ -15,23 +15,23 @@ class ReportType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, [
-							'label' => 'Signalement',
-							'expanded' => false,
-							'multiple' => false,
-							'placeholder' => 'Raison du signalement',
-							'choices' => [
-								'Violence physique' => 'Violence physique',
-								'Violence verbale' => 'Violence verbale',
-								'Harcèlement (spams, contacts abusifs)' => 'Harcèlement',
-								'Comportements Haineux' => 'Comportements Haineux',
-								'Sortie inappropriée' => 'Sortie inappropriée',
-								'Autre' => 'Autre',
-							]
-						])
+                            'label' => 'Signalement',
+                            'expanded' => false,
+                            'multiple' => false,
+                            'placeholder' => 'Raison du signalement',
+                            'choices' => [
+                                'Violence physique' => 'Violence physique',
+                                'Violence verbale' => 'Violence verbale',
+                                'Harcèlement (spams, contacts abusifs)' => 'Harcèlement',
+                                'Comportements Haineux' => 'Comportements Haineux',
+                                'Sortie inappropriée' => 'Sortie inappropriée',
+                                'Autre' => 'Autre',
+                            ]
+                        ])
             ->add('message', TextareaType::class, [
-							'label' => 'Préciser la situation',
-							'help' => 'Détaillez au maximum, circonstances (en ligne, au cours d\'une sortie), quand ? ...',
-						])
+                            'label' => 'Préciser la situation',
+                            'help' => 'Détaillez au maximum, circonstances (en ligne, au cours d\'une sortie), quand ? ...',
+                        ])
         ;
     }
 

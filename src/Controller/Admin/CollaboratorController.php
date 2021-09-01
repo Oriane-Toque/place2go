@@ -26,7 +26,7 @@ class CollaboratorController extends AbstractController
      * @Route("/admin/collaborators", name="admin_collaborator_list", methods={"GET"})
      */
     public function list(UserRepository $userRepository): Response
-    {    
+    {
         // Find all collaborators => (users with roles = '["ROLE_ADMIN"]')
         $users = $userRepository->findCollaborators();
 
@@ -41,10 +41,10 @@ class CollaboratorController extends AbstractController
     public function show(User $user, EventRepository $eventRepository): Response
     {
         // Last events organise by this user
-		$userLastEvents = $eventRepository->findLastAuthorEvents($user->getId(), 3);
+        $userLastEvents = $eventRepository->findLastAuthorEvents($user->getId(), 3);
 
-		// Last events in which the user participates
-		$userLastExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
+        // Last events in which the user participates
+        $userLastExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
         return $this->render('admin/collaborator/show.html.twig', [
             'user' => $user,
@@ -59,7 +59,7 @@ class CollaboratorController extends AbstractController
     public function create(Request $request, FileUploader $fileUploader): Response
     {
         // New object
-        $user = New User();
+        $user = new User();
 
         // Create new form associated to entity
         $form = $this->createForm(UserType::class, $user);
@@ -96,7 +96,6 @@ class CollaboratorController extends AbstractController
         return $this->render('admin/collaborator/create.html.twig', [
             'form' => $form->createView(),
         ]);
-                
     }
 
     /**
@@ -110,7 +109,6 @@ class CollaboratorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             // No persist on edit
             $entityManager->flush();
@@ -124,7 +122,6 @@ class CollaboratorController extends AbstractController
         return $this->render('admin/collaborator/edit.html.twig', [
             'form' => $form->createView(),
         ]);
-                 
     }
 
     /**
@@ -159,7 +156,6 @@ class CollaboratorController extends AbstractController
         //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été désactivé !');
 
         return $this->redirectToRoute('admin_collaborator_show', ['id' => $user->getId()]);
-            
     }
 
     /**
@@ -178,6 +174,5 @@ class CollaboratorController extends AbstractController
         //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été activé !');
 
         return $this->redirectToRoute('admin_collaborator_show', ['id' => $user->getId()]);
-            
     }
 }

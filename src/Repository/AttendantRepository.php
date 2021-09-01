@@ -25,26 +25,26 @@ class AttendantRepository extends ServiceEntityRepository
     //  * @return Attendant[] Returns an array of Attendant objects
     //  */
 
-		public function findByUserEvent($user, $event)
+    public function findByUserEvent($user, $event)
     {
         return $this->createQueryBuilder('a')
             ->where('a.user = :user')
-						->andWhere('a.event = :event')
+                        ->andWhere('a.event = :event')
             ->setParameters(new ArrayCollection([
-							new Parameter('user', $user),
-							new Parameter('event', $event)
-						]))
+                            new Parameter('user', $user),
+                            new Parameter('event', $event)
+                        ]))
             ->getQuery()
             ->getResult()
         ;
     }
 
-		public function findByEvent($event)
+    public function findByEvent($event)
     {
         return $this->createQueryBuilder('a')
-						->select('u.id')
-						->innerJoin('App\Entity\User', 'u', 'WITH', 'a.user = u.id')
-						->where('a.event = :event')
+                        ->select('u.id')
+                        ->innerJoin('App\Entity\User', 'u', 'WITH', 'a.user = u.id')
+                        ->where('a.event = :event')
             ->setParameter('event', $event)
             ->getQuery()
             ->getResult()
