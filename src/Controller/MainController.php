@@ -102,22 +102,31 @@ class MainController extends AbstractController {
 		return $this->render('team/team.html.twig');
 	}
 
-	// /**
-	//  * Display email template
-	//  *
-	//  * @Route("/template", name="app_template", methods={"GET"})
-	//  * 
-	//  * @return Response
-	//  */
-	// public function template(EventRepository $eventRepository, FriendshipManager $friendshipManager): Response
-	// {
-	// 	$events = $eventRepository->findAll();
+	/**
+	 * Display email template
+	 *
+	 * @Route("/template", name="app_template", methods={"GET"})
+	 * 
+	 * @return Response
+	 */
+	public function template(EventRepository $eventRepository, FriendshipManager $friendshipManager): Response
+	{
+		// If not connected
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
-	// 	$friendshipManager->eventAllFriendsNotifier($this->getUser(), $events[0]);
+		$events = $eventRepository->findAll();
 
-	// 	return $this->render("event/friends_notifier_email.html.twig", [
-	// 		'user' => $this->getUser(),
-	// 		'event' => $events[0]
-	// 	]);
-	// }
+		$notif = $friendshipManager->eventAllFriendsNotifier($this->getUser(), $events[0]);
+		
+		if($notif){
+			dd($notif);
+		}
+
+		return $this->render("event/friends_notifier_email_test.html.twig", [
+			'user' => $this->getUser(),
+			'event' => $events[0]
+		]);
+	}
 }

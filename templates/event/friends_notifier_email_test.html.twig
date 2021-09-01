@@ -84,7 +84,7 @@
 						<tr>
 							<td align="center" valign="top" style="padding: 24px 24px 0px 24px;">
 								<a href="https://place2go.com" target="_blank" style="display: inline-block;">
-									<img src="{{ email.image('@img/email-header.png') }}" alt="Logo">
+									<img src="{{ asset('img/email-header.png') }}" alt="Logo">
 								</a>
 							</td>
 						</tr>
@@ -165,7 +165,7 @@
 																	<em>{{ event.categories|join(' - ') }}</em>
 																</td>
 																<td align="right" style="padding: 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-																	{{ event.attendants | length }} / {{ event.maxAttendants }} <img src="{{ email.image('@img/email-icon-users.png') }}" alt="Icon">
+																	{{ event.attendants | length }} / {{ event.maxAttendants }} <img src="{{ asset('img/email-icon-users.png') }}" alt="Icon">
 																</td>
 															</tr>
 														</table>

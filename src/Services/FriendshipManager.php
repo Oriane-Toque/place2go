@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class FriendshipManager
 {
@@ -123,8 +123,16 @@ class FriendshipManager
         foreach($friends as $friend)
         {
             $email->to($friend->getEmail());
-            $this->mailer->send($email);
+            try {
+                $this->mailer->send($email);
+            } 
+            catch (TransportExceptionInterface $e)
+            {
+                return false;
+            }
         }
+
+        return true;
 
     }
 
