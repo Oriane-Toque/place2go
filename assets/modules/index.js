@@ -1,4 +1,4 @@
-export default function() {
+export default function index() {
     
   window.addEventListener("scroll", function () {
     const navbar = document.querySelector(".navbar");
