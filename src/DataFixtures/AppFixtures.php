@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
         // create 10 categories! Bam!
         for ($i = 0; $i < 10; $i++) {
             $category = new Category();
-            $category->setName($faker->unique->eventCategory());
+            $category->setName($faker->unique()->eventCategory());
             $category->setPicture('https://picsum.photos/id/' . mt_rand(100, 500) . '/600/400');
 
             $categories[] = $category;
@@ -127,25 +127,25 @@ class AppFixtures extends Fixture
             $manager->persist($comment);
         }
 
-        $frienships = [];
-        // Create 30 friendships! Bam!
-        for ($i = 0; $i < 30; $i++) {
-            $frienship = new Friendship();
+        // $frienships = [];
+        // // Create 30 friendships! Bam!
+        // for ($i = 0; $i < 30; $i++) {
+        //     $frienship = new Friendship();
 
-            $sender = $users[array_rand($users)];
-            $receiver = $users[array_rand($users)];
-            $frienship->setSender($sender);
+        //     $sender = $users[array_rand($users)];
+        //     $receiver = $users[array_rand($users)];
+        //     $frienship->setSender($sender);
             
-            while($receiver == $sender)
-            {
-                $receiver = $users[array_rand($users)];
-            }
-            $frienship->setReceiver($receiver);
-            $frienship->setStatus(1);
+        //     while($receiver == $sender)
+        //     {
+        //         $receiver = $users[array_rand($users)];
+        //     }
+        //     $frienship->setReceiver($receiver);
+        //     $frienship->setStatus(1);
 
-            $frienships[] = $frienship;
-            $manager->persist($frienship);
-        }
+        //     $frienships[] = $frienship;
+        //     $manager->persist($frienship);
+        // }
 
         $manager->flush();
     }
