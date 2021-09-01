@@ -1,0 +1,132 @@
+{% extends "admin/layout/base.html.twig" %}
+
+{% block menu_report 'active' %}
+
+{% block title 'Signalements' %}
+
+{% block body %}
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Signalements {% if app.request.attributes.get('_route') is same as('admin_report_list') %}en cours{% else %}traités{% endif %}</h1>
+	</div>
+
+	<!-- Content Row -->
+	<div
+		class="row">
+
+		<!-- Filter -->
+		<div class="col-12">
+			<div
+				class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">Filtres</h6>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body">
+					<div class="filter-area">
+						<p>Tous les champs de filtres ici</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Content Row -->
+	<div
+		class="row">
+
+		<!-- List all items -->
+		<div class="col-12">
+			<div
+				class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">Liste des signalements {% if app.request.attributes.get('_route') is same as('admin_report_list') %}en cours{% else %}traités{% endif %}</h6>
+
+				</div>
+				<!-- Card Body -->
+				<div class="card-body">
+					<div class="events-list">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>#Id</th>
+									<th>Auteur</th>
+									<th>Utilisateur signalé</th>
+									<th>Sortie signalée</th>
+									<th>Type</th>
+									<th>Statut</th>
+									<th>Date du signalement</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{% for report in reports %}
+									<tr>
+										<td>{{ loop.index }}</td>
+										<td>
+											<a href="{{ path('admin_user_show', {id: report.author.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir">
+												<i class="fas fa-sign-in-alt"></i>
+											</a>
+											{{ report.author }}
+										</td>
+										<td>
+											<a href="{{ path('admin_user_show', {id: report.user.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir">
+												<i class="fas fa-sign-in-alt"></i>
+											</a>
+											{{ report.user }}
+										</td>
+										<td>
+										{% if report.event %}
+											<a href="{{ path('admin_event_show', {id: report.event.id}) }}" data-mdb-toggle="tooltip" class="me-2" data-mdb-placement="bottom" title="Voir">
+												<i class="fas fa-sign-in-alt"></i>
+											</a>
+											{{ report.event.title }}
+										{% else %}
+											Pas précisée
+										{% endif %}
+										</td>
+										<td>{{ report.type|capitalize }}</td>
+										<td>{% if report.status is same as(false) %}En cours{% else %}Traité{% endif %}</td>
+										<td>{{ report.createdAt|date('d/m/Y') }}</td>
+										<td>
+											{# Voir les détails #}
+											<a href="{{ path('admin_report_show', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Aperçu">
+												<i class="fas fa-eye text-secondary"></i>
+											</a>
+											{% if app.request.attributes.get('_route') is same as('admin_report_list') %}
+												{# Archiver/Traiter #}
+												<a href="{{ path('admin_report_status', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut traité">
+													<i class="fas fa-check-square text-success"></i>
+												</a>
+											{% else %}
+												{# Remettre en cours #}
+												<a href="{{ path('admin_report_status', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Statut en cours">
+													<i class="fas fa-undo-alt text-warning"></i>
+												</a>
+												{# Supprimer #}
+												<a href="{{ path('admin_report_delete', {id: report.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
+													<i class="fas fa-trash-alt text-danger"></i>
+												</a>
+											{% endif %}
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="4">Aucun signalement en cours de traitement</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}

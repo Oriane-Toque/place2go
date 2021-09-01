@@ -161,8 +161,8 @@ class EventRepository extends ServiceEntityRepository
             ->select('e', 'c', 'user', 'a', 'r')
             ->join('e.categories', 'c')
             ->join('e.author', 'user')
-            ->join('e.attendants', 'a')
-            ->leftJoin('e.report', 'r')
+            ->leftJoin('e.attendants', 'a')
+            ->leftJoin('e.reports', 'r')
         ;
 
         if (!empty($search->q)) {

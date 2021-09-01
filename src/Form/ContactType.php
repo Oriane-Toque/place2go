@@ -7,6 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 
 class ContactType extends AbstractType
 {
@@ -15,9 +18,18 @@ class ContactType extends AbstractType
         $builder
             ->add('subject', TextType::class, [
 							'label' => 'Sujet',
+							'constraints' => [
+								new NotBlank(),
+								new Type('string'),
+							],
 						])
 						->add('message', CKEditorType::class, [
 							'label' => 'Message',
+							'constraints' => [
+								new NotBlank(),
+								new Type('string'),
+								new Length('', 15, 255),
+							],
 						])
         ;
     }

@@ -45,7 +45,7 @@ body {
 
 }
 
-p {
+.pages p {
 	text-align: justify;
 }
 
@@ -115,6 +115,10 @@ p {
     border-color: var(--primary-color);
     -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
     box-shadow: inset 0 0 0 1px var(--primary-color);
+}
+
+.form-check .form-check-input{
+	float:none;
 }
 
 .form-check-input[type=checkbox]:checked {
@@ -924,8 +928,8 @@ p {
 
 #show {
 	margin: 5rem auto 0;
-
 }
+
 #show .show__card {
 	height: 100%;
 	min-height: 350px;
@@ -1160,6 +1164,7 @@ p {
 
 .dashAction__item>p {
 	margin: 0;
+	text-align: center;
 }
 
 .dashAction.--mobile .dashAction__item-infos_details {
@@ -1345,6 +1350,10 @@ p {
 .contentProfile__description,
 .contentProfile__friends {
 	border-bottom: solid 5px var(--profile-main-color);
+}
+
+.user__name {
+	text-align: left;
 }
 
 /* classe pour le loader du bouton qui génère l'avatar */
@@ -1616,6 +1625,19 @@ p {
 
 #create .create__form #event_description {
 	height: 200px;
+}
+
+#event_event_date .input-group{
+	padding-bottom: 0.3rem;
+}
+
+.col-form-label{
+	padding-top : 0;
+}
+
+#event_event_date_date_month{
+	margin-right: 0.1rem;
+	margin-left: 0.1rem;
 }
 
 /*****************************************************************? TEAM */
@@ -2302,15 +2324,5 @@ p {
 
 	.contentProfile.--public {
 		margin: 2rem 15rem;
-	}
-}
-
-@media screen and (min-width: 1400px) {
-
-	/************************************************ PROFILE  */
-	.contentProfile {
-		-webkit-box-flex: 3;
-		    -ms-flex: 3;
-		        flex: 3;
 	}
 }

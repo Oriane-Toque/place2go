@@ -20,11 +20,12 @@ class ReportType extends AbstractType
 							'multiple' => false,
 							'placeholder' => 'Raison du signalement',
 							'choices' => [
-								'Violence physique' => 'violence_physique',
-								'Violence verbale' => 'violence_verbale',
-								'Harcèlement (spams, contacts abusifs)' => 'harcelement',
-								'Comportements Haineux' => 'comportements_haineux',
-								'Autre' => 'autre',
+								'Violence physique' => 'Violence physique',
+								'Violence verbale' => 'Violence verbale',
+								'Harcèlement (spams, contacts abusifs)' => 'Harcèlement',
+								'Comportements Haineux' => 'Comportements Haineux',
+								'Sortie inappropriée' => 'Sortie inappropriée',
+								'Autre' => 'Autre',
 							]
 						])
             ->add('message', TextareaType::class, [
