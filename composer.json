@@ -114,8 +114,8 @@
             "php bin/console doctrine:database:drop --force",
             "php bin/console doctrine:database:create"
         ],
-        "@CkEditor": [
-            "php bin/console ckeditor:install",
+        "CkEditor": [
+            "php bin/console ckeditor:install --clear=drop",
             "php bin/console assets:install public"
         ]
     },
