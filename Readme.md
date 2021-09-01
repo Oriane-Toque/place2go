@@ -32,44 +32,62 @@ Ce site a pour but de rassembler plusieurs personnes qui ne se connaissent pas m
 <!-- USAGE EXAMPLES -->
 ## Getting Started
 
-1. Clone the repo
-```sh
+```bash
+# Clone the repo
 git clone git@github.com:O-clock-Trinity/projet-place-2-go.git
-```
 
-2. Open VS Code
-```sh
+# Open VS Code
 cd projet projet-place-2-go
 code .
-```
 
-3. Install depedencies
-```sh
+# Install depedencies
 composer install
-```
-4. Copy / Paste `.env` to `.env.local`
 
-5. Add your Database configuration
-   
-6. Create the database
-```sh
+# Because of webpack, install node dependencies
+npm install
+
+# Create the database
 php bin/console doctrine:database:create
-```
 
-7. Launch the migrations
-```sh
+# Apply migrations
 php bin/console doctrine:migrations:migrate
-```
 
-8. Launch the fixtures
-```sh
+# Apply fixtures if needed
 php bin/console doctrine:fixtures:load
+
+# Launch a PHP server and enjoy our good work !
+symfony server:start
+
 ```
 
-9. Finally, launch a PHP server
-```sh
-php -S localhost:8000 -t public
+### How to use webpack ?
+
+Webpack will create a new folder in the root directory called `assets`.
+Inside, you will find a `styles` folder with `app.css` where you need to add your css rules.  
+This file is imported in `app.js`, where you can add you own javascripts scripts.  
+Everytime you add something in these two files, you need to compile to apply changes.
+
+#### Compile assets with webpack
+
+```bash
+# Compile assets once
+npm run dev
+
+# Or, recompile assets automatically when files change
+npm run watch
+
+# On deploy, create a production file
+npm run build
 ```
+
+#### Webpack features
+
+Place 2 go is also using with webpack :
+
+* Sass-Loader
+* Sass
+* PostCSS
+* Autoprefixer
 
 <!-- CONTACT -->
 ## Project Team
@@ -89,6 +107,7 @@ Fred **fred@gmail.com**
 ## Licence
 
 _Code propriétaire_
+Toute reproduction est explicetement interdite sans l'accord de tous les créateurs du projet.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

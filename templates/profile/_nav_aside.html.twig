@@ -1,5 +1,6 @@
 {# Navigation secondaire du dashboard + informations #}
-<aside class="dashAction --desktop">
+<aside
+	class="dashAction --desktop">
 	{# Info personnel + Ajout Ami + Edition Compte #}
 	<div class="dashAction__item card">
 		<div
@@ -15,7 +16,7 @@
 
 			{# Edition de l'utilisateur #}
 			<p class="dashAction__item-button">
-				<a class="--edit btn btn-warning btn-floating" href="{{ path('app_profile_edit') }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer profil">
+				<a class="btn button-secondary btn-floating" href="{{ path('app_profile_edit') }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer profil">
 					<i class="fas fa-user-edit"></i>
 				</a>
 			</p>
@@ -23,28 +24,22 @@
 	</div>
 
 	{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
-	<div class="dashAction__item card">
+	<div
+		class="dashAction__item card">
 
-			{# Bouton qui affiche l'historique #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="{{ path("app_profile_events") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Historique">
-					<i class="far fa-calendar-check"></i>
-				</a>
-			</p>
+		{# Bouton qui affiche l'historique #}
+		<p class="dashAction__item-action">
+			<a class="dashAction__item-action_button" href="{{ path("app_profile_events") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Historique">
+				<i class="far fa-calendar-check"></i>
+			</a>
+		</p>
 
-			{# Bouton qui affiche le tchat privé #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="#!" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Tchat">
-					<i class="fab fa-rocketchat"></i>
-				</a>
-			</p>
-
-			{# Bouton qui affiche le dashboard/profil #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dashboard">
-					<i class="fas fa-user-circle"></i>
-				</a>
-			</p>
+		{# Bouton qui affiche le dashboard/profil #}
+		<p class="dashAction__item-action">
+			<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dashboard">
+				<i class="fas fa-user-circle"></i>
+			</a>
+		</p>
 
 	</div>
 
@@ -54,7 +49,7 @@
 			<h3>A propos de moi</h3>
 		</div>
 		<div class="card-body">
-			<p class="card-text">{{ user.description ?? app.user.description }}</p>	
+			<p class="card-text">{{ user.description ?? app.user.description }}</p>
 		</div>
 	</div>
 
@@ -76,46 +71,33 @@
 	<div id="infos" class="dashAction__item">
 		<img src="{{ user.avatar ?? app.user.avatar }}" alt="photo de {{ user ?? app.user }}">
 		<div class="dashAction__item-infos_details">
-			<a href="{{ path("app_profile_show", {id:user.id ?? app.user.id}) }}">{{ user ?? app.user }}</a> 
+			<a href="{{ path("app_profile_show", {id:user.id ?? app.user.id}) }}">{{ user ?? app.user }}</a>
 		</div>
 	</div>
 
 	{# Actions : visualiser historiques des sorties, tchat privé, afficher profil #}
-	<div class="dashAction__item">
+	<div
+		class="dashAction__item">
 
-			{# Edition de l'utilisateur #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="{{ path('app_profile_edit') }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer profil">
-					<i class="fas fa-user-edit"></i>
-				</a>
-			</p>
+		{# Edition de l'utilisateur #}
+		<p class="dashAction__item-action">
+			<a class="dashAction__item-action_button" href="{{ path('app_profile_edit') }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer profil">
+				<i class="fas fa-user-edit"></i>
+			</a>
+		</p>
 
-			{# Bouton qui affiche l'historique #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="#!" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Historique">
-					<i class="far fa-calendar-check"></i>
-				</a>
-			</p>
+		{# Bouton qui affiche l'historique #}
+		<p class="dashAction__item-action">
+			<a class="dashAction__item-action_button" href="#!" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Historique">
+				<i class="far fa-calendar-check"></i>
+			</a>
+		</p>
 
-			{# Bouton qui affiche le tchat privé #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="#!" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Tchat">
-					<i class="fab fa-rocketchat"></i>
-				</a>
-			</p>
-
-			{# Bouton qui affiche le dashboard/profil #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button">
-					<i class="fas fa-user-circle"></i>
-				</a>
-			</p>
-
-			{# Bouton qui affiche le dashboard/profil #}
-			<p class="dashAction__item-action">
-				<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dashboard">
-					<i class="fas fa-user-friends"></i>
-				</a>
-			</p>
+		{# Bouton qui affiche le dashboard/profil #}
+		<p class="dashAction__item-action">
+			<a class="dashAction__item-action_button" href="{{ path("app_profile_profile") }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Dashboard">
+				<i class="fas fa-user-friends"></i>
+			</a>
+		</p>
 	</div>
 </aside>

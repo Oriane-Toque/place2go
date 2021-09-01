@@ -48,6 +48,7 @@
         "symfony/twig-bundle": "^5.3",
         "symfony/validator": "5.3.*",
         "symfony/web-link": "5.3.*",
+        "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "5.3.*",
         "symfonycasts/reset-password-bundle": "^1.9",
         "symfonycasts/verify-email-bundle": "^1.5",
@@ -96,6 +97,7 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
+            "@CkEditor",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
@@ -111,6 +113,10 @@
         "db-reset": [
             "php bin/console doctrine:database:drop --force",
             "php bin/console doctrine:database:create"
+        ],
+        "CkEditor": [
+            "php bin/console ckeditor:install --clear=drop",
+            "php bin/console assets:install public"
         ]
     },
     "conflict": {
