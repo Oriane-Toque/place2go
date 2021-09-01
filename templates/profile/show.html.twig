@@ -16,11 +16,12 @@
 					<h2>{{ user }}</h2>
 					<p><span>Email : </span>{{ user.email }}</p>
 					<p><span>Anniversaire : </span><time datetime="{{ user.birthday|date("d/m/Y") }}">{{ user.birthday|date("d/m/Y") }}</time></p>
-          {# ajouter aux amis #}
-					<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Ajouter à ses amis</a>
-          {# signaler l'utilisateur #}
-					<a href="#" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Ajouter à ses amis</a>
+          			
+					{# If user is granted #}						
 					{% if is_granted('USER_ACCESS', app.user) and app.user.id != user.id %}
+						{# ajouter aux amis #}
+						<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Ajouter à ses amis</a>
+						{# signaler l'utilisateur #}
 						<a href="{{ path('app_report_user', {id:user.id}) }}" type="button" class="--action contentProfile__infos-buttonText btn btn-secondary">Signaler</a>
 					{% endif %}
 
