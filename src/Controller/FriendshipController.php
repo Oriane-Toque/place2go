@@ -3,15 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Friendship;
-use App\Repository\FriendshipRepository;
 use App\Services\FriendshipManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Repository\FriendshipRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class FriendshipController extends AbstractController
 {
     
@@ -19,7 +21,6 @@ class FriendshipController extends AbstractController
      * Send a friend request
      *
      * @Route("/profile/friends/{id<\d+>}/add", name="app_friend_add", methods={"GET"})
-     * @isGranted("ROLE_USER")
      *
      * @param User $friend
      * @param FriendshipManager $friendshipManager
@@ -56,7 +57,6 @@ class FriendshipController extends AbstractController
 
     /**
      * List all friends in the user profile
-     * @isGranted("ROLE_USER")
      *
      * @param FriendshipManager $friendshipManager
      *
@@ -64,11 +64,6 @@ class FriendshipController extends AbstractController
      */
     public function privateFriendsList(FriendshipRepository $friendshipRepository): Response
     {
-        // If not connected
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-
         // Get current User
         $user = $this->getUser();
 
@@ -100,7 +95,6 @@ class FriendshipController extends AbstractController
      * Delete a friend from friendlist
      *
      * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET"})
-     * @isGranted("ROLE_USER")
      *
      * @param User $friend
      * @param FriendshipManager $friendshipManager
@@ -111,11 +105,6 @@ class FriendshipController extends AbstractController
     */
     public function deleteAction(User $friend, FriendshipManager $friendshipManager, Request $request): Response
     {
-        // If not connected
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-
         // Get current User
         $user = $this->getUser();
 
@@ -131,7 +120,6 @@ class FriendshipController extends AbstractController
      * Delete a friend from friendlist
      *
      * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
-     * @isGranted("ROLE_USER")
      *
      * @param User $friend
      * @param FriendshipManager $friendshipManager
@@ -142,11 +130,6 @@ class FriendshipController extends AbstractController
     */
     public function deleteFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
     {
-        // If not connected
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
-
         // Get current User
         $user = $this->getUser();
 

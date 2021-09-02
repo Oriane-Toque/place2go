@@ -6,33 +6,49 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.scss';
-import './modules/avatar.js'
-import './modules/vanilla-tilt.min.js'
-import './modules/remove_friend.js'
-import './modules/sidenav.js'
+import "./styles/app.scss";
+import "./modules/avatar.js";
+import "./modules/vanilla-tilt.min.js";
 
 // start the Stimulus application
-import './bootstrap';
+import "./bootstrap";
 
+// Open the sidenav when clicking on the burger menu
+window.toggleSidenav = function () {
+  document.querySelector(".sidenav").classList.toggle("open");
+};
 
+// Remove a friend
+window.removeFriend = function (item) {
+  let url = item.getAttribute("data-url");
+  let nickname = item.getAttribute("data-nickname");
+
+  if (confirm("Supprimer " + nickname + " ?")) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
+    item.closest(".chip").remove();
+  }
+};
 
 window.addEventListener("scroll", function () {
-    const navbar = document.querySelector(".navbar");
-    navbar.classList.toggle("sticky", window.scrollY > 0);
-  });
+  const navbar = document.querySelector(".navbar");
+  navbar.classList.toggle("sticky", window.scrollY > 0);
+});
 
-  // Auto close Flashmessage after 6sec
-  const flashMessage = document.querySelector("#flash_messages");
-  if (flashMessage != null) {
-    setTimeout(() => {
-      flashMessage.style.display = "none";
-    }, 6000);
-  }
+// Auto close Flashmessage after 6sec
+const flashMessage = document.querySelector("#flash_messages");
+if (flashMessage != null) {
+  setTimeout(() => {
+    flashMessage.style.display = "none";
+  }, 6000);
+}
 
-  // toggle comment box
-  const targetDiv = document.querySelector(".create__comment");
-  const btn = document.getElementById("toggle__comments");
+// toggle comment box
+const targetDiv = document.querySelector(".create__comment");
+const btn = document.getElementById("toggle__comments");
+
+if (btn != null) {
   btn.onclick = function () {
     if (targetDiv.classList.contains("create__comment")) {
       targetDiv.classList.replace("create__comment", "create__comment_toggle");
@@ -41,19 +57,22 @@ window.addEventListener("scroll", function () {
       targetDiv.classList.replace("create__comment_toggle", "create__comment");
     }
   };
+}
 
-  //cancel comment
-  const cancelbtn = document.getElementById("cancel__comment");
+//cancel comment
+const cancelbtn = document.getElementById("cancel__comment");
+if (cancelbtn != null) {
   cancelbtn.onclick = function () {
     if (targetDiv.classList.contains("create__comment_toggle")) {
       targetDiv.classList.replace("create__comment_toggle", "create__comment");
       btn.style.display = "block";
     }
   };
+}
 
-  //counting characters in comment area
-  let textarea = document.getElementById("comment_content");
-
+//counting characters in comment area
+let textarea = document.getElementById("comment_content");
+if (textarea != null) {
   textarea.addEventListener("input", (event) => {
     const target = event.currentTarget;
     const currentLength = target.value.length;
@@ -68,4 +87,4 @@ window.addEventListener("scroll", function () {
       textarea.style.border = "1px solid #00b4d4";
     }
   });
-
+}
