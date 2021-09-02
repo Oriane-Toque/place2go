@@ -1,165 +1,134 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard
+{% endblock %}
 
 {% block body %}
-<div class="container">
+	<div class="container">
 
-	<div id="profile">
+		<div
+			id="profile" class="mt-6">
 
-		{# Navigation secondaire du dashboard + informations #}
-		{% include "profile/_nav_aside.html.twig" %}
+			{# Navigation secondaire du dashboard + informations #}
+			{% include "profile/_nav_aside.html.twig" %}
 
-		{# Contenu du profil #}
-		<div class="contentProfile">
-			{# Les derniers sorties proposées par l'utilisateur #}
-			<section class="contentProfile__lastExits">
-				<h2>Dernières sorties publiées</h2>
-				{# Début carte sortie #}
-				{% for event in userLastExits %}
-					<div class="card mb-3">
-						<div class="row g-0">
+			{# Contenu du profil #}
+			<div
+				class="contentProfile">
+				{# Les derniers sorties proposées par l'utilisateur #}
+				<section class="contentProfile__lastExits">
+					<h2>Dernières sorties publiées</h2>
+					{# Début carte sortie #}
+					{% for event in userLastExits %}
+						<div class="card mb-3">
+							<div class="row g-0">
 
-							<div class="contentProfile__lastExits-picture">
-								{# TODO Image de la sortie (améliorations) #}
-								<img
-									src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-									alt="..."
-									class="img-fluid"
-								/>
-							</div>
-
-							<div class="contentProfile__lastExits-infos">
-								<div class="card-header">
-									<h3 class="card-title">{{ event.title }}</h3>
-									<p><time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time></p>
+								<div class="contentProfile__lastExits-picture">
+									<img src="{{ event.categories[0].picture }}" alt="{{ event.categories[0].name }}" class="img-fluid"/>
 								</div>
-								<div class="card-body">
-									<div class="contentProfile__lastExits-infos_details">
-										<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
-										{# fonction length de twig pour retourner le nombre de participants #}
-										<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+
+								<div class="contentProfile__lastExits-infos">
+									<div class="card-header">
+										<h3 class="card-title">{{ event.title }}</h3>
+										<p>
+											<time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time>
+										</p>
 									</div>
-									<div class="contentProfile__lastExits-infos_actions">
-										{# Bouton pour voir les détails #}
-										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
-											<i class="far fa-eye"></i>
-										</a>
+									<div class="card-body">
+										<div class="contentProfile__lastExits-infos_details">
+											<p class="card-text">
+												<span>Organisé par :</span>
+												{{ event.author }}</p>
+											{# fonction length de twig pour retourner le nombre de participants #}
+											<p class="card-text">
+												<span>Nbr part :</span>
+												{{ event.attendants|length }}
+												/
+												{{ event.maxAttendants }}</p>
+										</div>
+										<div
+											class="contentProfile__lastExits-infos_actions">
+											{# Bouton pour voir les détails #}
+											<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+												<i class="far fa-eye"></i>
+											</a>
 
-										{# Bouton pour éditer la sortie #}
-										<a class="--edit btn btn-warning btn-floating" href="{{ path("app_event_edit", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer sortie">
-											<i class="fas fa-pencil-alt"></i>
-										</a>
+											{# Bouton pour éditer la sortie #}
+											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_edit", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer sortie">
+												<i class="fas fa-pencil-alt"></i>
+											</a>
 
-										{# Bouton pour supprimer la sortie #}
-										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer">
-											<i class="fas fa-trash-alt"></i>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-				
-				{# Fin carte sortie #}
-			</section>
-
-			{# Les dernières sorties auxquelles a participé l'utilisateur #}
-			<section class="contentProfile__lastExits">
-				<h2>Dernières sorties effectuées</h2>
-				{# Début carte sortie #}
-				{% for event in attendantLastExits %}
-					<div class="card mb-3">
-						<div class="row g-0">
-
-							<div class="contentProfile__lastExits-picture">
-								{# Image de la sortie #}
-								<img
-									src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-									alt="Image de la sortie"
-									class="img-fluid"
-								/>
-
-							</div>
-
-							<div class="contentProfile__lastExits-infos">
-								<div class="card-header">
-									<h3 class="card-title">{{ event.title }}</h3>
-									<p><time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time></p>
-								</div>
-								<div class="card-body">
-									<div class="contentProfile__lastExits-infos_details">
-										<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
-										<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
-									</div>
-									<div class="contentProfile__lastExits-infos_actions">
-										{# Bouton pour voir les détails #}
-										<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
-											<i class="far fa-eye"></i>
-										</a>
-
-										{# Bouton pour ne plus participer à la sortie #}
-										<a class="--delete btn btn-danger btn-floating" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
-											<i class="fas fa-sign-out-alt"></i>
-										</a>
+											{# Bouton pour supprimer la sortie #}
+											<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer" onclick="window.alert('Confirmez-vous la suppression ?')">
+												<i class="fas fa-trash-alt"></i>
+											</a>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				{# Fin carte sortie #}
-				{% endfor %}
-				
-			</section>
+					{% else %}
+						<div>Aucune donnée à afficher pour le moment</div>
+					{% endfor %}
 
-			{# TODO uniquement version supérieur #}
-			<section class="contentProfile__lastExits">
-				<h2>Nouveautés de mes amis</h2>
-				{# Début carte notifications sur les amis #}
-				<div class="card mb-3">
-					<div class="row g-0">
+					{# Fin carte sortie #}
+				</section>
 
-						<div class="contentProfile__lastExits-picture">
-							{# Image profil de l'Ami #}
-							<img
-								src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-								alt="Image de la sortie"
-								class="img-fluid"
-							/>
-						</div>
+				{# Les dernières sorties auxquelles a participé l'utilisateur #}
+				<section class="contentProfile__lastExits">
+					<h2>Dernières sorties effectuées</h2>
+					{# Début carte sortie #}
+					{% for event in attendantLastExits %}
+						<div class="card mb-3">
+							<div class="row g-0">
 
-						<div class="contentProfile__lastExits-infos">
-							<div class="card-header">
-								<h3 class="card-title">Nom Prénom </br>participera à X évènements</h3>
-								<p><time datetime="2025/03/12">2025/03/12</time></p>
-							</div>
-							<div class="card-body">
-								<div class="contentProfile__lastExits-infos_details">
-									<p class="card-text"><span>Organisé par :</span> Nom de l'organisateur</p>
-									<p class="card-text"><span>Nbr part :</span> 2 / 5</p>
+								<div
+									class="contentProfile__lastExits-picture">
+									{# Image de la sortie #}
+									<img src="{{ event.categories[0].picture }}" alt="{{ event.categories[0].name }}" class="img-fluid"/>
 								</div>
-								<div class="contentProfile__lastExits-infos_actions">
-									{# Bouton pour voir les détails #}
-									<a class="--show btn btn-primary btn-floating" href="#!" role="button">
-										<i class="far fa-eye"></i>
-									</a>
+
+								<div class="contentProfile__lastExits-infos">
+									<div class="card-header">
+										<h3 class="card-title">{{ event.title }}</h3>
+										<p>
+											<time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time>
+										</p>
+									</div>
+									<div class="card-body">
+										<div class="contentProfile__lastExits-infos_details">
+											<p class="card-text">
+												<span>Organisé par :</span>
+												{{ event.author }}</p>
+											<p class="card-text">
+												<span>Nbr part :</span>
+												{{ event.attendants|length }}
+												/
+												{{ event.maxAttendants }}</p>
+										</div>
+										<div
+											class="contentProfile__lastExits-infos_actions">
+											{# Bouton pour ne plus participer à la sortie #}
+											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
+												<i class="fas fa-sign-out-alt"></i>
+											</a>
+											{# Bouton pour voir les détails #}
+											<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+												<i class="far fa-eye"></i>
+											</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</section>
+					{% else %}
+						<div>Aucune donnée à afficher pour le moment</div>
+					{% endfor %}
 
-			{# TODO uniquement dans version supérieure #}
-			<section class="contentProfile__lastSearch">
-				<h2>Ma recherche du moment</h2>
-				<p>Prévoir lien direct vers la recherche sauvegardée</p>
-			</section>
+				</section>
+
+			</div>
+
 		</div>
-
 	</div>
-	
-</div>
-
 {% endblock %}

@@ -16,7 +16,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class EventRepository extends ServiceEntityRepository
 {
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
@@ -151,7 +150,7 @@ class EventRepository extends ServiceEntityRepository
 
     /**
      * Récupère les sorties en lien avec une recherche
-     * 
+     *
      * @return Event[]
      */
     public function findSearch(SearchData $search): array
@@ -195,7 +194,6 @@ class EventRepository extends ServiceEntityRepository
      */
     public function findEventsByCategory(Category $category, string $city = null): array
     {
-
         $query = $this->createQueryBuilder('e')
             ->join('e.categories', 'c')
             ->where('c.id = :categoryId');

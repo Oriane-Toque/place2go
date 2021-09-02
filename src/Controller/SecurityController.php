@@ -7,19 +7,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"} )
-     * 
+     *
      * @param AuthenticationUtils $authenticationUtils
-     * 
+     *
      * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) return $this->redirectToRoute('app_home');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

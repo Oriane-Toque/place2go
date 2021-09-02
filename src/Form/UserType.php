@@ -22,8 +22,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener( FormEvents::PRE_SET_DATA, function (FormEvent $event)
-        {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             // Get User and Form data
             $user = $event->getData();
             $form = $event->getForm();
@@ -89,11 +88,10 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email *',
                 'required' => true,
-            ]);   
+            ]);
             // If USER is new, the password is mapped to USER
             // It inherits the constraints defined in the entity
-            if (!$user || null === $user->getId())
-            {
+            if (!$user || null === $user->getId()) {
                 $form->add('password', RepeatedType::class, [
                     'type' => PasswordType::class,
                     'invalid_message' => 'Les mots de passes sont différents',
@@ -103,9 +101,7 @@ class UserType extends AbstractType
                     ],
                     'second_options' => ['label' => 'Répéter le mot de passe'],
                 ]);
-            }
-            else
-            {
+            } else {
                 // Otherwise we add mapped = false to isolate it from the entity
                 // We need to specify the constraints manually
                 // As well as empty_data + placeholder
@@ -114,16 +110,16 @@ class UserType extends AbstractType
                     'invalid_message' => 'Les mots de passes sont différents',
                     'empty_data' => '',
                     'mapped' => false,
-                    'first_options' => [ 
+                    'first_options' => [
                         /*'constraints' => [
                             new Length([
                                 'min' => 4,
                                 'minMessage' => "Le mot de passe doit contenir au moins {{ limit }} caractères",
-                            ]),  
+                            ]),
                         ], */
                         'attr' => [
                             'placeholder' => 'Laissez vide si inchangé...',
-                        ],    
+                        ],
                         'label' => 'Mot de passe',
                         'help' => 'Pas de contraintes pour le moment'
                     ],

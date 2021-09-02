@@ -20,5 +20,9 @@
     "dependencies": {
         "autoprefixer": "^10.3.3",
         "postcss-loader": "^5.0.0"
+    },
+    "engines": {
+        "node": "15.11.0",
+        "npm" : "7.17.0"
     }
 }

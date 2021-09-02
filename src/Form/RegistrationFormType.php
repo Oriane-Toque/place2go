@@ -19,13 +19,12 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
-
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // register form creation 
-        // adding constraints 
+        // register form creation
+        // adding constraints
         $builder
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom *',
@@ -48,9 +47,9 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'ex : jd'
                 ]
             ])
-						->add('avatar', HiddenType::class, [
-								'required' => false,
-						])
+                        ->add('avatar', HiddenType::class, [
+                                'required' => false,
+                        ])
             // ajout d'un évènement sur le formulaire pour différencier l'édition de la création d'un utilisateur
             // mapped false pour le password afin de ne pas relier à l'entité en cas de modification de password
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -116,11 +115,11 @@ class RegistrationFormType extends AbstractType
                             'label' => 'Description',
                         ])
                         ->add('email', EmailType::class)
-												->add('oldpassword', PasswordType::class, [
-													'label' => 'Ancien mot de passe',
-													'mapped' => false,
-													'help' => 'Si vous désirez changer de mot de passe, veuillez renseigner votre ancien mot de passe au préalable !',
-												])
+                                                ->add('oldpassword', PasswordType::class, [
+                                                    'label' => 'Ancien mot de passe',
+                                                    'mapped' => false,
+                                                    'help' => 'Si vous désirez changer de mot de passe, veuillez renseigner votre ancien mot de passe au préalable !',
+                                                ])
                         ->add('password', RepeatedType::class, [
                             'type' => PasswordType::class,
                             'invalid_message' => 'Les mots de passe ne correspondent pas.',
