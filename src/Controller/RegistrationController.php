@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
      * @Route("/register", name="app_register")
      */
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher): Response
-    {   
+    {
         // creating user
         $user = new User();
 
@@ -39,7 +39,9 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-                $passwordHasher->hashPassword($user, $form->get('password')->getData()
+                $passwordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
                 )
             );
             // set user role
@@ -50,7 +52,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
                     ->to($user->getEmail())

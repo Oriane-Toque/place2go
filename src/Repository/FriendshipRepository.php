@@ -34,8 +34,7 @@ class FriendshipRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-        foreach($results as $result)
-        {
+        foreach ($results as $result) {
             $friends[] = $result->getReceiver();
         }
 
@@ -48,8 +47,7 @@ class FriendshipRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        foreach($results as $result)
-        {
+        foreach ($results as $result) {
             $friends[] = $result->getSender();
         }
 
@@ -57,21 +55,21 @@ class FriendshipRepository extends ServiceEntityRepository
     }
 
     /**
-	 * Get count of friend request received
-	 *
+     * Get count of friend request received
+     *
      * @param Int $id
-	 * @return Int
-	 */
-	public function getTotalFriendRequest(int $id): Int
+     * @return Int
+     */
+    public function getTotalFriendRequest(int $id): Int
     {
-		$result = $this->createQueryBuilder('f')
+        $result = $this->createQueryBuilder('f')
             ->select('COUNT(f)')
-			->where('f.receiver = :id')
+            ->where('f.receiver = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getSingleScalarResult()
         ;
-		return (int)$result;
+        return (int)$result;
     }
 
     // /**

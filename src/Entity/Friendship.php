@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=FriendshipRepository::class)
- * @ORM\Table(name="friendship", 
+ * @ORM\Table(name="friendship",
  *    uniqueConstraints={
- *        @UniqueConstraint(name="friendship_unique", 
+ *        @UniqueConstraint(name="friendship_unique",
  *            columns={"sender_id", "receiver_id"})
  *    }
  * )
@@ -105,5 +105,4 @@ class Friendship
 
         return $this;
     }
-
 }

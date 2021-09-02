@@ -37,51 +37,50 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-	 * Get count of all users
-	 *
-	 * @return Int
-	 */
-	public function getTotalUsers():int
+     * Get count of all users
+     *
+     * @return Int
+     */
+    public function getTotalUsers():int
     {
-		$result = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->getQuery()
             ->getSingleScalarResult()
         ;
-		return (int)$result;
-    }
-
-	/**
-	 * Get count of all active users
-	 *
-	 * @return Int
-	 */
-	public function getTotalActiveUsers():int
-    {
-		$result = $this->createQueryBuilder('u')
-            ->select('COUNT(u)')
-			->where('u.isActive = true')
-            ->getQuery()
-            ->getSingleScalarResult()
-        ;
-		return (int)$result;
+        return (int)$result;
     }
 
     /**
-	 * Find all users with roles : ROLE_ADMIN
-	 *
-	 * @return Array
-	 */
-	public function findCollaborators():Array
+     * Get count of all active users
+     *
+     * @return Int
+     */
+    public function getTotalActiveUsers():int
     {
-		return $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->where('u.isActive = true')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+        return (int)$result;
+    }
+
+    /**
+     * Find all users with roles : ROLE_ADMIN
+     *
+     * @return Array
+     */
+    public function findCollaborators():array
+    {
+        return $this->createQueryBuilder('u')
             ->select('u')
-			->where('u.roles = :role')
+            ->where('u.roles = :role')
             ->setParameter('role', '["ROLE_ADMIN"]')
             ->getQuery()
             ->getResult()
         ;
-
     }
 
     // /**

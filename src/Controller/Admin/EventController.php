@@ -24,7 +24,7 @@ class EventController extends AbstractController
      * @Route("/admin/events", name="admin_event_list", methods={"GET"})
      */
     public function list(EventRepository $eventRepository): Response
-    {    
+    {
         // Find all events
         $events = $eventRepository->findAll();
 
@@ -39,7 +39,7 @@ class EventController extends AbstractController
     public function show(Event $event, AttendantRepository $attendantRepository): Response
     {
         // Attendants for this event
-		$eventUsers = $attendantRepository->findAttendantsByEvent($event);
+        $eventUsers = $attendantRepository->findAttendantsByEvent($event);
 
         return $this->render('admin/event/show.html.twig', [
             'event' => $event,
@@ -53,7 +53,7 @@ class EventController extends AbstractController
     public function create(Request $request): Response
     {
         // New object
-        $event = New Event();
+        $event = new Event();
 
         // Create new form associated to entity
         $form = $this->createForm(EventType::class, $event);
@@ -78,7 +78,6 @@ class EventController extends AbstractController
         return $this->render('admin/event/create.html.twig', [
             'form' => $form->createView(),
         ]);
-                
     }
 
     /**
@@ -92,7 +91,6 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             // No persist on edit
             $entityManager->flush();
@@ -106,7 +104,6 @@ class EventController extends AbstractController
         return $this->render('admin/event/edit.html.twig', [
             'form' => $form->createView(),
         ]);
-                 
     }
 
     /**
@@ -141,7 +138,6 @@ class EventController extends AbstractController
         //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été désactivé !');
 
         return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
-            
     }
 
     /**
@@ -160,6 +156,5 @@ class EventController extends AbstractController
         //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été activé !');
 
         return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
-            
     }
 }

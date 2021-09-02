@@ -37,15 +37,15 @@ class Report
 
     /**
      * false: En cours, true: Traité
-     * 
+     *
      * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $status;
 
-     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    /**
+    * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+    * @ORM\JoinColumn(nullable=false)
+    */
     private $user;
 
     /**

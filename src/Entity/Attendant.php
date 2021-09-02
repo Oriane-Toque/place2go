@@ -22,9 +22,9 @@ class Attendant
      */
     private $id;
 
-     /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    /**
+    * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+    */
     private $createdAt;
 
     /**

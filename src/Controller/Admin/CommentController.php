@@ -23,7 +23,7 @@ class CommentController extends AbstractController
      * @Route("/admin/comments", name="admin_comment_list", methods={"GET"})
      */
     public function list(CommentRepository $commentRepository): Response
-    {    
+    {
         // Find all comments
         $comments = $commentRepository->findAll();
 
@@ -48,7 +48,7 @@ class CommentController extends AbstractController
     public function create(Request $request): Response
     {
         // New object
-        $comment = New Comment();
+        $comment = new Comment();
 
         // Create new form associated to entity
         $form = $this->createForm(CommentType::class, $comment);
@@ -70,7 +70,6 @@ class CommentController extends AbstractController
         return $this->render('admin/comment/create.html.twig', [
             'form' => $form->createView(),
         ]);
-                
     }
 
     /**
@@ -84,7 +83,6 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             // No persist on edit
             $entityManager->flush();
@@ -99,7 +97,6 @@ class CommentController extends AbstractController
             'comment' => $comment,
             'form' => $form->createView(),
         ]);
-                 
     }
 
     /**

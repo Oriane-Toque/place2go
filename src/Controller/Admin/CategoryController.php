@@ -25,7 +25,7 @@ class CategoryController extends AbstractController
      * @Route("/admin/categories", name="admin_category_list", methods={"GET"})
      */
     public function list(CategoryRepository $categoryRepository): Response
-    {    
+    {
         // Find all categories
         $categories = $categoryRepository->findAll();
 
@@ -50,7 +50,7 @@ class CategoryController extends AbstractController
     public function create(Request $request, FileUploader $fileUploader): Response
     {
         // New object
-        $category = New Category();
+        $category = new Category();
 
         // Create new form associated to entity
         $form = $this->createForm(CategoryType::class, $category);
@@ -86,7 +86,6 @@ class CategoryController extends AbstractController
         return $this->render('admin/category/create.html.twig', [
             'form' => $form->createView(),
         ]);
-                
     }
 
     /**
@@ -100,7 +99,6 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             // No persist on edit
             $entityManager->flush();
@@ -118,7 +116,6 @@ class CategoryController extends AbstractController
             'form' => $form->createView(),
             'category' => $category,
         ]);*/
-                 
     }
 
     /**

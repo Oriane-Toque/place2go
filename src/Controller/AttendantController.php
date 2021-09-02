@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * @isGranted("ROLE_USER")
  */
@@ -30,10 +29,10 @@ class AttendantController extends AbstractController
     /**
      * To join an event
      * @Route("/event/{id<\d+>}/join", name="app_event_join", methods={"GET"})
-     * 
+     *
      * @param Event $event
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function join(Event $event, Request $request): Response
@@ -65,10 +64,10 @@ class AttendantController extends AbstractController
     /**
      * To leave an event
      * @Route("/event/{id<\d+>}/leave", name="app_event_leave", methods={"GET"})
-     * 
+     *
      * @param Event $event
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function leave(Event $event, Request $request): Response

@@ -4,7 +4,6 @@ namespace App\DataFixtures\Provider;
 
 class EventProvider
 {
-
     private $categories = [
         'Cinéma',
         'Restaurant',
@@ -26,5 +25,4 @@ class EventProvider
     {
         return $this->categories[array_rand($this->categories)];
     }
- 
 }

@@ -15,8 +15,6 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-
-
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
@@ -46,22 +44,18 @@ class AppFixtures extends Fixture
         $users = [];
 
         // Create 20 users! Bam!
-        for ($i = 0; $i < 20; $i++)
-        {
+        for ($i = 0; $i < 20; $i++) {
             $user = new User();
 
             $firstName = $faker->firstName();
             $lastName  = $faker->lastName();
             $nickName = $firstName.substr($lastName, 0, 1);
 
-            if($i == 0)
-            {
+            if ($i == 0) {
                 $user->setRoles(["ROLE_ADMIN"]);
                 $user->setEmail('admin@admin.com');
                 $user->setNickname('admin');
-            }
-            else
-            {
+            } else {
                 $user->setRoles(["ROLE_USER"]);
                 $user->setEmail($faker->email());
                 $user->setNickname($nickName);
@@ -70,12 +64,12 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordHasher->hashPassword($user, 'dada'));
             $user->setFirstname($firstName);
             $user->setLastname($lastName);
-            $user->setAvatar('https://api.multiavatar.com/' . mt_rand(1,500) . '.png');
+            $user->setAvatar('https://api.multiavatar.com/' . mt_rand(1, 500) . '.png');
             $user->setCity($faker->city());
             $user->setIsActive(true);
             $user->setIsVerified(true);
-			$user->setBirthday(new DateTimeImmutable('now -' . mt_rand(20,60) . 'years'));
-			$user->setDescription($faker->text(mt_rand(100,500)));
+            $user->setBirthday(new DateTimeImmutable('now -' . mt_rand(20, 60) . 'years'));
+            $user->setDescription($faker->text(mt_rand(100, 500)));
 
             $users[] = $user;
             $manager->persist($user);
@@ -85,13 +79,13 @@ class AppFixtures extends Fixture
         // create 10 events! Bam!
         for ($i = 0; $i < 30; $i++) {
             $event = new Event();
-            $event->setTitle($faker->text(mt_rand(15,50)));
-            $event->setDescription($faker->text(mt_rand(100,250)));
-            $event->setEventDate(new DateTimeImmutable('now +' . mt_rand(9,12) . 'days'));
+            $event->setTitle($faker->text(mt_rand(15, 50)));
+            $event->setDescription($faker->text(mt_rand(100, 250)));
+            $event->setEventDate(new DateTimeImmutable('now +' . mt_rand(9, 12) . 'days'));
             $event->setAddress($faker->address());
             $event->setLat($faker->latitude(0, 5));
             $event->setLon($faker->longitude(44, 49));
-            $event->setMaxAttendants(mt_rand(3,20));
+            $event->setMaxAttendants(mt_rand(3, 20));
             $event->setIsActive(true);
             $event->setAuthor($users[array_rand($users)]);
 
@@ -120,7 +114,7 @@ class AppFixtures extends Fixture
             $comment = new Comment();
             $comment->setAuthor($users[array_rand($users)]);
             $comment->setEvent($events[array_rand($events)]);
-            $comment->setContent($faker->text(mt_rand(100,250)));
+            $comment->setContent($faker->text(mt_rand(100, 250)));
             $comment->setCreatedAt(new \DateTimeImmutable());
 
             $comments[] = $comment;

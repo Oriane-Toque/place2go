@@ -2,16 +2,13 @@
 
 namespace App\Services;
 
-
 class GeoJson
 {
-
     public function createGeoJson($events)
     {
         $geojson = ['type' => 'FeatureCollection', 'features' => []];
 
         foreach ($events as $place) {
-
             $marker = [
                 'type' => 'Feature',
                 'geometry' => [

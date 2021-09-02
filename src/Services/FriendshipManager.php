@@ -11,7 +11,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-
 class FriendshipManager
 {
     private $mailer;
@@ -27,7 +26,7 @@ class FriendshipManager
 
     /**
      * Create a friendship between two users
-     * 
+     *
      * @param User $sender
      * @param User $receiver
      *
@@ -47,7 +46,7 @@ class FriendshipManager
 
     /**
      * Delete a friendship between two users
-     * 
+     *
      * @param User $user
      * @param User $friend
      *
@@ -62,7 +61,7 @@ class FriendshipManager
 
     /**
      * Find a friendship relation between two users
-     * 
+     *
      * @param User $user
      * @param User $friend
      *
@@ -71,8 +70,7 @@ class FriendshipManager
     {
         $friendship = $this->friendshipRepository->findOneBy(['sender' => $user, 'receiver' => $friend]);
 
-        if (null === $friendship)
-        {
+        if (null === $friendship) {
             $friendship = $this->friendshipRepository->findOneBy(['sender' => $friend, 'receiver' => $user]);
         }
         return $friendship;
@@ -80,7 +78,7 @@ class FriendshipManager
 
     /**
      * Find all friendship relation between from a user
-     * 
+     *
      * @param User $user
      * @param User $friend
      *
@@ -89,8 +87,7 @@ class FriendshipManager
     {
         $friendship = $this->friendshipRepository->findBy(['sender' => $user, 'receiver' => $friend]);
 
-        if (null === $friendship)
-        {
+        if (null === $friendship) {
             $friendship = $this->friendshipRepository->findBy(['sender' => $friend, 'receiver' => $user]);
         }
         return $friendship;
@@ -98,10 +95,10 @@ class FriendshipManager
 
     /**
      * Notify all friends of an user
-     * 
+     *
      * @param User $user
      * @param Event $event
-     * 
+     *
     */
     public function eventAllFriendsNotifier(User $user, Event $event)
     {
@@ -120,12 +117,9 @@ class FriendshipManager
         ;
 
         // Send email to all friends
-        foreach($friends as $friend)
-        {
+        foreach ($friends as $friend) {
             $email->to($friend->getEmail());
             $this->mailer->send($email);
         }
-
     }
-
 }
