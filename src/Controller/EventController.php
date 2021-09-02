@@ -157,13 +157,12 @@ class EventController extends AbstractController
 
         // Create new form associated to entity
         if ($form->isSubmitted() && $form->isValid()) {
+            // Check access
             $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
-            // set the author to the  associated commenb
+            // set the author to the  associated comment
             $comment->setAuthor($this->getUser());
             // set the event
             $comment->setEvent($event);
-            // set the date
-            $comment->setCreatedAt(new DateTimeImmutable());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);

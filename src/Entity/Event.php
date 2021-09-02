@@ -68,7 +68,7 @@ class Event
      * @var int
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
-     * @Assert\Range(min=1, max=15, notInRangeMessage = "Le nombre de participants doit etre compris entre {{ min }} et {{ max }}")
+     * @Assert\Range(min=1, max=20, notInRangeMessage = "Le nombre de participants doit etre compris entre {{ min }} et {{ max }}")
      */
     private $maxAttendants;
 
