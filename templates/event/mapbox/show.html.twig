@@ -9,5 +9,5 @@
     zoom: 15.5, // Starting zoom level
     });
     // Create a default Marker and add it to the map.
-    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat | raw }}, {{ event.lon | raw }}]).addTo(map);
 </script>
