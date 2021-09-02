@@ -10,7 +10,6 @@ use App\Data\SearchData;
 use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
-use App\Services\CallApiService;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,11 +87,14 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre sortie à bien été créée !');
+            $notif = $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
 
-            // Email all my friends
-            $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
-
+            if ($notif) {
+                $this->addFlash('success', 'Votre sortie a bien été créée. Vos amis seront notifiés par email !');
+            } else {
+                $this->addFlash('success', 'Votre sortie à bien été créée ! ');
+            }
+        
             return $this->redirectToRoute('app_event_show', [
                 'id' => $event->getId(),
             ]);
