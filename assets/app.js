@@ -13,10 +13,12 @@ import "./modules/vanilla-tilt.min.js";
 // start the Stimulus application
 import "./bootstrap";
 
+
 // Open the sidenav when clicking on the burger menu
 window.toggleSidenav = function () {
   document.querySelector(".sidenav").classList.toggle("open");
 };
+
 
 // Remove a friend
 window.removeFriend = function (item) {

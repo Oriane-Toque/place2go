@@ -1,226 +1,230 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}{% endblock %}
-        - Place 2 Go
-    </title>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
+		<title>
+			{% block title %}{% endblock %}
+			- Place 2 Go
+		</title>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/admin.css') }}">
-    
-</head>
+		<!-- Font Awesome -->
+		<link
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+		<!-- MDB -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"/>
 
-<body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('admin') }}
+		{% endblock %}
 
-        <!-- Sidebar -->
+		{% block javascripts %}
+			{{ encore_entry_script_tags('admin') }}
+		{% endblock %}
+	</head>
 
-          <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+	<body
+		id="page-top">
+		<!-- Page Wrapper -->
+		<div
+			id="wrapper">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('admin_home') }}">
-                <div class="sidebar-brand-text mx-3">
-                    <img src="{{ asset('img/logo-place2go-white.svg') }}" class="img-fluid logo" width="150" alt="Place 2 Go">
-                </div>
-            </a>
+			<!-- Sidebar -->
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+			<ul
+				class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item {% block menu_dashboard %}{% endblock %}">
-                <a class="nav-link" href="{{ path('admin_home') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('admin_home') }}">
+					<div class="sidebar-brand-text mx-3">
+						<img src="{{ asset('img/logo-place2go-white.svg') }}" class="img-fluid logo" width="150" alt="Place 2 Go">
+					</div>
+				</a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider my-0">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item {% block menu_dashboard %}{% endblock %}">
+					<a class="nav-link" href="{{ path('admin_home') }}">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
 
-            <!-- Nav Item - Events Collapse Menu -->
-            <li class="nav-item {% block menu_event %}{% endblock %}">
-                <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseEvents"
-                    aria-expanded="true" aria-controls="collapseEvents">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Sorties</span>
-                </a>
-                <div id="collapseEvents" class="collapse" aria-labelledby="headingEvents" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Sorties</h6>
-                        <a class="collapse-item" href="{{ path('admin_event_list') }}">Toutes les sorties</a>
-                        <a class="collapse-item" href="{{ path('admin_event_create') }}">Ajouter une sortie</a>
-                    </div>
-                </div>
-            </li>
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider">
 
-            <!-- Nav Item - Categories Collapse Menu -->
-            <li class="nav-item {% block menu_category %}{% endblock %}">
-                <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCategories"
-                    aria-expanded="false" aria-controls="collapseCategories">
-                    <i class="fas fa-fw fa-tag"></i>
-                    <span>Categories</span>
-                </a>
-                <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Categories</h6>
-                        <a class="collapse-item" href="{{ path('admin_category_list') }}">Toutes les catégories</a>
-                        <a class="collapse-item" href="{{ path('admin_category_create') }}">Ajouter une catégorie</a>
-                    </div>
-                </div>
-            </li>
+				<!-- Heading -->
+				<div class="sidebar-heading">
+					Interface
+				</div>
 
-            <!-- Nav Item - Users Collapse Menu -->
-            <li class="nav-item {% block menu_user %}{% endblock %}">
-                <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseUsers"
-                    aria-expanded="false" aria-controls="collapseUsers">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Utilisateurs</span>
-                </a>
-                <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Utilisateurs</h6>
-                        <a class="collapse-item" href="{{ path('admin_user_list') }}">Tous les utilisateurs</a>
-                        <a class="collapse-item" href="{{ path('admin_user_create') }}">Ajouter un utilisateur</a>
-                    </div>
-                </div>
-            </li>
+				<!-- Nav Item - Events Collapse Menu -->
+				<li class="nav-item {% block menu_event %}{% endblock %}">
+					<a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseEvents" aria-expanded="true" aria-controls="collapseEvents">
+						<i class="fas fa-fw fa-calendar"></i>
+						<span>Sorties</span>
+					</a>
+					<div id="collapseEvents" class="collapse" aria-labelledby="headingEvents" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Sorties</h6>
+							<a class="collapse-item" href="{{ path('admin_event_list') }}">Toutes les sorties</a>
+							<a class="collapse-item" href="{{ path('admin_event_create') }}">Ajouter une sortie</a>
+						</div>
+					</div>
+				</li>
 
-            <!-- Nav Item - Comments Menu -->
-            <li class="nav-item {% block menu_comment %}{% endblock %}">
-                <a class="nav-link" href="{{ path('admin_comment_list') }}"><i class="fas fa-fw fa-comments"></i><span>Commentaires</span></a>
-            </li>
+				<!-- Nav Item - Categories Collapse Menu -->
+				<li class="nav-item {% block menu_category %}{% endblock %}">
+					<a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories">
+						<i class="fas fa-fw fa-tag"></i>
+						<span>Categories</span>
+					</a>
+					<div id="collapseCategories" class="collapse" aria-labelledby="headingCategories" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Categories</h6>
+							<a class="collapse-item" href="{{ path('admin_category_list') }}">Toutes les catégories</a>
+							<a class="collapse-item" href="{{ path('admin_category_create') }}">Ajouter une catégorie</a>
+						</div>
+					</div>
+				</li>
 
-            <!-- Nav Item - Signalments Menu -->
-            <li class="nav-item {% block menu_signalment %}{% endblock %}">
-                <a class="nav-link" href="#"><i class="fas fa-fw fa-bullhorn"></i><span>Signalements</span></a>
-            </li>
+				<!-- Nav Item - Users Collapse Menu -->
+				<li class="nav-item {% block menu_user %}{% endblock %}">
+					<a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+						<i class="fas fa-fw fa-users"></i>
+						<span>Utilisateurs</span>
+					</a>
+					<div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Utilisateurs</h6>
+							<a class="collapse-item" href="{{ path('admin_user_list') }}">Tous les utilisateurs</a>
+							<a class="collapse-item" href="{{ path('admin_user_create') }}">Ajouter un utilisateur</a>
+						</div>
+					</div>
+				</li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+				<!-- Nav Item - Comments Menu -->
+				<li class="nav-item {% block menu_comment %}{% endblock %}">
+					<a class="nav-link" href="{{ path('admin_comment_list') }}">
+						<i class="fas fa-fw fa-comments"></i>
+						<span>Commentaires</span>
+					</a>
+				</li>
 
-            <!-- Nav Item - Collaborators Collapse Menu -->
-            <li class="nav-item {% block menu_collaborator %}{% endblock %}">
-                <a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCollaborators"
-                    aria-expanded="true" aria-controls="collapseCollaborators">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Collaborateurs</span>
-                </a>
-                <div id="collapseCollaborators" class="collapse" aria-labelledby="headingCollaborators"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Collaborateurs</h6>
-                        <a class="collapse-item" href="{{ path('admin_collaborator_list') }}">Tous les collaborateurs</a>
-                        <a class="collapse-item" href="{{ path('admin_collaborator_create') }}">Ajouter un collaborateur</a>
-                    </div>
-                </div>
-            </li>
+				<!-- Nav Item - Signalments Menu -->
+				<li class="nav-item {% block menu_signalment %}{% endblock %}">
+					<a class="nav-link" href="{{ path('admin_report_list') }}">
+						<i class="fas fa-fw fa-bullhorn"></i>
+						<span>Signalements</span>
+					</a>
+				</li>
+
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider d-none d-md-block">
+
+				<!-- Nav Item - Collaborators Collapse Menu -->
+				<li class="nav-item {% block menu_collaborator %}{% endblock %}">
+					<a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseCollaborators" aria-expanded="true" aria-controls="collapseCollaborators">
+						<i class="fas fa-fw fa-users"></i>
+						<span>Collaborateurs</span>
+					</a>
+					<div id="collapseCollaborators" class="collapse" aria-labelledby="headingCollaborators" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Collaborateurs</h6>
+							<a class="collapse-item" href="{{ path('admin_collaborator_list') }}">Tous les collaborateurs</a>
+							<a class="collapse-item" href="{{ path('admin_collaborator_create') }}">Ajouter un collaborateur</a>
+						</div>
+					</div>
+				</li>
 
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+				<!-- Divider -->
+				<hr
+				class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+				<!-- Sidebar Toggler (Sidebar) -->
+				<div class="text-center d-none d-md-inline">
+					<button class="rounded-circle border-0" id="sidebarToggle"></button>
+				</div>
 
-        </ul>
-        <!-- End of Sidebar -->
+			</ul>
+			<!-- End of Sidebar -->
 
-        <div id="content-wrapper" class="d-flex flex-column">
+			<div id="content-wrapper" class="d-flex flex-column">
 
-            <div id="content">
+				<div
+					id="content">
 
-                <!-- Topbar -->
-                {{ include('admin/layout/partials/_topbar.html.twig') }}
+					<!-- Topbar -->
+					{{ include('admin/layout/partials/_topbar.html.twig') }}
 
-                <div class="container-fluid">
-                
-                    <!-- Affichage des message flash -->
-                    {% for label, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="close" data-mdb-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
+					<div
+						class="container-fluid">
 
-                    {% block body %}{% endblock %}
-                </div>
+						<!-- Affichage des message flash -->
+						{% for label, messages in app.flashes %}
+							{% for message in messages %}
+								<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+									{{ message }}
+									<button type="button" class="close" data-mdb-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							{% endfor %}
+						{% endfor %}
 
-            </div>
+						{% block body %}{% endblock %}
+					</div>
 
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Place2Go &copy; 2021</span>
-                    </div>
-                </div>
-            </footer>
+				</div>
 
-        </div>
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Place2Go &copy; 2021</span>
+						</div>
+					</div>
+				</footer>
 
-    </div>
+			</div>
 
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+		</div>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
 
-    <!-- MDB core JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- Logout Modal-->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="login.html">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
-
-    {% block javascripts %}
-        {#{{ encore_entry_script_tags('app') }}#}
-    {% endblock %}
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('admin/admin.js') }}"></script>
-
-</body>
+		<!-- MDB core JavaScript-->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+	</body>
 
 </html>
