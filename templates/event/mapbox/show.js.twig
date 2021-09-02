@@ -4,7 +4,7 @@
     container: 'map', // Container ID
     style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
     center: [
-    {{ event.lat }}, {{ event.lon }}
+    {{ event.lat | raw }}, {{ event.lon | raw }}
     ], // Starting position [lng, lat]
     zoom: 15.5, // Starting zoom level
     });
