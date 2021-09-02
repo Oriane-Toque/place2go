@@ -64,7 +64,7 @@
 										</div>
 										<div class="card-body">
 											<div class="contentProfile__lastExits-infos_details">
-												<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
+												<p class="card-text"><span>Organisé par :</span> <img src="{{ event.author.avatar }}" width="30" class="me-2" />{{ event.author.nickname }}</p>
 												{# fonction length de twig pour retourner le nombre de participants #}
 												<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
 											</div>
@@ -108,7 +108,6 @@
 											alt="Image de la sortie"
 											class="img-fluid"
 										/>
-
 									</div>
 
 									<div class="contentProfile__lastExits-infos">
@@ -118,7 +117,7 @@
 										</div>
 										<div class="card-body">
 											<div class="contentProfile__lastExits-infos_details">
-												<p class="card-text"><span>Organisé par :</span> {{ event.author }}</p>
+												<p class="card-text"><span>Organisé par :</span> <img src="{{ event.author.avatar }}" width="30" class="me-2" />{{ event.author.nickname }}</p>
 												<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
 											</div>
 											<div class="contentProfile__lastExits-infos_actions">
@@ -144,14 +143,56 @@
 
 				<div class="tab-pane fade" id="friend-events" role="tabpanel" aria-labelledby="friend-events-tab">
 
-					{# TODO uniquement version supérieur #}
 					<section class="contentProfile__lastExit">
-						<h2>Nouveautés de mes amis</h2>
+						<h2>Dernières sorties organisées par mes amis</h2>
 						{# Début carte notifications sur les amis #}
-						{% for friend in friends %}
-						{% for event in friend.events %}
-							{# {% for events in friendEvents %}
-							{% for event in events %} #}
+						{# {% for friend in friends %}
+						{% for event in friend.events %} #}
+							{% for events in friendsAuthor %}
+							{% for event in events %}
+								<div class="card mb-3">
+									<div class="row g-0">
+
+										<div class="contentProfile__lastExits-picture">
+											<!-- Image profil de l'Ami -->
+											<img
+												src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+												alt="Image de la sortie"
+												class="img-fluid"
+											/>
+										</div>
+
+										<div class="contentProfile__lastExits-infos">
+											<div class="card-header">
+												<h3 class="card-title">{{ event.title }}</h3>
+												<p><time datetime="{{ event.eventDate|date("d MMMM Y à HH:mm") }}">{{ event.eventDate|format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr') }}</time></p>
+											</div>
+											<div class="card-body">
+												<div class="contentProfile__lastExits-infos_details">
+													<p class="card-text"><span>Organisé par :</span> <img src="{{ event.author.avatar }}" width="30" class="me-2" />{{ event.author.nickname }}</p>
+													<p class="card-text"><span>Nbr part :</span> {{ event.attendants|length }} / {{ event.maxAttendants }}</p>
+												</div>
+												<div class="contentProfile__lastExits-infos_actions">
+													{# Bouton pour voir les détails #}
+													<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+														<i class="far fa-eye"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+							{% endfor %}
+					</section>
+
+					<section class="contentProfile__lastExit">
+						<h2>Dernières sorties auxquelles participent mes amis</h2>
+						{# Début carte notifications sur les amis #}
+						{# {% for friend in friends %}
+						{% for event in friend.events %} #}
+							{% for events in friendsAttendant %}
+							{% for event in events %}
 								<div class="card mb-3">
 									<div class="row g-0">
 

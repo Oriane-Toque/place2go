@@ -61,27 +61,21 @@ class ProfileController extends AbstractController
 		// Last 3 joined events by the user ordered by date
 		$attendantLastThreeExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
-		// My friends events
+		// My friends last events
 		$friends = $friendshipRepository->findAllFriends($user);
 
-		dump($friends);
-
-		// foreach($friends as $friend)
-		// {
-		// 	//$friendEvents = $friend->getEvents();
-		// 	//$friendEvents[] = $eventRepository->findLastAuthorEvents($friend->getId(), 3);
-		// 	$friendEvents[] = $eventRepository->findLastAttendantEvents($friend->getId(), 3);
-		// 	//if($result) $friendEvents[] = $result;
-		// }
-
-		//dd($friendEvents);
+		foreach($friends as $friend)
+		{
+			$friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId(), 999);
+			$friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
+		}
 
 		return $this->render('profile/profile.html.twig', [
 			"user" => $user,
 			"userLastExits" => $authorLastThreeExits,
 			"attendantLastExits" => $attendantLastThreeExits,
-			"friends" => $friends
-			//"friendEvents" => $friendEvents
+			"friendsAuthor" => $friendsAuthor,
+			"friendsAttendant" => $friendsAttendant
 		]);
 	}
 

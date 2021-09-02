@@ -115,6 +115,7 @@ class EventRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e')
             ->where('e.author = :userId')
+            ->andWhere('e.isActive = 1')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
@@ -138,6 +139,56 @@ class EventRepository extends ServiceEntityRepository
         $qb =  $this->createQueryBuilder('e')
             ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
             ->where('a.user = :userId')
+            ->andWhere('e.isActive = 1')
+            ->setParameter('userId', $userId)
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Recover the next events of the organizer order by event date (DESC)
+     *
+     * @param Int $userId
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties proposées
+     */
+    public function findNextAuthorEvents(int $userId, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.author = :userId')
+            ->andWhere('e.event_date > CURRENT_DATE()')
+            ->andWhere('e.isActive = 1')
+            ->setParameter('userId', $userId)
+            ->orderBy('e.event_date', 'DESC');
+            
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Recover the next exits of the user order by event date (DESC)
+     *
+     * @param Int $userId
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties auxquels l'utilisateur participe
+     */
+    public function findNextAttendantEvents(int $userId, int $limit = null): array
+    {
+        $qb =  $this->createQueryBuilder('e')
+            ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
+            ->where('a.user = :userId')
+            ->andWhere('e.event_date > CURRENT_DATE()')
+            ->andWhere('e.isActive = 1')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
