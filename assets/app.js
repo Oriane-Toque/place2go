@@ -90,3 +90,60 @@ if (textarea != null) {
     }
   });
 }
+
+
+
+const textDisplay = document.getElementById('text')
+const bold = {
+  go: '2 Go',
+  move: '2 Be..',
+  party: '2 Party..',
+  friends: '2 Make Friends..',
+  fun: '2 have Fun..',
+  people: "2 Meet People.."
+}
+
+const phrases = [`lace ${bold.go} !!`, `lace ${bold.move}`, `lace ${bold.party}`, `lace ${bold.friends}`, `lace ${bold.fun}`, `lace ${bold.people}`]
+let i = 0
+let j = 0
+let currentPhrase = []
+let isDeleting = false
+let isEnd = false
+
+function loop() {
+    isEnd = false
+
+    if (i < phrases.length) {
+
+        if (!isDeleting && j <= phrases[i].length) {
+            currentPhrase.push(phrases[i][j])
+            j++
+            textDisplay.innerHTML = currentPhrase.join('')
+        }
+
+        if (isDeleting && j <= phrases[i].length) {
+            currentPhrase.pop(phrases[i][j])
+            j--
+            textDisplay.innerHTML = currentPhrase.join('')
+        }
+
+        if (j == phrases[i].length) {
+            isEnd = true
+            isDeleting = true
+        }
+
+        if (isDeleting && j === 0) {
+            currentPhrase = []
+            isDeleting = false
+            i++
+            if (i == phrases.length) {
+                i = 0
+            }
+        }
+    }
+    const speedUp = Math.random() * (100 - 50) + 50
+    const normalSpeed = Math.random() * (200 - 100) + 100
+    const time = isEnd ? 1500 : isDeleting ? speedUp : normalSpeed
+    setTimeout(loop, time)
+}
+loop()

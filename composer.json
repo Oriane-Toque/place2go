@@ -97,7 +97,6 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "@CkEditor",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [

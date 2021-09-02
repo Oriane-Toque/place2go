@@ -18,9 +18,9 @@ class ReportController extends AbstractController
      * Liste les signalements en cours de traitement
      *
      * @Route("/admin/reports", name="admin_report_list", methods={"GET"})
-     * 
+     *
      * @param ReportRepository $rr
-     * 
+     *
      * @return Response
      */
     public function list(ReportRepository $rr): Response
@@ -38,9 +38,9 @@ class ReportController extends AbstractController
      * Liste les signalements traités/archivés
      *
      * @Route("/admin/reports/archive", name="admin_report_archive", methods={"GET"})
-     * 
+     *
      * @param ReportRepository $rr
-     * 
+     *
      * @return Response
      */
     public function archive(ReportRepository $rr): Response
@@ -60,7 +60,7 @@ class ReportController extends AbstractController
      * @Route("/admin/reports/{id<\d+>}", name="admin_report_show", methods={"GET"})
      *
      * @param Report $report
-     * 
+     *
      * @return Response
      */
     public function show(Report $report): Response
@@ -74,11 +74,11 @@ class ReportController extends AbstractController
      * Change le statut d'un signalement (en cours/traité)
      *
      * @Route("/admin/reports/{id<\d+>}/status", name="admin_report_status", methods={"GET"})
-     * 
+     *
      * @param Report $report
      * @param EntityManagerInterface $em
      * @param Request $request
-     * 
+     *
      * @return RedirectResponse
      */
     public function process(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse
@@ -106,7 +106,7 @@ class ReportController extends AbstractController
      * @param Report $report
      * @param EntityManagerInterface $em
      * @param Request $request
-     * 
+     *
      * @return RedirectResponse
      */
     public function delete(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse
