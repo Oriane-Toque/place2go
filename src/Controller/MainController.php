@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
-use App\Repository\EventRepository;
-use App\Services\FriendshipManager;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
@@ -21,6 +19,10 @@ class MainController extends AbstractController
      * Permet d'accéder à la page de contact
      *
      * @Route("/contact", name="app_contact_contact", methods={"GET", "POST"})
+     * 
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * 
      * @return Response
      */
     public function contact(Request $request, MailerInterface $mailer): Response
@@ -32,7 +34,6 @@ class MainController extends AbstractController
         $contact = $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             // on crée le mail
             $email = (new TemplatedEmail())
                 ->from(new Address($user->getEmail()))

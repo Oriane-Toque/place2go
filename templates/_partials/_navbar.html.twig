@@ -7,11 +7,11 @@
 
 		<!-- Toggle button -->
 		{#<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<i class="fas fa-bars"></i>
-						</button>#}
+									<i class="fas fa-bars"></i>
+								</button>#}
 
-		<button class="navbar-toggler" type="button" onclick="toggleSidenav()">
-			<i class="fas fa-bars"></i>
+		<button class="navbar-toggler" type="button" id="js-burger" onclick="toggleSidenav()">
+			<i class="fas fa-bars" id="js-burger"></i>
 		</button>
 
 		<div id="navbarSupportedContent" class="collapse navbar-collapse">
@@ -49,8 +49,8 @@
 							Mon espace perso</a>
 						{% if is_granted('ROLE_ADMIN') %}
 							<a class="dropdown-item icon" href="{{ path('admin_home') }}">
-							<i class="fas fa-tools"></i>
-							Espace admin</a>
+								<i class="fas fa-tools"></i>
+								Espace admin</a>
 						{% endif %}
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item icon" href="{{ path('app_logout') }}">
@@ -91,7 +91,9 @@
 			<ul class="navbar-nav">
 				<li class="sidenav-item">
 					<a class="sidenav-link ripple-surface" href="{{ path('app_category_list') }}" tabindex="1">
-						<i class="fas fa-tag pe-3"></i>Catégories</a>
+						<i class="fas fa-tag pe-3"></i>
+						Catégories
+					</a>
 				</li>
 				<li class="sidenav-item dropdown">
 					<a class="sidenav-link ripple-surface ripple-surface-primary collapsed" href="#events" data-mdb-toggle="collapse" role="button" tabindex="1">
