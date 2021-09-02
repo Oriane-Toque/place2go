@@ -95,7 +95,7 @@ class MainController extends AbstractController
     /**
      * Team's page
      *
-     * @Route("/team", name="app__main_team", methods={"GET"})
+     * @Route("/team", name="app_main_team", methods={"GET"})
      *
      * @return Response
      */
