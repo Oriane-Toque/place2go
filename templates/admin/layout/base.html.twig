@@ -117,12 +117,19 @@
 					</a>
 				</li>
 
-				<!-- Nav Item - Signalments Menu -->
-				<li class="nav-item {% block menu_signalment %}{% endblock %}">
-					<a class="nav-link" href="{{ path('admin_report_list') }}">
+				<!-- Nav Item - Report Collapse Menu -->
+				<li class="nav-item {% block menu_report %}{% endblock %}">
+					<a class="nav-link collapsed" href="#" data-mdb-toggle="collapse" data-mdb-target="#collapseReport" aria-expanded="false" aria-controls="collapseReport">
 						<i class="fas fa-fw fa-bullhorn"></i>
 						<span>Signalements</span>
 					</a>
+					<div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Signalements</h6>
+							<a class="collapse-item" href="{{ path('admin_report_list') }}">Signalements en cours</a>
+							<a class="collapse-item" href="{{ path('admin_report_archive') }}">Signalements traités</a>
+						</div>
+					</div>
 				</li>
 
 				<!-- Divider -->
