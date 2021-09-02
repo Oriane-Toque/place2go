@@ -44,7 +44,6 @@ class EventType extends AbstractType
             ])
             ->add('event_date', DateTimeType::class, [
                 'label' => 'Date de la sortie *',
-                'data' => new DateTime('now'),
                 'required' => true,
             ])
             ->add('address', HiddenType::class, [
