@@ -722,14 +722,13 @@ body {
 
 #category .category__card {
   border-radius: 0.25rem;
+  height: 100%;
   max-height: 250px;
-  -webkit-box-shadow: 0 0 20px rgba(0 0 0 / 30%);
-  box-shadow: 0 0 20px rgba(0 0 0 / 30%);
+  box-shadow: 0 5px 15px 0 rgba(0,0,0, 0.6);
 }
 
 #category .category__card:hover {
-  -webkit-box-shadow: 0 0 15px rgba(0 0 0 / 50%);
-  box-shadow: 0 0 15px rgba(0 0 0 / 50%);
+  box-shadow: 0 5px 15px 0 rgba(0,0,0, 0.9);
 }
 
 #category .category__card_title {
