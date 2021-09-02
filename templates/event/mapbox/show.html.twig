@@ -1,0 +1,13 @@
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+    let map = new mapboxgl.Map({
+    container: 'map', // Container ID
+    style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+    center: [
+    {{ event.lat }}, {{ event.lon }}
+    ], // Starting position [lng, lat]
+    zoom: 15.5, // Starting zoom level
+    });
+    // Create a default Marker and add it to the map.
+    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+</script>

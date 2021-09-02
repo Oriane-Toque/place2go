@@ -17,20 +17,20 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('subject', TextType::class, [
-							'label' => 'Sujet',
-							'constraints' => [
-								new NotBlank(),
-								new Type('string'),
-							],
-						])
-						->add('message', CKEditorType::class, [
-							'label' => 'Message',
-							'constraints' => [
-								new NotBlank(),
-								new Type('string'),
-								new Length('', 15, 255),
-							],
-						])
+                            'label' => 'Sujet',
+                            'constraints' => [
+                                new NotBlank(),
+                                new Type('string'),
+                            ],
+                        ])
+                        ->add('message', CKEditorType::class, [
+                            'label' => 'Message',
+                            'constraints' => [
+                                new NotBlank(),
+                                new Type('string'),
+                                new Length('', 15, 255),
+                            ],
+                        ])
         ;
     }
 

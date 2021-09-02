@@ -27,15 +27,14 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function findTopCategories(): array
     {
-
-			return $this->createQueryBuilder('c')
-			->select('count(e) AS nbrEvents')
-			->addSelect('c')
-			->join('c.events', 'e')
-			->groupBy('c.id')
-			->orderBy('nbrEvents', 'DESC')
-			->setMaxResults(6)
-			->getQuery()
-			->getResult();
+        return $this->createQueryBuilder('c')
+            ->select('count(e) AS nbrEvents')
+            ->addSelect('c')
+            ->join('c.events', 'e')
+            ->groupBy('c.id')
+            ->orderBy('nbrEvents', 'DESC')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
     }
 }

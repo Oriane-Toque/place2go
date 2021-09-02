@@ -18,192 +18,190 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 class EventController extends AbstractController
 {
-	private $geoJson;
+    private $geoJson;
 
-	public function __construct(geoJson $geoJson)
-	{
-		$this->geoJson = $geoJson;
-	}
+    public function __construct(geoJson $geoJson)
+    {
+        $this->geoJson = $geoJson;
+    }
 
-	/**
-	 * @Route("/events", name="app_event_list", methods={"GET"})
-	 * 
-	 * @param Request $request
-	 * @param EventRepository $eventRepository
-	 * 
-	 * TODO GÉRER SI IL N'Y A PAS DE SORTIES POUR UNE CATÉGORIE DONNÉE
-	 * 
-	 * @return Response
-	 */
-	public function list(Request $request, EventRepository $eventRepository): Response
-	{
-		// Init Data to handle form search
-		$data = new SearchData();
-		$form = $this->createForm(SearchFormType::class, $data);
+    /**
+     * @Route("/events", name="app_event_list", methods={"GET"})
+     *
+     * @param Request $request
+     * @param EventRepository $eventRepository
+     *
+     * TODO GÉRER SI IL N'Y A PAS DE SORTIES POUR UNE CATÉGORIE DONNÉE
+     *
+     * @return Response
+     */
+    public function list(Request $request, EventRepository $eventRepository): Response
+    {
+        // Init Data to handle form search
+        $data = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $data);
 
-		// Handle the form request and use $data in custom query to show searched events
-		$form->handleRequest($request);
+        // Handle the form request and use $data in custom query to show searched events
+        $form->handleRequest($request);
 
-		$events = $eventRepository->findSearch($data);
-		// Make a geoJson from results to render pin on map
-		$geoJson = $this->geoJson->createGeoJson($events);
+        $events = $eventRepository->findSearch($data);
+        // Make a geoJson from results to render pin on map
+        $geoJson = $this->geoJson->createGeoJson($events);
 
-		// Get coords of the requested city
-		if (!empty($events)) {
-			$location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
-		} else {
-			$location = [1, 47];
-		}
+        // Get coords of the requested city
+        if (!empty($events)) {
+            $location = [$geoJson['features'][0]['geometry']['coordinates'][0], $geoJson['features'][0]['geometry']['coordinates'][1]];
+        } else {
+            $location = [1, 47];
+        }
 
-		return $this->render('event/list.html.twig', [
-			'events' => $events,
-			'form' => $form->createView(),
-			'geojson' => $geoJson,
-			'location' => $location,
-		]);
-	}
+        return $this->render('event/list.html.twig', [
+            'events' => $events,
+            'form' => $form->createView(),
+            'geojson' => $geoJson,
+            'location' => $location,
+        ]);
+    }
 
-	/**
-	 * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
-	 * 
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function create(Request $request, FriendshipManager $friendshipManager): Response
-	{
-		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
-		$event = new Event();
+    /**
+     * @Route("/events/create", name="app_event_create", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function create(Request $request, FriendshipManager $friendshipManager): Response
+    {
+        $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+        $event = new Event();
 
-		// Create new form associated to entity
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			$event->setAuthor($this->getUser());
-			// push into the database
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($event);
-			$entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->setAuthor($this->getUser());
+            // push into the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($event);
+            $entityManager->flush();
 
-			$this->addFlash('success', 'Votre sortie à bien été créée !');
+            $this->addFlash('success', 'Votre sortie à bien été créée !');
 
-			// Email all my friends
-			$friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
+            // Email all my friends
+            $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
 
-			return $this->redirectToRoute('app_event_show', [
-				'id' => $event->getId(),
-			]);
-		}
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
 
-		return $this->render('event/create.html.twig', [
-			'form' => $form->createView(),
-		]);
-	}
+        return $this->render('event/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
-	/**
-	 * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
-	 * 
-	 * @param Event $event
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function edit(Event $event, Request $request): Response
-	{
-		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
-		$this->denyAccessUnlessGranted('EVENT_EDIT', $event, "Vous n'avez pas les autorisations nécessaires");
+    /**
+     * @Route("/events/{id<\d+>}/edit", name="app_event_edit", methods={"GET", "POST"})
+     *
+     * @param Event $event
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function edit(Event $event, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+        $this->denyAccessUnlessGranted('EVENT_EDIT', $event, "Vous n'avez pas les autorisations nécessaires");
 
-		// Create new form associated to entity
-		$form = $this->createForm(EventType::class, $event);
-		$form->handleRequest($request);
+        // Create new form associated to entity
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
 
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->flush();
+            $this->addFlash('success', 'Sortie modifiée !');
 
-			$this->addFlash('success', 'Sortie modifiée !');
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
 
-			return $this->redirectToRoute('app_event_show', [
-				'id' => $event->getId(),
-			]);
-		}
+        return $this->render('event/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
-		return $this->render('event/edit.html.twig', [
-			'form' => $form->createView(),
-		]);
-	}
+    /**
+     * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
+     *
+     * @param Event $event
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function show(Event $event, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted("EVENT_SHOW", $event, "Impossible d'effectuer cette action");
 
-	/**
-	 * @Route("/events/{id<\d+>}/show", name="app_event_show", methods={"GET", "POST"})
-	 * 
-	 * @param Event $event
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function show(Event $event, Request $request): Response
-	{
-		$this->denyAccessUnlessGranted("EVENT_SHOW", $event, "Impossible d'effectuer cette action");
+        $comment = new Comment();
 
-		$comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
 
-		$form = $this->createForm(CommentType::class, $comment);
-		$form->handleRequest($request);
+        // Create new form associated to entity
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
+            // set the author to the  associated commenb
+            $comment->setAuthor($this->getUser());
+            // set the event
+            $comment->setEvent($event);
+            // set the date
+            $comment->setCreatedAt(new DateTimeImmutable());
 
-		// Create new form associated to entity
-		if ($form->isSubmitted() && $form->isValid()) {
-			$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
-			// set the author to the  associated commenb
-			$comment->setAuthor($this->getUser());
-			// set the event
-			$comment->setEvent($event);
-			// set the date
-			$comment->setCreatedAt(new DateTimeImmutable());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
 
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($comment);
-			$entityManager->flush();
+            $this->addFlash('success', 'Votre commentaire a été ajouté');
 
-			$this->addFlash('success', 'Votre commentaire a été ajouté');
+            return $this->redirectToRoute('app_event_show', [
+                'id' => $event->getId(),
+            ]);
+        }
 
-			return $this->redirectToRoute('app_event_show', [
-				'id' => $event->getId(),
-			]);
-		}
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+            'comments' => $comment,
+            'form' => $form->createView(),
+        ]);
+    }
 
-		return $this->render('event/show.html.twig', [
-			'event' => $event,
-			'comments' => $comment,
-			'form' => $form->createView(),
-		]);
-	}
+    /**
+     * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
+     *
+     * @param Event $event
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function delete(Event $event, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
+        $this->denyAccessUnlessGranted('EVENT_DELETE', $event, "Vous n'avez pas les autorisations nécessaires");
 
-	/**
-	 * @Route("/events/{id<\d+>}/delete", name="app_event_delete", methods={"GET"})
-	 * 
-	 * @param Event $event
-	 * @param Request $request
-	 * 
-	 * @return Response
-	 */
-	public function delete(Event $event, Request $request): Response
-	{
-		$this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
-		$this->denyAccessUnlessGranted('EVENT_DELETE', $event, "Vous n'avez pas les autorisations nécessaires");
+        // Remove from BDD
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($event);
+        $entityManager->flush();
 
-		// Remove from BDD
-		$entityManager = $this->getDoctrine()->getManager();
-		$entityManager->remove($event);
-		$entityManager->flush();
+        $this->addFlash('success', 'Sortie supprimée avec succès');
 
-		$this->addFlash('success', 'Sortie supprimée avec succès');
-
-		//? Handle redirect to previous visited page
-		return $this->redirect($request->headers->get('referer'));
-	}
+        //? Handle redirect to previous visited page
+        return $this->redirect($request->headers->get('referer'));
+    }
 }
