@@ -53,10 +53,8 @@ class ProfileController extends AbstractController
     public function profile(EventRepository $eventRepository): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
-        // (MVP) je dois récupérer le nom, prénom, email, description du user
-        // TODO (V2) je dois récupérer les notifications au sujet de mes amis
 
-        // rGet current User
+        // Get current User
         $user = $this->getUser();
 
         // Last 3 created events by the user ordered by date
@@ -86,7 +84,7 @@ class ProfileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 
-        // je récupère l'utilisateur courant
+        // Get current User
         $user = $this->getUser();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -95,7 +93,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Password hash if user is trying to update it
-            // si ancien mdp (et correspondant au mdp user) + new mdp transmis
+            // If old password (and corresponding to user password) + new password sent
             if (!empty($form->get('oldpassword')->getData()) && !empty($form->get('password')->getData()) && $passwordHasher->isPasswordValid($user, $form->get('oldpassword')->getData())) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->getData());
                 $user->setPassword($hashedPassword);
