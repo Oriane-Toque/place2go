@@ -56,7 +56,7 @@ class FriendshipManager
     {
         $friendship = $this->get($user, $friend);
 
-        if($friendship == null) return false;
+        if($friendship === null) return false;
 
         $this->entityManager->remove($friendship);
         $this->entityManager->flush();

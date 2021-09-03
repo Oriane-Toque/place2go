@@ -92,31 +92,31 @@ class FriendshipController extends AbstractController
         ]);
     }
 
-    /**
-     * Delete a friend from friendlist
-     *
-     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
-     *
-     * @param User $friend
-     * @param FriendshipManager $friendshipManager
-     * @param Request $request
-     *
-     * @return Response
-     *
-    */
-    public function deleteFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
-    {
-        // Get current User
-        $user = $this->getUser();
+    // /**
+    //  * Delete a friend from friendlist
+    //  *
+    //  * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
+    //  *
+    //  * @param User $friend
+    //  * @param FriendshipManager $friendshipManager
+    //  * @param Request $request
+    //  *
+    //  * @return Response
+    //  *
+    // */
+    // public function deleteFriend(User $friend, FriendshipManager $friendshipManager, Request $request): Response
+    // {
+    //     // Get current User
+    //     $user = $this->getUser();
 
-        if ($friendshipManager->delete($user, $friend))
-        {
-            $this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
-        }
+    //     if ($friendshipManager->delete($user, $friend))
+    //     {
+    //         $this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
+    //     }
 
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
-    }
+    //     $referer = $request->headers->get('referer');
+    //     return $this->redirect($referer);
+    // }
 
     /**
      * Delete a friend from friendlist
