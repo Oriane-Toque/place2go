@@ -25,11 +25,19 @@ window.removeFriend = function (item) {
   let url = item.getAttribute("data-url");
   let nickname = item.getAttribute("data-nickname");
 
-  if (confirm("Supprimer " + nickname + " ?")) {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", url);
-    xhttp.send();
-    item.closest(".chip").remove();
+  if (confirm("Supprimer " + nickname + " de vos amis ?"))
+  {
+    fetch(url, {
+      method: 'DELETE'
+    })
+    .then(function(response) {
+      response.text().then(function(text) {
+        if(response){
+          item.closest(".chip").remove();
+        }
+      });
+    })
+    .catch(err => console.log(err));
   }
 };
 

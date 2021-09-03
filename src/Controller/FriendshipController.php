@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @IsGranted("ROLE_USER")
@@ -94,31 +95,6 @@ class FriendshipController extends AbstractController
     /**
      * Delete a friend from friendlist
      *
-     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET"})
-     *
-     * @param User $friend
-     * @param FriendshipManager $friendshipManager
-     * @param Request $request
-     *
-     * @return Response
-     *
-    */
-    public function deleteAction(User $friend, FriendshipManager $friendshipManager, Request $request): Response
-    {
-        // Get current User
-        $user = $this->getUser();
-
-        if ($friendshipManager->delete($user, $friend)) {
-            $this->addFlash('success', 'Supprimer ' . $friend->getNickname() . ' ? <a href=""');
-        }
-
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
-    }
-
-    /**
-     * Delete a friend from friendlist
-     *
      * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete", methods={"GET", "POST"})
      *
      * @param User $friend
@@ -133,11 +109,33 @@ class FriendshipController extends AbstractController
         // Get current User
         $user = $this->getUser();
 
-        if ($friendshipManager->delete($user, $friend)) {
+        if ($friendshipManager->delete($user, $friend))
+        {
             $this->addFlash('success', $friend->getNickname() . ' a été retiré de votre liste ;(');
         }
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
+    }
+
+    /**
+     * Delete a friend from friendlist
+     *
+     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete_action", methods={"DELETE"})
+     *
+     * @param User $friend
+     * @param FriendshipManager $friendshipManager
+     * @param Request $request
+     *
+     *
+    */
+    public function deleteFriendAction(User $friend, FriendshipManager $friendshipManager, Request $request)
+    {
+        // Get current User
+        $user = $this->getUser();
+
+        $delete = $friendshipManager->delete($user, $friend);
+
+        return new JsonResponse($delete);
     }
 }
