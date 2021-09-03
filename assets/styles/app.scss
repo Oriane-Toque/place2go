@@ -448,7 +448,9 @@ body {
 }
 
 .topScore .topScore__card .bg-image img.card-img-top {
+  width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .topScore .topScore__card h3 {
