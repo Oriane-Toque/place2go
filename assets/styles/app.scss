@@ -826,7 +826,7 @@ form[name="search_friend"] {
   align-items: center;
 
   margin-bottom: 0.8rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
   box-shadow: 0 10px 20px 0 rgba(0,0,0,.05);
 
   border-bottom-left-radius: 70px;
@@ -868,10 +868,10 @@ form[name="search_friend"] {
 }
 
 #list .list__card_author a {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #555555;
+  color: var(--hover-color);
 }
 
 #list .list__card_author a:hover {
@@ -893,11 +893,11 @@ form[name="search_friend"] {
 }
 
 #list .list__card_title a {
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 #list .list__card_title a {
-  color: var(--hover-color);
+  color: var(--secondary-hover-color);
 }
 
 #list .list__cards_attendants {
@@ -999,7 +999,7 @@ form[name="search_friend"] {
 }
 
 #show .show__card_content-author a {
-  color: #757575;
+  color: var(--secondary-color);
 }
 
 #show .show__card_content-author a:hover {
@@ -1035,14 +1035,14 @@ form[name="search_friend"] {
   -ms-flex-align: end;
   align-items: flex-end;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
 }
 
 #show .show__card_categories {
   color: #0384f4;
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   align-items: flex-end;
   margin: 0;
 }
@@ -1051,8 +1051,9 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 1rem;
-  border-radius: 3rem;
+  margin-top: 1.2rem;
+  padding: 0.2rem;
+  border-radius: 60px;
   -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 
@@ -1068,8 +1069,8 @@ form[name="search_friend"] {
 }
 
 .show__author_avatar img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 110px;
+  max-height: 110px;
   -o-object-fit: cover;
   object-fit: cover;
   border-radius: 50%;
@@ -1083,7 +1084,7 @@ form[name="search_friend"] {
   width: 100%;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  padding: 0 1rem 0.3rem;
+  padding: 0.3rem 1rem;
 }
 
 .show__comment_header {

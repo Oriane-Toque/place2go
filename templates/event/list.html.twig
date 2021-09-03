@@ -46,147 +46,111 @@
 
 {% block body %}
 
-	<div class="container">
-		<section id="search" class=" my-5">
+<div class="container">
+	<section id="search" class=" my-5">
 
-			<div class="row">
-				<div class="col-12 ">
-					{% include 'event/_filter.html.twig' %}
-				</div>
+		<div class="row">
+			<div class="col-12 ">
+				{% include 'event/_filter.html.twig' %}
 			</div>
+		</div>
 
-		</section>
+	</section>
 
-		<section id="list" class="mt-sm-2 mt-md-5">
+	<section id="list" class="mt-sm-2 mt-md-5">
 
-			<div class="row">
-				<div class="col-sm-12 col-lg-7">
-					{% for event in events %}
-						<div class="list__card js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
-							<div class="list__card_image">
-								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
-									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class=""/>
-								</a>
+		<div class="row">
+			<div class="col-sm-12 col-lg-7">
+
+				{% for event in events %}
+					<div class="list__card js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
+						<div class="list__card_image">
+							<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+								<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class=""/>
+							</a>
+						</div>
+
+						<div class="list__card_content">
+							<div class="flex-between">
+								<div class="list__card_author">
+									<a href="{{ path('app_event_show', {id: event.id}) }}" class="text-decoration-underline">
+										{{ event.title }}
+									</a>
+								</div>
+								<div class="list__card_date">
+									le
+									{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
+								</div>
 							</div>
 
-							<div class="list__card_content">
-								<div class="flex-between">
-									<div class="list__card_author">
-										<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
-											{{ event.author.nickname }}
+							<div class="flex-between">
+								<div class="list__card_title">
+									<i class="fas fa-long-arrow-alt-right"></i>
+									<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
+										{{ event.author.nickname }}
+									</a>
+								</div>
+								<div class="list__cards_attendants">
+									{{ event.attendants | length }}
+									/
+									{{ event.maxAttendants }}
+									<i class="fas fa-users"></i>
+								</div>
+							</div>
+
+							<div class="flex-between">
+								<div class="list__card_address">
+									<i class="fas fa-long-arrow-alt-right fs-6"></i>
+									{{ event.address }}
+								</div>
+							</div>
+
+							<div class="list__card_footer">
+								<p class="list__card_categories m-0">
+									{% for category in event.categories %}
+										{{ category.name }}{{ loop.last ? '' : ' - ' }}
+									{% endfor %}
+								</p>
+
+								<div class="list__cards_join">
+									{% if is_granted('EVENT_LEAVE', event) %}
+										{# Bouton pour ne plus participer à la sortie #}
+										<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
+											<i class="fas fa-times fa-lg"></i>
 										</a>
-									</div>
-									<div class="list__card_date">
-										le
-										{{ event.eventDate | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
-									</div>
+									{% endif %}
+									{% if is_granted('EVENT_JOIN', event) %}
+										{# Bouton pour participer à la sortie #}
+										<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
+											<i class="fas fa-user-plus"></i>
+										</a>
+									{% endif %}
+									{% if is_granted('USER_ACCESS', app.user) and app.user.id != event.author.id %}
+										<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
+											<i class="fas fa-exclamation"></i>
+										</a>
+									{% endif %}
 								</div>
-
-								<div class="flex-between">
-									<div class="list__card_title">
-										<i class="fas fa-long-arrow-alt-right"></i>
-										<a href="{{ path('app_event_show', {id: event.id}) }}" class="text-decoration-underline">{{ event.title }}</a>
-									</div>
-									<div class="list__cards_attendants">
-										{{ event.attendants | length }}
-										/
-										{{ event.maxAttendants }}
-										<i class="fas fa-users"></i>
-									</div>
-								</div>
-
-								<div class="flex-between">
-									<div class="list__card_address">
-										<i class="fas fa-long-arrow-alt-right fs-6"></i>
-										{{ event.address }}
-									</div>
-								</div>
-
-								<div class="list__card_footer">
-									<p class="list__card_categories m-0">
-										{% for category in event.categories %}
-											{{ category.name }}{{ loop.last ? '' : ' - ' }}
-										{% endfor %}
-									</p>
-
-									<div class="list__cards_join">
-										{% if is_granted('EVENT_LEAVE', event) %}
-											{# Bouton pour ne plus participer à la sortie #}
-											<a class="btn button-secondary btn-floating-sm" href="{{ path("app_event_leave", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Quitter">
-												<i class="fas fa-times fa-lg"></i>
-											</a>
-										{% endif %}
-										{% if is_granted('EVENT_JOIN', event) %}
-											{# Bouton pour participer à la sortie #}
-											<a href="{{ path("app_event_join", {id: event.id}) }}" class="btn button-primary btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Joindre">
-												<i class="fas fa-user-plus"></i>
-											</a>
-										{% endif %}
-										{% if is_granted('USER_ACCESS', app.user) and app.user.id != event.author.id %}
-											<a href="{{ path("app_report_event", {id: event.id}) }}" role="button" class="btn btn-danger btn-floating-sm ms-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Signaler">
-												<i class="fas fa-exclamation"></i>
-											</a>
-										{% endif %}
-									</div>
-								</div>
-
 							</div>
-						</div>
-					{% else %}
-						<div class="text-center fw-bold">
-							Aucune sortie ne correspond à vos critères.
-						</div>
-					{% endfor %}
-				</div>
 
-				<div class="col-sm-12 col-lg-5 my-3">
-					<div id='map' class=""></div>
-				</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="text-center fw-bold">
+						Aucune sortie ne correspond à vos critères.
+					</div>
+				{% endfor %}
 			</div>
 
-		</section>
+			<div class="col-sm-12 col-lg-5 my-3">
+				<div id='map' class=""></div>
+			</div>
+		</div>
 
-	<script>
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-		var geojson = {{ geojson|json_encode|raw }};
-		let map = new mapboxgl.Map({
-			container: 'map', // Container ID
-			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ location[0] | raw }},{{ location[1] | raw }}], // Starting position [lng, lat]
-			zoom: 10, // Starting zoom level
-		});
-		let clickableElements = document.querySelectorAll('.js-event');
-		clickableElements.forEach(element => {
-			element.addEventListener('click', evt => {
-				map.flyTo({
-					center: [element.dataset.lat, element.dataset.lon],
-					essential: true,
-					zoom: 14,
-				});
-			})
-		})
-		// add markers to map
-		geojson.features.forEach(function (marker) {
-		// create a HTML element for each feature
-		var el = document.createElement('div');
-		el.className = 'marker';
-		
-		// make a marker for each feature and add it to the map
-		new mapboxgl.Marker(el)
-			.setLngLat(marker.geometry.coordinates)
-			.setPopup(
-		new mapboxgl.Popup({ offset: 25 }) // add popups
-			.setHTML(
-			'<h5>' +
-			marker.properties.title +
-			'</h5><p>' +
-			marker.properties.description +
-			'</p>'
-			)
-		)
-		.addTo(map);
-		});   
-	</script>
+	</section>
+</div>
 
-{% endblock %}
+	{{ include('event/mapbox/list.html.twig') }}
+
+	{% endblock %}
 

@@ -1,0 +1,41 @@
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+    var geojson = {{ geojson|json_encode|raw }};
+    let map = new mapboxgl.Map({
+        container: 'map', // Container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
+        center: [{{ location[0] | raw }},{{ location[1] | raw }}], // Starting position [lng, lat]
+        zoom: 10, // Starting zoom level
+    });
+    let clickableElements = document.querySelectorAll('.js-event');
+    clickableElements.forEach(element => {
+        element.addEventListener('click', evt => {
+            map.flyTo({
+                center: [element.dataset.lat, element.dataset.lon],
+                essential: true,
+                zoom: 14,
+            });
+        })
+    })
+    // add markers to map
+    geojson.features.forEach(function (marker) {
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // make a marker for each feature and add it to the map
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML(
+                        '<h5>' +
+                        marker.properties.title +
+                        '</h5><p>' +
+                        marker.properties.description +
+                        '</p>'
+                    )
+            )
+            .addTo(map);
+    });
+</script>
