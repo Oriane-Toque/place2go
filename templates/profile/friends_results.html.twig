@@ -24,14 +24,16 @@
 						<div class="topScore__content-avatar">
 							<img src="{{ friend.avatar }}" alt="avatar de {{ friend.nickname }}">
 						</div>
-						<div class="card-body d-flex justify-content-between">
-							<h3 class="card-title">
-								{{ friend.nickname }}
-							</h3>
-							<a class="btn button-secondary btn-floating-sm ripple-surface" style="color:#fff;" href="{{ path('app_friend_add', {id: friend.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Ajouter">
-								<i class="fas fa-plus"></i>
-							</a>
-						</div>
+						<a href="{{ path("app_profile_show", {id:friend.id}) }}">
+							<div class="card-body d-flex justify-content-between">
+								<h3 class="card-title">
+									{{ friend.nickname }}
+								</h3>
+								<a class="btn button-secondary btn-floating-sm ripple-surface" style="color:#fff;" href="{{ path('app_friend_add', {id: friend.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Ajouter">
+									<i class="fas fa-plus"></i>
+								</a>
+							</div>
+						</a>
 					</div>
 				{% endfor %}
 			</div>
