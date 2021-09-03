@@ -143,6 +143,53 @@ body {
   background-color: var(--primary-color);
 }
 
+.btn-floating-sm {
+  border-radius: 50%;
+  padding: 0;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+}
+
+.btn-floating-sm .fab,
+.btn-floating-sm .far,
+.btn-floating-sm .fas {
+  width: 2rem;
+  line-height: 2rem;
+}
+/*****************************************************************? MDB */
+
+#search__friends > input {
+	border: none;
+	border-radius: 2rem;
+	background-color: #fff;
+	width: 100%;
+	transform: translateX(-10px);
+}
+
+#search__friends > input:focus {
+	border: 2px solid var(--primary-color)!important;
+}
+
+#search__friends > button {
+	width: 2rem;
+	height: 2rem;
+}
+
+#search__friends > button > i {
+	width: 2rem;
+	line-height: 2rem;
+}
+
+#search__friends {
+	height: 37px;
+	background-color: transparent;
+}
+
+form[name="search_friend"] {
+	margin-bottom: 3rem;
+}
+
 /*****************************************************************? HEADER */
 
 #header {
@@ -673,6 +720,7 @@ body {
 
 .topContributors .topScore .topScore__content .card-body h3 {
   margin: 0;
+	word-break: break-all;
 }
 
 .topContributors .topScore .topScore__content .card-body .badge {

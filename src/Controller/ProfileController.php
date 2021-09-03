@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Friendship;
+use App\Form\SearchFriendType;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
-use App\Repository\FriendshipRepository;
 use App\Repository\UserRepository;
 use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +42,7 @@ class ProfileController extends AbstractController
     /**
      * Display user profile (private / dashboard)
      *
-     * @Route("/profile", name="app_profile_profile", methods={"GET"})
+     * @Route("/profile", name="app_profile_profile", methods={"GET", "POST"})
      * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository

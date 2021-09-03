@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\SearchFriendType;
 use App\Services\FriendshipManager;
 use App\Repository\FriendshipRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +19,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class FriendshipController extends AbstractController
 {
-    
     /**
      * Send a friend request
      *
