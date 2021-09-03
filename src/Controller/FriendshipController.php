@@ -166,8 +166,11 @@ class FriendshipController extends AbstractController
 					]);
 				}
 
+				$friends = $ur->findAll();
+
 				return $this->render('profile/friends_results.html.twig', [
 					'form' => $form->createView(),
+					'friends' => $friends,
 				]);
 		}
 }
