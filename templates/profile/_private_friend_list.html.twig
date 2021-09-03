@@ -2,7 +2,7 @@
     {% for friend in friends %}
     <div class="chip chip-md">
         <img src="{{ friend.avatar ?? app.friend.avatar }}" alt="Friend"><a href="{{ path('app_profile_show', {id: friend.id}) }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir le profil"><span class="name">{{ friend.nickname|capitalize }}</span></a>             
-        <a onclick="removeFriend(this)" data-url="{{ path('app_friend_delete', {id: friend.id})}}" data-nickname="{{friend.nickname|capitalize}}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer de mes amis"><i class="close fas fa-times"></i></a>
+        <a onclick="removeFriend(this)" data-url="{{ path('app_friend_delete_action', {id: friend.id})}}" data-nickname="{{friend.nickname|capitalize}}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer de mes amis"><i class="close fas fa-times"></i></a>
     </div>
     {% else %}
     <p>Aucun ami pour le moment</p>

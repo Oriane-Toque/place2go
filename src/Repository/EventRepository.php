@@ -80,6 +80,7 @@ class EventRepository extends ServiceEntityRepository
         $result = $this->createQueryBuilder('e')
             ->select('COUNT(e)')
             ->where('e.event_date > CURRENT_DATE()')
+            ->andWhere('e.isActive = 1')
             ->getQuery()
             ->getSingleScalarResult();
         return (int)$result;
@@ -98,6 +99,7 @@ class EventRepository extends ServiceEntityRepository
             ->select('e', 'user')
             ->join('e.author', 'user')
             ->where('e.author = :userId')
+            ->andWhere('e.isActive = 1')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
@@ -121,11 +123,61 @@ class EventRepository extends ServiceEntityRepository
             ->join('e.attendants', 'a')
             // ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
             ->where('a.user = :userId')
+            ->andWhere('e.isActive = 1')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
         // Set a limit if variable is sent
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Recover the next events of the organizer order by event date (DESC)
+     *
+     * @param Int $userId
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties proposées
+     */
+    public function findNextAuthorEvents(int $userId, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.author = :userId')
+            ->andWhere('e.event_date > CURRENT_DATE()')
+            ->andWhere('e.isActive = 1')
+            ->setParameter('userId', $userId)
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
             $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Recover the next exits of the user order by event date (DESC)
+     *
+     * @param Int $userId
+     * @param Int $limit
+     * @return Array tableau d'objets, les dernières sorties auxquels l'utilisateur participe
+     */
+    public function findNextAttendantEvents(int $userId, int $limit = null): array
+    {
+        $qb =  $this->createQueryBuilder('e')
+            ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
+            ->where('a.user = :userId')
+            ->andWhere('e.event_date > CURRENT_DATE()')
+            ->andWhere('e.isActive = 1')
+            ->setParameter('userId', $userId)
+            ->orderBy('e.event_date', 'DESC');
+
+        // Set a limit if variable is sent
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -140,6 +192,7 @@ class EventRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('e')
             ->select('e', 'c', 'user', 'a', 'r')
+            ->where('e.isActive = 1')
             ->join('e.categories', 'c')
             ->join('e.author', 'user')
             ->leftJoin('e.attendants', 'a')
@@ -178,7 +231,8 @@ class EventRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('e')
             ->join('e.categories', 'c')
-            ->where('c.id = :categoryId');
+            ->where('c.id = :categoryId')
+            ->andWhere('e.isActive = 1');
 
         if (null !== $city) {
             $query = $query->andWhere('e.address LIKE :city')
@@ -199,7 +253,8 @@ class EventRepository extends ServiceEntityRepository
      */
     public function findRandEvents(string $city = null): array
     {
-        $query = $this->createQueryBuilder('e');
+        $query = $this->createQueryBuilder('e')
+            ->where('e.isActive = 1');
 
         if ($city) {
             $query = $query->where('e.address LIKE :city')

@@ -695,6 +695,29 @@ form[name="search_friend"] {
   color: #404040;
 }
 
+.topContributors .topScore .topScore__content .card-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.topContributors .topScore .topScore__content .card-body h3 {
+  margin: 0;
+	word-break: break-all;
+}
+
+.topContributors .topScore .topScore__content .card-body .badge {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
 /*****************************************************************? CATEGORY LIST */
 
 #categoryCarousel .carousel__img {
