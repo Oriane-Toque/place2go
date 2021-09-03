@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
-use App\Repository\EventRepository;
-use App\Services\FriendshipManager;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;

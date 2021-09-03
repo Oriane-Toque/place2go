@@ -32,8 +32,6 @@ class EventController extends AbstractController
      * @param Request $request
      * @param EventRepository $eventRepository
      *
-     * TODO GÉRER SI IL N'Y A PAS DE SORTIES POUR UNE CATÉGORIE DONNÉE
-     *
      * @return Response
      */
     public function list(Request $request, EventRepository $eventRepository): Response
@@ -163,6 +161,7 @@ class EventController extends AbstractController
             $comment->setAuthor($this->getUser());
             // set the event
             $comment->setEvent($event);
+            $comment->setCreatedAt(new DateTimeImmutable());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);

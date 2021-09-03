@@ -11,8 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
-    use Timestamps;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,6 +22,11 @@ class Comment
      * @ORM\Column(type="string", length=500)
      */
     private $content;
+    
+     /**
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
@@ -74,6 +77,18 @@ class Comment
     public function setEvent(?Event $event): self
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
