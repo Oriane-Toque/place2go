@@ -68,20 +68,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Find all users with roles : ROLE_ADMIN
+     * Find all users with role
      *
+     * @param String $role
      * @return Array
      */
-    public function findCollaborators():array
+    public function findUsersByRole($role):array
     {
         return $this->createQueryBuilder('u')
             ->select('u')
             ->where('u.roles = :role')
-            ->setParameter('role', '["ROLE_ADMIN"]')
+            ->setParameter('role', $role)
             ->getQuery()
             ->getResult()
         ;
     }
+
 
 		/**
 		 * Return search results : all friends by keywords
