@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
+use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,12 +26,16 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function show(User $user): Response
+    public function show(User $user, FriendshipManager $friendshipManager): Response
     {
         $this->denyAccessUnlessGranted('BASIC_ACCESS', $user, "Impossible d'accéder à ce profil");
 
+        // Check if friendship exists
+		$friendship = $friendshipManager->get($this->getUser(), $user);
+
         return $this->render('profile/show.html.twig', [
             "user" => $user,
+            "friendship" => $friendship
         ]);
     }
 
@@ -44,7 +49,7 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function profile(EventRepository $eventRepository): Response
+    public function profile(EventRepository $eventRepository, FriendshipRepository $friendshipRepository): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 
@@ -57,10 +62,25 @@ class ProfileController extends AbstractController
         // Last 3 joined events by the user ordered by date
         $attendantLastThreeExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
+        // My friends last events
+		$friends = $friendshipRepository->findAllFriends($user);
+
+        $friendsAuthor = [];
+        $friendsAttendant = [];
+
+		foreach($friends as $friend)
+		{
+			$friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
+			$friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
+		}
+
         return $this->render('profile/profile.html.twig', [
             "user" => $user,
             "userLastExits" => $authorLastThreeExits,
             "attendantLastExits" => $attendantLastThreeExits,
+            "friends" => $friends,
+            "friendsAuthor" => $friendsAuthor,
+			"friendsAttendant" => $friendsAttendant
         ]);
     }
 
@@ -78,7 +98,7 @@ class ProfileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 
-        // je récupère l'utilisateur courant
+        // Get current User
         $user = $this->getUser();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -87,7 +107,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Password hash if user is trying to update it
-            // si ancien mdp (et correspondant au mdp user) + new mdp transmis
+            // If old password (and corresponding to user password) + new password sent
             if (!empty($form->get('oldpassword')->getData()) && !empty($form->get('password')->getData()) && $passwordHasher->isPasswordValid($user, $form->get('oldpassword')->getData())) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->getData());
                 $user->setPassword($hashedPassword);
@@ -97,7 +117,7 @@ class ProfileController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            // redirection vers le dashboard
+            // Redirect to dashboard
             return $this->redirectToRoute('app_profile_profile', [], Response::HTTP_SEE_OTHER);
         }
 
