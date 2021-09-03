@@ -17,20 +17,21 @@
 		<div id="navbarSupportedContent" class="collapse navbar-collapse">
 
 			<ul class="navbar-nav m-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_category_list') }}">
+				<li>
+					<a class="nav-link mx-3" href="{{ path('app_category_list') }}">
 						Catégories
 					</a>
 				</li>
 				<li>
-					<a class="nav-link" href="{{ path('app_event_list') }}">
+					<a class="nav-link mx-3" href="{{ path('app_event_list') }}">
 						Voir les sorties
 					</a>
 				</li>
 				{% if is_granted('USER_ACCESS', app.user) %}
 					<li>
-						<a class="nav-link" href="{{ path('app_event_create') }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Ajouter une sortie">
+						<a class="nav-link mx-3" href="{{ path('app_event_create') }}">
 							<i class="fas fa-map-marker-alt"></i>
+							Ajouter une sortie
 						</a>
 					</li>
 				{% endif %}
@@ -62,17 +63,19 @@
 			{% else %}
 				<!-- Register Dropdown Menu -->
 				<div class="navbar-nav align-items-lg-center nav-right">
-					<li class="nav-item">
-						<a class="nav-link me-2" href="{{ path('app_register') }}">Inscription</a>
-					</li>
+					<ul>
+						<li class="nav-item">
+							<a class="nav-link me-2" href="{{ path('app_register') }}">Inscription</a>
+						</li>
 
-					<li class="nav-item dropdown">
-						<button class="btn button-primary" id="loginDropdown" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
+						<li class="nav-item dropdown">
+							<button class="btn button-primary" id="loginDropdown" data-mdb-toggle="dropdown" aria-expanded="false" tabindex="0">Connexion</button>
 
-						<div class="dropdown-menu login-form px-3 py-4" aria-labelledby="loginDropdown">
-							{% include "_partials/_dropdown_login.html.twig" %}
-						</div>
-					</li>
+							<div class="dropdown-menu login-form px-3 py-4" aria-labelledby="loginDropdown">
+								{% include "_partials/_dropdown_login.html.twig" %}
+							</div>
+						</li>
+					</ul>
 				</div>
 			{% endif %}
 

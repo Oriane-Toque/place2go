@@ -61,9 +61,8 @@
 
 			<div class="row">
 				<div class="col-sm-12 col-lg-7">
-
 					{% for event in events %}
-						<div class="list__card shadow-3 js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
+						<div class="list__card js-event" data-lat="{{event.lat}}" data-lon="{{ event.lon }}">
 							<div class="list__card_image">
 								<a href="{{ path('app_profile_show', {id: event.author.id}) }}">
 									<img src="{{ event.author.avatar }}" alt="{{ event.author.nickname }}" class=""/>
@@ -140,12 +139,13 @@
 					{% endfor %}
 				</div>
 
+
 				<div class="col-sm-12 col-lg-5 mb-2">
 					<div id='map' class=""></div>
 				</div>
+			</div>
 
-			</section>
-		</div>
+		</section>
 
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
@@ -153,7 +153,7 @@
 		let map = new mapboxgl.Map({
 			container: 'map', // Container ID
 			style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
-			center: [{{ location[0]}},{{ location[1]}}], // Starting position [lng, lat]
+			center: [{{ location[0] | raw }},{{ location[1] | raw }}], // Starting position [lng, lat]
 			zoom: 10, // Starting zoom level
 		});
 		let clickableElements = document.querySelectorAll('.js-event');
