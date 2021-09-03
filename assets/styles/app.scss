@@ -151,23 +151,27 @@ body {
 	transform: translateX(-10px);
 }
 
+#search__friends > input:focus {
+	border: 2px solid var(--primary-color)!important;
+}
+
 #search__friends > button {
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 2rem;
+	height: 2rem;
 }
 
 #search__friends > button > i {
-	width: 1.5rem;
-	line-height: 1.5rem;
+	width: 2rem;
+	line-height: 2rem;
 }
 
 #search__friends {
-	height: 30px;
+	height: 37px;
 	background-color: transparent;
 }
 
-form[name='search_friend'] {
-	padding: 5px 20px;
+form[name="search_friend"] {
+	margin-bottom: 3rem;
 }
 
 /*****************************************************************? HEADER */

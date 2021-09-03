@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Friendship;
 use App\Form\SearchFriendType;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
-use App\Repository\FriendshipRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,30 +37,20 @@ class ProfileController extends AbstractController
     /**
      * Display user profile (private / dashboard)
      *
-     * @Route("/profile", name="app_profile_profile", methods={"GET"})
+     * @Route("/profile", name="app_profile_profile", methods={"GET", "POST"})
      * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository
      *
      * @return Response
      */
-    public function profile(EventRepository $eventRepository, Request $request): Response
+    public function profile(EventRepository $eventRepository): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
         // (MVP) je dois récupérer le nom, prénom, email, description du user
         // TODO (V2) je dois récupérer les notifications au sujet de mes amis
 
-				$form = $this->createForm(SearchFriendType::class);
-
-				$form->handleRequest($request);
-	
-				if($form->isSubmitted() && $form->isValid()) {
-	
-					$resultFriend = $form->get('searchfriends')->getData();
-					dd($resultFriend);
-				}
-
-        // rGet current User
+        // Get current User
         $user = $this->getUser();
 
         // Last 3 created events by the user ordered by date
@@ -75,7 +63,6 @@ class ProfileController extends AbstractController
             "user" => $user,
             "userLastExits" => $authorLastThreeExits,
             "attendantLastExits" => $attendantLastThreeExits,
-						"form" => $form->createView(),
         ]);
     }
 

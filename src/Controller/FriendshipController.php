@@ -142,4 +142,32 @@ class FriendshipController extends AbstractController
 			$referer = $request->headers->get('referer');
 			return $this->redirect($referer);
 		}
+
+		/**
+		 * Rechercher de nouveaux ami(e)s
+		 *
+		 * @Route("/profile/friends/search", name="app_friend_search", methods={"GET", "POST"})
+		 */
+		public function searchNewFriends(Request $request, UserRepository $ur) {
+
+			$form = $this->createForm(SearchFriendType::class);
+
+				$form->handleRequest($request);
+	
+				if($form->isSubmitted() && $form->isValid()) {
+	
+					$resultFriend = $form->get('searchfriends')->getData();
+					
+					$friends = $ur->searchFriends($resultFriend);
+					
+					return $this->render('profile/friends_results.html.twig', [
+						'form' => $form->createView(),
+						'friends' => $friends,
+					]);
+				}
+
+				return $this->render('profile/friends_results.html.twig', [
+					'form' => $form->createView(),
+				]);
+		}
 }

@@ -55,10 +55,12 @@
 
 	{# Liste des Amis #}
 	<div class="dashAction__item card">
-		<div class="card-header">
+		<div class="card-header d-flex justify-content-between">
 			<h3>Mes amis</h3>
+			<a class="btn button-secondary btn-floating-sm ripple-surface" href="{{ path('app_friend_search') }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Editer profil">
+				<i class="fas fa-plus"></i>
+			</a>
 		</div>
-		{% include "profile/_form_friends.html.twig" %}
 		<div class="card-body">
 			{{ render(controller('App\\Controller\\FriendshipController::privateFriendsList')) }}
 		</div>

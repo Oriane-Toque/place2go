@@ -1,0 +1,43 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title "Recherche d'ami(e)s" %}
+
+{% block body %}
+	<section class="container topContributors">
+		<h2 class="home__title">Recherche d'ami(e)s</h2>
+
+		{{form_start(form)}}
+		<div id="search__friends" class="home-search">
+			{{form_widget(form.searchfriends, { attr: {'class': 'form-control-lg me-5'} })}}
+			<button class="btn btn-floating" type="submit" data-mdb-ripple-color="dark">
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
+		{{form_end(form)}}
+
+
+		<div id="result__friends" class="topScore">
+
+			{% if friends is defined %}
+				{% for friend in friends %}
+					<div class="card topScore__content">
+						<div class="topScore__content-avatar">
+							<img src="{{ friend.avatar }}" alt="avatar de {{ friend.nickname }}">
+						</div>
+						<div class="card-body d-flex justify-content-between">
+							<h3 class="card-title">
+								{{ friend.nickname }}
+							</h3>
+							<a class="btn button-secondary btn-floating-sm ripple-surface" style="color:#fff;" href="{{ path('app_friend_add', {id: friend.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Ajouter">
+								<i class="fas fa-plus"></i>
+							</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="text-start fw-bold">Aucuns résultats</div>
+		{% endif %}
+	</section>
+
+{% endblock %}
