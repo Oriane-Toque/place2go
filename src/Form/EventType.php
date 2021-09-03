@@ -50,6 +50,7 @@ class EventType extends AbstractType
                         'label' => 'Date de la sortie *',
                         'required' => true,
                         'data' => new DateTime('now'),
+                        'years' => range(date('Y'), date('Y')+5),
                     ]);
             } else {
                 $form
@@ -57,6 +58,7 @@ class EventType extends AbstractType
                         'label' => 'Date de la sortie *',
                         'required' => true,
                         'data' => $event->getEventDate(),
+                        'years' => range(date('Y'), date('Y')+5),
                     ]);
             }
 
