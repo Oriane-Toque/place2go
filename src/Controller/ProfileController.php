@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Friendship;
+use App\Form\SearchFriendType;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
@@ -45,11 +46,21 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function profile(EventRepository $eventRepository): Response
+    public function profile(EventRepository $eventRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
         // (MVP) je dois récupérer le nom, prénom, email, description du user
         // TODO (V2) je dois récupérer les notifications au sujet de mes amis
+
+				$form = $this->createForm(SearchFriendType::class);
+
+				$form->handleRequest($request);
+	
+				if($form->isSubmitted() && $form->isValid()) {
+	
+					$resultFriend = $form->get('searchfriends')->getData();
+					dd($resultFriend);
+				}
 
         // rGet current User
         $user = $this->getUser();
@@ -64,6 +75,7 @@ class ProfileController extends AbstractController
             "user" => $user,
             "userLastExits" => $authorLastThreeExits,
             "attendantLastExits" => $attendantLastThreeExits,
+						"form" => $form->createView(),
         ]);
     }
 

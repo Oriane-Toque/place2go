@@ -58,7 +58,7 @@
 		<div class="card-header">
 			<h3>Mes amis</h3>
 		</div>
-
+		{% include "profile/_form_friends.html.twig" %}
 		<div class="card-body">
 			{{ render(controller('App\\Controller\\FriendshipController::privateFriendsList')) }}
 		</div>

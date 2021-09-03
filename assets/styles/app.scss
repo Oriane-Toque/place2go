@@ -141,6 +141,34 @@ body {
   width: 2rem;
   line-height: 2rem;
 }
+/*****************************************************************? MDB */
+
+#search__friends > input {
+	border: none;
+	border-radius: 2rem;
+	background-color: #fff;
+	width: 100%;
+	transform: translateX(-10px);
+}
+
+#search__friends > button {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+#search__friends > button > i {
+	width: 1.5rem;
+	line-height: 1.5rem;
+}
+
+#search__friends {
+	height: 30px;
+	background-color: transparent;
+}
+
+form[name='search_friend'] {
+	padding: 5px 20px;
+}
 
 /*****************************************************************? HEADER */
 
