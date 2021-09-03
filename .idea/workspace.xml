@@ -4,8 +4,6 @@
     <list default="true" id="c4c45a03-a14f-4eda-bec8-d30065a5a724" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/_partials/_navbar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_partials/_navbar.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/home.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +33,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1630659189" />
+                    <option name="lastUsedInstant" value="1630675989" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Dev" />
+                    <option name="lastUsedInstant" value="1630675350" />
                   </RecentBranch>
                 </list>
               </option>
