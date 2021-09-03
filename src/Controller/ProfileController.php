@@ -8,6 +8,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
 use App\Repository\FriendshipRepository;
 use App\Repository\UserRepository;
+use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,12 +27,16 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function show(User $user): Response
+    public function show(User $user, FriendshipManager $friendshipManager): Response
     {
         $this->denyAccessUnlessGranted('BASIC_ACCESS', $user, "Impossible d'accéder à ce profil");
 
+        // Check if friendship exists
+		$friendship = $friendshipManager->get($this->getUser(), $user);
+
         return $this->render('profile/show.html.twig', [
             "user" => $user,
+            "friendship" => $friendship
         ]);
     }
 
