@@ -50,7 +50,7 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function profile(EventRepository $eventRepository): Response
+    public function profile(EventRepository $eventRepository, FriendshipRepository $friendshipRepository): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
 
@@ -63,10 +63,25 @@ class ProfileController extends AbstractController
         // Last 3 joined events by the user ordered by date
         $attendantLastThreeExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
+        // My friends last events
+		$friends = $friendshipRepository->findAllFriends($user);
+
+        $friendsAuthor = [];
+        $friendsAttendant = [];
+
+		foreach($friends as $friend)
+		{
+			$friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
+			$friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
+		}
+
         return $this->render('profile/profile.html.twig', [
             "user" => $user,
             "userLastExits" => $authorLastThreeExits,
             "attendantLastExits" => $attendantLastThreeExits,
+            "friends" => $friends,
+            "friendsAuthor" => $friendsAuthor,
+			"friendsAttendant" => $friendsAttendant
         ]);
     }
 
