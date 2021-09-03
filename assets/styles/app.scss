@@ -123,8 +123,6 @@ body {
 /*****************************************************************? MDB */
 
 .form-control:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
   border-color: var(--primary-color);
   -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
   box-shadow: inset 0 0 0 1px var(--primary-color);
@@ -202,50 +200,17 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   text-align: center;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -ms-flex-line-pack: center;
   align-content: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
   height: 65vh;
   overflow: hidden;
 
   background-size: cover !important;
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(0, 0, 0, 0)),
-      color-stop(80%, rgba(0, 0, 0, 0)),
-      to(rgba(255, 255, 255, 0.5))
-    ),
-    -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0)), color-stop(80%, rgba(0, 0, 0, 0)), to(rgba(255, 255, 255, 0.2))),
-    url("../img/bg-header.jpeg") no-repeat center center scroll;
-  background: -o-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 80%,
-      rgba(255, 255, 255, 0.5) 100%
-    ),
-    -o-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 80%, rgba(
-            255,
-            255,
-            255,
-            0.2
-          )
-          100%),
-    url("../img/bg-header.jpeg") no-repeat center center scroll;
   background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0) 0%,
@@ -280,9 +245,9 @@ form[name="search_friend"] {
   display: flex;
   position: relative;
   width: 100%;
-  -webkit-box-shadow: 0px 16px 32px rgb(0 0 0 / 15%),
-    0px 3px 8px rgb(0 0 0 / 10%);
-  box-shadow: 0px 16px 32px rgb(0 0 0 / 15%), 0px 3px 8px rgb(0 0 0 / 10%);
+  -webkit-box-shadow: 0 16px 32px rgb(0 0 0 / 15%),
+    0 3px 8px rgb(0 0 0 / 10%);
+  box-shadow: 0 16px 32px rgb(0 0 0 / 15%), 0 3px 8px rgb(0 0 0 / 10%);
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -342,7 +307,6 @@ form[name="search_friend"] {
 }
 
 #nav .navbar .btn {
-  display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-align: center;
@@ -364,6 +328,11 @@ form[name="search_friend"] {
   background-color: rgba(255, 255, 255, 0.95);
 }
 
+#nav .dropdown__buttons > ul {
+  display: flex;
+  align-items: center;
+}
+
 #nav .dropdown-menu.login-form {
   min-width: 22rem;
   padding: 1rem;
@@ -383,8 +352,7 @@ form[name="search_friend"] {
   box-shadow: 0 0 16px 2px rgb(0 0 0 / 40%);
 }
 
-/*** Sidenav ***/
-
+//********* SIDENAV
 .sidenav {
   height: 100%;
   width: 0;
@@ -420,7 +388,6 @@ form[name="search_friend"] {
   color: var(--hover-color) !important;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
   color: var(--primary-color);
 }
@@ -444,13 +411,8 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-line-pack: center;
   align-content: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   color: var(--secondary-color);
 
@@ -530,7 +492,7 @@ form[name="search_friend"] {
   right: 20px;
   top: 20px;
 }
-
+//********** BANDEAU DESCRIPTION
 .descriptionPlace {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -625,6 +587,7 @@ form[name="search_friend"] {
   text-decoration: underline;
 }
 
+//******************** TOP CONTRIBUTEURS
 .topScore__content {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -647,37 +610,63 @@ form[name="search_friend"] {
 }
 
 .topScore__content .card-body {
-  padding: 0.5rem !important;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 .topScore__content-avatar {
-  width: 20%;
+  width: 80px;
+  height: 80px;
 }
 
 .topScore__content-avatar > img {
+  object-fit: cover;
   width: 100%;
-  border-radius: 3rem;
+  height: 100%;
+  max-width: 80px;
+  max-height: 80px;
 }
 
-.topCities .home__card {
-  position: relative;
+.topContributors .topScore .topScore__content .card-body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.topContributors .topScore .topScore__content .card-body h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.topContributors .topScore .topScore__content .card-body .badge {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+//******************** TOP CITIES
+.topCities .home__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   height: 120px;
   margin-top: 3rem;
   border-top-left-radius: 30px;
   border-bottom-right-radius: 30px;
+
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,.05);
+  transition: 0.2s all linear;
+}
+
+.topCities .home__card:hover {
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,.12);
 }
 
 .topCities .home__card .home__card_image img {
@@ -749,7 +738,6 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-line-pack: center;
   align-content: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
@@ -852,7 +840,6 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-line-pack: center;
   align-content: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
@@ -862,7 +849,7 @@ form[name="search_friend"] {
   align-items: center;
 
   margin-bottom: 0.8rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
   box-shadow: 0 10px 20px 0 rgba(0,0,0,.05);
 
   border-bottom-left-radius: 70px;
@@ -904,10 +891,10 @@ form[name="search_friend"] {
 }
 
 #list .list__card_author a {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #555555;
+  color: var(--hover-color);
 }
 
 #list .list__card_author a:hover {
@@ -929,11 +916,11 @@ form[name="search_friend"] {
 }
 
 #list .list__card_title a {
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 #list .list__card_title a {
-  color: var(--hover-color);
+  color: var(--secondary-hover-color);
 }
 
 #list .list__cards_attendants {
@@ -1035,7 +1022,7 @@ form[name="search_friend"] {
 }
 
 #show .show__card_content-author a {
-  color: #757575;
+  color: var(--secondary-color);
 }
 
 #show .show__card_content-author a:hover {
@@ -1071,14 +1058,14 @@ form[name="search_friend"] {
   -ms-flex-align: end;
   align-items: flex-end;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
 }
 
 #show .show__card_categories {
   color: #0384f4;
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   align-items: flex-end;
   margin: 0;
 }
@@ -1087,14 +1074,14 @@ form[name="search_friend"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 1rem;
-  border-radius: 3rem;
+  margin-top: 1.2rem;
+  padding: 0.2rem;
+  border-radius: 60px;
   -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 
   @media screen and (max-width: 768px) {
-    border-radius: 0.5rem;
-    border-top-left-radius: 1rem;
+    border-radius: 1rem 0.5rem 0.5rem 0.5rem;
   }
 }
 
@@ -1105,8 +1092,8 @@ form[name="search_friend"] {
 }
 
 .show__author_avatar img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 110px;
+  max-height: 110px;
   -o-object-fit: cover;
   object-fit: cover;
   border-radius: 50%;
@@ -1120,7 +1107,7 @@ form[name="search_friend"] {
   width: 100%;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  padding: 0 1rem 0.3rem;
+  padding: 0.3rem 1rem;
 }
 
 .show__comment_header {
@@ -1771,10 +1758,7 @@ form[name="search_friend"] {
 }
 
 #team .team_cards .team__card:hover {
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-radius: 0 20px 0 20px;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -2313,8 +2297,7 @@ form[name="search_friend"] {
     -webkit-box-flex: 2;
     -ms-flex: 2;
     flex: 2;
-    margin: 0;
-    margin-left: 2rem;
+    margin: 0 0 0 2rem;
   }
 
   .dashAction.--desktop > .dashAction__item {
@@ -2426,7 +2409,6 @@ form[name="search_friend"] {
 @media screen and (min-width: 1200px) {
   /************************************************ HOME  */
   .topScore {
-    -ms-grid-columns: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
   }
 

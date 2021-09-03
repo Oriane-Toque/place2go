@@ -5,30 +5,24 @@
 			<img src="{{ asset('img/logo-place2go-white.svg') }}" class="logo-sticky" width="150" alt="Place 2 Go" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Accueil">
 		</a>
 
-		<!-- Toggle button -->
-		{#<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-									<i class="fas fa-bars"></i>
-								</button>#}
-
 		<button class="navbar-toggler" type="button" id="js-burger" onclick="toggleSidenav()">
 			<i class="fas fa-bars" id="js-burger"></i>
 		</button>
 
 		<div id="navbarSupportedContent" class="collapse navbar-collapse">
-
 			<ul class="navbar-nav m-auto">
-				<li>
+				<li class="nav-item">
 					<a class="nav-link mx-3" href="{{ path('app_category_list') }}">
 						Catégories
 					</a>
 				</li>
-				<li>
+				<li class="nav-item">
 					<a class="nav-link mx-3" href="{{ path('app_event_list') }}">
 						Voir les sorties
 					</a>
 				</li>
 				{% if is_granted('USER_ACCESS', app.user) %}
-					<li>
+					<li class="nav-item">
 						<a class="nav-link mx-3" href="{{ path('app_event_create') }}">
 							<i class="fas fa-map-marker-alt"></i>
 							Ajouter une sortie
@@ -62,8 +56,8 @@
 
 			{% else %}
 				<!-- Register Dropdown Menu -->
-				<div class="navbar-nav align-items-lg-center nav-right">
-					<ul>
+				<div class="dropdown__buttons">
+					<ul class="navbar-nav">
 						<li class="nav-item">
 							<a class="nav-link me-2" href="{{ path('app_register') }}">Inscription</a>
 						</li>
