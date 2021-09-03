@@ -29,7 +29,11 @@
 					<div class="d-flex justify-content-between">
 						{# signaler l'utilisateur #}
 						{% if is_granted('USER_ACCESS', app.user) and app.user.id != user.id %}
-							<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="contentProfile__infos-buttonText btn button-primary">Ajouter à ses amis</a>
+							{% if friendship is not null and friendship is defined %}
+								<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="contentProfile__infos-buttonText btn button-primary">Ajouter à ses amis</a>
+							{% else %}
+								<button type="button" class="contentProfile__infos-buttonText btn button-secondary" disabled>Vous êtes déjà amis</button>
+							{% endif %}
 							<a href="{{ path('app_report_user', {id:user.id}) }}" type="button" class="contentProfile__infos-buttonText btn button-secondary btn-floating-sm ms-3">
 								<i class="fas fa-exclamation"></i>
 							</a>
