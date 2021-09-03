@@ -4,11 +4,10 @@
 
 {% block banner %}
 
-	<!-- Top Banner -->
 	<div class="masthead" role="img" aria-label="Image Description">
 		<div class="row w-100">
 			<div class="col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
-				<h1 class="masthead__brand my-5">BE / MOVE / PARTY / MAKE FRIENDS</h1>
+				<h1 class="masthead__brand mb-5">P<span id="text"></span></h1>
 				{% include "event/_filter_home.html.twig" %}
 			</div>
 		</div>
@@ -87,7 +86,8 @@
 				</div>
 			{% else %}
 				<div>
-					Aucun résultat trouvé.
+					Nous n'avons pas trouvé de sorties proches de chez vous.. Essayez d'effecter une recherche <a
+							href="{{ path('app_event_list') }}">ici</a>
 				</div>
 			{% endfor %}
 		</div>

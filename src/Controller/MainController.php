@@ -13,16 +13,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
-
-
     /**
      * Permet d'accéder à la page de contact
      *
      * @Route("/contact", name="app_contact_contact", methods={"GET", "POST"})
-     * 
+     *
      * @param Request $request
      * @param MailerInterface $mailer
-     * 
+     *
      * @return Response
      */
     public function contact(Request $request, MailerInterface $mailer): Response
@@ -38,7 +36,7 @@ class MainController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from(new Address($user->getEmail()))
                 ->to(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
-                ->subject('Place2Go - '.$contact->get('subject')->getData())
+                ->subject('Place2Go - ' . $contact->get('subject')->getData())
                 ->cc(new Address($user->getEmail()))
                 ->htmlTemplate('contact/contact_email.html.twig')
                 ->context([
@@ -50,7 +48,7 @@ class MainController extends AbstractController
             $mailer->send($email);
 
             $this->addFlash('success', 'Votre email a bien été envoyé et sera traité dans les plus brefs délais !');
-            
+
             return $this->redirectToRoute('app_home');
         }
 
@@ -95,7 +93,7 @@ class MainController extends AbstractController
     /**
      * Team's page
      *
-     * @Route("/team", name="app__main_team", methods={"GET"})
+     * @Route("/team", name="app_main_team", methods={"GET"})
      *
      * @return Response
      */
@@ -103,23 +101,4 @@ class MainController extends AbstractController
     {
         return $this->render('team/team.html.twig');
     }
-
-    // /**
-    //  * Display email template
-    //  *
-    //  * @Route("/template", name="app_template", methods={"GET"})
-    //  *
-    //  * @return Response
-    //  */
-    // public function template(EventRepository $eventRepository, FriendshipManager $friendshipManager): Response
-    // {
-    // 	$events = $eventRepository->findAll();
-
-    // 	$friendshipManager->eventAllFriendsNotifier($this->getUser(), $events[0]);
-
-    // 	return $this->render("event/friends_notifier_email.html.twig", [
-    // 		'user' => $this->getUser(),
-    // 		'event' => $events[0]
-    // 	]);
-    // }
 }

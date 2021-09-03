@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestamps;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,9 +22,9 @@ class Comment
      * @ORM\Column(type="string", length=500)
      */
     private $content;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
+    
+     /**
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -56,18 +57,6 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getAuthor(): ?User
     {
         return $this->author;
@@ -88,6 +77,18 @@ class Comment
     public function setEvent(?Event $event): self
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

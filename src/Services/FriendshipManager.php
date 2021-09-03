@@ -7,9 +7,10 @@ use App\Entity\Friendship;
 use App\Entity\User;
 use App\Repository\FriendshipRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class FriendshipManager
 {
@@ -30,7 +31,7 @@ class FriendshipManager
      * @param User $sender
      * @param User $receiver
      *
-    */
+     */
     public function create(User $sender, User $receiver)
     {
         $friendship = new Friendship();
@@ -50,7 +51,7 @@ class FriendshipManager
      * @param User $user
      * @param User $friend
      *
-    */
+     */
     public function delete(User $user, User $friend)
     {
         $friendship = $this->get($user, $friend);
@@ -65,7 +66,7 @@ class FriendshipManager
      * @param User $user
      * @param User $friend
      *
-    */
+     */
     public function get(User $user, User $friend)
     {
         $friendship = $this->friendshipRepository->findOneBy(['sender' => $user, 'receiver' => $friend]);
@@ -82,7 +83,7 @@ class FriendshipManager
      * @param User $user
      * @param User $friend
      *
-    */
+     */
     public function getAll(User $user, User $friend)
     {
         $friendship = $this->friendshipRepository->findBy(['sender' => $user, 'receiver' => $friend]);
@@ -99,7 +100,7 @@ class FriendshipManager
      * @param User $user
      * @param Event $event
      *
-    */
+     */
     public function eventAllFriendsNotifier(User $user, Event $event)
     {
         // Get all friends
@@ -108,18 +109,28 @@ class FriendshipManager
         // Init the email to send
         $email = (new TemplatedEmail())
             ->from(new Address('checkmyapplications@gmail.com', 'Place 2 Go Emailer'))
-            ->subject('Nouvelle sortie de ' . $user->getNickname())
+            ->subject('Nouvelle sortie proposée par ' . $user->getNickname())
             ->htmlTemplate('event/friends_notifier_email.html.twig')
             ->context([
                 'user' => $user,
                 'event' => $event,
-            ])
-        ;
+            ]);
+
+        if (count($friends) == 0) {
+            return 'Aucune notification envoyée';
+        }
 
         // Send email to all friends
         foreach ($friends as $friend) {
             $email->to($friend->getEmail());
-            $this->mailer->send($email);
+
+            try {
+                $this->mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                return $e->getMessage();
+            }
         }
+
+        return true;
     }
 }

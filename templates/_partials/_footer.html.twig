@@ -4,7 +4,7 @@
 
 		<!-- Social Networks -->
 		<div class="row">
-			<div class="col-4 mx-auto text-center">
+			<div class="col-sm-6 col-md-4 mx-auto text-center">
 				<div class="icon__list">
 					<a href="#" target="_blank" rel="noopener" title="Twitter" class="icon__list_icons">
 						<i class="fab fa-twitter fa-3x"></i>
@@ -20,19 +20,20 @@
 		</div>
 
 		<!-- Divider -->
-		<hr
-		class="footer__divider">
+		<hr class="footer__divider">
 
-		<!-- Widget Columns -->
-		<div
-			class="row">
+		<div class="row">
 
-			<!-- About Column -->
+			<!-- Links Column -->
 			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
 				<ul class="footer__links">
 					<li class="mb-2">
 						<i class="fas fa-caret-right"></i>
-						<a href="#">A propos</a>
+						<a href="{{ path('app_main_team') }}">Team</a>
+					</li>
+					<li class="mb-2">
+						<i class="fas fa-caret-right"></i>
+						<a href="{{ path('app_contact_contact') }}">Contactez-nous</a>
 					</li>
 					<li class="mb-2">
 						<i class="fas fa-caret-right"></i>
@@ -46,31 +47,25 @@
 						<i class="fas fa-caret-right"></i>
 						<a href="{{ path('app_cgu') }}">CGU</a>
 					</li>
-					<li class="mb-2">
-						<i class="fas fa-caret-right"></i>
-						<a href="{{ path('app_contact_contact') }}">Contactez-nous</a>
-					</li>
-					<li class="mb-2">
-						<i class="fas fa-caret-right"></i>
-						<a href="#">Team</a>
-					</li>
 				</ul>
 			</div>
 
 			<!-- Place To Random Column -->
-			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+			<div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
 				<div class="footer__title">Place To Random</div>
 				<ul class="list-unstyled">
 					{% for event in eventRepository.findRandEvents(app.user.city ?? '') %}
 						<li class="mb-2">
 							<a href="{{ path("app_event_show", {id: event.id}) }}">{{ event.title }}</a>
 						</li>
+					{% else %}
+						<p style="font-size: 0.8rem; color: #d9d9d9">Aucune sortie proche de chez vous.</p>
 					{% endfor %}
 				</ul>
 			</div>
 
 			<!-- Popular Categories Column -->
-			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+			<div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
 				<div class="footer__title">Catégories populaires</div>
 				<ul class="list-unstyled">
 					{% for category in categoryRepository.findTopCategories %}
@@ -82,7 +77,7 @@
 			</div>
 
 			<!-- Top Contributors Column -->
-			<div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+			<div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
 				<div class="footer__title">Top Contributeurs</div>
 				<ul class="list-unstyled">
 					{% for contributor in eventRepository.findTopContributors %}
@@ -96,8 +91,8 @@
 		</div>
 
 		<!-- Copyright Bottom -->
-		<div class="mt-5">
-			<div class="text-center">Copyright © 2021</div>
+		<div>
+			<div class="text-center">Copyright © {{ date('Y') | date('Y') }}</div>
 
 			<div class="text-center text-sm fst-italic">
 				Made with

@@ -24,7 +24,7 @@ class SearchFormType extends AbstractType
             ->add('q', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher une activité...',
+                    'placeholder' => 'Rechercher une activité par Ville ou adresse',
                 ]
             ])
             ->add('categories', EntityType::class, [

@@ -10,7 +10,6 @@ use App\Data\SearchData;
 use App\Form\CommentType;
 use App\Services\GeoJson;
 use App\Form\SearchFormType;
-use App\Services\CallApiService;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +31,6 @@ class EventController extends AbstractController
      *
      * @param Request $request
      * @param EventRepository $eventRepository
-     *
-     * TODO GÉRER SI IL N'Y A PAS DE SORTIES POUR UNE CATÉGORIE DONNÉE
      *
      * @return Response
      */
@@ -88,11 +85,14 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre sortie à bien été créée !');
+            $notif = $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
 
-            // Email all my friends
-            $friendshipManager->eventAllFriendsNotifier($this->getUser(), $event);
-
+            if ($notif) {
+                $this->addFlash('success', 'Votre sortie a bien été créée. Vos amis seront notifiés par email !');
+            } else {
+                $this->addFlash('success', 'Votre sortie à bien été créée ! ');
+            }
+        
             return $this->redirectToRoute('app_event_show', [
                 'id' => $event->getId(),
             ]);
@@ -155,12 +155,12 @@ class EventController extends AbstractController
 
         // Create new form associated to entity
         if ($form->isSubmitted() && $form->isValid()) {
+            // Check access
             $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), 'Accès refusé');
-            // set the author to the  associated commenb
+            // set the author to the  associated comment
             $comment->setAuthor($this->getUser());
             // set the event
             $comment->setEvent($event);
-            // set the date
             $comment->setCreatedAt(new DateTimeImmutable());
 
             $entityManager = $this->getDoctrine()->getManager();
