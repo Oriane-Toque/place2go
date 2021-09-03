@@ -30,7 +30,7 @@
 						{# user action #}
 						{% if is_granted('USER_ACCESS', app.user) and app.user.id != user.id %}
 							{# ajouter aux amis #}
-							{% if friendship is null %}
+							{% if friendship is not null and friendship is defined %}
 								<button type="button" class="contentProfile__infos-buttonText btn button-secondary" disabled>Vous êtes déjà amis</button>
 							{% else %}
 								<a href="{{ path('app_friend_add', {id: user.id}) }}" type="button" class="contentProfile__infos-buttonText btn button-primary">Ajouter à ses amis</a>
