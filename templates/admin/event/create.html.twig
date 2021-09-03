@@ -68,12 +68,10 @@
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
 	const map = new mapboxgl.Map({
-	container: 'map',
-	style: 'mapbox://styles/mapbox/streets-v11',
-	center: [
-	2, 47
-	],
-	zoom: 4.5
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [2, 47],
+        zoom: 4.5
 	});
 
 	// Add the control to the map.
@@ -88,20 +86,21 @@
 	input.addEventListener('keydown', handle);
 
 	function handle(e) {
-	let value = e.target.value;
-	eventAddress.value = value;
+        let value = e.target.value;
+        eventAddress.value = value;
 	}
 
 	// Listen for the result event from the geocoder.
 	// 'result' event is triggered when the user makes a selection
 	geocoder.on('result', function (e) {
-	const lat = document.getElementById('event_lat');
-	const lon = document.getElementById('event_lon');
+        const lat = document.getElementById('event_lat');
+        const lon = document.getElementById('event_lon');
 
-	var latlong = e.result.geometry.coordinates;
-	lat.value = latlong[0];
-	lon.value = latlong[1];
-});
+        var latlong = e.result.geometry.coordinates;
+        lat.value = latlong[0];
+        lon.value = latlong[1];
+    });
+    
 </script>
 
 {% endblock %}
