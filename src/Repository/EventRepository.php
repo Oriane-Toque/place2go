@@ -212,4 +212,29 @@ class EventRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * Return events data for graph
+     *
+     * @param Int $year (option) year
+     * @return Array events count by month
+     */
+    public function getCountEventsByMonth(int $year = null): array
+    {
+        $query = $this->createQueryBuilder('e')
+            ->select('MONTH(e.event_date) AS month, COUNT(e) AS count');
+
+        if ($year) {
+            $query->where('YEAR(e.event_date) = :year')
+                ->setParameter('year', $year);
+        }
+        else{
+            $query->where('YEAR(e.event_date) = YEAR(CURRENT_DATE())');
+        }
+
+        $query->groupBy('month');
+        $query->orderBy('month', 'ASC');
+
+        return $query->getQuery()->getResult();
+    }
 }

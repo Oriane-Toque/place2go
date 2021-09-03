@@ -4,6 +4,12 @@
 
 {% block title 'Dashboard' %}
 
+{% block javascripts %}
+    {# Chart JS #}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}
+
 {% block body %}
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -116,7 +122,28 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <canvas id="myChart" height="360"></canvas>
+
+                    <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Jan', 'Fev', 'Mar','Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+                            datasets: [{
+                                label: '{{ datasets.label }}',
+                                backgroundColor: 'rgb(16, 206, 170)',
+                                data: [{{ datasets.data|join(',') }}],
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+
+                    </script>
                 </div>
             </div>
         </div>

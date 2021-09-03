@@ -26,8 +26,26 @@ class AdminController extends AbstractController
         $countArr['users']          = $userRepository->getTotalUsers();
         $countArr['active_users']   = $userRepository->getTotalActiveUsers();
 
+        // Get events count by month
+        $dataArr = $eventRepository->getCountEventsByMonth();
+
+        // Init data array
+        $data = array_fill(0, 12, 0);
+
+        // Populate array at good place
+        foreach($dataArr as $value)
+        {
+            $data[$value['month']-1] = $value['count'];
+        }
+
+        $datasets = (object) array(
+            'label' => 'Nbre de sorties par mois en 2021',
+            'data' => $data
+        );
+
         return $this->render('admin/home.html.twig', [
             'countArr' => $countArr,
+            'datasets' => $datasets
         ]);
     }
 }
