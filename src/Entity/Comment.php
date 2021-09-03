@@ -39,6 +39,11 @@ class Comment
      */
     private $event;
 
+    public function __construt()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

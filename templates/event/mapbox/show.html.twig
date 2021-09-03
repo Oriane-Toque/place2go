@@ -4,10 +4,10 @@
     container: 'map', // Container ID
     style: 'mapbox://styles/mapbox/streets-v11', // Map style to use
     center: [
-    {{ event.lat }}, {{ event.lon }}
+    {{ event.lat | raw }}, {{ event.lon | raw }}
     ], // Starting position [lng, lat]
     zoom: 15.5, // Starting zoom level
     });
     // Create a default Marker and add it to the map.
-    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat }}, {{ event.lon }}]).addTo(map);
+    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ event.lat | raw }}, {{ event.lon | raw }}]).addTo(map);
 </script>

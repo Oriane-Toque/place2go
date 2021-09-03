@@ -51,7 +51,7 @@
 								<div class="show__card_content-date ">
 									<i class="fas fa-caret-right"></i>
 									Le
-									{{ event.eventDate | format_date('none', 'd MMMM Y à h:m', null, 'gregorian', 'fr')}}
+									{{ event.eventDate | format_date('none', 'd MMMM Y à H:mm', null, 'gregorian', 'fr')}}
 								</div>
 
 								<div class="show__card_address">
@@ -169,6 +169,6 @@
 		</div>
 	</div>
 
-	{% include "event/mapbox/show.js.twig" %}
+	{% include "event/mapbox/show.html.twig" %}
 
 {% endblock %}
