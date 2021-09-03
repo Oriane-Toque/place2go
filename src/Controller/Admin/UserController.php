@@ -28,7 +28,9 @@ class UserController extends AbstractController
     public function list(UserRepository $userRepository): Response
     {
         // Find all users
-        $users = $userRepository->findAll();
+        //$users = $userRepository->findAll();
+        $users = $userRepository->findBy(['roles' => 'ROLE_ADMIN']);
+
 
         return $this->render('admin/user/list.html.twig', [
             'users' => $users,

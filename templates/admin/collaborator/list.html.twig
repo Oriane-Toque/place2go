@@ -46,7 +46,9 @@
                 
             </div>
             <!-- Card Body -->
-            {{ include("admin/collaborator/_user_list.html.twig", {'users': users }) }} 
+            <div class="card-body">
+                {{ include("admin/collaborator/_user_list.html.twig", {'users': users }) }}
+            </div> 
         </div>
     </div>
 
