@@ -91,8 +91,6 @@ if (textarea != null) {
   });
 }
 
-
-
 const textDisplay = document.getElementById('text')
 const bold = {
   go: '2 Go',

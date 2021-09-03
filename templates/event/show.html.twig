@@ -13,6 +13,13 @@
 			min-height: 350px;
 			margin-bottom: 0.8rem;
 		}
+
+		@media  screen and (max-width: 768px) {
+			#map {
+				margin-top: 1.5rem;
+				overflow: hidden;
+			}
+		}
 	</style>
 {% endblock %}
 
@@ -67,11 +74,11 @@
 						</div>
 
 						<div class="show__card_content-footer">
-							<div>
+							<p class="show__card_categories">
 								{% for category in event.categories %}
-									<span class="text-muted fst-italic">{{ category.name }}{{ loop.last ? '' : ', ' }}</span>
+									{{ category.name }}{{ loop.last ? '' : ' - ' }}
 								{% endfor %}
-							</div>
+							</p>
 
 							<div class="show__cards_join">
 								<div class="list__cards_join">
@@ -101,7 +108,7 @@
 				</div>
 
 
-				<div class="col-sm-6 col-lg-6">
+				<div class="col-sm-12 col-lg-6">
 
 					<div id='map' class="shadow-1"></div>
 
@@ -129,7 +136,7 @@
 									le
 									{{ comment.createdAt | format_date('none', 'd MMMM Y à HH:mm', null, 'gregorian', 'fr')}}
 								</div>
-								<div class="show__comment_content pe-4">
+								<div class="show__comment_content">
 									{{comment.content}}
 								</div>
 							</div>

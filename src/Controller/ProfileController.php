@@ -48,8 +48,6 @@ class ProfileController extends AbstractController
     public function profile(EventRepository $eventRepository): Response
     {
         $this->denyAccessUnlessGranted('USER_ACCESS', $this->getUser(), "Vous n'avez pas les autorisations nécessaires");
-        // (MVP) je dois récupérer le nom, prénom, email, description du user
-        // TODO (V2) je dois récupérer les notifications au sujet de mes amis
 
         // rGet current User
         $user = $this->getUser();

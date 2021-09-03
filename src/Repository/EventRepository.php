@@ -86,24 +86,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieve all the cities (but still in DESC order)
-     *
-     * @return Array all the cities
-     */
-    /*public function findAllCities(): array
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT e.city, COUNT(e.city) AS count
-            FROM App\Entity\Event e
-            GROUP BY e.city
-            ORDER BY count DESC'
-        );
-        return $query->getResult();
-    }*/
-
-
-    /**
      * Recover the last events of the organizer order by event date (DESC)
      *
      * @param Int $userId
@@ -113,14 +95,14 @@ class EventRepository extends ServiceEntityRepository
     public function findLastAuthorEvents(int $userId, int $limit = null): array
     {
         $qb = $this->createQueryBuilder('e')
+            ->select('e', 'user')
+            ->join('e.author', 'user')
             ->where('e.author = :userId')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
         // Set a limit if variable is sent
-        if (!is_null($limit)) {
-            $qb->setMaxResults($limit);
-        }
+        $qb->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
     }
@@ -135,15 +117,15 @@ class EventRepository extends ServiceEntityRepository
     public function findLastAttendantEvents(int $userId, int $limit = null): array
     {
         $qb =  $this->createQueryBuilder('e')
-            ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
+            ->select('e', 'a')
+            ->join('e.attendants', 'a')
+            // ->innerJoin('App\Entity\Attendant', 'a', 'WITH', 'e.id = a.event')
             ->where('a.user = :userId')
             ->setParameter('userId', $userId)
             ->orderBy('e.event_date', 'DESC');
 
         // Set a limit if variable is sent
-        if (!is_null($limit)) {
             $qb->setMaxResults($limit);
-        }
 
         return $qb->getQuery()->getResult();
     }
