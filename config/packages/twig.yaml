@@ -10,7 +10,7 @@ twig:
     globals:
         eventRepository: '@App\Repository\EventRepository'
         categoryRepository: '@App\Repository\CategoryRepository'
-
+        userRepository: '@App\Repository\UserRepository'
 
 when@test:
     twig:
