@@ -22,6 +22,22 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * Find All Query
+     */
+    public function findAllQuery(array $data = null)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->where('e.isActive = 1');
+
+        if (!empty($data['title'])) {
+            $query->andWhere('e.title LIKE :title')
+                ->setParameter('title', "%{$data['title']}%");
+        }
+        
+        return $query;
+    }
+
+    /**
      * Return the top six cities with events score (DESC)
      *
      * @return Array the top six cities

@@ -46,7 +46,7 @@
 
 						<div class="row mb-3">
 							<div class="col-md-12">
-								<h2>{{ report.user }} signalé(e) pour {{ report.type }}</h2>
+								<h2>{{ report.user.nickname }} signalé(e) pour {{ report.type }}</h2>
 							</div>
 						</div>
 
@@ -57,11 +57,11 @@
 									<tbody>
 										<tr>
 											<th>Auteur du signalement</th>
-											<td>{{ report.author }}</td>
+											<td><img src="{{ report.author.avatar }}" width="30" class="rounded-circle me-1">{{ report.author.nickname }}</td>
 										</tr>
 										<tr>
 											<th>Utilisateur signalé</th>
-											<td>{{ report.user }}</td>
+											<td><img src="{{ report.author.avatar }}" width="30" class="rounded-circle me-1">{{ report.user.nickname }}</td>
 										</tr>
 										<tr>
 											<th>Sortie signalée</th>

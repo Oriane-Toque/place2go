@@ -16,7 +16,7 @@
                 <tr>
                     <td>{{ comment.id }}</td>
                     <td>
-                        <a href="{{ path('admin_user_show', {id: comment.author.id}) }}">{{ comment.author.nickname|capitalize }}</a>
+                        <a href="{{ path('admin_user_show', {id: comment.author.id}) }}"><img src="{{ comment.author.avatar }}" width="30" class="rounded-circle me-1">{{ comment.author.nickname }}</a>
                     </td>
                     <td>
                         <a href="{{ path('admin_event_show', {id: comment.event.id}) }}">{{ comment.event.title|capitalize }}</a>

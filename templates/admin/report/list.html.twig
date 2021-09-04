@@ -72,13 +72,13 @@
 											<a href="{{ path('admin_user_show', {id: report.author.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir">
 												<i class="fas fa-sign-in-alt"></i>
 											</a>
-											{{ report.author }}
+											{{ report.author.nickname }}
 										</td>
 										<td>
 											<a href="{{ path('admin_user_show', {id: report.user.id}) }}" class="me-2" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir">
 												<i class="fas fa-sign-in-alt"></i>
 											</a>
-											{{ report.user }}
+											{{ report.user.nickname }}
 										</td>
 										<td>
 										{% if report.event %}

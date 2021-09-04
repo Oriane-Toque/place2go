@@ -1,9 +1,24 @@
 <div class="events-list">
+    <div class="row">
+        <div class="col-6">
+            {# display navigation #}
+            <div class="navigation text-end">
+                {{ knp_pagination_render(events) }}
+            </div> 
+        </div>
+        <div class="col-6">
+            {# total items count #}
+            <div class="count text-end">
+                {{ events.getTotalItemCount }} résultats
+            </div>
+        </div>
+    </div>
     <table class="table table-hover table-responsive-md">
         <thead>
             <tr>
-                <th>#Id</th>
-                <th>Titre</th>
+                <th>{{ knp_pagination_sortable(events, '#Id', 'e.id') }}</th>
+                <th {% if events.isSorted('e.title') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(events, 'Titre', 'e.title') }}</th>
                 <th>Adresse</th>
                 <th>Organisateur</th>
                 <th>Nb Participants</th>
@@ -21,7 +36,7 @@
                     </td>
                     <td>{{ event.address }}</td>
                     <td>
-                        {{ event.author.nickname }}
+                        <a href="{{ path('admin_user_show', {id: event.author.id}) }}"><img src="{{ event.author.avatar }}" width="30" class="rounded-circle me-1">{{ event.author.nickname }}</a>
                     </td>
                     <td>
                         {{ event.attendants|length }}/{{ event.maxAttendants }}
@@ -41,4 +56,8 @@
             {% endfor %}
         </tbody>
     </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(events) }}
+    </div>
 </div>
