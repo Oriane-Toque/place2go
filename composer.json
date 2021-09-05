@@ -98,6 +98,7 @@
         "post-install-cmd": [
             "@auto-scripts",
             "@CkEditor",
+            "@db-migrations",
             "php bin/console cache:clear"
         ],
         "post-update-cmd": [
