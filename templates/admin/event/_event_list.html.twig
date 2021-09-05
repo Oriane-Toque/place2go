@@ -19,10 +19,13 @@
                 <th>{{ knp_pagination_sortable(events, '#Id', 'e.id') }}</th>
                 <th {% if events.isSorted('e.title') %} class="sorted"{% endif %}>
                     {{ knp_pagination_sortable(events, 'Titre', 'e.title') }}</th>
-                <th>Adresse</th>
+                <th {% if events.isSorted('e.address') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(events, 'Adresse', 'e.address') }}</th>
                 <th>Organisateur</th>
-                <th>Nb Participants</th>
-                <th>Date</th>
+                <th {% if events.isSorted('e.maxAttendants') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(events, 'Nb Participants', 'e.maxAttendants') }}</th>
+                <th {% if events.isSorted('e.event_date') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(events, 'Date', 'e.event_date') }}</th>
                 <th>Actions</th>
             </tr>
         </thead>

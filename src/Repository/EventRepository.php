@@ -24,17 +24,18 @@ class EventRepository extends ServiceEntityRepository
     /**
      * Find All Query
      */
-    public function findAllQuery(array $data = null)
+    public function findAllQuery(array $options = [])
     {
-        $query = $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->where('e.isActive = 1');
 
-        if (!empty($data['title'])) {
-            $query->andWhere('e.title LIKE :title')
-                ->setParameter('title', "%{$data['title']}%");
+        foreach($options as $key => $value)
+        {
+            $qb->andWhere($key.' LIKE :value')
+            ->setParameter('value', "%{$value}%");
         }
         
-        return $query;
+        return $qb->getQuery();
     }
 
     /**

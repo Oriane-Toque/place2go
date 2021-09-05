@@ -30,38 +30,21 @@ class EventController extends AbstractController
     {
         // Find all events
         //$events = $eventRepository->findAll();
-        $data = array();
-        $query = $eventRepository->findAllQuery($data);
-        
+        $options = [];
+        if ($request->query->get('filterField'))
+        {
+            $options[$request->query->get('filterField')] = $request->query->get('filterValue');
+        }
+
+        $query = $eventRepository->findAllQuery($options);
+
         $events = $paginator->paginate(
             $query, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
 
-        //dd($request->query->get('filterValue'));
-
-        $searchData = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $searchData, [
-            'action' => $this->generateUrl('admin_event_list'),
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $data['title'] = $form->get('q')->getData();
-            $query = $eventRepository->findAllQuery($data);
-    
-            $events = $paginator->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1), /*page number*/
-                10 /*limit per page*/
-            );
-    
-        }
-
         return $this->render('admin/event/list.html.twig', [
-            'form' => $form->createView(),
             'events' => $events,
         ]);
     }
