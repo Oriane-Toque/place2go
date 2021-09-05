@@ -28,7 +28,7 @@ class ProfileController extends AbstractController
      */
     public function show(User $user, FriendshipManager $friendshipManager): Response
     {
-        $this->denyAccessUnlessGranted('BASIC_ACCESS', $user, "Impossible d'accéder à ce profil");
+        $this->denyAccessUnlessGranted('USER_ACCESS', $user, "Impossible d'accéder à ce profil");
 
         // Check if friendship exists
 		$friendship = $friendshipManager->get($this->getUser(), $user);
@@ -43,7 +43,6 @@ class ProfileController extends AbstractController
      * Display user profile (private / dashboard)
      *
      * @Route("/profile", name="app_profile_profile", methods={"GET", "POST"})
-     * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository
      *
@@ -131,7 +130,6 @@ class ProfileController extends AbstractController
      * Display all events created by the user
      *
      * @Route("/profile/events", name="app_profile_events", methods={"GET"})
-     * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository
      *
