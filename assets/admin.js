@@ -67,4 +67,22 @@ import "./bootstrap";
     e.preventDefault();
   });
 
+  // Display user details in floating div
+  $( ".user-details-floating" ).on("mouseenter", function (e) {
+    
+  //$(document).on('mouseenter', '.user-details-floating', function(e) {
+    var $anchor = $(this);
+    var url = $anchor.attr('href');
+    console.log("URL: " + url);
+
+    $.ajax({
+      url: $anchor.attr('href'),
+      type: "GET",
+      success: function(data){
+        alert("Données retournées : " + data );
+      }
+  })
+    
+  });
+
 })(jQuery); // End of use strict

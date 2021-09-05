@@ -57,9 +57,9 @@
                 <h6 class="m-0 font-weight-bold text-primary">Liste des sorties</h6>            
             </div>
             <!-- Card Body -->
-            <div class="card-body">        
-                {{ include("admin/event/_event_list.html.twig", {'events': events }) }} 
-            </div> 
+            <div class="card-body">    
+                {{ include("admin/event/_event_list.html.twig", {'events': events, 'pagination': true }) }}       
+            </div>
         </div>
     </div>
 

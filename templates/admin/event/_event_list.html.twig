@@ -1,4 +1,5 @@
 <div class="events-list">
+    {% if pagination is defined and pagination == true %}
     <div class="row">
         <div class="col-6">
             {# display navigation #}
@@ -12,9 +13,11 @@
                 {{ events.getTotalItemCount }} résultats
             </div>
         </div>
-    </div>
+    </div> 
+    {% endif %}    
     <table class="table table-hover table-responsive-md">
         <thead>
+            {% if pagination is defined and pagination == true %}
             <tr>
                 <th>{{ knp_pagination_sortable(events, '#Id', 'e.id') }}</th>
                 <th {% if events.isSorted('e.title') %} class="sorted"{% endif %}>
@@ -28,6 +31,17 @@
                     {{ knp_pagination_sortable(events, 'Date', 'e.event_date') }}</th>
                 <th>Actions</th>
             </tr>
+            {% else %}
+            <tr>
+                <th>#Id</th>
+                <th>Titre</th>
+                <th>Adresse</th>
+                <th>Organisateur</th>
+                <th>Nb Participants</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+            {% endif %}
         </thead>
 
         <tbody>
@@ -39,7 +53,7 @@
                     </td>
                     <td>{{ event.address }}</td>
                     <td>
-                        <a href="{{ path('admin_user_show', {id: event.author.id}) }}"><img src="{{ event.author.avatar }}" width="30" class="rounded-circle me-1">{{ event.author.nickname }}</a>
+                        <a href="{{ path('admin_user_show', {id: event.author.id}) }}" class="user-details-floating"><img src="{{ event.author.avatar }}" width="30" class="rounded-circle me-1">{{ event.author.nickname }}</a>
                     </td>
                     <td>
                         {{ event.attendants|length }}/{{ event.maxAttendants }}
@@ -60,7 +74,9 @@
         </tbody>
     </table>
     {# display navigation #}
+    {% if pagination is defined and pagination == true %}
     <div class="navigation">
         {{ knp_pagination_render(events) }}
     </div>
+    {% endif %}
 </div>
