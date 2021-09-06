@@ -12,6 +12,7 @@ use App\Services\GeoJson;
 use App\Form\SearchFormType;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
+use DateTimeZone;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -161,7 +162,7 @@ class EventController extends AbstractController
             $comment->setAuthor($this->getUser());
             // set the event
             $comment->setEvent($event);
-            $comment->setCreatedAt(new DateTimeImmutable());
+            $comment->setCreatedAt(new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
