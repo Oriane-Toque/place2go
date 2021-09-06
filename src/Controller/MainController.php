@@ -52,8 +52,8 @@ class MainController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render("contact/contact.html.twig", [
-            'form' => $form->createView(),
+        return $this->renderForm("contact/contact.html.twig", [
+            'form' => $form,
         ]);
     }
 

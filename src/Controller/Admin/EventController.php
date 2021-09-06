@@ -16,11 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * Require ROLE_ADMIN for *every* controller method in this class.
- *
+ * Require ROLE_ADMIN for *every* controller methods.
  * @IsGranted("ROLE_ADMIN")
  */
-
 class EventController extends AbstractController
 {
     /**
@@ -91,8 +89,8 @@ class EventController extends AbstractController
             return $this->redirectToRoute('admin_event_list');
         }
 
-        return $this->render('admin/event/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/event/create.html.twig', [
+            'form' => $form
         ]);
     }
 
@@ -117,8 +115,8 @@ class EventController extends AbstractController
             return $this->redirectToRoute('admin_event_list');
         }
 
-        return $this->render('admin/event/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/event/edit.html.twig', [
+            'form' => $form
         ]);
     }
 

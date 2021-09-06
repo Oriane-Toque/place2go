@@ -93,8 +93,8 @@ class CollaboratorController extends AbstractController
             return $this->redirectToRoute('admin_collaborator_list');
         }
 
-        return $this->render('admin/collaborator/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/collaborator/create.html.twig', [
+            'form' => $form
         ]);
     }
 
@@ -119,8 +119,8 @@ class CollaboratorController extends AbstractController
             return $this->redirectToRoute('admin_collaborator_list');
         }
 
-        return $this->render('admin/collaborator/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/collaborator/edit.html.twig', [
+            'form' => $form
         ]);
     }
 

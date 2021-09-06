@@ -91,7 +91,7 @@
 													</a>
 
 													{# Bouton pour supprimer la sortie #}
-													<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer" onclick="window.alert('Confirmez-vous la suppression ?')">
+													<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer" onclick="window.confirm('Confirmez-vous la suppression ?')">
 														<i class="fas fa-trash-alt"></i>
 													</a>
 												</div>
