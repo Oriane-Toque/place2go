@@ -119,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attendant::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Attendant::class, mappedBy="user", cascade={"remove"})
      */
     private $attendants;
 
