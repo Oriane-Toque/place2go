@@ -14,7 +14,7 @@
 			margin-bottom: 0.8rem;
 		}
 
-		@media  screen and (max-width: 768px) {
+		@media screen and(max-width: 768px) {
 			#map {
 				margin-top: 1.5rem;
 				overflow: hidden;
@@ -71,17 +71,6 @@
 								<div class='--title'>Détails sur l'activité</div>
 								{{ event.description }}
 							</div>
-
-							<div class="show__card_content-description">
-								<div class='--title'>Participants</div>
-								{% for attendant in event.attendants %}
-									<div class="chip chip-lg">
-										<img src="{{ attendant.user.avatar }}" alt="Attendant"><a href="{{ path('app_profile_show', {id: attendant.user.id}) }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir le profil"><span class="name">{{ attendant.user.nickname }}</span></a>
-									</div>
-								{% else %}
-									<p>Aucun participant pour le moment</p>
-								{% endfor %}
-							</div>
 						</div>
 
 						<div class="show__card_content-footer">
@@ -125,6 +114,20 @@
 
 				</div>
 
+			</div>
+
+			<h3 class='mt-5 mb-2 text-center'>Participants</h3>
+
+			<div class="row text-center">
+				<div class="col-12 mx-auto">
+					{% for attendant in event.attendants %}
+						<div class="chip chip-lg">
+							<img src="{{ attendant.user.avatar }}" alt="Attendant"><a href="{{ path('app_profile_show', {id: attendant.user.id}) }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir le profil">
+								<span class="name">{{ attendant.user.nickname }}</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
 			</div>
 
 			<h3 class="mt-5 mb-2 text-center">Commentaires</h3>
