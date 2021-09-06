@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\FriendshipRepository;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
 use Symfony\Component\HttpFoundation\Request;

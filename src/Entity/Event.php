@@ -100,7 +100,7 @@ class Event
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="event", cascade={"remove"})
      */
     private $reports;
 
