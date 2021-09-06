@@ -71,6 +71,17 @@
 								<div class='--title'>Détails sur l'activité</div>
 								{{ event.description }}
 							</div>
+
+							<div class="show__card_content-description">
+								<div class='--title'>Participants</div>
+								{% for attendant in event.attendants %}
+									<div class="chip chip-lg">
+										<img src="{{ attendant.user.avatar }}" alt="Attendant"><a href="{{ path('app_profile_show', {id: attendant.user.id}) }}" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Voir le profil"><span class="name">{{ attendant.user.nickname }}</span></a>
+									</div>
+								{% else %}
+									<p>Aucun participant pour le moment</p>
+								{% endfor %}
+							</div>
 						</div>
 
 						<div class="show__card_content-footer">
