@@ -66,35 +66,43 @@ import "./bootstrap";
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
   });
-
+  
   // Display user details in floating div
   $( ".user-details-floating" )
   .on("mouseenter", function (e) {
-  
-    var $anchor = $(this);
-    var url = $anchor.attr('href') + '/floating';
-    var html = '';
 
-    $.ajax({
-      url: url,
-      type: "GET",
-      dataType: 'json',
-      success: function(data){
+    var $floating = $(this).find(".details-floating");
 
-        html += '<div class="details-floating position-absolute p-4 bg-white shadow">';
-        html += '<h3>' + data.firstname + ' ' + data.lastname + '</h3>';
-        html += '<img src="' + data.avatar + '" width="150" class="mx-auto mb-2">';
-        html += '<p class="mb-0">Ville : ' + data.city + '</p>';
-        html += '<p class="mb-0">Age : ' + data.birthday + '</p>';
-        html += '<p class="mb-0">Inscrit depuis le ' + data.createdAt + '</p>';
-        html += '</div>';
+    if ($floating.length > 0){
+      $floating.show();
+    }
+    else{
 
-        $anchor.append(html);
-      }
-  })
+      var $anchor = $(this);
+      var url = $anchor.attr('href') + '/floating';
+      var html = '';
+
+      $.ajax({
+        url: url,
+        type: "GET",
+        dataType: 'json',
+        success: function(data){
+
+          html += '<div class="details-floating position-absolute p-4 bg-white shadow">';
+          html += '<h3>' + data.firstname + ' ' + data.lastname + '</h3>';
+          html += '<img src="' + data.avatar + '" width="150" class="mx-auto mb-2">';
+          html += '<p class="mb-0">Ville : ' + data.city + '</p>';
+          html += '<p class="mb-0">Age : ' + data.birthday + '</p>';
+          html += '<p class="mb-0">Inscrit depuis le ' + data.createdAt + '</p>';
+          html += '</div>';
+
+          $anchor.append(html);
+        }
+      })
+    }
     
   }).on("mouseout", function () {
-    $( ".details-floating" ).remove();
+    $( ".details-floating" ).hide();
   });
 
 })(jQuery); // End of use strict
