@@ -68,21 +68,33 @@ import "./bootstrap";
   });
 
   // Display user details in floating div
-  $( ".user-details-floating" ).on("mouseenter", function (e) {
-    
-  //$(document).on('mouseenter', '.user-details-floating', function(e) {
+  $( ".user-details-floating" )
+  .on("mouseenter", function (e) {
+  
     var $anchor = $(this);
-    var url = $anchor.attr('href');
-    console.log("URL: " + url);
+    var url = $anchor.attr('href') + '/floating';
+    var html = '';
 
     $.ajax({
-      url: $anchor.attr('href'),
+      url: url,
       type: "GET",
+      dataType: 'json',
       success: function(data){
-        alert("Données retournées : " + data );
+
+        html += '<div class="details-floating position-absolute p-4 bg-white shadow">';
+        html += '<h3>' + data.firstname + ' ' + data.lastname + '</h3>';
+        html += '<img src="' + data.avatar + '" width="150" class="mx-auto mb-2">';
+        html += '<p class="mb-0">Ville : ' + data.city + '</p>';
+        html += '<p class="mb-0">Age : ' + data.birthday + '</p>';
+        html += '<p class="mb-0">Inscrit depuis le ' + data.createdAt + '</p>';
+        html += '</div>';
+
+        $anchor.append(html);
       }
   })
     
+  }).on("mouseout", function () {
+    $( ".details-floating" ).remove();
   });
 
 })(jQuery); // End of use strict
