@@ -28,7 +28,7 @@ class CollaboratorController extends AbstractController
     public function list(UserRepository $userRepository): Response
     {
         // Find all collaborators => (users with roles = '["ROLE_ADMIN"]')
-        $users = $userRepository->findCollaborators();
+        $users = $userRepository->findUsersByRole('["ROLE_ADMIN"]');
 
         return $this->render('admin/collaborator/list.html.twig', [
             'users' => $users,

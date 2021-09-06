@@ -1,40 +1,42 @@
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>#Id</th>
-            <th>Auteur</th>
-            <th>Sortie</th>
-            <th>Contenu</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="comments-list">
+    <table class="table table-hover table-responsive-md">
+        <thead>
+            <tr>
+                <th>#Id</th>
+                <th>Auteur</th>
+                <th>Sortie</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        {% for comment in comments %}
-            <tr>
-                <td>{{ comment.id }}</td>
-                <td>
-                    <a href="{{ path('admin_user_show', {id: comment.author.id}) }}">{{ comment.author.nickname|capitalize }}</a>
-                </td>
-                <td>
-                    <a href="{{ path('admin_event_show', {id: comment.event.id}) }}">{{ comment.event.title|capitalize }}</a>
-                </td>
-                <td>
-                    {{ comment.content }}
-                </td>
-                <td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
-                <td>
-                    <a href="{{ path('admin_comment_show', {id: comment.id}) }}" title="Aperçu" class="me-2"><i class="fas fa-eye text-secondary"></i></a>
-                    <a href="{{ path('admin_comment_edit', {id: comment.id}) }}" title="Editer" class="me-2"><i class="fas fa-edit text-secondary"></i></a>
-                    <a href="{{ path('admin_comment_delete', {id: comment.id}) }}" title="Supprimer"><i class="fas fa-trash text-danger"></i></a>
-                    {#<a href="#" onclick="delModal('#delModal', '/admin/comment/delete/{{ comment.id }}')" class="delModal" data-mdb-toggle="modal" data-mdb-target="#delModal"><i class="fa fa-trash text-danger"></i></a>#}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Aucun commentaire pour le moment</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <tbody>
+            {% for comment in comments %}
+                <tr>
+                    <td>{{ comment.id }}</td>
+                    <td>
+                        <a href="{{ path('admin_user_show', {id: comment.author.id}) }}"><img src="{{ comment.author.avatar }}" width="30" class="rounded-circle me-1">{{ comment.author.nickname }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_event_show', {id: comment.event.id}) }}">{{ comment.event.title|capitalize }}</a>
+                    </td>
+                    <td>
+                        {{ comment.content }}
+                    </td>
+                    <td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
+                    <td>
+                        <a href="{{ path('admin_comment_show', {id: comment.id}) }}" title="Aperçu" class="me-2"><i class="fas fa-eye text-secondary"></i></a>
+                        <a href="{{ path('admin_comment_edit', {id: comment.id}) }}" title="Editer" class="me-2"><i class="fas fa-edit text-secondary"></i></a>
+                        <a href="{{ path('admin_comment_delete', {id: comment.id}) }}" title="Supprimer"><i class="fas fa-trash text-danger"></i></a>
+                        {#<a href="#" onclick="delModal('#delModal', '/admin/comment/delete/{{ comment.id }}')" class="delModal" data-mdb-toggle="modal" data-mdb-target="#delModal"><i class="fa fa-trash text-danger"></i></a>#}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucun commentaire pour le moment</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

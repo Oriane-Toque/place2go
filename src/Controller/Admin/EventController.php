@@ -2,8 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Data\SearchData;
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Form\SearchFormType;
 use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
@@ -23,10 +26,23 @@ class EventController extends AbstractController
     /**
      * @Route("/admin/events", name="admin_event_list", methods={"GET"})
      */
-    public function list(EventRepository $eventRepository): Response
+    public function list(EventRepository $eventRepository, Request $request, PaginatorInterface $paginator): Response
     {
         // Find all events
-        $events = $eventRepository->findAll();
+        //$events = $eventRepository->findAll();
+        $options = [];
+        if ($request->query->get('filterField'))
+        {
+            $options[$request->query->get('filterField')] = $request->query->get('filterValue');
+        }
+
+        $query = $eventRepository->findAllQuery($options);
+
+        $events = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
 
         return $this->render('admin/event/list.html.twig', [
             'events' => $events,

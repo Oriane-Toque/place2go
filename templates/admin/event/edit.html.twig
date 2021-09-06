@@ -6,6 +6,8 @@
 
 {% block stylesheets %}
 
+{{ parent() }}
+
 {# MAPBOX #}
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
@@ -27,60 +29,6 @@
         width: 100%;
     }
 </style>
-
-{% endblock %}
-
-{% block javascripts %}
-
-{# MAPBOX #}
-<script>
-    // TO MAKE THE MAP APPEAR YOU MUST
-    // ADD YOUR ACCESS TOKEN FROM
-    // https://account.mapbox.com
-    mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}],
-        zoom: 15.5
-    });
-
-    // Add the control to the map.
-    const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
-
-    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
-    const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
-    const eventAddress = document.querySelector('#event_address');
-    console.log(eventAddress);
-    let value;
-
-    input.addEventListener('change', handle);
-    input.addEventListener('keydown', handle);
-
-    input.value = eventAddress.value;
-
-    // Create a default Marker and add it to the map.
-    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}]).addTo(map);
-
-    function handle(e) {
-    let value = e.target.value;
-    console.log(value);
-    eventAddress.value = value;
-    }
-
-    //Listen for the result event from the geocoder.
-    //'result' event is triggered when the user makes a selection
-    geocoder.on('result', function(e) {
-        const lat = document.getElementById('event_lat');
-        const lon = document.getElementById('event_lon');
-
-        var latlong = e.result.geometry.coordinates;
-        lat.value = latlong[0];
-        lon.value = latlong[1];
-    });
-
-</script>
 
 {% endblock %}
 
@@ -115,5 +63,55 @@
     </div>
 
 </div>
+
+{# MAPBOX #}
+<script>
+    // TO MAKE THE MAP APPEAR YOU MUST
+    // ADD YOUR ACCESS TOKEN FROM
+    // https://account.mapbox.com
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia2V5Z2VuOSIsImEiOiJja3NrNWh6MGQwczZnMnBsNHhqYnRtMDUxIn0.dq2MMs1vSwGk8nMIj9NTxQ';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}],
+        zoom: 15.5
+    });
+
+    // Add the control to the map.
+    const geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl, countries: 'fr'});
+
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+    const input = document.querySelector('.mapboxgl-ctrl-geocoder--input');
+    const eventAddress = document.querySelector('#event_address');
+    console.log(eventAddress);
+    let value;
+
+    input.addEventListener('change', handle);
+    input.addEventListener('keydown', handle);
+
+    input.value = eventAddress.value;
+
+    // Create a default Marker and add it to the map.
+    const marker1 = new mapboxgl.Marker({color: 'red'}).setLngLat([{{ form.children.lat.vars.value }}, {{ form.children.lon.vars.value }}]).addTo(map);
+
+    function handle(e) {
+        let value = e.target.value;
+        console.log(value);
+        eventAddress.value = value;
+    }
+
+    //Listen for the result event from the geocoder.
+    //'result' event is triggered when the user makes a selection
+    geocoder.on('result', function(e) {
+        const lat = document.getElementById('event_lat');
+        const lon = document.getElementById('event_lon');
+
+        var latlong = e.result.geometry.coordinates;
+        lat.value = latlong[0];
+        lon.value = latlong[1];
+    });
+
+</script>
 
 {% endblock %}
