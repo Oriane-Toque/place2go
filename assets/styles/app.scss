@@ -2039,7 +2039,23 @@ form[name="search_friend"] {
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
-  margin-bottom: -6rem;
+  margin-bottom: -2rem;
+}
+
+.--forbidden {
+	position: relative;
+	background-image: url("../img/403.png");
+	height: 45vh;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: -2rem; 
+}
+
+.action-home {
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
 }
 
 .return__home {
@@ -2233,6 +2249,12 @@ form[name="search_friend"] {
     left: 50%;
     height: 500px;
   }
+
+	.--forbidden,
+	.error__page {
+		margin-bottom: -6rem;
+		height: 90vh;
+	}
 }
 
 @media screen and (min-width: 992px) {
