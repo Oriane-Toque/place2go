@@ -22,6 +22,23 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * Find All Query
+     */
+    public function findAllQuery(array $options = [])
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.isActive = 1');
+
+        foreach($options as $key => $value)
+        {
+            $qb->andWhere($key.' LIKE :value')
+            ->setParameter('value', "%{$value}%");
+        }
+        
+        return $qb->getQuery();
+    }
+
+    /**
      * Return the top six cities with events score (DESC)
      *
      * @return Array the top six cities
@@ -264,6 +281,31 @@ class EventRepository extends ServiceEntityRepository
         $query = $query->orderBy('RAND()')
             ->addOrderBy('e.event_date', 'DESC')
             ->setMaxResults(6);
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Return events data for graph
+     *
+     * @param Int $year (option) year
+     * @return Array events count by month
+     */
+    public function getCountEventsByMonth(int $year = null): array
+    {
+        $query = $this->createQueryBuilder('e')
+            ->select('MONTH(e.event_date) AS month, COUNT(e) AS count');
+
+        if ($year) {
+            $query->where('YEAR(e.event_date) = :year')
+                ->setParameter('year', $year);
+        }
+        else{
+            $query->where('YEAR(e.event_date) = YEAR(CURRENT_DATE())');
+        }
+
+        $query->groupBy('month');
+        $query->orderBy('month', 'ASC');
 
         return $query->getQuery()->getResult();
     }

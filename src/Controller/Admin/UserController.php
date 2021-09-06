@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
@@ -28,7 +30,7 @@ class UserController extends AbstractController
     public function list(UserRepository $userRepository): Response
     {
         // Find all users
-        $users = $userRepository->findAll();
+        $users = $userRepository->findUsersByRole('["ROLE_USER"]');
 
         return $this->render('admin/user/list.html.twig', [
             'users' => $users,
@@ -51,6 +53,32 @@ class UserController extends AbstractController
             'userLastEvents' => $userLastEvents,
             'userLastExits' => $userLastExits,
         ]);
+    }
+
+    /**
+     * @Route("/admin/users/{id<\d+>}/show/floating", name="admin_user_show_floating", methods={"GET"})
+     */
+    public function showFloating(User $user = null): Response
+    {    
+        // 404 ?
+        if ($user === null) {
+            return $this->json(["message" => "Utilisateur non trouvé"], Response::HTTP_NOT_FOUND);
+        }
+
+        // Age calcul
+        $age = date_diff(date_create(date_format($user->getBirthday(), 'Y-m-d')), date_create(date("Y-m-d")));
+
+        $data = [
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+            'nickname' => $user->getNickname(),
+            'avatar' => $user->getAvatar(),
+            'city' => $user->getCity(),
+            'birthday' => $age->format('%y').' ans',
+            'createdAt' => date_format($user->getCreatedAt(), 'd/m/Y'),
+        ];
+
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
     /**
