@@ -54,11 +54,11 @@ class EventController extends AbstractController
             $location = [1, 47];
         }
 
-        return $this->render('event/list.html.twig', [
+        return $this->renderForm('event/list.html.twig', [
             'events' => $events,
-            'form' => $form->createView(),
             'geojson' => $geoJson,
             'location' => $location,
+            'form' => $form,
         ]);
     }
 
@@ -98,8 +98,8 @@ class EventController extends AbstractController
             ]);
         }
 
-        return $this->render('event/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('event/create.html.twig', [
+            'form' => $form
         ]);
     }
 
@@ -131,8 +131,8 @@ class EventController extends AbstractController
             ]);
         }
 
-        return $this->render('event/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('event/edit.html.twig', [
+            'form' => $form,
         ]);
     }
 
@@ -174,10 +174,10 @@ class EventController extends AbstractController
             ]);
         }
 
-        return $this->render('event/show.html.twig', [
+        return $this->renderForm('event/show.html.twig', [
             'event' => $event,
             'comments' => $comment,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

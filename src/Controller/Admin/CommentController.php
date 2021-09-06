@@ -67,8 +67,8 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('admin_comment_list');
         }
 
-        return $this->render('admin/comment/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/comment/create.html.twig', [
+            'form' => $form
         ]);
     }
 
@@ -93,9 +93,9 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('admin_comment_list');
         }
 
-        return $this->render('admin/comment/edit.html.twig', [
+        return $this->renderForm('admin/comment/edit.html.twig', [
             'comment' => $comment,
-            'form' => $form->createView(),
+            'form' => $form
         ]);
     }
 

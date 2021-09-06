@@ -83,8 +83,8 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_category_list');
         }
 
-        return $this->render('admin/category/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/category/create.html.twig', [
+            'form' => $form
         ]);
     }
 
@@ -109,8 +109,8 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_category_list');
         }
 
-        return $this->render('admin/category/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/category/edit.html.twig', [
+            'form' => $form,
         ]);
         /*return $this->render('admin/category/_category_form.html.twig', [
             'form' => $form->createView(),

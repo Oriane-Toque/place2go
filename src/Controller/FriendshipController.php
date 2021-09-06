@@ -132,16 +132,16 @@ class FriendshipController extends AbstractController
 					
 					$friends = $ur->searchFriends($resultFriend);
 					
-					return $this->render('profile/friends_results.html.twig', [
-						'form' => $form->createView(),
+					return $this->renderForm('profile/friends_results.html.twig', [
+						'form' => $form,
 						'friends' => $friends,
 					]);
 				}
 
 				$friends = $ur->findAll();
 
-				return $this->render('profile/friends_results.html.twig', [
-					'form' => $form->createView(),
+				return $this->renderForm('profile/friends_results.html.twig', [
+					'form' => $form,
 					'friends' => $friends,
 				]);
 		}
