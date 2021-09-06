@@ -96,7 +96,7 @@ class FriendshipController extends AbstractController
     /**
      * Delete a friend from friendlist
      *
-     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete_action", methods={"GET"})
+     * @Route("/profile/friends/{id<\d+>}/delete", name="app_friend_delete_action", methods={"DELETE"})
      *
      * @param User $friend
      * @param FriendshipManager $friendshipManager

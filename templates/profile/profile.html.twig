@@ -32,12 +32,12 @@
 						</a>
 					</li>
 					{% endif %}
-					<li class="nav-item" role="navbar">
+					{# <li class="nav-item" role="navbar">
 						<a class="nav-link" id="saves-tab" href="#saves" role="tab"
 						data-mdb-toggle="pill" aria-controls="saves" aria-selected="false">
 						Recherches sauvegardés
 						</a>
-					</li>
+					</li> #}
 				</ul>
 				{# End pills navs #}
 
@@ -169,6 +169,7 @@
 						<section class="contentProfile__lastExits">
 							<h2>Prochaines sorties organisées par mes amis</h2>
 							{# Start Card #}
+							{% if friendsAuthor[0] is defined and friendsAuthor[0] is not empty %}
 							{% for events in friendsAuthor %}
 							{% for event in events %}
 								<div class="card mb-3">
@@ -202,10 +203,11 @@
 										</div>
 									</div>
 								</div>
+							{% endfor %}
+							{% endfor %}
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
-							{% endfor %}
-							{% endfor %}
+							{% endif %}
 						</section>
 
 						{# Next events participated by my friends #}
@@ -213,6 +215,7 @@
 							<h2>Prochaines sorties auxquelles participent mes amis</h2>
 
 							{# Start Card #}
+							{% if friendsAttendant[0] is defined and friendsAttendant[0] is not empty %}
 							{% for events in friendsAttendant %}
 							{% for event in events %}
 								<div class="card mb-3">
@@ -244,12 +247,14 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div>	
+							{% endfor %}
+							{% endfor %}
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
-							{% endfor %}
-							{% endfor %}
+							{% endif %}
 						</section>
+						
 
 					</div>
 					{% endif %}
