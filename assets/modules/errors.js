@@ -48,6 +48,20 @@ export const errors = {
 			const backHome = document.getElementById('error__win');
 
 			backHome.style.display="initial";
+
+			door.remove();
+			
+			// je crée mon dada
+			const dadaContainer = document.createElement('div');
+			dadaContainer.classList.add('avatar__error');
+			// je crée l'image dada
+			const dadaPicture = document.createElement('img');
+			dadaPicture.src = "/img/dada.png";
+
+			dadaContainer.append(dadaPicture);
+
+			document.querySelector('.container__error').append(dadaContainer);
+
 			// j'informe l'utilisateur qu'il a gagné
 			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 		} else {
