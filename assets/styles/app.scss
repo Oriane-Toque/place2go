@@ -2042,6 +2042,10 @@ form[name="search_friend"] {
   margin-bottom: -2rem;
 }
 
+.error__page.--error-game {
+	background-image: url("../img/fond-errors.png");
+}
+
 .--forbidden {
 	position: relative;
 	background-image: url("../img/403.png");
@@ -2070,6 +2074,22 @@ form[name="search_friend"] {
   width: 45%;
   margin: 0 auto;
   padding-top: 4rem;
+}
+
+.container__error.--error {
+	display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
+	gap: 1rem;
+  transform: translateY(20vh);
+}
+
+.--error > img {
+	min-width: auto;
+  min-height: auto;
+  overflow: hidden;
 }
 
 .error__text{
