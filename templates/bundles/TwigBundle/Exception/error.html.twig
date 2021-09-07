@@ -4,6 +4,16 @@
 
 {% block body %}
 
-
+	<section class="error__page --error-game">
+		<a id="error__win" class="return__home btn button-secondary " href="{{ path("app_home") }}">Retour à l'accueil</a>
+		<p class="error__message">On a perdu Dada, retrouve Dada pour nous et il t'indiquera le chemin de la Lumière !</p>
+		<div class="container__error --error">
+			<img src="{{ asset('img/door.png') }}" class="where_is_dada">
+			<img src="{{ asset('img/door.png') }}" class="where_is_dada">
+			<img src="{{ asset('img/door.png') }}" class="where_is_dada">
+			<img src="{{ asset('img/door.png') }}" class="where_is_dada">
+			<img src="{{ asset('img/door.png') }}" class="where_is_dada">
+		</div>
+	</section>
 
 {% endblock %}

@@ -2033,15 +2033,38 @@ form[name="search_friend"] {
 }
 
 /************************************************  404 PAGE */
-
 .error__page {
+	position: relative;
   background-image: url("../img/404.jpg");
   height: 90vh;
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
-  margin-bottom: -6rem;
+  margin-bottom: -2rem;
+}
+
+/************************************************ OTHER ERRORS  */
+.error__page.--error-game {
+	background-image: url("../img/fond-errors.png");
+	height: 62vh;
+}
+
+/************************************************ 403  */
+.--forbidden {
+	position: relative;
+	background-image: url("../img/403.png");
+	height: 45vh;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: -2rem; 
+}
+
+.action-home {
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
 }
 
 .return__home {
@@ -2058,6 +2081,33 @@ form[name="search_friend"] {
   padding-top: 4rem;
 }
 
+.container__error.--error {
+	display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
+	gap: 2rem;
+  transform: translateY(27vh);
+}
+
+.--error > img {
+	flex: 1;
+	min-width: auto;
+  min-height: auto;
+  overflow: hidden;
+	cursor: pointer;
+}
+
+.--error > .avatar__error {
+	align-self: center;
+  flex: 1;
+}
+
+.avatar__error > img {
+	width: 100%;
+}
+
 .error__text{
   margin-top: 0;
   margin-bottom: 1rem;
@@ -2067,6 +2117,22 @@ form[name="search_friend"] {
   text-align: center;
   text-shadow:1px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.error__message {
+	position: absolute;
+	text-align: center;
+	top: 2rem;
+	left: 1rem;
+	right: 1rem;
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+#error__win {
+	display: none;
+}
+
 /*****************************************************************/
 /************************************************  MEDIA QUERIES */
 /*****************************************************************/
@@ -2216,6 +2282,15 @@ form[name="search_friend"] {
   .contentProfile.--public .contentProfile__infos-details > h2 {
     margin-left: 2rem;
   }
+
+  /************************************************ ERROR PAGE */
+	.error__message {
+		font-size: 2rem;
+	}
+
+	.--error-game {
+		height: 84vh;
+	}
 }
 
 @media screen and (min-width: 700px) {
@@ -2235,6 +2310,16 @@ form[name="search_friend"] {
     left: 50%;
     height: 500px;
   }
+
+	.--forbidden,
+	.error__page {
+		margin-bottom: -6rem;
+		height: 90vh;
+	}
+
+	.--error-game {
+		height: 100vh!important;
+	}
 }
 
 @media screen and (min-width: 992px) {
@@ -2440,4 +2525,8 @@ form[name="search_friend"] {
   .contentProfile.--public {
     margin: 2rem 15rem;
   }
+
+	.--error-game {
+		height: 130vh!important;
+	}
 }
