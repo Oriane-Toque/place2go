@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
      * @Route("/admin/categories", name="admin_category_list", methods={"GET"})
      *
      * @param CategoryRepository $categoryRepository
-     * 
+     *
      * @return Response
      */
     public function list(CategoryRepository $categoryRepository): Response
@@ -37,9 +37,9 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/{id<\d+>}/show", name="admin_category_show", methods={"GET"})
-     * 
+     *
      * @param Category $category
-     * 
+     *
      * @return Response
      */
     public function show(Category $category): Response
@@ -51,10 +51,10 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/create", name="admin_category_create", methods={"GET", "POST"})
-     * 
+     *
      * @param Request $request
      * @param FileUploader $fileUploader
-     * 
+     *
      * @return Response
      */
     public function create(Request $request, FileUploader $fileUploader): Response
@@ -100,10 +100,10 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/{id<\d+>}/edit", name="admin_category_edit", methods={"GET", "POST"})
-     * 
+     *
      * @param Category $category
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function edit(Category $category, Request $request): Response
@@ -131,9 +131,9 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/{id<\d+>}/delete", name="admin_category_delete", methods={"GET"})
-     * 
+     *
      * @param Category $category
-     * 
+     *
      * @return Response
      */
     public function delete(Category $category): Response
