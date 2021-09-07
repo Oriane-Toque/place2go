@@ -1175,6 +1175,14 @@ form[name="search_friend"] {
   margin: 0;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: var(--secondary-color);
+}
+.nav-pills .nav-link:hover:not(.active) {
+  background-color: #eee;
+}
+
 .dashAction.--desktop {
   display: none;
 }
