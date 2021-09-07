@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Repository\FriendshipRepository;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
+use App\Repository\FriendshipRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -30,7 +29,7 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('USER_ACCESS', $user, "Impossible d'accéder à ce profil");
 
         // Check if friendship exists
-		$friendship = $friendshipManager->get($this->getUser(), $user);
+        $friendship = $friendshipManager->get($this->getUser(), $user);
 
         return $this->render('profile/show.html.twig', [
             "user" => $user,
@@ -61,16 +60,15 @@ class ProfileController extends AbstractController
         $attendantLastThreeExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
         // My friends last events
-		$friends = $friendshipRepository->findAllFriends($user);
+        $friends = $friendshipRepository->findAllFriends($user);
 
         $friendsAuthor = [];
         $friendsAttendant = [];
 
-		foreach($friends as $friend)
-		{
-			$friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
-			$friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
-		}
+        foreach ($friends as $friend) {
+            $friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
+            $friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
+        }
 
         return $this->render('profile/profile.html.twig', [
             "user" => $user,
@@ -78,7 +76,7 @@ class ProfileController extends AbstractController
             "attendantLastExits" => $attendantLastThreeExits,
             "friends" => $friends,
             "friendsAuthor" => $friendsAuthor,
-			"friendsAttendant" => $friendsAttendant
+            "friendsAttendant" => $friendsAttendant
         ]);
     }
 

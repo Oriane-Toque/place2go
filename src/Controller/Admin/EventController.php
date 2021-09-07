@@ -2,35 +2,37 @@
 
 namespace App\Controller\Admin;
 
-use App\Data\SearchData;
 use App\Entity\Event;
 use App\Form\EventType;
-use App\Form\SearchFormType;
 use App\Repository\AttendantRepository;
 use App\Repository\EventRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Require ROLE_ADMIN for *every* controller methods.
  * @IsGranted("ROLE_ADMIN")
  */
 class EventController extends AbstractController
 {
     /**
      * @Route("/admin/events", name="admin_event_list", methods={"GET"})
+     *
+     * @param EventRepository $eventRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     *
+     * @return Response
      */
     public function list(EventRepository $eventRepository, Request $request, PaginatorInterface $paginator): Response
     {
         // Find all events
         //$events = $eventRepository->findAll();
         $options = [];
-        if ($request->query->get('filterField'))
-        {
+        if ($request->query->get('filterField')) {
             $options[$request->query->get('filterField')] = $request->query->get('filterValue');
         }
 
@@ -49,6 +51,11 @@ class EventController extends AbstractController
 
     /**
      * @Route("/admin/events/{id<\d+>}/show", name="admin_event_show", methods={"GET"})
+     *
+     * @param Event $event
+     * @param AttendantRepository $attendantRepository
+     *
+     * @return Response
      */
     public function show(Event $event, AttendantRepository $attendantRepository): Response
     {
@@ -63,6 +70,10 @@ class EventController extends AbstractController
 
     /**
      * @Route("/admin/events/create", name="admin_event_create", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -96,6 +107,11 @@ class EventController extends AbstractController
 
     /**
      * @Route("/admin/events/{id<\d+>}/edit", name="admin_event_edit", methods={"GET", "POST"})
+     *
+     * @param Event $event
+     * @param Request $request
+     *
+     * @return Response
      */
     public function edit(Event $event, Request $request): Response
     {
@@ -122,6 +138,10 @@ class EventController extends AbstractController
 
     /**
      * @Route("/admin/events/{id<\d+>}/delete", name="admin_event_delete", methods={"GET"})
+     *
+     * @param Event $event
+     *
+     * @return Response
      */
     public function delete(Event $event): Response
     {
@@ -138,6 +158,10 @@ class EventController extends AbstractController
 
     /**
      * @Route("/admin/events/{id<\d+>}/desactive", name="admin_event_desactive", methods={"GET"})
+     *
+     * @param Event $event
+     *
+     * @return Response
      */
     public function desactive(Event $event): Response
     {
@@ -148,14 +172,15 @@ class EventController extends AbstractController
         // No persist on edit
         $entityManager->flush();
 
-        // Flash message
-        //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été désactivé !');
-
         return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
     }
 
     /**
      * @Route("/admin/events/{id<\d+>}/active", name="admin_event_active", methods={"GET"})
+     *
+     * @param Event $event
+     *
+     * @return Response
      */
     public function active(Event $event): Response
     {
@@ -165,9 +190,6 @@ class EventController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         // No persist on edit
         $entityManager->flush();
-
-        // Flash message
-        //$this->addFlash('success', 'Sortie '. $event->getId() . ' a été activé !');
 
         return $this->redirectToRoute('admin_event_show', ['id' => $event->getId()]);
     }
