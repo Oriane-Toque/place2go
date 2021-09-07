@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTimeZone;
 use App\Entity\Event;
 use DateTimeImmutable;
 use App\Entity\Comment;
@@ -12,7 +13,6 @@ use App\Services\GeoJson;
 use App\Form\SearchFormType;
 use App\Repository\EventRepository;
 use App\Services\FriendshipManager;
-use DateTimeZone;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

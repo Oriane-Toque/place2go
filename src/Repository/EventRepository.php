@@ -29,8 +29,7 @@ class EventRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('e')
             ->where('e.isActive = 1');
 
-        foreach($options as $key => $value)
-        {
+        foreach ($options as $key => $value) {
             $qb->andWhere($key.' LIKE :value')
             ->setParameter('value', "%{$value}%");
         }
@@ -299,8 +298,7 @@ class EventRepository extends ServiceEntityRepository
         if ($year) {
             $query->where('YEAR(e.event_date) = :year')
                 ->setParameter('year', $year);
-        }
-        else{
+        } else {
             $query->where('YEAR(e.event_date) = YEAR(CURRENT_DATE())');
         }
 

@@ -85,21 +85,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 
-		/**
-		 * Return search results : all friends by keywords
-		 *
-		 * @param string $friend
-		 */
-		public function searchFriends(string $friend = null)
-		{
-			return $this->createQueryBuilder('u')
-				->where('u.nickname LIKE :friend')
-				->orWhere('u.firstname LIKE :friend')
-				->orWhere('u.lastname LIKE :friend')
-				->setParameter(':friend', $friend.'%')
-				->getQuery()
-				->getResult();
-		}
+    /**
+     * Return search results : all friends by keywords
+     *
+     * @param string $friend
+     */
+    public function searchFriends(string $friend = null)
+    {
+        return $this->createQueryBuilder('u')
+                ->where('u.nickname LIKE :friend')
+                ->orWhere('u.firstname LIKE :friend')
+                ->orWhere('u.lastname LIKE :friend')
+                ->setParameter(':friend', $friend.'%')
+                ->getQuery()
+                ->getResult();
+    }
 
 
     // /**

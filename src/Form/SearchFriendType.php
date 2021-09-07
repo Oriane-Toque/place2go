@@ -14,8 +14,8 @@ class SearchFriendType extends AbstractType
     {
         $builder
             ->add('searchfriends', SearchType::class, [
-							'label' => false,
-						])
+                            'label' => false,
+                        ])
         ;
     }
 

@@ -4,25 +4,24 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
 use App\Services\FileUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Require ROLE_ADMIN for *every* controller method in this class.
- *
  * @IsGranted("ROLE_ADMIN")
  */
-
 class CategoryController extends AbstractController
 {
     /**
      * @Route("/admin/categories", name="admin_category_list", methods={"GET"})
+     * 
+     * 
      */
     public function list(CategoryRepository $categoryRepository): Response
     {

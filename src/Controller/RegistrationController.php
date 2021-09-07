@@ -26,6 +26,11 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/register", name="app_register")
+     * 
+     * @param Request $request
+     * @param UserPasswordHasherInterface $passwordHasher
+     * 
+     * @return Response
      */
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -75,6 +80,11 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/verify/email", name="app_verify_email")
+     * 
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * 
+     * @return Response
      */
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {

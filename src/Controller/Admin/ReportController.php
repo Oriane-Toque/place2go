@@ -5,12 +5,16 @@ namespace App\Controller\Admin;
 use App\Entity\Report;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @isGranted('ROLE_ADMIN')
+ */
 class ReportController extends AbstractController
 {
 
@@ -105,11 +109,10 @@ class ReportController extends AbstractController
      *
      * @param Report $report
      * @param EntityManagerInterface $em
-     * @param Request $request
      *
      * @return RedirectResponse
      */
-    public function delete(Report $report, EntityManagerInterface $em, Request $request): RedirectResponse
+    public function delete(Report $report, EntityManagerInterface $em): RedirectResponse
     {
         $em->remove($report);
         $em->flush();

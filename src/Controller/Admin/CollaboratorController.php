@@ -15,15 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * Require ROLE_ADMIN for *every* controller method in this class.
- *
  * @IsGranted("ROLE_ADMIN")
  */
-
 class CollaboratorController extends AbstractController
 {
     /**
      * @Route("/admin/collaborators", name="admin_collaborator_list", methods={"GET"})
+     * 
+     * @param UserRepository $userRepository
+     * 
+     * @return Response
      */
     public function list(UserRepository $userRepository): Response
     {
@@ -37,6 +38,11 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/show", name="admin_collaborator_show", methods={"GET"})
+     * 
+     * @param User $user
+     * @param EventRepository $eventRepository
+     * 
+     * @return Response
      */
     public function show(User $user, EventRepository $eventRepository): Response
     {
@@ -55,6 +61,11 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/create", name="admin_collaborator_create", methods={"GET", "POST"})
+     * 
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * 
+     * @return Response
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
@@ -100,6 +111,11 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/edit", name="admin_collaborator_edit", methods={"GET", "POST"})
+     * 
+     * @param User $user
+     * @param Request $request 
+     * 
+     * @return Response
      */
     public function edit(User $user, Request $request): Response
     {
@@ -126,6 +142,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/delete", name="admin_collaborator_delete", methods={"GET"})
+     * 
+     * @param User $user
+     * 
+     * @return Response
      */
     public function delete(User $user): Response
     {
@@ -142,6 +162,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/desactive", name="admin_collaborator_desactive", methods={"GET"})
+     * 
+     * @param User $user
+     * 
+     * @return Response
      */
     public function desactive(User $user): Response
     {
@@ -160,6 +184,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaboratorss/{id<\d+>}/active", name="admin_collaborator_active", methods={"GET"})
+     * 
+     * @param User $user
+     * 
+     * @return Response
      */
     public function active(User $user): Response
     {
@@ -169,9 +197,6 @@ class CollaboratorController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         // No persist on edit
         $entityManager->flush();
-
-        // Flash message
-        //$this->addFlash('success', 'Utilisateur '. $user->getId() . ' a été activé !');
 
         return $this->redirectToRoute('admin_collaborator_show', ['id' => $user->getId()]);
     }
