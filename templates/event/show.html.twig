@@ -42,29 +42,30 @@
 
 						<div class="show__card_content">
 							<div class="show__card_content-details">
-								<div class="show__card_content-author">
-									<i class="fas fa-caret-right"></i>
-									<a href="{{ path('app_profile_show', {id: event.author.id}) }}" class="">{{ event.author.nickname }}</a>
-								</div>
 
-								<div class="show__card_content-attendants">
-									<i class="fas fa-caret-right"></i>
-									<span class="">Nombre de Participants :</span>
-									{{ event.attendants|length }}
-									/
-									{{ event.maxAttendants }}
-								</div>
+								<hr>
 
-								<div class="show__card_content-date ">
-									<i class="fas fa-caret-right"></i>
-									Le
-									{{ event.eventDate | format_date('none', 'd MMMM Y à H:mm', null, 'gregorian', 'fr')}}
-								</div>
+								<ul class="fa-ul ms-4 list-unstyled">
+									<li>
+										<i class="fa-li fas fa-user"></i>
+										<a href="{{ path('app_profile_show', {id: event.author.id}) }}"><span class="show__card_content-author">{{ event.author.nickname }}</span></a>
+									</li>
+									<li>
+										<i class="fa-li fas fa-users"></i>
+										<span class="show__card_content-attendants">Nombre de Participants : {{ event.attendants|length }} / {{ event.maxAttendants }}</span>
+									</li>
+									<li>
+										<i class="fa-li fas fa-calendar-alt"></i> 
+										<span class="show__card_content-date">Le {{ event.eventDate | format_date('none', 'd MMMM Y à H:mm', null, 'gregorian', 'fr')}}</span>
+									</li>
+									<li>
+										<i class="fa-li fas fa-map-marker-alt"></i>
+										<span class="show__card_address">{{ event.address }}</span>
+									</li>
+								</ul>
 
-								<div class="show__card_address">
-									<i class="fas fa-caret-right"></i>
-									{{ event.address }}
-								</div>
+								<hr>
+
 							</div>
 
 							<div class="show__card_content-description">
