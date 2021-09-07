@@ -11,8 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Require ROLE_ADMIN for *every* controller method in this class.
- * @IsGranted('ROLE_ADMIN')
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends AbstractController
 {
@@ -22,7 +21,7 @@ class AdminController extends AbstractController
      * @param EventRegistry $eventRepository
      * @param UserRepository $userRepository
      *
-     * @@return Response
+     * @return Response
      */
     public function home(EventRepository $eventRepository, UserRepository $userRepository): Response
     {
@@ -60,11 +59,10 @@ class AdminController extends AbstractController
      * @Route("/admin/export_data", name="admin_export_data_csv")
      *
      * @param EventRepository $eventRepository
-     * @param UserRepository $userRepository
      *
      * @return Response Content-type text/csv
      */
-    public function exportDataCsvAction(EventRepository $eventRepository, UserRepository $userRepository): Response
+    public function exportDataCsvAction(EventRepository $eventRepository): Response
     {
         // Get events count by month
         $events = $eventRepository->getCountEventsByMonth();
