@@ -8,6 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import "./styles/app.scss";
 import "./modules/avatar.js";
+import "./modules/errors.js";
 import "./modules/vanilla-tilt.min.js";
 
 // start the Stimulus application

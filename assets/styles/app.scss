@@ -2031,8 +2031,8 @@ form[name="search_friend"] {
 }
 
 /************************************************  404 PAGE */
-
 .error__page {
+	position: relative;
   background-image: url("../img/404.jpg");
   height: 90vh;
   width: 100%;
@@ -2042,10 +2042,12 @@ form[name="search_friend"] {
   margin-bottom: -2rem;
 }
 
+/************************************************ OTHER ERRORS  */
 .error__page.--error-game {
 	background-image: url("../img/fond-errors.png");
 }
 
+/************************************************ 403  */
 .--forbidden {
 	position: relative;
 	background-image: url("../img/403.png");
@@ -2083,13 +2085,14 @@ form[name="search_friend"] {
   width: 100%;
   padding: 0 1rem;
 	gap: 1rem;
-  transform: translateY(20vh);
+  transform: translateY(30vh);
 }
 
 .--error > img {
 	min-width: auto;
   min-height: auto;
   overflow: hidden;
+	cursor: pointer;
 }
 
 .error__text{
@@ -2101,6 +2104,22 @@ form[name="search_friend"] {
   text-align: center;
   text-shadow:1px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.error__message {
+	position: absolute;
+	text-align: center;
+	top: 2rem;
+	left: 1rem;
+	right: 1rem;
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+#error__win {
+	display: none;
+}
+
 /*****************************************************************/
 /************************************************  MEDIA QUERIES */
 /*****************************************************************/
@@ -2250,6 +2269,11 @@ form[name="search_friend"] {
   .contentProfile.--public .contentProfile__infos-details > h2 {
     margin-left: 2rem;
   }
+
+  /************************************************ ERROR PAGE */
+	.error__message {
+		font-size: 2rem;
+	}
 }
 
 @media screen and (min-width: 700px) {
