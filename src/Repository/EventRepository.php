@@ -227,7 +227,6 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
-
         $query = $query
             // sql query to get event of the day
             ->andWhere('e.event_date > CURRENT_DATE()')

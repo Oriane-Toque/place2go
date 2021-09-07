@@ -34,6 +34,7 @@ class FriendshipRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+        
         foreach ($results as $result) {
             $friends[] = $result->getReceiver();
         }
@@ -71,33 +72,4 @@ class FriendshipRepository extends ServiceEntityRepository
         ;
         return (int)$result;
     }
-
-    // /**
-    //  * @return Friendship[] Returns an array of Friendship objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Friendship
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

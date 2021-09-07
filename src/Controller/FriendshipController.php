@@ -46,7 +46,7 @@ class FriendshipController extends AbstractController
             $friendshipManager->create($user, $friend);
 
             //$this->addFlash('success', 'Votre demande a bien été envoyé !');
-            $this->addFlash('success', $friend->getNickname().' a été ajouté à vos amis !');
+            $this->addFlash('success', $friend->getNickname() . ' a été ajouté à vos amis !');
         } elseif ($friendship->getStatus() == 1) {
             $this->addFlash('success', 'Vous êtes déjà ami avec ' . $friend->getNickname() . ' !');
         } else {
@@ -104,7 +104,7 @@ class FriendshipController extends AbstractController
      *
      * @return Response
      *
-    */
+     */
     public function deleteFriendAction(User $friend, FriendshipManager $friendshipManager, Request $request): Response
     {
         // Get current User
@@ -122,26 +122,26 @@ class FriendshipController extends AbstractController
      */
     public function searchNewFriends(Request $request, UserRepository $ur)
     {
+        $friends = $ur->searchFriends(null, $this->getUser());
+
         $form = $this->createForm(SearchFriendType::class);
 
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $resultFriend = $form->get('searchfriends')->getData();
-                    
-            $friends = $ur->searchFriends($resultFriend);
-                    
+
+            $friends = $ur->searchFriends($resultFriend, $this->getUser());
+
             return $this->renderForm('profile/friends_results.html.twig', [
-                        'form' => $form,
-                        'friends' => $friends,
-                    ]);
+                'form' => $form,
+                'friends' => $friends,
+            ]);
         }
 
-        $friends = $ur->findAll();
-
         return $this->renderForm('profile/friends_results.html.twig', [
-                    'form' => $form,
-                    'friends' => $friends,
-                ]);
+            'form' => $form,
+            'friends' => $friends,
+        ]);
     }
 }

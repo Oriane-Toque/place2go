@@ -2518,8 +2518,7 @@ form[name="search_friend"] {
 
   /************************************************ PROFILE  */
   .dashAction.--desktop .dashAction__item:last-child .card-body {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    columns: 2;
   }
 
   .contentProfile.--public {
