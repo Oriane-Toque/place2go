@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
  * @IsGranted('ROLE_ADMIN')
@@ -19,10 +18,10 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin_home")
-     * 
+     *
      * @param EventRegistry $eventRepository
      * @param UserRepository $userRepository
-     * 
+     *
      * @@return Response
      */
     public function home(EventRepository $eventRepository, UserRepository $userRepository): Response

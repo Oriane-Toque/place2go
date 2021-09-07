@@ -20,8 +20,8 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/admin/categories", name="admin_category_list", methods={"GET"})
-     * 
-     * 
+     *
+     *
      */
     public function list(CategoryRepository $categoryRepository): Response
     {

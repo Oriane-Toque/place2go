@@ -18,9 +18,9 @@ class CommentController extends AbstractController
 {
     /**
      * @Route("/admin/comments", name="admin_comment_list", methods={"GET"})
-     * 
+     *
      * @param CommentRpository $commentRepository
-     * 
+     *
      * @return Response
      */
     public function list(CommentRepository $commentRepository): Response
@@ -35,9 +35,9 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/admin/comments/{id<\d+>}/show", name="admin_comment_show", methods={"GET"})
-     * 
+     *
      * @param Comment $comment
-     * 
+     *
      * @return Response
      */
     public function show(Comment $comment): Response
@@ -49,9 +49,9 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/admin/comments/create", name="admin_comment_create", methods={"GET", "POST"})
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function create(Request $request): Response
@@ -83,11 +83,11 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/admin/comments/{id<\d+>}/edit", name="admin_comment_edit", methods={"GET", "POST"})
-     * 
+     *
      * @param Comment $comment
      * @param Request $request
-     * 
-     * @return Response 
+     *
+     * @return Response
      */
     public function edit(Comment $comment, Request $request): Response
     {
@@ -115,9 +115,9 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/admin/comments/{id<\d+>}/delete", name="admin_comment_delete", methods={"GET"})
-     * 
+     *
      * @param Comment $comment
-     * 
+     *
      * @return Response
      */
     public function delete(Comment $comment): Response

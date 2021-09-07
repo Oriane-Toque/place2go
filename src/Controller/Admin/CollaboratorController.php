@@ -21,9 +21,9 @@ class CollaboratorController extends AbstractController
 {
     /**
      * @Route("/admin/collaborators", name="admin_collaborator_list", methods={"GET"})
-     * 
+     *
      * @param UserRepository $userRepository
-     * 
+     *
      * @return Response
      */
     public function list(UserRepository $userRepository): Response
@@ -38,10 +38,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/show", name="admin_collaborator_show", methods={"GET"})
-     * 
+     *
      * @param User $user
      * @param EventRepository $eventRepository
-     * 
+     *
      * @return Response
      */
     public function show(User $user, EventRepository $eventRepository): Response
@@ -61,10 +61,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/create", name="admin_collaborator_create", methods={"GET", "POST"})
-     * 
+     *
      * @param Request $request
      * @param FileUploader $fileUploader
-     * 
+     *
      * @return Response
      */
     public function create(Request $request, FileUploader $fileUploader): Response
@@ -111,10 +111,10 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/edit", name="admin_collaborator_edit", methods={"GET", "POST"})
-     * 
+     *
      * @param User $user
-     * @param Request $request 
-     * 
+     * @param Request $request
+     *
      * @return Response
      */
     public function edit(User $user, Request $request): Response
@@ -142,9 +142,9 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/delete", name="admin_collaborator_delete", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function delete(User $user): Response
@@ -162,9 +162,9 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaborators/{id<\d+>}/desactive", name="admin_collaborator_desactive", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function desactive(User $user): Response
@@ -184,9 +184,9 @@ class CollaboratorController extends AbstractController
 
     /**
      * @Route("/admin/collaboratorss/{id<\d+>}/active", name="admin_collaborator_active", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function active(User $user): Response

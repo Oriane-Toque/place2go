@@ -115,34 +115,33 @@ class FriendshipController extends AbstractController
         return new JsonResponse($delete);
     }
 
-		/**
-		 * Rechercher de nouveaux ami(e)s
-		 *
-		 * @Route("/profile/friends/search", name="app_friend_search", methods={"GET", "POST"})
-		 */
-		public function searchNewFriends(Request $request, UserRepository $ur) {
+    /**
+     * Rechercher de nouveaux ami(e)s
+     *
+     * @Route("/profile/friends/search", name="app_friend_search", methods={"GET", "POST"})
+     */
+    public function searchNewFriends(Request $request, UserRepository $ur)
+    {
+        $form = $this->createForm(SearchFriendType::class);
 
-			$form = $this->createForm(SearchFriendType::class);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $resultFriend = $form->get('searchfriends')->getData();
+                    
+            $friends = $ur->searchFriends($resultFriend);
+                    
+            return $this->renderForm('profile/friends_results.html.twig', [
+                        'form' => $form,
+                        'friends' => $friends,
+                    ]);
+        }
 
-				$form->handleRequest($request);
-	
-				if($form->isSubmitted() && $form->isValid()) {
-	
-					$resultFriend = $form->get('searchfriends')->getData();
-					
-					$friends = $ur->searchFriends($resultFriend);
-					
-					return $this->renderForm('profile/friends_results.html.twig', [
-						'form' => $form,
-						'friends' => $friends,
-					]);
-				}
+        $friends = $ur->findAll();
 
-				$friends = $ur->findAll();
-
-				return $this->renderForm('profile/friends_results.html.twig', [
-					'form' => $form,
-					'friends' => $friends,
-				]);
-		}
+        return $this->renderForm('profile/friends_results.html.twig', [
+                    'form' => $form,
+                    'friends' => $friends,
+                ]);
+    }
 }

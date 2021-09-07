@@ -22,9 +22,9 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/admin/users", name="admin_user_list", methods={"GET"})
-     * 
+     *
      * @param UserRepository $userRepository
-     * 
+     *
      * @return Response
      */
     public function list(UserRepository $userRepository): Response
@@ -39,10 +39,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/show", name="admin_user_show", methods={"GET"})
-     * 
+     *
      * @param User $user
      * @param EventRepository $eventRepository
-     * 
+     *
      * @return Response
      */
     public function show(User $user, EventRepository $eventRepository): Response
@@ -62,9 +62,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/show/floating", name="admin_user_show_floating", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function showFloating(User $user = null): Response
@@ -92,10 +92,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/create", name="admin_user_create", methods={"GET", "POST"})
-     * 
+     *
      * @param Request $request
      * @param FileUploader $fileUploader
-     * 
+     *
      * @return Response
      */
     public function create(Request $request, FileUploader $fileUploader): Response
@@ -142,10 +142,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/edit", name="admin_user_edit", methods={"GET", "POST"})
-     * 
+     *
      * @param User $user
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function edit(User $user, Request $request): Response
@@ -173,9 +173,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/delete", name="admin_user_delete", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function delete(User $user): Response
@@ -193,9 +193,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/desactive", name="admin_user_desactive", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function desactive(User $user): Response
@@ -212,9 +212,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/users/{id<\d+>}/active", name="admin_user_active", methods={"GET"})
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Response
      */
     public function active(User $user): Response
