@@ -11,13 +11,19 @@ export const errors = {
 
 		// je mélange mon tableau
 		doors = errors.shuffle(doors);
+
+		var dadaFound = 0;
 		
+		console.log(dadaFound);
 		let counter = 1;
 		// je boucle dessus et j'attribue leur dataset
 		// puis j'applique un écouteur d'évènement au clic
-		for (const door of doors) {
+		if(dadaFound === 0) {
+			for (const door of doors) {
 			door.dataset.dada = counter++;
+
 			door.addEventListener('click', errors.handleDadaIsHere);
+			}
 		}
 	},
 
@@ -36,7 +42,6 @@ export const errors = {
 		const dataDoor = door.dataset.dada;
 
 		let dada = Math.floor(Math.random()*(6 - 1) + 1);
-		console.log(dada);
 
 		// je récupère la balise contenant le message
 		const message = document.querySelector('.error__message');
@@ -47,13 +52,16 @@ export const errors = {
 			const backHome = document.getElementById('error__win');
 
 			backHome.style.display="initial";
-		
+
 			// j'insère l'image dada
 			door.src = "/img/dada.png";
 			door.classList.add("avatar__game");
 
 			// j'informe l'utilisateur qu'il a gagné
 			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
+		
+			dadaFound = 1;
+
 		} else {
 			// sinon pas de chance ce n'était pas la bonne
 			message.textContent = errors.randomMessage();
