@@ -1,6 +1,7 @@
 export const errors = {
 
-	dadaFound: 0,
+	dadaFound: false,
+	dada: Math.floor(Math.random() * (6 - 1) + 1),
 
 	init: function () {
 
@@ -19,7 +20,7 @@ export const errors = {
 		let counter = 1;
 
 		// si pas fin du jeu
-		if (errors.dadaFound == 0) {
+		if (errors.dadaFound == false) {
 			// je boucle sur mes portes
 			for (const door of doors) {
 				// je leur attribue un dataset
@@ -28,7 +29,9 @@ export const errors = {
 				// et un écouteur d'évènement
 				door.addEventListener('click', errors.handleDadaIsHere);
 			}
-		} else {
+		} 
+
+		if (errors.dadaFound == true) {
 			for (const door of doors) {
 
 				// je récupère la balise contenant le message
@@ -55,11 +58,10 @@ export const errors = {
 		// je récupère son dataset
 		const dataDoor = door.dataset.dada;
 
-		let dada = Math.floor(Math.random() * (6 - 1) + 1);
-
 		// je check si c'est bien dada
-		if (errors.isDada(dataDoor, dada)) {
-			errors.dadaFound = 1;
+		if (errors.isDada(dataDoor)) {
+
+			errors.dadaFound = true;
 			// je récupère mon bouton pour sortir de la page d'erreur
 			const backHome = document.getElementById('error__win');
 
@@ -74,7 +76,9 @@ export const errors = {
 			// j'informe l'utilisateur qu'il a gagné
 			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 
-		} else {
+		} 
+		
+		if(!errors.isDada(dataDoor)){
 			// je récupère la balise contenant le message
 			const message = document.querySelector('.error__message');
 			// sinon pas de chance ce n'était pas la bonne
@@ -89,9 +93,9 @@ export const errors = {
 	 * @param {*} dataDoor 
 	 * @returns Bool
 	 */
-	isDada: function (dataDoor, dada) {
+	isDada: function (dataDoor) {
 
-		if (dada == dataDoor) {
+		if (errors.dada == dataDoor) {
 			return true;
 		} else {
 			return false;
