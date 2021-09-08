@@ -2,7 +2,9 @@ export const errors = {
 
 	dadaFound: 0,
 
-	init: function() {
+	init: function () {
+
+		console.log(errors.dadaFound);
 
 		// MISE EN PLACE DU JEU, ON CACHE DADA DE MANIERE ALEATOIRE
 		// je récupère toutes les portes
@@ -28,14 +30,14 @@ export const errors = {
 			}
 		} else {
 			for (const door of doors) {
-	
+
+				// je récupère la balise contenant le message
+				const message = document.querySelector('.error__message');
+				// j'informe l'utilisateur qu'il a gagné
+				message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
+
 				door.removeEventListener('click', errors.handleDadaIsHere);
 			}
-
-			// je récupère la balise contenant le message
-			const message = document.querySelector('.error__message');
-			// j'informe l'utilisateur qu'il a gagné
-			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 		}
 	},
 
@@ -45,7 +47,7 @@ export const errors = {
 	 * @param {*} evt
 	 * @returns Void
 	 */
-	handleDadaIsHere: function(evt) {
+	handleDadaIsHere: function (evt) {
 
 		// je récupère la porte sélectionnée
 		const door = evt.currentTarget;
@@ -53,18 +55,24 @@ export const errors = {
 		// je récupère son dataset
 		const dataDoor = door.dataset.dada;
 
-		let dada = Math.floor(Math.random()*(6 - 1) + 1);
+		let dada = Math.floor(Math.random() * (6 - 1) + 1);
 
 		// je check si c'est bien dada
-		if(errors.isDada(dataDoor, dada)) {
+		if (errors.isDada(dataDoor, dada)) {
+			errors.dadaFound = 1;
 			// je récupère mon bouton pour sortir de la page d'erreur
 			const backHome = document.getElementById('error__win');
 
-			backHome.style.display="initial";
+			backHome.style.display = "initial";
 
 			// j'insère l'image dada
 			door.src = "/img/dada.png";
 			door.classList.add("avatar__game");
+
+			// je récupère la balise contenant le message
+			const message = document.querySelector('.error__message');
+			// j'informe l'utilisateur qu'il a gagné
+			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 
 		} else {
 			// je récupère la balise contenant le message
@@ -72,7 +80,7 @@ export const errors = {
 			// sinon pas de chance ce n'était pas la bonne
 			message.textContent = errors.randomMessage();
 			errors.init();
-		}	
+		}
 	},
 
 	/**
@@ -81,17 +89,16 @@ export const errors = {
 	 * @param {*} dataDoor 
 	 * @returns Bool
 	 */
-	isDada: function(dataDoor, dada) {
+	isDada: function (dataDoor, dada) {
 
-		if(dada == dataDoor) {
-			errors.dadaFound = 1;
+		if (dada == dataDoor) {
 			return true;
 		} else {
 			return false;
 		}
 	},
 
-	randomMessage: function() {
+	randomMessage: function () {
 
 		const dadaMessage = [
 			"Noooon !!! Dada, n'est pas là, attention il vient de changer de cachette ! Quel vicieux !",
@@ -100,7 +107,7 @@ export const errors = {
 			"Par mes Ancêtres, quels calamités, je t'abandonne pour les rejoindre, tu me fais honte !",
 		];
 
-		return dadaMessage[Math.floor(Math.random()*4)];
+		return dadaMessage[Math.floor(Math.random() * 4)];
 	},
 
 	/**
@@ -109,7 +116,7 @@ export const errors = {
 	 * @param {*} array 
 	 * @returns Array
 	 */
-	shuffle: function(array) {
+	shuffle: function (array) {
 
 		return array.sort(() => Math.random() - 0.5);
 	},
