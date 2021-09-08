@@ -1,5 +1,7 @@
 export const errors = {
 
+	dadaFound: 0,
+
 	init: function() {
 
 		// MISE EN PLACE DU JEU, ON CACHE DADA DE MANIERE ALEATOIRE
@@ -12,18 +14,28 @@ export const errors = {
 		// je mélange mon tableau
 		doors = errors.shuffle(doors);
 
-		var dadaFound = 0;
-		
-		console.log(dadaFound);
 		let counter = 1;
-		// je boucle dessus et j'attribue leur dataset
-		// puis j'applique un écouteur d'évènement au clic
-		if(dadaFound === 0) {
-			for (const door of doors) {
-			door.dataset.dada = counter++;
 
-			door.addEventListener('click', errors.handleDadaIsHere);
+		// si pas fin du jeu
+		if (errors.dadaFound == 0) {
+			// je boucle sur mes portes
+			for (const door of doors) {
+				// je leur attribue un dataset
+				door.dataset.dada = counter++;
+
+				// et un écouteur d'évènement
+				door.addEventListener('click', errors.handleDadaIsHere);
 			}
+		} else {
+			for (const door of doors) {
+	
+				door.removeEventListener('click', errors.handleDadaIsHere);
+			}
+
+			// je récupère la balise contenant le message
+			const message = document.querySelector('.error__message');
+			// j'informe l'utilisateur qu'il a gagné
+			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 		}
 	},
 
@@ -43,9 +55,6 @@ export const errors = {
 
 		let dada = Math.floor(Math.random()*(6 - 1) + 1);
 
-		// je récupère la balise contenant le message
-		const message = document.querySelector('.error__message');
-
 		// je check si c'est bien dada
 		if(errors.isDada(dataDoor, dada)) {
 			// je récupère mon bouton pour sortir de la page d'erreur
@@ -57,12 +66,9 @@ export const errors = {
 			door.src = "/img/dada.png";
 			door.classList.add("avatar__game");
 
-			// j'informe l'utilisateur qu'il a gagné
-			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
-		
-			dadaFound = 1;
-
 		} else {
+			// je récupère la balise contenant le message
+			const message = document.querySelector('.error__message');
 			// sinon pas de chance ce n'était pas la bonne
 			message.textContent = errors.randomMessage();
 			errors.init();
@@ -78,6 +84,7 @@ export const errors = {
 	isDada: function(dataDoor, dada) {
 
 		if(dada == dataDoor) {
+			errors.dadaFound = 1;
 			return true;
 		} else {
 			return false;
