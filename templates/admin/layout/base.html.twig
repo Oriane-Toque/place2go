@@ -20,9 +20,6 @@
 			{{ encore_entry_link_tags('admin') }}
 		{% endblock %}
 
-		{% block javascripts %}
-			{{ encore_entry_script_tags('admin') }}
-		{% endblock %}
 	</head>
 
 	<body
@@ -229,9 +226,15 @@
 
 		<!-- MDB core JavaScript-->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- Popper-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<!-- Core plugin JavaScript-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('admin') }}
+		{% endblock %}
 	</body>
 
 </html>
