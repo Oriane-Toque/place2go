@@ -1,11 +1,7 @@
 export const errors = {
 
-	// lieu ou se cache dada
-	dada: Math.floor(Math.random()*(6 - 1) + 1),
-
 	init: function() {
 
-		console.log("DADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA !!!!!!!!!!!!!!");
 		// MISE EN PLACE DU JEU, ON CACHE DADA DE MANIERE ALEATOIRE
 		// je récupère toutes les portes
 		let doors = document.querySelectorAll('.where_is_dada');
@@ -39,28 +35,22 @@ export const errors = {
 		// je récupère son dataset
 		const dataDoor = door.dataset.dada;
 
+		let dada = Math.floor(Math.random()*(6 - 1) + 1);
+		console.log(dada);
+
 		// je récupère la balise contenant le message
 		const message = document.querySelector('.error__message');
 
 		// je check si c'est bien dada
-		if(errors.isDada(dataDoor)) {
+		if(errors.isDada(dataDoor, dada)) {
 			// je récupère mon bouton pour sortir de la page d'erreur
 			const backHome = document.getElementById('error__win');
 
 			backHome.style.display="initial";
-
-			door.remove();
-			
-			// je crée mon dada
-			const dadaContainer = document.createElement('div');
-			dadaContainer.classList.add('avatar__error');
-			// je crée l'image dada
-			const dadaPicture = document.createElement('img');
-			dadaPicture.src = "/img/dada.png";
-
-			dadaContainer.append(dadaPicture);
-
-			document.querySelector('.container__error').append(dadaContainer);
+		
+			// j'insère l'image dada
+			door.src = "/img/dada.png";
+			door.classList.add("avatar__game");
 
 			// j'informe l'utilisateur qu'il a gagné
 			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
@@ -77,9 +67,9 @@ export const errors = {
 	 * @param {*} dataDoor 
 	 * @returns Bool
 	 */
-	isDada: function(dataDoor) {
+	isDada: function(dataDoor, dada) {
 
-		if(errors.dada == dataDoor) {
+		if(dada == dataDoor) {
 			return true;
 		} else {
 			return false;
