@@ -2045,9 +2045,11 @@ form[name="search_friend"] {
 }
 
 /************************************************ OTHER ERRORS  */
-.error__page.--error-game {
+.error__game {
+	position: relative;
 	background-image: url("../img/fond-errors.png");
-	height: 62vh;
+	height: 100vh;
+	margin-bottom: -6rem;
 }
 
 /************************************************ 403  */
@@ -2081,31 +2083,27 @@ form[name="search_friend"] {
   padding-top: 4rem;
 }
 
-.container__error.--error {
+.container__game {
+	position: absolute;
+	top: 55%;
+	left: 50%;
 	display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
   padding: 0 1rem;
-	gap: 2rem;
-  transform: translateY(27vh);
+  width: 100%;
+  transform: translate(-50%, -50%);
 }
 
-.--error > img {
-	flex: 1;
-	min-width: auto;
-  min-height: auto;
-  overflow: hidden;
-	cursor: pointer;
-}
-
-.--error > .avatar__error {
+.avatar__game {
+	width: 100px!important;
+	height: 100px!important;
 	align-self: center;
-  flex: 1;
 }
 
-.avatar__error > img {
-	width: 100%;
+.container__game > img {
+	height: 365px;
+	width: 195px;
+	cursor: pointer;
 }
 
 .error__text{
@@ -2121,7 +2119,7 @@ form[name="search_friend"] {
 .error__message {
 	position: absolute;
 	text-align: center;
-	top: 2rem;
+	top: 8rem;
 	left: 1rem;
 	right: 1rem;
 	color: #fff;
@@ -2131,6 +2129,9 @@ form[name="search_friend"] {
 
 #error__win {
 	display: none;
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
 }
 
 /*****************************************************************/
@@ -2287,10 +2288,6 @@ form[name="search_friend"] {
 	.error__message {
 		font-size: 2rem;
 	}
-
-	.--error-game {
-		height: 84vh;
-	}
 }
 
 @media screen and (min-width: 700px) {
@@ -2315,10 +2312,6 @@ form[name="search_friend"] {
 	.error__page {
 		margin-bottom: -6rem;
 		height: 90vh;
-	}
-
-	.--error-game {
-		height: 100vh!important;
 	}
 }
 
@@ -2524,8 +2517,4 @@ form[name="search_friend"] {
   .contentProfile.--public {
     margin: 2rem 15rem;
   }
-
-	.--error-game {
-		height: 130vh!important;
-	}
 }

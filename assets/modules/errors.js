@@ -1,11 +1,9 @@
 export const errors = {
 
-	// lieu ou se cache dada
-	dada: Math.floor(Math.random()*(6 - 1) + 1),
+	dadaFound: 0,
 
 	init: function() {
 
-		console.log("DADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA !!!!!!!!!!!!!!");
 		// MISE EN PLACE DU JEU, ON CACHE DADA DE MANIERE ALEATOIRE
 		// je récupère toutes les portes
 		let doors = document.querySelectorAll('.where_is_dada');
@@ -15,13 +13,29 @@ export const errors = {
 
 		// je mélange mon tableau
 		doors = errors.shuffle(doors);
-		
+
 		let counter = 1;
-		// je boucle dessus et j'attribue leur dataset
-		// puis j'applique un écouteur d'évènement au clic
-		for (const door of doors) {
-			door.dataset.dada = counter++;
-			door.addEventListener('click', errors.handleDadaIsHere);
+
+		// si pas fin du jeu
+		if (errors.dadaFound == 0) {
+			// je boucle sur mes portes
+			for (const door of doors) {
+				// je leur attribue un dataset
+				door.dataset.dada = counter++;
+
+				// et un écouteur d'évènement
+				door.addEventListener('click', errors.handleDadaIsHere);
+			}
+		} else {
+			for (const door of doors) {
+	
+				door.removeEventListener('click', errors.handleDadaIsHere);
+			}
+
+			// je récupère la balise contenant le message
+			const message = document.querySelector('.error__message');
+			// j'informe l'utilisateur qu'il a gagné
+			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 		}
 	},
 
@@ -39,32 +53,22 @@ export const errors = {
 		// je récupère son dataset
 		const dataDoor = door.dataset.dada;
 
-		// je récupère la balise contenant le message
-		const message = document.querySelector('.error__message');
+		let dada = Math.floor(Math.random()*(6 - 1) + 1);
 
 		// je check si c'est bien dada
-		if(errors.isDada(dataDoor)) {
+		if(errors.isDada(dataDoor, dada)) {
 			// je récupère mon bouton pour sortir de la page d'erreur
 			const backHome = document.getElementById('error__win');
 
 			backHome.style.display="initial";
 
-			door.remove();
-			
-			// je crée mon dada
-			const dadaContainer = document.createElement('div');
-			dadaContainer.classList.add('avatar__error');
-			// je crée l'image dada
-			const dadaPicture = document.createElement('img');
-			dadaPicture.src = "/img/dada.png";
+			// j'insère l'image dada
+			door.src = "/img/dada.png";
+			door.classList.add("avatar__game");
 
-			dadaContainer.append(dadaPicture);
-
-			document.querySelector('.container__error').append(dadaContainer);
-
-			// j'informe l'utilisateur qu'il a gagné
-			message.textContent = "Merci d'avoir retrouvé Dada pour nous, votre porte de sortie vient d'apparaître ! A bientôt peut être ...";
 		} else {
+			// je récupère la balise contenant le message
+			const message = document.querySelector('.error__message');
 			// sinon pas de chance ce n'était pas la bonne
 			message.textContent = errors.randomMessage();
 			errors.init();
@@ -77,9 +81,10 @@ export const errors = {
 	 * @param {*} dataDoor 
 	 * @returns Bool
 	 */
-	isDada: function(dataDoor) {
+	isDada: function(dataDoor, dada) {
 
-		if(errors.dada == dataDoor) {
+		if(dada == dataDoor) {
+			errors.dadaFound = 1;
 			return true;
 		} else {
 			return false;
