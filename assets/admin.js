@@ -12,7 +12,7 @@ import "./styles/admin.css";
 import "./bootstrap";
 
 
-(function($) {
+$(function() {
   "use strict"; // Start of use strict
 
   // Toggle the side navigation
@@ -67,42 +67,38 @@ import "./bootstrap";
     e.preventDefault();
   });
   
-  // Display user details in floating div
-  $( ".user-details-floating" )
-  .on("mouseenter", function (e) {
-
-    var $floating = $(this).find(".details-floating");
-
-    if ($floating.length > 0){
-      $floating.show();
-    }
-    else{
-
-      var $anchor = $(this);
-      var url = $anchor.attr('href') + '/floating';
-      var html = '';
-
-      $.ajax({
-        url: url,
-        type: "GET",
-        dataType: 'json',
-        success: function(data){
-
-          html += '<div class="details-floating position-absolute p-4 bg-white shadow">';
-          html += '<h3>' + data.firstname + ' ' + data.lastname + '</h3>';
-          html += '<img src="' + data.avatar + '" width="150" class="mx-auto mb-2">';
-          html += '<p class="mb-0">Ville : ' + data.city + '</p>';
-          html += '<p class="mb-0">Age : ' + data.birthday + '</p>';
-          html += '<p class="mb-0">Inscrit depuis le ' + data.createdAt + '</p>';
-          html += '</div>';
-
-          $anchor.append(html);
-        }
-      })
-    }
-    
-  }).on("mouseout", function () {
-    $( ".details-floating" ).hide();
-  });
-
-})(jQuery); // End of use strict
+  // Display details in popover	
+  $('[data-toggle="popover"]').popover({
+    trigger: "hover",
+    html: true,
+    placement: 'right',
+    content: function() {
+      return `
+        <div class="spinner-border text-info" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>`;}
+      }).on('shown.bs.popover', function () {
+      var el = $(this);
+      var titreEl = $('.popover .popover-header');
+      var contentEl = $('.popover .popover-body');
+      //var contentEl = el.next("bs.popover").find(".popover-body");
+  
+      var url = el.attr('href') + '/floating';
+  
+      $.getJSON(url)
+      .done(function (data) {
+  
+        var html  = '';
+        //html += '<h3>' + data.firstname + ' ' + data.lastname + '</h3>';
+        html += '<img src="' + data.avatar + '" width="150" class="mx-auto mb-2">';
+        html += '<p class="mb-0">Ville : ' + data.city + '</p>';
+        html += '<p class="mb-0">Age : ' + data.birthday + '</p>';
+        html += '<p class="mb-0">Inscrit depuis le ' + data.createdAt + '</p>';
+        titreEl.html(data.firstname + ' ' + data.lastname);
+        contentEl.html(html);
+        el.popover('update');
+      });
+  
+    });
+  
+}); // End of use strict
