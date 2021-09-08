@@ -101,4 +101,14 @@ class MainController extends AbstractController
     {
         return $this->render('team/team.html.twig');
     }
+
+    /**
+     * @Route("/500", name="app_500", methods={"GET"})
+     * 
+     * @return void
+     */
+    public function error()
+    {
+        
+    }
 }

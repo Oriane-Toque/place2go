@@ -19,7 +19,7 @@
 				{# Pills navs #}
 				<ul class="nav nav-pills mb-3" id="profile-navbar" role="tablist">
 					<li class="nav-item" role="navbar">
-						<a class="nav-link active" id="my-events-tab" href="#my-events" role="tab"
+						<a class="nav-link active button-primary" id="my-events-tab" href="#my-events" role="tab"
 						data-mdb-toggle="pill" aria-controls="my-events" aria-selected="false">
 						Mes sorties
 						</a>
@@ -32,14 +32,7 @@
 						</a>
 					</li>
 					{% endif %}
-					{# <li class="nav-item" role="navbar">
-						<a class="nav-link" id="saves-tab" href="#saves" role="tab"
-						data-mdb-toggle="pill" aria-controls="saves" aria-selected="false">
-						Recherches sauvegardés
-						</a>
-					</li> #}
 				</ul>
-				{# End pills navs #}
 
 				<div class="tab-content" id="tabs-content">
 
@@ -102,8 +95,6 @@
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
 							{% endfor %}
-
-							{# Fin carte sortie #}
 						</section>
 
 						{# Les dernières sorties auxquelles a participé l'utilisateur #}
@@ -195,7 +186,7 @@
 												</div>
 												<div class="contentProfile__lastExits-infos_actions">
 													{# Action buttons #}
-													<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+													<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 														<i class="far fa-eye"></i>
 													</a>
 												</div>
@@ -240,7 +231,7 @@
 												</div>
 												<div class="contentProfile__lastExits-infos_actions">
 													{# Action buttons #}
-													<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+													<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 														<i class="far fa-eye"></i>
 													</a>
 												</div>
