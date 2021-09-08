@@ -53,7 +53,7 @@
                     </td>
                     <td>{{ event.address }}</td>
                     <td>
-                        <a href="{{ path('admin_user_show', {id: event.author.id}) }}" class="user-details-floating"><img src="{{ event.author.avatar }}" width="30" class="rounded-circle me-1">{{ event.author.nickname }}</a>
+                        <a href="{{ path('admin_user_show', {id: event.author.id}) }}" data-toggle="popover"><img src="{{ event.author.avatar }}" width="30" class="rounded-circle me-1">{{ event.author.nickname }}</a>
                     </td>
                     <td>
                         {{ event.attendants|length }}/{{ event.maxAttendants }}
