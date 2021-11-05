@@ -31,21 +31,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank()
      */
     private $nickname;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
     private $firstname;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
@@ -57,20 +54,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
     private $city;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -93,7 +87,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email(
@@ -107,8 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $roles = [];
 
-    /**
-     * @var string The hashed password
+    /** The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
