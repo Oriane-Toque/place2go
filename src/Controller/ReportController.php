@@ -8,9 +8,9 @@ use App\Entity\User;
 use App\Form\ReportType;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReportController extends AbstractController
 {
@@ -60,8 +60,8 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('app_profile_show', ['id' => $user->getId()]);
         }
 
-        return $this->render('report/report.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('report/report.html.twig', [
+            'form' => $form,
         ]);
     }
 
@@ -111,8 +111,8 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
         }
 
-        return $this->render('report/report.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('report/report.html.twig', [
+            'form' => $form,
         ]);
     }
 }

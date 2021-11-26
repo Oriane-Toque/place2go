@@ -26,6 +26,18 @@
             <div class="card-body">
                 <div class="filter-area">
                     <p>Tous les champs de filtres ici</p>
+                    {{ knp_pagination_filter(events, {'e.title': 'Title'}) }}
+                    {# {{ form_start(form, {'attr': {class: 'search__form'}}) }}
+
+                        <div class="search__form_input">
+                            {{ form_widget(form.q) }}
+                            <button type="submit" class="btn button-primary ms-3 px-3" type="button">Rechercher</button>
+                        </div>
+
+                        {{ form_widget(form.categories)}}
+                        {{ form_errors(form.categories) }}
+                        
+                    {{ form_end(form)}} #}
                 </div>
             </div>
         </div>
@@ -45,9 +57,9 @@
                 <h6 class="m-0 font-weight-bold text-primary">Liste des sorties</h6>            
             </div>
             <!-- Card Body -->
-            <div class="card-body">        
-                {{ include("admin/event/_event_list.html.twig", {'events': events }) }} 
-            </div> 
+            <div class="card-body">    
+                {{ include("admin/event/_event_list.html.twig", {'events': events, 'pagination': true }) }}       
+            </div>
         </div>
     </div>
 

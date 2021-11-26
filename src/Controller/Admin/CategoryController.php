@@ -4,25 +4,26 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
 use App\Services\FileUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Require ROLE_ADMIN for *every* controller method in this class.
- *
  * @IsGranted("ROLE_ADMIN")
  */
-
 class CategoryController extends AbstractController
 {
     /**
      * @Route("/admin/categories", name="admin_category_list", methods={"GET"})
+     *
+     * @param CategoryRepository $categoryRepository
+     *
+     * @return Response
      */
     public function list(CategoryRepository $categoryRepository): Response
     {
@@ -36,6 +37,10 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/{id<\d+>}/show", name="admin_category_show", methods={"GET"})
+     *
+     * @param Category $category
+     *
+     * @return Response
      */
     public function show(Category $category): Response
     {
@@ -46,6 +51,11 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/admin/categories/create", name="admin_category_create", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     *
+     * @return Response
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
@@ -83,13 +93,18 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_category_list');
         }
 
-        return $this->render('admin/category/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/category/create.html.twig', [
+            'form' => $form
         ]);
     }
 
     /**
      * @Route("/admin/categories/{id<\d+>}/edit", name="admin_category_edit", methods={"GET", "POST"})
+     *
+     * @param Category $category
+     * @param Request $request
+     *
+     * @return Response
      */
     public function edit(Category $category, Request $request): Response
     {
@@ -109,17 +124,17 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_category_list');
         }
 
-        return $this->render('admin/category/edit.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/category/edit.html.twig', [
+            'form' => $form,
         ]);
-        /*return $this->render('admin/category/_category_form.html.twig', [
-            'form' => $form->createView(),
-            'category' => $category,
-        ]);*/
     }
 
     /**
      * @Route("/admin/categories/{id<\d+>}/delete", name="admin_category_delete", methods={"GET"})
+     *
+     * @param Category $category
+     *
+     * @return Response
      */
     public function delete(Category $category): Response
     {

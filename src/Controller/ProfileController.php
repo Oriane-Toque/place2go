@@ -2,17 +2,14 @@
 
 namespace App\Controller;
 
-use App\Form\SearchFriendType;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Repository\FriendshipRepository;
 use App\Repository\EventRepository;
-use App\Repository\UserRepository;
 use App\Services\FriendshipManager;
+use App\Repository\FriendshipRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -29,10 +26,10 @@ class ProfileController extends AbstractController
      */
     public function show(User $user, FriendshipManager $friendshipManager): Response
     {
-        $this->denyAccessUnlessGranted('BASIC_ACCESS', $user, "Impossible d'accéder à ce profil");
+        $this->denyAccessUnlessGranted('USER_ACCESS', $user, "Impossible d'accéder à ce profil");
 
         // Check if friendship exists
-		$friendship = $friendshipManager->get($this->getUser(), $user);
+        $friendship = $friendshipManager->get($this->getUser(), $user);
 
         return $this->render('profile/show.html.twig', [
             "user" => $user,
@@ -44,7 +41,6 @@ class ProfileController extends AbstractController
      * Display user profile (private / dashboard)
      *
      * @Route("/profile", name="app_profile_profile", methods={"GET", "POST"})
-     * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository
      *
@@ -64,16 +60,15 @@ class ProfileController extends AbstractController
         $attendantLastThreeExits = $eventRepository->findLastAttendantEvents($user->getId(), 3);
 
         // My friends last events
-		$friends = $friendshipRepository->findAllFriends($user);
+        $friends = $friendshipRepository->findAllFriends($user);
 
         $friendsAuthor = [];
         $friendsAttendant = [];
 
-		foreach($friends as $friend)
-		{
-			$friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
-			$friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
-		}
+        foreach ($friends as $friend) {
+            $friendsAuthor[] = $eventRepository->findNextAuthorEvents($friend->getId());
+            $friendsAttendant[] = $eventRepository->findNextAttendantEvents($friend->getId());
+        }
 
         return $this->render('profile/profile.html.twig', [
             "user" => $user,
@@ -81,7 +76,7 @@ class ProfileController extends AbstractController
             "attendantLastExits" => $attendantLastThreeExits,
             "friends" => $friends,
             "friendsAuthor" => $friendsAuthor,
-			"friendsAttendant" => $friendsAttendant
+            "friendsAttendant" => $friendsAttendant
         ]);
     }
 
@@ -103,10 +98,12 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
+
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             // Password hash if user is trying to update it
             // If old password (and corresponding to user password) + new password sent
             if (!empty($form->get('oldpassword')->getData()) && !empty($form->get('password')->getData()) && $passwordHasher->isPasswordValid($user, $form->get('oldpassword')->getData())) {
@@ -132,7 +129,6 @@ class ProfileController extends AbstractController
      * Display all events created by the user
      *
      * @Route("/profile/events", name="app_profile_events", methods={"GET"})
-     * @isGranted("ROLE_USER")
      *
      * @param EventRepository $eventRepository
      *

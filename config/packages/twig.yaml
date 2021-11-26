@@ -1,8 +1,5 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-
-    form_theme: 'bootstrap_5_layout.html.twig'
-
     form_themes: ['bootstrap_5_layout.html.twig']
     paths:
         # point this wherever your images live
@@ -11,10 +8,9 @@ twig:
         eventRepository: '@App\Repository\EventRepository'
         categoryRepository: '@App\Repository\CategoryRepository'
         userRepository: '@App\Repository\UserRepository'
-
+    date:
+        timezone: Europe/Paris
 when@test:
     twig:
         strict_variables: true
-
-        twig:
     # ...

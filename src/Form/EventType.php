@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\Category;
 use DateTime;
 use App\Repository\CategoryRepository;
+use DateTimeZone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,7 +50,7 @@ class EventType extends AbstractType
                     ->add('event_date', DateTimeType::class, [
                         'label' => 'Date de la sortie *',
                         'required' => true,
-                        'data' => new DateTime('now'),
+                        'data' => new DateTime('now', new DateTimeZone('Europe/Paris')),
                         'years' => range(date('Y'), date('Y')+5),
                     ]);
             } else {

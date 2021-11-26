@@ -19,7 +19,7 @@
 				{# Pills navs #}
 				<ul class="nav nav-pills mb-3" id="profile-navbar" role="tablist">
 					<li class="nav-item" role="navbar">
-						<a class="nav-link active" id="my-events-tab" href="#my-events" role="tab"
+						<a class="nav-link active button-primary" id="my-events-tab" href="#my-events" role="tab"
 						data-mdb-toggle="pill" aria-controls="my-events" aria-selected="false">
 						Mes sorties
 						</a>
@@ -32,14 +32,7 @@
 						</a>
 					</li>
 					{% endif %}
-					<li class="nav-item" role="navbar">
-						<a class="nav-link" id="saves-tab" href="#saves" role="tab"
-						data-mdb-toggle="pill" aria-controls="saves" aria-selected="false">
-						Recherches sauvegardés
-						</a>
-					</li>
 				</ul>
-				{# End pills navs #}
 
 				<div class="tab-content" id="tabs-content">
 
@@ -91,7 +84,7 @@
 													</a>
 
 													{# Bouton pour supprimer la sortie #}
-													<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer" onclick="window.alert('Confirmez-vous la suppression ?')">
+													<a class="btn btn-danger btn-floating-sm" href="{{ path("app_event_delete", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Supprimer" onclick="window.confirm('Confirmez-vous la suppression ?')">
 														<i class="fas fa-trash-alt"></i>
 													</a>
 												</div>
@@ -102,8 +95,6 @@
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
 							{% endfor %}
-
-							{# Fin carte sortie #}
 						</section>
 
 						{# Les dernières sorties auxquelles a participé l'utilisateur #}
@@ -166,9 +157,10 @@
 					<div class="tab-pane fade" id="friend-events" role="tabpanel" aria-labelledby="friend-events-tab">
 						
 						{# Next events organised by my friends #}
-						<section class="contentProfile__lastExit">
+						<section class="contentProfile__lastExits">
 							<h2>Prochaines sorties organisées par mes amis</h2>
 							{# Start Card #}
+							{% if friendsAuthor[0] is defined and friendsAuthor[0] is not empty %}
 							{% for events in friendsAuthor %}
 							{% for event in events %}
 								<div class="card mb-3">
@@ -194,7 +186,7 @@
 												</div>
 												<div class="contentProfile__lastExits-infos_actions">
 													{# Action buttons #}
-													<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+													<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 														<i class="far fa-eye"></i>
 													</a>
 												</div>
@@ -202,17 +194,19 @@
 										</div>
 									</div>
 								</div>
+							{% endfor %}
+							{% endfor %}
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
-							{% endfor %}
-							{% endfor %}
+							{% endif %}
 						</section>
 
 						{# Next events participated by my friends #}
-						<section class="contentProfile__lastExit">
+						<section class="contentProfile__lastExits">
 							<h2>Prochaines sorties auxquelles participent mes amis</h2>
 
 							{# Start Card #}
+							{% if friendsAttendant[0] is defined and friendsAttendant[0] is not empty %}
 							{% for events in friendsAttendant %}
 							{% for event in events %}
 								<div class="card mb-3">
@@ -237,19 +231,21 @@
 												</div>
 												<div class="contentProfile__lastExits-infos_actions">
 													{# Action buttons #}
-													<a class="--show btn btn-primary btn-floating" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
+													<a class="btn button-primary btn-floating-sm" href="{{ path("app_event_show", {id:event.id}) }}" role="button" data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="Détails">
 														<i class="far fa-eye"></i>
 													</a>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</div>	
+							{% endfor %}
+							{% endfor %}
 							{% else %}
 								<div>Aucune donnée à afficher pour le moment</div>
-							{% endfor %}
-							{% endfor %}
+							{% endif %}
 						</section>
+						
 
 					</div>
 					{% endif %}

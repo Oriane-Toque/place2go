@@ -454,6 +454,7 @@ form[name="search_friend"] {
 
 .topScore .topScore__card .bg-image {
   height: 100%;
+  width: 100%;
 }
 
 .topScore .topScore__card .bg-image img.card-img-top {
@@ -1039,6 +1040,7 @@ form[name="search_friend"] {
 
 #show .show__card_content-description {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 #show .show__card_content-description .--title {
@@ -2031,15 +2033,42 @@ form[name="search_friend"] {
 }
 
 /************************************************  404 PAGE */
-
 .error__page {
+	position: relative;
   background-image: url("../img/404.jpg");
   height: 90vh;
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
-  margin-bottom: -6rem;
+  margin-bottom: -2rem;
+}
+
+/************************************************ OTHER ERRORS  */
+.error__game {
+	position: relative;
+	background-image: url("../img/fond-errors.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+	margin-bottom: -6rem;
+}
+
+/************************************************ 403  */
+.--forbidden {
+	position: relative;
+	background-image: url("../img/403.png");
+	height: 45vh;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: -2rem; 
+}
+
+.action-home {
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
 }
 
 .return__home {
@@ -2056,6 +2085,29 @@ form[name="search_friend"] {
   padding-top: 4rem;
 }
 
+.container__game {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.avatar__game {
+	width: 100px!important;
+	height: 100px!important;
+	align-self: center;
+}
+
+.container__game > img {
+	height: 365px;
+	width: 195px;
+	cursor: pointer;
+}
+
 .error__text{
   margin-top: 0;
   margin-bottom: 1rem;
@@ -2065,6 +2117,25 @@ form[name="search_friend"] {
   text-align: center;
   text-shadow:1px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.error__message {
+	position: absolute;
+	text-align: center;
+	top: 8rem;
+	left: 1rem;
+	right: 1rem;
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+#error__win {
+	display: none;
+	position: absolute;
+	top: 2rem;
+	left: 2rem;
+}
+
 /*****************************************************************/
 /************************************************  MEDIA QUERIES */
 /*****************************************************************/
@@ -2214,6 +2285,11 @@ form[name="search_friend"] {
   .contentProfile.--public .contentProfile__infos-details > h2 {
     margin-left: 2rem;
   }
+
+  /************************************************ ERROR PAGE */
+	.error__message {
+		font-size: 2rem;
+	}
 }
 
 @media screen and (min-width: 700px) {
@@ -2233,6 +2309,12 @@ form[name="search_friend"] {
     left: 50%;
     height: 500px;
   }
+
+	.--forbidden,
+	.error__page {
+		margin-bottom: -6rem;
+		height: 90vh;
+	}
 }
 
 @media screen and (min-width: 992px) {
@@ -2373,7 +2455,7 @@ form[name="search_friend"] {
 
   .contentProfile__lastExits > .card > div {
     display: flex;
-    height: 190px;
+    height: 220px;
   }
 
   .contentProfile__lastExits-picture {
@@ -2431,8 +2513,7 @@ form[name="search_friend"] {
 
   /************************************************ PROFILE  */
   .dashAction.--desktop .dashAction__item:last-child .card-body {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    columns: 2;
   }
 
   .contentProfile.--public {

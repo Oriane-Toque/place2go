@@ -31,21 +31,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank()
      */
     private $nickname;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
     private $firstname;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
@@ -57,20 +54,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
     private $city;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -93,7 +87,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email(
@@ -107,8 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $roles = [];
 
-    /**
-     * @var string The hashed password
+    /** The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
@@ -136,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Friendship::class, mappedBy="receiver", orphanRemoval=true)
      */
     private $friendsWithMe;
-  
+
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author")
      */
@@ -445,18 +437,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->friends;
     }
 
-    public function addFriend(User $friend)
-    {
-        /*$friendship = new Friendship();
-        $friendship->setSender($this);
-        $friendship->setReceiver($friend);
-        $friendship->setStatus(1);
-
-        $this->addFriendship($friendship);
-
-        return $friendship;*/
-    }
-
     public function addFriends(Friendship $friendship): self
     {
         if (!$this->friends->contains($friendship)) {
@@ -467,6 +447,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     
+    public function removeFriends(Friendship $friendship): self
+    {
+        if ($this->friendship->removeElement($friendship)) {
+            // set the owning side to null (unless already changed)
+            if ($friendship->getSender() === $this) {
+                $friendship->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
     /*
      * @return Collection|Comment[]
      */
@@ -480,18 +472,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
             $comment->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFriends(Friendship $friendship): self
-    {
-        if ($this->friendship->removeElement($friendship)) {
-            // set the owning side to null (unless already changed)
-            if ($friendship->getSender() === $this) {
-                $friendship->setSender(null);
-            }
         }
 
         return $this;
@@ -526,7 +506,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
+    public function removeFriendsWithMe(Friendship $friendship): self
+    {
+        if ($this->friendship->removeElement($friendship)) {
+            // set the owning side to null (unless already changed)
+            if ($friendship->getReceiver() === $this) {
+                $friendship->setReceiver(null);
+            }
+        }
+
+        return $this;
+    }
+
     /*
      * @return Collection|Report[]
      */
@@ -540,19 +532,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->reports->contains($report)) {
             $this->reports[] = $report;
             $report->setUser($this);
-        }
-
-        return $this;
-    }
-
-
-    public function removeFriendsWithMe(Friendship $friendship): self
-    {
-        if ($this->friendship->removeElement($friendship)) {
-            // set the owning side to null (unless already changed)
-            if ($friendship->getReceiver() === $this) {
-                $friendship->setReceiver(null);
-            }
         }
 
         return $this;
