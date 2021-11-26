@@ -98,10 +98,12 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(RegistrationFormType::class, $user);
+
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             // Password hash if user is trying to update it
             // If old password (and corresponding to user password) + new password sent
             if (!empty($form->get('oldpassword')->getData()) && !empty($form->get('password')->getData()) && $passwordHasher->isPasswordValid($user, $form->get('oldpassword')->getData())) {

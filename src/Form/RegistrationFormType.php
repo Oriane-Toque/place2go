@@ -29,6 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom *',
                 'required' => true,
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'ex : Jean'
                 ]
@@ -36,6 +37,7 @@ class RegistrationFormType extends AbstractType
             ->add('lastname', TextType::class, [
                 'label' => 'Nom de famille *',
                 'required' => true,
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'ex : Dupont'
                 ]
@@ -43,6 +45,7 @@ class RegistrationFormType extends AbstractType
             ->add('nickname', TextType::class, [
                 'label' => 'Pseudo *',
                 'required' => true,
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'ex : jd'
                 ]
@@ -66,6 +69,7 @@ class RegistrationFormType extends AbstractType
                     $form
                         ->add('birthday', BirthdayType::class, [
                             'label' => 'Date de naissance',
+                            'empty_data' => '',
                             'widget' => 'choice',
                             'days' => range(1, 31),
                             'months' => range(1, 12),
@@ -74,6 +78,7 @@ class RegistrationFormType extends AbstractType
                         ])
                         ->add('city', TextType::class, [
                             'label' => 'Ville *',
+                            'empty_data' => '',
                             'required' => true,
                             'attr' => [
                                 'placeholder' => 'ex : Paris'
@@ -81,6 +86,7 @@ class RegistrationFormType extends AbstractType
                         ])
                         ->add('email', EmailType::class, [
                             'label' => 'Adresse email *',
+                            'empty_data' => '',
                             'required' => true,
                             'attr' => [
                                 'placeholder' => 'ex : email@exemple.fr'
@@ -110,13 +116,19 @@ class RegistrationFormType extends AbstractType
                     $form
                         ->add('city', TextType::class, [
                             'label' => 'Ville',
+                            'required' => true,
+                            'empty_data' => '',
                         ])
                         ->add('description', TextareaType::class, [
                             'label' => 'Description',
+                            'empty_data' => '',
                         ])
-                        ->add('email', EmailType::class)
+                        ->add('email', EmailType::class, [
+                            'empty_data' => '',
+                        ])
                         ->add('oldpassword', PasswordType::class, [
                             'label' => 'Ancien mot de passe',
+                            'required' => false,
                             'mapped' => false,
                             'help' => 'Si vous désirez changer de mot de passe, veuillez renseigner votre ancien mot de passe au préalable !',
                             'attr' => [
